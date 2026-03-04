@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌟 閱讀小達人闖關挑戰 🌟</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #f0fdf4; /* 淺綠色活潑背景 */
+      background-image: radial-gradient(#bbf7d0 2px, transparent 2px);
+      background-size: 30px 30px;
+    }
+    .view-section { display: none; animation: fadeIn 0.4s ease-in-out; }
+    .view-section.active { display: flex; }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .btn-primary {
+      background: linear-gradient(to bottom, #fde047, #eab308);
+      box-shadow: 0 4px 0 #ca8a04, 0 8px 15px rgba(0,0,0,0.1);
+      transition: all 0.1s;
+    }
+    .btn-primary:active {
+      transform: translateY(4px);
+      box-shadow: 0 0px 0 #ca8a04, 0 4px 5px rgba(0,0,0,0.1);
+    }
+    
+    .btn-option {
+      transition: all 0.2s;
+      border: 2px solid #e5e7eb;
+    }
+    .btn-option:hover {
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+      transform: scale(1.02);
+    }
+    
+    .card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      border: 4px solid #ffffff;
+    }
+
+    /* 閱讀文章重點標示樣式 */
+    .passage-text {
+      line-height: 2;
+      font-size: 1.125rem;
+      color: #374151;
+    }
+    .passage-text strong {
+      background-color: #fef08a;
+      padding: 2px 4px;
+      border-radius: 4px;
+      color: #1f2937;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+  <!-- ================= [ 1. 首頁：輸入姓名 ] ================= -->
+  <div id="home-view" class="view-section active flex-col items-center max-w-md w-full">
+    <div class="text-6xl mb-4">📚</div>
+    <h1 class="text-4xl font-black text-green-700 mb-2 text-center drop-shadow-sm">閱讀小達人</h1>
+    <h2 class="text-xl font-bold text-green-600 mb-8 text-center">闖關挑戰賽</h2>
+    
+    <div class="card p-8 w-full text-center">
+      <label class="block text-lg font-bold text-gray-700 mb-4">請輸入你的挑戰代號 (姓名)</label>
+      <input type="text" id="player-name" placeholder="例如：王小明" 
+             class="w-full text-center text-xl p-4 border-4 border-green-200 rounded-xl mb-6 focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-100 transition-all">
+      <button onclick="goToLevelSelect()" class="btn-primary w-full text-2xl font-black text-yellow-900 py-4 rounded-xl">
+        開始挑戰！ 🚀
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= [ 2. 關卡選擇 ] ================= -->
+  <div id="level-select-view" class="view-section flex-col max-w-4xl w-full">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-3xl font-black text-green-800">選擇挑戰關卡</h2>
+      <div class="text-lg font-bold text-gray-600 bg-white px-4 py-2 rounded-full shadow-sm">
+        👤 玩家：<span id="display-player-name" class="text-blue-600"></span>
+      </div>
+    </div>
+    <div id="level-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- 關卡卡片由 JS 動態產生 -->
+    </div>
+  </div>
+
+  <!-- ================= [ 3. 閱讀文章畫面 ] ================= -->
+  <div id="reading-view" class="view-section flex-col max-w-3xl w-full">
+    <div class="card p-6 md:p-10 w-full mb-6">
+      <div class="flex justify-between items-center mb-6 border-b-2 border-gray-100 pb-4">
+        <h2 id="reading-title" class="text-3xl font-black text-blue-700"></h2>
+        <span class="bg-blue-100 text-blue-800 text-sm font-bold px-3 py-1 rounded-full">👀 仔細閱讀</span>
+      </div>
+      <div id="reading-passage" class="passage-text mb-8"></div>
+      
+      <button onclick="startQuiz()" class="btn-primary w-full text-2xl font-black text-yellow-900 py-4 rounded-xl flex items-center justify-center gap-2">
+        <span>我讀懂了，開始作答！</span>
+        <span class="text-3xl">⏱️</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= [ 4. 測驗作答畫面 ] ================= -->
+  <div id="quiz-view" class="view-section flex-col max-w-2xl w-full">
+    <div class="flex justify-between items-center mb-4">
+      <div class="bg-white px-4 py-2 rounded-full shadow-sm font-bold text-gray-600 text-lg">
+        題目：<span id="question-counter" class="text-blue-600">1 / 5</span>
+      </div>
+      <div class="bg-white px-4 py-2 rounded-full shadow-sm font-bold text-red-500 text-lg flex items-center gap-2">
+        ⏱️ <span id="timer-display">0</span> 秒
+      </div>
+    </div>
+    
+    <div class="card p-6 md:p-8 w-full">
+      <h3 id="question-text" class="text-2xl font-bold text-gray-800 mb-8 leading-snug"></h3>
+      <div id="options-container" class="flex flex-col gap-4">
+        <!-- 選項由 JS 動態產生 -->
+      </div>
+      
+      <!-- 新增：解析區塊 -->
+      <div id="explanation-box" class="mt-8 p-6 bg-red-50 border-2 border-red-200 rounded-xl hidden">
+        <h4 class="text-lg font-bold text-red-600 mb-2">❌ 答錯囉！</h4>
+        <p id="correct-answer-text" class="text-green-700 font-bold mb-2"></p>
+        <p id="explanation-text" class="text-gray-700 leading-relaxed"></p>
+        <button onclick="nextQuestion()" class="mt-4 w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg shadow transition-colors">
+          看懂了，下一題 ➡️
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= [ 5. 測驗結果畫面 ] ================= -->
+  <div id="result-view" class="view-section flex-col items-center max-w-md w-full">
+    <div class="text-6xl mb-4" id="result-emoji">🏆</div>
+    <h2 class="text-4xl font-black text-green-700 mb-6 text-center shadow-sm">挑戰完成！</h2>
+    
+    <div class="card p-8 w-full mb-6">
+      <div class="text-center mb-6 pb-6 border-b-2 border-dashed border-gray-200">
+        <div class="text-gray-500 font-bold mb-1">最終成績</div>
+        <div id="final-score" class="text-6xl font-black text-blue-600">100</div>
+      </div>
+      
+      <div class="grid grid-cols-2 gap-4 text-center mb-4">
+        <div class="bg-green-50 p-4 rounded-xl">
+          <div class="text-green-600 font-bold text-sm mb-1">答對題數</div>
+          <div id="final-correct" class="text-3xl font-black text-green-700">0</div>
+        </div>
+        <div class="bg-red-50 p-4 rounded-xl">
+          <div class="text-red-500 font-bold text-sm mb-1">答錯題數</div>
+          <div id="final-wrong" class="text-3xl font-black text-red-600">0</div>
+        </div>
+      </div>
+      
+      <div class="bg-yellow-50 p-4 rounded-xl text-center">
+        <div class="text-yellow-700 font-bold text-sm mb-1">挑戰耗時</div>
+        <div class="text-2xl font-black text-yellow-800"><span id="final-time">0</span> 秒</div>
+      </div>
+    </div>
+
+    <!-- 新增：錯題回顧區塊 -->
+    <div id="wrong-review-section" class="card p-6 w-full mb-6 hidden">
+      <h3 class="text-xl font-bold text-red-600 mb-4 border-b-2 border-red-100 pb-2">❌ 錯題與解析回顧</h3>
+      <div id="wrong-review-list" class="flex flex-col gap-4 text-left">
+        <!-- 錯題由 JS 產生 -->
+      </div>
+    </div>
+
+    <div class="flex flex-col w-full gap-4">
+      <button onclick="showLeaderboard()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold text-xl py-4 rounded-xl shadow-lg transition-all active:scale-95">
+        📊 查看排行榜
+      </button>
+      <button onclick="goToLevelSelect()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xl py-4 rounded-xl shadow transition-all active:scale-95">
+        🔙 回到關卡列表
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= [ 6. 排行榜畫面 ] ================= -->
+  <div id="leaderboard-view" class="view-section flex-col max-w-2xl w-full">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-3xl font-black text-blue-800">👑 閱讀達人排行榜</h2>
+      <button onclick="goToLevelSelect()" class="bg-white px-4 py-2 rounded-full shadow font-bold text-gray-600 hover:bg-gray-50">
+        返回
+      </button>
+    </div>
+    
+    <div class="card overflow-hidden w-full">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-blue-100 text-blue-800">
+            <th class="p-4 font-bold text-center">名次</th>
+            <th class="p-4 font-bold">姓名</th>
+            <th class="p-4 font-bold text-center">關卡</th>
+            <th class="p-4 font-bold text-center">分數</th>
+            <th class="p-4 font-bold text-center">秒數</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboard-body">
+          <!-- 排行榜資料由 JS 產生 -->
+        </tbody>
+      </table>
+      <div id="leaderboard-loading" class="p-8 text-center text-gray-500 font-bold hidden">
+        🔄 讀取排行榜中...
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= [ JavaScript 邏輯 ] ================= -->
+  <script>
+    // -----------------------------------------------------
+    // 1️⃣ 請將你的 Google Apps Script 網址填入下方 (選填)
+    // 如果不填，系統會自動使用瀏覽器本地儲存(Local Storage)來模擬排行榜，方便馬上試玩！
+    // -----------------------------------------------------
+    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzIfRF5ZTuuDs35IkhLZAkTi9LVe-vYh2A3g-dBHNXLzY8CHiRv8dLTgmG8Hh8HPxhl/exec"; 
+
+    // -----------------------------------------------------
+    // 2️⃣ 題庫資料庫 (擷取自講義內容)
+    // -----------------------------------------------------
+    const readingLevels = [
+      {
+        level: 1,
+        title: "如夢令 (李清照)",
+        passage: "昨夜雨疏風驟，濃睡不消殘酒。試問卷簾人，卻道海棠依舊。<strong>知否，知否？應是綠肥紅瘦。</strong><br><br>【語譯】<br>昨夜的雨水疏落，風勢卻猛烈，深沉的睡眠未能消去殘留的酒意。我詢問卷起窗簾的侍女，卻聽說海棠花依然如故，未曾變化。你知道嗎？你知道嗎？應該是海棠的綠葉茂盛，而紅花逐漸凋零。",
+        questions: [
+          {
+            question: "「知否，知否？」代表作者對卷簾人的回答有什麼感覺？",
+            options: ["滿意", "不滿意", "尚可接受", "無法推測"],
+            answer: "不滿意",
+            explanation: "「知否，知否？」連問兩次，語氣中帶有對侍女沒有仔細觀察外頭風雨變化的輕微責備與無奈的不滿。"
+          },
+          {
+            question: "下列哪一個字的意思有誤？",
+            options: ["道：說", "驟：急速", "綠：青苔", "紅：海棠花"],
+            answer: "綠：青苔",
+            explanation: "「綠肥紅瘦」中的「綠」借代為「海棠葉」，而「紅」借代為「海棠花」，並非青苔。"
+          },
+          {
+            question: "關於這一闋詞，下列哪一項敘述正確？",
+            options: ["「應」為「允諾」的意思", "「肥」與「瘦」相對，意指繁茂與凋零", "整首詞為作者自問自答", "「綠肥紅瘦」用設問與映襯雙重修辭"],
+            answer: "「肥」與「瘦」相對，意指繁茂與凋零",
+            explanation: "「肥」形容枝葉經過雨水滋潤而茂盛，「瘦」形容花朵被風雨摧殘而凋零，兩者形成強烈對比。"
+          }
+        ]
+      },
+      {
+        level: 2,
+        title: "陳述古辨賊",
+        passage: "古時有一位名叫陳述古的知縣。一日，縣裡有人被偷了東西，雖然抓到了幾個嫌疑犯，卻無法確認真正的犯人是誰。<br><br>陳述古知道後，就騙這些嫌疑犯說：「我知道一個具有靈性的大鐘，它能夠分辨出真正的犯人。」於是陳述古便請人將大鐘慎重的迎到官署，然後將這些嫌疑犯請到大鐘旁，告訴他們：「<strong>只要你不是犯人，摸這個鐘時就不會發出聲音；若你是犯人，摸這個鐘時，它就會發出巨響。</strong>」<br><br>接著陳述古便帶領官署的人一同向鐘祭禱。待祭禱結束後，他用一塊布把鐘圍住，<strong>偷偷的將墨汁塗在鐘上</strong>，並讓嫌疑犯逐一進入布幕內摸那口大鐘，等他們出來後再查驗他們的手，發現只有一個人的手上沒有墨痕。陳述古仔細的審問他後，那個人最終便承認他是犯人了。",
+        questions: [
+          {
+            question: "為什麼手上沒有墨痕的人，是嫌疑最大的人？",
+            options: ["可見他手腳靈活，墨汁無法附著在他的手上", "他很愛乾淨，不敢隨意亂摸東西", "他作賊心虛，不敢摸鐘", "他不信鬼神、也不配合調查"],
+            answer: "他作賊心虛，不敢摸鐘",
+            explanation: "陳述古事先謊稱犯人摸鐘會發出巨響，真正的犯人因為作賊心虛害怕暴露，所以躲在布幕內時根本不敢觸摸大鐘。"
+          },
+          {
+            question: "為什麼陳述古在請嫌疑犯摸鐘之前，要先率領全體官署人員一同祭禱？",
+            options: ["害怕查案失敗", "早就知道犯人是迷信的人", "加深大眾對鐘具有靈性的認知", "想喚醒犯人最後的良知"],
+            answer: "加深大眾對鐘具有靈性的認知",
+            explanation: "率眾祭禱是為了營造莊嚴神聖的氣氛，讓嫌疑犯更加深信大鐘具有辨識犯人的靈性，從而產生巨大的心理壓力。"
+          },
+          {
+            question: "陳述古用布把鐘圍住的主要目的是什麼？",
+            options: ["運用混淆視聽的手法幫嫌疑犯脫罪", "增加鐘的靈性，使其能更精準判斷出犯人", "可以適時安插幫手在鐘裡面，嚇唬嫌疑犯", "預測真正的犯人會有僥倖心理，在沒有人看到的地方一定不會摸鐘"],
+            answer: "預測真正的犯人會有僥倖心理，在沒有人看到的地方一定不會摸鐘",
+            explanation: "布幕創造了一個別人看不見的隱蔽空間，陳述古料到犯人會抱持僥倖心理，以為只要假裝摸一下不弄出聲音即可逃過一劫，卻不知道鐘上已塗滿墨汁。"
+          }
+        ]
+      },
+      {
+        level: 3,
+        title: "老子問疾",
+        passage: "商容有疾，老子曰：「先生無遺教以告弟子乎？」容曰：「吾舌存乎？」曰：「存。」「吾齒存乎？」曰：「亡。」「知之乎？」老子曰：「非謂其剛亡而弱存乎？」容曰：「嘻，天下事盡矣！」<br><br>【語譯】<br>老子去探望病重的哲人商容，並請教有關的哲學問題。商容張開口問道：「我的舌頭還在嗎？」老子說：「在。」商容又問：「我的牙齒還在嗎？」老子說：「沒有了。」商容說：「你知道這是什麼意思嗎？」<br><br>老子說：「<strong>先生是想告訴我，牙齒因為剛硬而過早夭亡，舌頭因柔軟而長久存在這個道理嗎？</strong>」商容說：「對！你明白了天下的事理。」",
+        questions: [
+          {
+            question: "讀完本文，下列何者是「柔」的表現？",
+            options: ["以牙還牙", "血氣方剛", "不留餘地", "以德報怨"],
+            answer: "以德報怨",
+            explanation: "「柔」的特質是包容、退讓、不剛烈。「以德報怨」展現了不與人硬碰硬的柔性與寬容，最符合此道理。"
+          },
+          {
+            question: "若以這則故事為題材，適用於下列哪一個題目？",
+            options: ["談讀書", "水的韌性", "學與做", "機智的故事"],
+            answer: "水的韌性",
+            explanation: "水具有柔軟、順應環境卻能滴水穿石的特性，非常符合故事中「舌存齒亡」所要傳達的「柔弱勝剛強」哲理。"
+          },
+          {
+            question: "有關商容的敘述，何者正確？",
+            options: ["老子是商容的老師", "商容所說的道理相近於以柔克剛", "商容責備了老子", "商容只是小感冒"],
+            answer: "商容所說的道理相近於以柔克剛",
+            explanation: "商容藉由牙齒掉光而舌頭仍在的現象，向老子生動地傳達了剛硬易折、柔弱卻能長存（以柔克剛）的道理。"
+          }
+        ]
+      },
+      {
+        level: 4,
+        title: "無米樂",
+        passage: "臺南市後壁區原本是一個沒沒無聞的典型傳統農業鄉村，卻因《無米樂》這一部影片而聲名大噪，甚至發展成觀光勝地。<br><br>大半個世紀以來，他們任勞任怨的辛勤耕作...樂天知命的崑濱伯每天早晨所做的第一件事，就是點三炷香向上蒼祈求能風調雨順、國泰民安。因為毫無預警的病蟲害和颱風，極有可能在一夕之間就把他們幾個月的心血破壞殆盡，但他們依舊抱持著樂觀的態度繼續下田耕作，因為「<strong>隨興唱歌，心情放輕鬆，不要想太多，這叫做無米樂啦！</strong>」<br><br>當崑濱伯在二○○六年以七十八歲的高齡拿下全國冠軍米王時...他以臺語激動的說：「種稻五十年，這次要感謝『天公伯』的配合，真的是『七分靠天公、三分靠打拚』。」",
+        questions: [
+          {
+            question: "當崑濱伯榮獲全國冠軍米王時，他最感謝誰？",
+            options: ["天公伯", "妻子", "農業改良場", "政府"],
+            answer: "天公伯",
+            explanation: "文中最後一段明確提到崑濱伯獲獎時激動地說：「這次要感謝『天公伯』的配合」。"
+          },
+          {
+            question: "文中所要傳達的「無米樂」是什麼？",
+            options: ["沒有米也要強顏歡笑", "米賣光了就很快樂", "心情放輕鬆，不要想太多", "沒有米煮飯，只好飲酒作樂"],
+            answer: "心情放輕鬆，不要想太多",
+            explanation: "文中崑濱伯解釋無米樂的意義：「隨興唱歌，心情放輕鬆，不要想太多，這叫做無米樂啦！」"
+          },
+          {
+            question: "(甲)地震 (乙)颱風 (丙)病蟲害 (丁)農藥。以上四種災害，哪些是崑濱伯最擔心的事？",
+            options: ["甲乙", "甲丙", "甲丁", "乙丙"],
+            answer: "乙丙",
+            explanation: "文中提到：「因為毫無預警的病蟲害和颱風，極有可能在一夕之間就把他們幾個月的心血破壞殆盡」。"
+          },
+          {
+            question: "「大半個世紀以來」這句話透露出故事中的主角從事農耕已經超過多少年？",
+            options: ["五十年", "四十年", "三十年", "二十年"],
+            answer: "五十年",
+            explanation: "一個世紀是一百年，大半個世紀約為五十年；且後文崑濱伯也親口說「種稻五十年」。"
+          }
+        ]
+      }
+    ];
+
+    // -----------------------------------------------------
+    // 遊戲狀態與變數
+    // -----------------------------------------------------
+    let playerName = "";
+    let currentLevelData = null;
+    let currentQuestionIndex = 0;
+    
+    // 統計資料
+    let correctList = [];
+    let wrongList = [];
+    let wrongDetailsList = []; // 新增：紀錄詳細錯題資訊
+    let startTime = 0;
+    let timerInterval = null;
+    let secondsElapsed = 0;
+
+    // -----------------------------------------------------
+    // 畫面切換邏輯
+    // -----------------------------------------------------
+    function switchView(viewId) {
+      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+      document.getElementById(viewId).classList.add('active');
+    }
+
+    // 從首頁進入關卡選擇
+    function goToLevelSelect() {
+      const nameInput = document.getElementById('player-name').value.trim();
+      if (!playerName && !nameInput) {
+        alert("請先輸入你的姓名或代號喔！");
+        return;
+      }
+      if (nameInput) playerName = nameInput;
+      
+      document.getElementById('display-player-name').innerText = playerName;
+      renderLevelList();
+      switchView('level-select-view');
+    }
+
+    // 渲染關卡卡片
+    function renderLevelList() {
+      const container = document.getElementById('level-list');
+      container.innerHTML = "";
+      
+      readingLevels.forEach((level, index) => {
+        const card = document.createElement('div');
+        card.className = "card p-6 flex flex-col justify-between hover:shadow-lg transition-shadow cursor-pointer border-t-8 border-t-green-400";
+        card.onclick = () => openReading(index);
+        card.innerHTML = `
+          <div>
+            <div class="text-sm font-bold text-green-500 mb-2">第 ${level.level} 關</div>
+            <h3 class="text-xl font-black text-gray-800 mb-4">${level.title}</h3>
+            <p class="text-gray-500 text-sm mb-6 line-clamp-2">${level.passage.replace(/<[^>]*>?/gm, '')}</p>
+          </div>
+          <button class="bg-green-100 text-green-700 font-bold py-2 rounded-lg w-full group-hover:bg-green-500 group-hover:text-white transition-colors">
+            進入閱讀 📖
+          </button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // 進入閱讀文章畫面
+    function openReading(index) {
+      currentLevelData = readingLevels[index];
+      document.getElementById('reading-title').innerText = currentLevelData.title;
+      document.getElementById('reading-passage').innerHTML = currentLevelData.passage;
+      switchView('reading-view');
+    }
+
+    // 開始測驗與計時
+    function startQuiz() {
+      currentQuestionIndex = 0;
+      correctList = [];
+      wrongList = [];
+      wrongDetailsList = []; // 重置錯題紀錄
+      secondsElapsed = 0;
+      
+      // 啟動計時器
+      document.getElementById('timer-display').innerText = "0";
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        secondsElapsed++;
+        document.getElementById('timer-display').innerText = secondsElapsed;
+      }, 1000);
+
+      renderQuestion();
+      switchView('quiz-view');
+    }
+
+    // 渲染題目
+    function renderQuestion() {
+      const qData = currentLevelData.questions[currentQuestionIndex];
+      const totalQ = currentLevelData.questions.length;
+      
+      document.getElementById('question-counter').innerText = `${currentQuestionIndex + 1} / ${totalQ}`;
+      document.getElementById('question-text').innerText = qData.question;
+      
+      // 隱藏並清空解析區塊
+      document.getElementById('explanation-box').classList.add('hidden');
+      
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = "";
+      
+      qData.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = "btn-option bg-white text-left text-lg font-bold text-gray-700 p-4 rounded-xl w-full flex items-center gap-4 shadow-sm transition-all";
+        btn.innerHTML = `<span class="bg-gray-100 text-gray-500 w-8 h-8 rounded-full flex items-center justify-center shrink-0 font-black">${['A','B','C','D'][idx]}</span> <span>${opt}</span>`;
+        // 將選項值存在屬性中方便比對
+        btn.dataset.option = opt;
+        btn.onclick = () => checkAnswer(opt, btn);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    // 檢查答案
+    function checkAnswer(selectedOption, clickedBtn) {
+      const qData = currentLevelData.questions[currentQuestionIndex];
+      const qNumberLabel = `Q${currentQuestionIndex + 1}`;
+      
+      // 鎖定所有選項按鈕
+      const allBtns = document.querySelectorAll('.btn-option');
+      allBtns.forEach(b => {
+        b.onclick = null;
+        b.style.pointerEvents = 'none'; // 防止 hover 變化
+      });
+      
+      if (selectedOption === qData.answer) {
+        correctList.push(qNumberLabel);
+        // 答對特效
+        clickedBtn.classList.remove('bg-white', 'border-gray-200');
+        clickedBtn.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+        clickedBtn.querySelector('span').classList.replace('bg-gray-100', 'bg-green-500');
+        clickedBtn.querySelector('span').classList.replace('text-gray-500', 'text-white');
+        
+        // 答對自動下一題 (延遲 0.8 秒讓學生看清楚)
+        setTimeout(() => {
+          nextQuestion();
+        }, 800);
+
+      } else {
+        wrongList.push(qNumberLabel);
+        // 紀錄錯題詳細資訊
+        wrongDetailsList.push({
+          qNum: qNumberLabel,
+          question: qData.question,
+          userAnswer: selectedOption,
+          correctAnswer: qData.answer,
+          explanation: qData.explanation
+        });
+
+        // 標示錯誤選項
+        clickedBtn.classList.remove('bg-white', 'border-gray-200');
+        clickedBtn.classList.add('bg-red-50', 'border-red-500', 'text-red-800');
+        clickedBtn.querySelector('span').classList.replace('bg-gray-100', 'bg-red-500');
+        clickedBtn.querySelector('span').classList.replace('text-gray-500', 'text-white');
+        
+        // 標示正確選項
+        allBtns.forEach(b => {
+          if (b.dataset.option === qData.answer) {
+            b.classList.remove('bg-white', 'border-gray-200');
+            b.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+            b.querySelector('span').classList.replace('bg-gray-100', 'bg-green-500');
+            b.querySelector('span').classList.replace('text-gray-500', 'text-white');
+          }
+        });
+
+        // 顯示解析區塊
+        document.getElementById('correct-answer-text').innerText = `✅ 正確答案：${qData.answer}`;
+        document.getElementById('explanation-text').innerText = `💡 解析：${qData.explanation}`;
+        document.getElementById('explanation-box').classList.remove('hidden');
+      }
+    }
+
+    // 換下一題邏輯抽離
+    function nextQuestion() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < currentLevelData.questions.length) {
+        renderQuestion();
+      } else {
+        finishQuiz();
+      }
+    }
+
+    // 完成測驗、計算成績與上傳資料
+    function finishQuiz() {
+      clearInterval(timerInterval);
+      
+      const totalQ = currentLevelData.questions.length;
+      const correctCount = correctList.length;
+      const wrongCount = wrongList.length;
+      const score = Math.round((correctCount / totalQ) * 100);
+      
+      // 更新畫面
+      document.getElementById('final-score').innerText = score;
+      document.getElementById('final-correct').innerText = correctCount;
+      document.getElementById('final-wrong').innerText = wrongCount;
+      document.getElementById('final-time').innerText = secondsElapsed;
+      
+      const emoji = document.getElementById('result-emoji');
+      if (score === 100) emoji.innerText = "🏆";
+      else if (score >= 80) emoji.innerText = "⭐";
+      else if (score >= 60) emoji.innerText = "👍";
+      else emoji.innerText = "💪";
+
+      // 渲染錯題回顧
+      const reviewSection = document.getElementById('wrong-review-section');
+      const reviewList = document.getElementById('wrong-review-list');
+      reviewList.innerHTML = "";
+      
+      if (wrongDetailsList.length > 0) {
+        reviewSection.classList.remove('hidden');
+        wrongDetailsList.forEach(item => {
+          const div = document.createElement('div');
+          div.className = "bg-white p-4 rounded-lg border-l-4 border-red-400 shadow-sm";
+          div.innerHTML = `
+            <div class="font-bold text-gray-800 mb-2">${item.qNum}. ${item.question}</div>
+            <div class="text-sm text-red-600 mb-1">❌ 你的答案：${item.userAnswer}</div>
+            <div class="text-sm text-green-700 font-bold mb-2">✅ 正確答案：${item.correctAnswer}</div>
+            <div class="text-sm text-gray-600 bg-gray-50 p-3 rounded">💡 解析：${item.explanation}</div>
+          `;
+          reviewList.appendChild(div);
+        });
+      } else {
+        reviewSection.classList.add('hidden');
+      }
+
+      switchView('result-view');
+
+      // 將錯題紀錄整理成文字，供 GAS 儲存
+      const wrongDetailsText = wrongDetailsList.map(item => 
+        `[${item.qNum}] 誤選: ${item.userAnswer} (正解: ${item.correctAnswer})`
+      ).join(" | ");
+
+      // 準備要送出的資料格式
+      const payload = {
+        timestamp: new Date().toLocaleString('zh-TW'),
+        playerName: playerName,
+        level: currentLevelData.title,
+        correctQuestions: correctList.join(", ") || "無",
+        wrongQuestions: wrongList.join(", ") || "無",
+        correctCount: correctCount,
+        wrongCount: wrongCount,
+        score: score,
+        duration: secondsElapsed,
+        wrongDetails: wrongDetailsText || "全對無錯題" // 新增送出詳細錯誤紀錄
+      };
+
+      // 儲存到 LocalStorage (模擬資料庫用)
+      saveToLocalLeaderboard(payload);
+
+      // 傳送資料到 Google Sheets
+      if (GAS_WEB_APP_URL) {
+        fetch(GAS_WEB_APP_URL, {
+          method: 'POST',
+          body: JSON.stringify(payload),
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' } // 避免 GAS CORS 問題
+        }).then(res => console.log("上傳成功"))
+          .catch(err => console.error("上傳失敗", err));
+      }
+    }
+
+    // -----------------------------------------------------
+    // 排行榜功能 (支援 LocalStorage 模擬 與 GAS 遠端抓取)
+    // -----------------------------------------------------
+    function saveToLocalLeaderboard(data) {
+      let records = JSON.parse(localStorage.getItem('readingQuizRecords') || '[]');
+      records.push(data);
+      localStorage.setItem('readingQuizRecords', JSON.stringify(records));
+    }
+
+    function showLeaderboard() {
+      switchView('leaderboard-view');
+      const tbody = document.getElementById('leaderboard-body');
+      const loading = document.getElementById('leaderboard-loading');
+      
+      tbody.innerHTML = "";
+      
+      if (!GAS_WEB_APP_URL) {
+        // 使用本地資料模擬
+        let records = JSON.parse(localStorage.getItem('readingQuizRecords') || '[]');
+        renderLeaderboardTable(records);
+      } else {
+        // 從 GAS 獲取資料
+        loading.classList.remove('hidden');
+        fetch(GAS_WEB_APP_URL)
+          .then(res => res.json())
+          .then(data => {
+            loading.classList.add('hidden');
+            renderLeaderboardTable(data);
+          })
+          .catch(err => {
+            loading.classList.add('hidden');
+            tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-red-500">無法讀取排行榜資料</td></tr>`;
+          });
+      }
+    }
+
+    function renderLeaderboardTable(records) {
+      const tbody = document.getElementById('leaderboard-body');
+      
+      // 排序：先比分數(高到低)，再比時間(少到多)
+      records.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        return a.duration - b.duration;
+      });
+
+      // 只取前 10 名
+      const top10 = records.slice(0, 10);
+      
+      if (top10.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-500">目前還沒有人挑戰喔！</td></tr>`;
+        return;
+      }
+
+      top10.forEach((record, idx) => {
+        let rankIcon = idx + 1;
+        if (idx === 0) rankIcon = "🥇";
+        if (idx === 1) rankIcon = "🥈";
+        if (idx === 2) rankIcon = "🥉";
+
+        const tr = document.createElement('tr');
+        tr.className = "border-b border-gray-100 hover:bg-gray-50 transition-colors";
+        tr.innerHTML = `
+          <td class="p-4 text-center font-black text-xl text-gray-700">${rankIcon}</td>
+          <td class="p-4 font-bold text-gray-800">${record.playerName}</td>
+          <td class="p-4 text-center text-sm text-gray-500">${record.level}</td>
+          <td class="p-4 text-center font-black text-blue-600">${record.score}</td>
+          <td class="p-4 text-center text-gray-600">${record.duration} 秒</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+  </script>
+</body>
+</html>
