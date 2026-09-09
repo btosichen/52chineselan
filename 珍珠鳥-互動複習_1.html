@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>珍珠鳥 自學寶典 | 六年級上冊第二課</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Fredoka+One&display=swap">
+<style>
+/* ══ VIVID COLOUR TOKENS ══ */
+:root {
+  --bg:        #FFFFFF;
+  --surface:   #F8FBFE;
+  --surface2:  #EDF2FF;
+  --ink:       #0D1117;
+  --ink2:      #374151;
+  --ink3:      #6B7280;
+  --red:       #FF1744;
+  --red-lt:    #FFF0F3;
+  --red-dk:    #C8003A;
+  --gold:      #FFC400;
+  --gold-lt:   #FFFCE8;
+  --gold-dk:   #CC9B00;
+  --teal:      #00BFA5;
+  --teal-lt:   #E0F8F5;
+  --teal-dk:   #008F7A;
+  --blue:      #2979FF;
+  --blue-lt:   #EBF1FF;
+  --blue-dk:   #1952CC;
+  --violet:    #D500F9;
+  --violet-lt: #F8E8FF;
+  --violet-dk: #A000C4;
+  --orange:    #FF6D00;
+  --orange-lt: #FFF3EA;
+  --pink:      #F50057;
+  --border:    #D1DBE8;
+  --radius:    16px;
+  --shadow:    0 3px 16px rgba(41,121,255,.12);
+  --shadow-sm: 0 1px 6px rgba(0,0,0,.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans TC', 'PingFang TC', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  line-height: 1.7;
+}
+
+/* ══ HEADER ══ */
+.site-header {
+  background: linear-gradient(120deg, #FF1744 0%, #FF6D00 55%, #FFC400 100%);
+  color: #fff;
+  padding: 18px 24px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 4px 24px rgba(255,23,68,.4);
+}
+.header-bird { font-size: 2.4rem; animation: bob 2.2s ease-in-out infinite; }
+@keyframes bob { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-6px) rotate(5deg)} }
+.header-titles h1 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.5rem; font-weight: 700;
+  letter-spacing: .06em; text-shadow: 0 1px 6px rgba(0,0,0,.15);
+}
+.header-titles p {
+  font-size: .78rem; opacity: .92;
+  font-family: 'Fredoka One', cursive; letter-spacing: .04em;
+}
+.header-badges { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.badge {
+  font-family: 'Fredoka One'; font-size: .72rem;
+  padding: 4px 12px; border-radius: 20px;
+  background: rgba(255,255,255,.28); color: #fff;
+  letter-spacing: .04em; border: 1.5px solid rgba(255,255,255,.4);
+}
+
+/* ══ TABS ══ */
+.tabs-wrap {
+  background: var(--surface);
+  border-bottom: 2.5px solid var(--border);
+  overflow-x: auto; scrollbar-width: none;
+}
+.tabs-wrap::-webkit-scrollbar { display: none; }
+.tabs { display: flex; min-width: max-content; padding: 8px 12px 0; gap: 4px; }
+.tab-btn {
+  font-family: 'Noto Sans TC'; font-size: .82rem; font-weight: 700;
+  padding: 9px 16px 9px;
+  background: none; border: none; border-radius: 12px 12px 0 0;
+  cursor: pointer; color: var(--ink3);
+  display: flex; align-items: center; gap: 6px;
+  transition: all .18s; white-space: nowrap;
+  border-bottom: 3px solid transparent; position: relative;
+}
+.tab-btn .ti { font-size: 1rem; }
+.tab-btn:hover { color: var(--ink); background: rgba(41,121,255,.06); }
+
+.tab-btn.active[data-tab="map"]      { color: #fff; background: var(--red);    border-bottom-color: var(--red); }
+.tab-btn.active[data-tab="vocab"]    { color: #fff; background: var(--blue);   border-bottom-color: var(--blue); }
+.tab-btn.active[data-tab="text"]     { color: #fff; background: var(--teal);   border-bottom-color: var(--teal); }
+.tab-btn.active[data-tab="rhetoric"] { color: var(--ink); background: var(--gold); border-bottom-color: var(--gold-dk); }
+.tab-btn.active[data-tab="patterns"] { color: #fff; background: var(--violet); border-bottom-color: var(--violet); }
+.tab-btn.active[data-tab="idioms"]   { color: #fff; background: var(--orange); border-bottom-color: var(--orange); }
+.tab-btn.active[data-tab="quiz"]     { color: #fff; background: var(--red);    border-bottom-color: var(--red); }
+
+/* ══ MAIN ══ */
+.main { max-width: 860px; margin: 0 auto; padding: 28px 16px 70px; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: fadeIn .2s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+.sec-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.35rem; font-weight: 700;
+  margin-bottom: 5px;
+  display: flex; align-items: center; gap: 10px;
+}
+.sec-sub { color: var(--ink3); font-size: .85rem; margin-bottom: 22px; }
+.color-bar { width: 5px; height: 26px; border-radius: 3px; display: inline-block; }
+
+/* ══ MAP CARDS ══ */
+.map-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+  gap: 14px; margin-bottom: 26px;
+}
+.map-card {
+  border-radius: var(--radius);
+  padding: 18px 16px 16px;
+  position: relative; overflow: hidden;
+  cursor: default;
+  transition: transform .18s, box-shadow .18s;
+  border: none;
+}
+.map-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,.14); }
+.map-card.c1 { background: linear-gradient(135deg, #00BFA5 0%, #00E5CC 100%); color: #fff; }
+.map-card.c2 { background: linear-gradient(135deg, #2979FF 0%, #68A8FF 100%); color: #fff; }
+.map-card.c3 { background: linear-gradient(135deg, #FFC400 0%, #FFE57F 100%); color: var(--ink); }
+.map-card.c4 { background: linear-gradient(135deg, #FF1744 0%, #FF6090 100%); color: #fff; }
+.map-card.c5 { background: linear-gradient(135deg, #D500F9 0%, #EA80FC 100%); color: #fff; }
+.map-card.c6 { background: linear-gradient(135deg, #FF6D00 0%, #FFB74D 100%); color: #fff; }
+.map-num {
+  font-family: 'Fredoka One'; font-size: .72rem; letter-spacing: .1em;
+  opacity: .8; margin-bottom: 6px;
+}
+.map-emoji { font-size: 2.2rem; margin-bottom: 8px; display: block; }
+.map-card h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1rem; font-weight: 700; margin-bottom: 5px;
+}
+.map-card p { font-size: .78rem; line-height: 1.6; opacity: .9; }
+
+.relation-chart {
+  background: #fff;
+  border: 2.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px; margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+}
+.relation-chart h3 {
+  font-family: 'Noto Serif TC'; font-size: 1rem; font-weight: 700;
+  margin-bottom: 18px; color: var(--ink2);
+}
+.relation-steps { display: flex; align-items: center; flex-wrap: wrap; gap: 0; }
+.rel-step { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; min-width: 65px; }
+.rel-bubble {
+  width: 68px; height: 68px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .82rem; font-weight: 700; text-align: center;
+  line-height: 1.3; color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,.18);
+}
+.rel-step.s1 .rel-bubble { background: var(--teal); }
+.rel-step.s2 .rel-bubble { background: var(--blue); }
+.rel-step.s3 .rel-bubble { background: var(--orange); }
+.rel-step.s4 .rel-bubble { background: var(--red); }
+.rel-step p { font-size: .72rem; color: var(--ink3); text-align: center; }
+.rel-arrow { font-size: 1.5rem; color: var(--blue); flex-shrink: 0; font-weight: 700; }
+
+.main-message {
+  background: linear-gradient(135deg, var(--teal) 0%, var(--blue) 100%);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(41,121,255,.25);
+}
+.main-message .quote {
+  font-family: 'Noto Serif TC'; font-size: 1.2rem; font-weight: 700;
+  color: #fff; letter-spacing: .07em; text-shadow: 0 1px 8px rgba(0,0,0,.2);
+}
+.main-message .attr { font-size: .78rem; color: rgba(255,255,255,.8); margin-top: 8px; }
+
+/* ══ VOCABULARY ══ */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: 14px; margin-bottom: 28px;
+}
+.flip-card { height: 165px; perspective: 900px; cursor: pointer; }
+.flip-inner {
+  width: 100%; height: 100%;
+  position: relative; transform-style: preserve-3d;
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+}
+.flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+.flip-front, .flip-back {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  border-radius: var(--radius);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 12px; box-shadow: var(--shadow);
+}
+.flip-front {
+  background: #fff; border: 2.5px solid var(--border);
+}
+.flip-back { transform: rotateY(180deg); }
+
+.flip-front .char-big {
+  font-family: 'Noto Serif TC'; font-size: 3rem; font-weight: 700; line-height: 1;
+}
+.flip-front .char-ping {
+  font-size: .78rem; font-family: 'Fredoka One'; letter-spacing: .04em; margin-top: 5px;
+}
+.flip-front .char-hint { font-size: .7rem; color: var(--ink3); margin-top: 2px; }
+.flip-front .char-stroke { font-size: .66rem; margin-top: 2px; }
+.flip-hint { font-size: .62rem; color: var(--ink3); position: absolute; bottom: 8px; right: 9px; }
+
+.flip-back .back-ping { font-family: 'Fredoka One'; font-size: .85rem; margin-bottom: 4px; }
+.flip-back .back-words { font-size: .77rem; text-align: center; line-height: 1.85; }
+.flip-back .back-memory {
+  font-size: .68rem; border-radius: 8px; padding: 3px 8px; margin-top: 6px;
+  background: rgba(255,255,255,.3); text-align: center;
+}
+
+/* Vivid flip-back colours per group */
+.flip-card[data-group="nature"] .flip-back  { background: linear-gradient(135deg,#00BFA5,#00E5CC); color:#fff; border:none; }
+.flip-card[data-group="action"] .flip-back  { background: linear-gradient(135deg,#2979FF,#68A8FF); color:#fff; border:none; }
+.flip-card[data-group="feel"]   .flip-back  { background: linear-gradient(135deg,#D500F9,#EA80FC); color:#fff; border:none; }
+.flip-card[data-group="time"]   .flip-back  { background: linear-gradient(135deg,#FF6D00,#FFB74D); color:#fff; border:none; }
+.flip-card[data-group="write"]  .flip-back  { background: linear-gradient(135deg,#FF1744,#FF6090); color:#fff; border:none; }
+
+.vocab-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.v-btn {
+  font-family: 'Noto Sans TC'; font-size: .82rem; font-weight: 700;
+  padding: 8px 20px; border-radius: 24px; border: none; cursor: pointer;
+  transition: all .15s; box-shadow: var(--shadow-sm);
+}
+.v-btn.blue  { background: var(--blue); color: #fff; }
+.v-btn.ghost { background: #fff; border: 2px solid var(--blue); color: var(--blue); box-shadow: none; }
+.v-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+
+.memory-tip {
+  background: linear-gradient(120deg, var(--gold-lt), #FFF0FA);
+  border: 2.5px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 14px 18px; margin-bottom: 20px; font-size: .85rem;
+  box-shadow: 0 2px 10px rgba(255,196,0,.18);
+}
+.memory-tip strong { color: var(--red); font-family: 'Fredoka One'; letter-spacing: .04em; }
+
+.palace-banner {
+  background: linear-gradient(135deg, var(--teal-lt), var(--blue-lt));
+  border: 2.5px solid var(--teal); border-radius: var(--radius);
+  padding: 16px 20px; margin-bottom: 20px;
+  display: flex; gap: 14px; align-items: flex-start;
+  box-shadow: 0 2px 10px rgba(0,191,165,.12);
+}
+.palace-banner .icon { font-size: 1.9rem; flex-shrink: 0; }
+.palace-banner h3 { font-family: 'Noto Serif TC'; font-weight: 700; font-size: .95rem; margin-bottom: 4px; color: var(--teal-dk); }
+.palace-banner p { font-size: .8rem; color: var(--ink2); line-height: 1.65; }
+
+/* ══ STORY TEXT ══ */
+.story-wrap {
+  background: #fff; border: 2.5px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  margin-bottom: 24px; box-shadow: var(--shadow-sm);
+}
+.story-section {
+  padding: 20px 24px 18px; border-bottom: 1.5px solid var(--border);
+}
+.story-section:last-child { border-bottom: none; }
+.story-label {
+  font-family: 'Fredoka One'; font-size: .72rem; letter-spacing: .1em;
+  padding: 4px 12px; border-radius: 14px; color: #fff;
+  display: inline-block; margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.18);
+}
+.l1 { background: var(--teal); }
+.l2 { background: var(--blue); }
+.l3 { background: var(--gold); color: var(--ink); }
+.l4 { background: var(--red); }
+.l5 { background: var(--violet); }
+.l6 { background: var(--orange); }
+.story-title { font-family:'Noto Serif TC'; font-size:1rem; font-weight:700; margin-bottom:10px; }
+.story-text { font-family:'Noto Serif TC'; font-size:.92rem; line-height:2.05; color:var(--ink); }
+.hi {
+  background: var(--gold-lt); border-bottom: 2px solid var(--gold);
+  padding: 1px 3px; border-radius: 3px; cursor: help; position: relative;
+}
+.hi:hover::after {
+  content: attr(data-tip);
+  position: absolute; bottom: 120%; left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink); color: #fff;
+  font-size: .72rem; padding: 5px 12px; border-radius: 8px;
+  white-space: nowrap; z-index: 50; pointer-events: none;
+  font-family: 'Noto Sans TC'; box-shadow: 0 4px 12px rgba(0,0,0,.2);
+}
+.annotation {
+  display: flex; gap: 10px;
+  background: var(--teal-lt); border-left: 4px solid var(--teal);
+  border-radius: 0 10px 10px 0; padding: 10px 14px; margin-top: 12px;
+  font-size: .8rem; color: var(--ink2);
+}
+.annotation .icon { font-size: 1rem; flex-shrink: 0; }
+
+.climax-box {
+  background: linear-gradient(135deg, var(--red) 0%, var(--orange) 100%);
+  border-radius: var(--radius); padding: 22px 24px;
+  text-align: center; margin-bottom: 22px;
+  box-shadow: 0 6px 24px rgba(255,23,68,.28);
+}
+.climax-box .big-quote {
+  font-family: 'Noto Serif TC'; font-size: 1.2rem; font-weight: 700;
+  letter-spacing: .08em; color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+.climax-box p { font-size: .82rem; color: rgba(255,255,255,.88); margin-top: 8px; }
+
+.sensory-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(155px,1fr));
+  gap: 12px; margin-bottom: 24px;
+}
+.sensory-card {
+  border-radius: var(--radius); padding: 16px; text-align: center;
+  border: 2.5px solid; box-shadow: var(--shadow-sm);
+}
+.sensory-card:nth-child(1) { background: var(--blue-lt); border-color: var(--blue); }
+.sensory-card:nth-child(2) { background: var(--teal-lt); border-color: var(--teal); }
+.sensory-card:nth-child(3) { background: var(--violet-lt); border-color: var(--violet); }
+.sensory-card:nth-child(4) { background: #FFF5F5; border-color: #FFB3B3; }
+.sensory-icon { font-size: 1.9rem; margin-bottom: 6px; display: block; }
+.sensory-type { font-family: 'Fredoka One'; font-size: .75rem; letter-spacing: .06em; margin-bottom: 6px; color: var(--ink2); }
+.sensory-content { font-family: 'Noto Serif TC'; font-size: .78rem; line-height: 1.7; color: var(--ink); }
+
+/* ══ RHETORIC ══ */
+.rhet-grid { display: grid; gap: 16px; margin-bottom: 24px; }
+.rhet-card {
+  background: #fff; border: 2.5px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm);
+}
+.rhet-header {
+  padding: 13px 18px; display: flex; align-items: center; gap: 12px;
+}
+.rhet-tag {
+  font-family: 'Fredoka One'; font-size: .8rem; letter-spacing: .06em;
+  padding: 5px 14px; border-radius: 20px; color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+.rhet-name { font-size: .95rem; font-weight: 700; }
+.rhet-sub { font-size: .78rem; color: var(--ink3); }
+.rhet-body { padding: 14px 18px 18px; border-top: 2px solid var(--border); }
+.rhet-example {
+  background: var(--surface); border-radius: 10px; border-left: 4px solid;
+  padding: 12px 16px; font-family: 'Noto Serif TC'; font-size: .88rem;
+  line-height: 1.95; margin-bottom: 10px; color: var(--ink);
+}
+.rhet-card:nth-child(1) .rhet-example { border-color: var(--teal); }
+.rhet-card:nth-child(2) .rhet-example { border-color: var(--blue); }
+.rhet-card:nth-child(3) .rhet-example { border-color: var(--red); }
+.rhet-card:nth-child(4) .rhet-example { border-color: var(--violet); }
+.rhet-explain { font-size: .82rem; color: var(--ink2); line-height: 1.65; }
+.rhet-explain strong { color: var(--ink); }
+.analysis-box {
+  background: var(--gold-lt); border: 2px solid var(--gold);
+  border-radius: 10px; padding: 11px 14px; font-size: .8rem;
+  color: var(--ink2); margin-top: 10px;
+  box-shadow: 0 1px 6px rgba(255,196,0,.15);
+}
+.analysis-box .alabel {
+  font-family: 'Fredoka One'; color: var(--red); font-size: .73rem;
+  letter-spacing: .06em; margin-bottom: 4px;
+}
+
+/* ══ SENTENCE PATTERNS ══ */
+.pattern-card {
+  background: #fff; border: 2.5px solid var(--border);
+  border-radius: var(--radius); margin-bottom: 16px;
+  overflow: hidden; box-shadow: var(--shadow-sm);
+}
+.pattern-header {
+  padding: 13px 18px; display: flex; align-items: center; gap: 10px;
+  border-bottom: 2px solid var(--border);
+}
+.pattern-tag {
+  font-family: 'Fredoka One'; font-size: .76rem;
+  padding: 4px 12px; border-radius: 12px; color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+.pattern-name { font-size: .95rem; font-weight: 700; }
+.pattern-body { padding: 16px 18px; }
+.pattern-formula {
+  border-radius: 10px; padding: 11px 15px; font-size: .86rem; font-weight: 700;
+  letter-spacing: .04em; margin-bottom: 12px; font-family: 'Noto Sans TC';
+  border-left: 5px solid;
+}
+.pattern-card:nth-child(1) .pattern-header { background: #EBF1FF; }
+.pattern-card:nth-child(1) .pattern-tag    { background: var(--blue); }
+.pattern-card:nth-child(1) .pattern-formula { background: #EBF1FF; color: var(--blue-dk); border-color: var(--blue); }
+.pattern-card:nth-child(2) .pattern-header { background: var(--violet-lt); }
+.pattern-card:nth-child(2) .pattern-tag    { background: var(--violet); }
+.pattern-card:nth-child(2) .pattern-formula { background: var(--violet-lt); color: var(--violet-dk); border-color: var(--violet); }
+.pattern-card:nth-child(3) .pattern-header { background: var(--teal-lt); }
+.pattern-card:nth-child(3) .pattern-tag    { background: var(--teal); }
+.pattern-card:nth-child(3) .pattern-formula { background: var(--teal-lt); color: var(--teal-dk); border-color: var(--teal); }
+.pattern-card:nth-child(4) .pattern-header { background: var(--orange-lt); }
+.pattern-card:nth-child(4) .pattern-tag    { background: var(--orange); }
+.pattern-card:nth-child(4) .pattern-formula { background: var(--orange-lt); color: var(--orange); border-color: var(--orange); }
+
+.pattern-examples p {
+  font-family: 'Noto Serif TC'; font-size: .87rem; line-height: 1.95; color: var(--ink);
+  padding: 7px 0; border-bottom: 1px dashed var(--border);
+}
+.pattern-examples p:last-child { border-bottom: none; }
+.pattern-practice {
+  border-radius: 10px; padding: 12px 14px; margin-top: 12px; font-size: .82rem;
+  background: var(--surface2); border: 2px dashed var(--border);
+}
+.pattern-practice strong { color: var(--ink2); }
+.practice-input {
+  width: 100%; margin-top: 8px; padding: 9px 13px;
+  border: 2.5px solid var(--blue); border-radius: 10px;
+  background: #fff; font-family: 'Noto Sans TC'; font-size: .85rem;
+  color: var(--ink); outline: none;
+}
+.practice-input:focus { box-shadow: 0 0 0 4px rgba(41,121,255,.15); }
+.check-btn {
+  font-family: 'Noto Sans TC'; font-size: .82rem; font-weight: 700;
+  padding: 7px 20px; border-radius: 22px; color: #fff; border: none; cursor: pointer;
+  margin-top: 8px; background: var(--blue); box-shadow: 0 2px 10px rgba(41,121,255,.3);
+  transition: filter .15s, transform .15s;
+}
+.check-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+/* ══ IDIOMS ══ */
+.idiom-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+  gap: 16px; margin-bottom: 24px;
+}
+.idiom-card {
+  border-radius: var(--radius); padding: 18px 16px;
+  transition: transform .18s, box-shadow .18s;
+  position: relative; overflow: hidden; border: 2.5px solid;
+  background: #fff;
+}
+.idiom-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,.12); }
+.idiom-card::after {
+  content: attr(data-char);
+  position: absolute; right: -6px; bottom: -6px;
+  font-family: 'Noto Serif TC'; font-size: 5rem;
+  opacity: .07; pointer-events: none; font-weight: 700;
+}
+.idiom-card:nth-child(1) { border-color: var(--teal); }
+.idiom-card:nth-child(2) { border-color: var(--blue); }
+.idiom-card:nth-child(3) { border-color: var(--red); }
+.idiom-card:nth-child(4) { border-color: var(--gold-dk); }
+.idiom-card:nth-child(5) { border-color: var(--violet); }
+.idiom-chars { font-family:'Noto Serif TC'; font-size:1.45rem; font-weight:700; letter-spacing:.08em; margin-bottom:4px; }
+.idiom-card:nth-child(1) .idiom-chars { color: var(--teal-dk); }
+.idiom-card:nth-child(2) .idiom-chars { color: var(--blue-dk); }
+.idiom-card:nth-child(3) .idiom-chars { color: var(--red-dk); }
+.idiom-card:nth-child(4) .idiom-chars { color: var(--gold-dk); }
+.idiom-card:nth-child(5) .idiom-chars { color: var(--violet-dk); }
+.idiom-ping { font-family:'Fredoka One'; font-size:.75rem; color:var(--ink3); letter-spacing:.06em; margin-bottom:8px; }
+.idiom-meaning { font-size:.8rem; color:var(--ink2); line-height:1.65; margin-bottom:10px; }
+.idiom-example {
+  border-radius: 9px; padding: 9px 11px;
+  font-family: 'Noto Serif TC'; font-size: .78rem; line-height: 1.75;
+  color: var(--ink); border-left: 4px solid;
+}
+.idiom-card:nth-child(1) .idiom-example { background:var(--teal-lt); border-color:var(--teal); }
+.idiom-card:nth-child(2) .idiom-example { background:var(--blue-lt); border-color:var(--blue); }
+.idiom-card:nth-child(3) .idiom-example { background:var(--red-lt); border-color:var(--red); }
+.idiom-card:nth-child(4) .idiom-example { background:var(--gold-lt); border-color:var(--gold-dk); }
+.idiom-card:nth-child(5) .idiom-example { background:var(--violet-lt); border-color:var(--violet); }
+.idiom-star { font-family:'Fredoka One'; font-size:.7rem; letter-spacing:.04em; margin-top:8px; }
+
+/* ══ QUIZ ══ */
+.quiz-wrap { max-width: 700px; }
+.quiz-progress { display: flex; gap: 6px; margin-bottom: 22px; flex-wrap: wrap; }
+.qp-dot { height: 9px; flex: 1; min-width: 24px; max-width: 48px; border-radius: 5px; background: var(--border); transition: background .3s; }
+.qp-dot.done    { background: var(--teal); }
+.qp-dot.current { background: var(--red); box-shadow: 0 0 8px rgba(255,23,68,.4); }
+
+.quiz-card {
+  background: #fff; border: 2.5px solid var(--border);
+  border-radius: var(--radius); padding: 24px; margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.quiz-num { font-family:'Fredoka One'; font-size:.75rem; color:var(--ink3); letter-spacing:.08em; margin-bottom:10px; }
+.quiz-q { font-family:'Noto Sans TC'; font-size:.96rem; font-weight:700; line-height:1.7; margin-bottom:8px; }
+.quiz-passage {
+  font-family:'Noto Serif TC'; font-size:.85rem; line-height:1.95;
+  background: var(--surface); border-left: 4px solid var(--blue);
+  border-radius: 0 10px 10px 0; padding: 10px 14px; margin-bottom: 14px; color: var(--ink2);
+}
+.quiz-options { display: grid; gap: 10px; }
+.q-opt {
+  padding: 11px 16px; background: var(--surface); border: 2.5px solid var(--border);
+  border-radius: 12px; font-size: .87rem; cursor: pointer; text-align: left;
+  color: var(--ink); font-family: 'Noto Sans TC';
+  transition: all .15s; display: flex; align-items: flex-start; gap: 10px;
+}
+.q-opt:hover:not(.disabled) { border-color: var(--blue); background: var(--blue-lt); }
+.q-opt.correct { border-color: var(--teal); background: var(--teal-lt); }
+.q-opt.wrong   { border-color: var(--red);  background: var(--red-lt); }
+.q-opt.disabled { cursor: default; }
+.opt-label {
+  font-family: 'Fredoka One'; font-size: .8rem;
+  min-width: 26px; height: 26px; border-radius: 50%;
+  background: var(--border); display: inline-flex; align-items: center;
+  justify-content: center; flex-shrink: 0; color: var(--ink2);
+}
+.q-opt.correct .opt-label { background: var(--teal); color: #fff; }
+.q-opt.wrong   .opt-label { background: var(--red);  color: #fff; }
+.feedback {
+  padding: 12px 16px; border-radius: 12px; font-size: .82rem;
+  margin-top: 12px; display: none; line-height: 1.7; border-left: 5px solid;
+}
+.feedback.show { display: block; }
+.feedback.ok { background: var(--teal-lt); border-color: var(--teal); color: var(--ink); }
+.feedback.no { background: var(--red-lt);  border-color: var(--red);  color: var(--ink); }
+.next-btn {
+  font-family: 'Noto Sans TC'; font-size: .87rem; font-weight: 700;
+  padding: 11px 28px; border-radius: 24px;
+  background: linear-gradient(120deg, var(--red), var(--orange));
+  color: #fff; border: none; cursor: pointer; margin-top: 14px;
+  display: none; box-shadow: 0 4px 16px rgba(255,23,68,.3);
+  transition: filter .15s, transform .15s;
+}
+.next-btn.show { display: inline-block; }
+.next-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+
+.score-box {
+  background: #fff; border: 2.5px solid var(--border);
+  border-radius: var(--radius); padding: 40px 32px; text-align: center;
+  display: none; box-shadow: var(--shadow);
+}
+.score-box.show { display: block; animation: fadeIn .3s ease; }
+.score-ring {
+  width: 120px; height: 120px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--red), var(--orange));
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; margin: 0 auto 16px;
+  box-shadow: 0 6px 24px rgba(255,23,68,.3);
+}
+.score-big { font-family:'Fredoka One'; font-size:2.2rem; color:#fff; line-height:1; }
+.score-label { font-family:'Fredoka One'; font-size:.72rem; color:rgba(255,255,255,.85); letter-spacing:.06em; }
+.score-msg { font-family:'Noto Serif TC'; font-size:1.05rem; color:var(--ink2); margin-bottom:20px; }
+.restart-btn {
+  font-family:'Noto Sans TC'; font-size:.87rem; font-weight:700;
+  padding: 11px 28px; border-radius: 24px;
+  background: linear-gradient(120deg, var(--teal), var(--blue));
+  color: #fff; border: none; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,191,165,.3);
+  transition: filter .15s, transform .15s;
+}
+.restart-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+
+/* ══ CHIPS & UTIL ══ */
+.chip {
+  display: inline-block; font-family:'Fredoka One'; font-size:.7rem;
+  padding: 2px 9px; border-radius: 12px; color: #fff; margin-right: 4px;
+}
+.chip.red    { background: var(--red); }
+.chip.teal   { background: var(--teal); }
+.chip.blue   { background: var(--blue); }
+.chip.gold   { background: var(--gold); color: var(--ink); }
+.chip.violet { background: var(--violet); }
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 540px) {
+  .map-grid { grid-template-columns: 1fr 1fr; }
+  .vocab-grid { grid-template-columns: repeat(3, 1fr); }
+  .idiom-grid { grid-template-columns: 1fr; }
+  .header-badges { display: none; }
+  .site-header { flex-wrap: wrap; }
+  .rel-bubble { width: 54px; height: 54px; font-size: .72rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div class="header-bird">🐦</div>
+  <div class="header-titles">
+    <h1>珍珠鳥 · 自學寶典</h1>
+    <p>六年級上冊 第二課 ｜ 作者：馮驥才</p>
+  </div>
+  <div class="header-badges">
+    <span class="badge">📖 課文</span>
+    <span class="badge">🔤 生字</span>
+    <span class="badge">🧪 測驗</span>
+  </div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="map"><span class="ti">🗺️</span>故事地圖</button>
+    <button class="tab-btn" data-tab="vocab"><span class="ti">🔤</span>生字學習</button>
+    <button class="tab-btn" data-tab="text"><span class="ti">📖</span>課文欣賞</button>
+    <button class="tab-btn" data-tab="rhetoric"><span class="ti">🎨</span>修辭技巧</button>
+    <button class="tab-btn" data-tab="patterns"><span class="ti">✍️</span>句型練習</button>
+    <button class="tab-btn" data-tab="idioms"><span class="ti">🌟</span>成語世界</button>
+    <button class="tab-btn" data-tab="quiz"><span class="ti">🧪</span>小測驗</button>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ██ TAB: MAP ██ -->
+<div class="tab-panel active" id="tab-map">
+  <div class="sec-title"><span class="color-bar" style="background:var(--red)"></span>故事結構地圖</div>
+  <p class="sec-sub">課文分六段，跟著珍珠鳥從陌生到信賴的旅程！</p>
+  <div class="map-grid">
+    <div class="map-card c1"><div class="map-num">第 1 段</div><span class="map-emoji">🎁</span><h3>由來</h3><p>朋友送我一對珍珠鳥，養在竹條編成的籠子裡，籠內有溫暖的乾草巢。</p></div>
+    <div class="map-card c2"><div class="map-num">第 2 段</div><span class="map-emoji">🌿</span><h3>鳥的家</h3><p>把籠子掛在窗前，茂盛藤蔓遮蓋，打造安全幽深的環境。</p></div>
+    <div class="map-card c3"><div class="map-num">第 3 段</div><span class="map-emoji">🥚</span><h3>小珍珠鳥出生</h3><p>三個月後，小腦袋從葉縫鑽出！紅嘴紅腳，灰藍色身子帶白點。</p></div>
+    <div class="map-card c4"><div class="map-num">第 4–6 段</div><span class="map-emoji">🕊️</span><h3>熟悉親近</h3><p>小鳥在屋裡飛，漸漸靠近作者，在稿紙上跳來跳去留下小印子。</p></div>
+    <div class="map-card c5"><div class="map-num">第 7–9 段</div><span class="map-emoji">🤝</span><h3>越來越親近</h3><p>索性站到杯子上喝茶，啄我手指，讓我輕撫柔細的短毛。</p></div>
+    <div class="map-card c6"><div class="map-num">第 10–11 段</div><span class="map-emoji">💤</span><h3>信賴</h3><p>小傢伙竟落在我肩上，把嘴插進羽毛，甜甜睡著了！</p></div>
+  </div>
+  <div class="relation-chart">
+    <h3>⏱️ 人與鳥的關係變化（記住這條路線！）</h3>
+    <div class="relation-steps">
+      <div class="rel-step s1"><div class="rel-bubble">害怕</div><p>開始</p></div>
+      <div class="rel-arrow">→</div>
+      <div class="rel-step s2"><div class="rel-bubble">熟悉</div><p>漸漸</p></div>
+      <div class="rel-arrow">→</div>
+      <div class="rel-step s3"><div class="rel-bubble">親近</div><p>後來</p></div>
+      <div class="rel-arrow">→</div>
+      <div class="rel-step s4"><div class="rel-bubble">信賴</div><p>最後</p></div>
+    </div>
+  </div>
+  <div class="main-message">
+    <div class="quote">「信賴，往往能創造出美好的境界。」</div>
+    <p class="attr">——馮驥才《珍珠鳥》 ｜ 全文主旨句</p>
+  </div>
+</div>
+
+<!-- ██ TAB: VOCAB ██ -->
+<div class="tab-panel" id="tab-vocab">
+  <div class="sec-title"><span class="color-bar" style="background:var(--blue)"></span>生字學習</div>
+  <p class="sec-sub">點擊字卡翻面，看注音、造詞和記憶小技巧！</p>
+  <div class="memory-tip"><strong>🧠 超強記憶法：</strong>先看字的樣子，猜猜意思，再翻面確認 → 重複 3 次就記住啦！</div>
+  <div class="vocab-controls">
+    <button class="v-btn blue" onclick="flipAll()">全部翻開</button>
+    <button class="v-btn ghost" onclick="resetAll()">重新蓋上</button>
+  </div>
+  <div class="vocab-grid">
+
+    <div class="flip-card" data-group="nature" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="char-big" style="color:var(--teal)">蔓</div><div class="char-ping" style="color:var(--teal)">ㄇㄢˋ</div><div class="char-hint">植物</div><div class="char-stroke">12畫</div><div class="flip-hint">點我翻面 👆</div></div>
+        <div class="flip-back"><div class="back-ping">màn</div><div class="back-words">蔓生・蔓延<br/>蔓草・蔓藤</div><div class="back-memory">🌿 草字頭＋曼<br/>植物四處延伸</div></div>
+      </div>
+    </div>
+
+    <div class="flip-card" data-group="nature" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="char-big" style="color:var(--teal)">藤</div><div class="char-ping" style="color:var(--teal)">ㄊㄥˊ</div><div class="char-hint">植物</div><div class="char-stroke">18畫</div><div class="flip-hint">點我翻面 👆</div></div>
+        <div class="flip-back"><div class="back-ping">téng</div><div class="back-words">藤條・藤椅<br/>藤蔓・攀藤</div><div class="back-memory">🪴 草字頭＋月＋馬<br/>往上攀爬</div></div>
+      </div>
+    </div>
+
+    <div class="flip-card" data-group="nature" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="char-big" style="color:var(--teal)">茂</div><div class="char-ping" style="color:var(--teal)">ㄇㄠˋ</div><div class="char-hint">茂盛</div><div class="char-stroke">8畫</div><div class="flip-hint">點我翻面 👆</div></div>
+        <div class="flip-back"><div class="back-ping">mào</div><div class="back-words">繁茂・茂盛<br/>茂密・茂林</div><div class="back-memory">🌳 植物長得旺盛</div></div>
+      </div>
+    </div>
+
+    <div class="flip-card" data-group="action" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="char-big" style="color:var(--blue)">栽</div><div class="char-ping" style="color:var(--blue)">ㄗㄞ</div><div class="char-hint">種植</div><div class="char-stroke">10畫</div><div class="flip-hint">點我翻面 👆</div></div>
+        <div class="flip-back"><div class="back-ping">zāi</div><div class="back-words">栽培・盆栽<br/>栽種・栽植</div><div class="back-memory">🌱 木字旁＝種到土裡</div></div>
+      </div>
+    </div>
+
+    <div class="flip-card" data-group="action" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="char-big" style="color:var(--blue)">添</div><div class="char-ping" style="color:var(--blue)">ㄊㄧㄢ</div><div class="char-hint">增加</div><div class="char-stroke">11畫</div><div class="flip-hint">點我翻面 👆</div></div>
+        <div class="flip-back"><div class="back-ping">tiān</div><div class="back-words">添購・添加<br/>增添・錦上添花</div><div class="back-memory">➕ 三點水＋天<br/>越加越多</div></div>
+      </div>
+    </div>
+
+    <div class="flip-card" data-group="action" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="char-big" style="color:var(--blue)">免</div><div class="char-ping" style="color:var(--blue)">ㄇㄧㄢˇ</div><div class="char-hint">避免</div><div class="char-stroke">7畫</div><div class="flip-hint">點我翻面 👆</div></div>
+        <div class="flip-back"><div class="back-ping">miǎn</div><div class="back-words">避免・免費<br/>免除・免疫</div><div class="back-memory">🐇 像兔子（免≈兔）<br/>逃脫的意思</div></div>
+      </div>
+    </div>
+
+    <div class="flip-card" data-group="action" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="char-big" style="color:var(--blue)">掀</div><div class="char-ping" style="color:var(--blue)">ㄒㄧㄢ</div><div class="char-hint">揭開</div><div class="char-stroke">11畫</div><div class="flip-hint">點我翻面 👆</div></div>
+        <div class="flip-back"><div class="back-ping">xiān</div><div class="back-words">掀起・掀翻<br/>掀開・掀動</div><div class="back-memory">✋ 手字旁＝用手掀開</div></div>
+      </div>
+    </div>
+
+    <div class="flip-card" data-group="write" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="char-big" style="color:var(--red)">稿</div><div class="char-ping" style="color:var(--red)">ㄍㄠˇ</div><div class="char-hint">草稿</div><div class="char-stroke">15畫</div><div class="flip-hint">點我翻面 👆</div></div>
+        <div class="flip-back"><div class="back-ping">gǎo</div><div class="back-words">稿件・投稿<br/>稿紙・草稿</div><div class="back-memory">📄 禾字旁＝寫在稻草紙上</div></div>
+      </div>
+    </div>
+
+    <div class="flip-card" data-group="write" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="char-big" style="color:var(--red)">尚</div><div class="char-ping" style="color:var(--red)">ㄕㄤˋ</div><div class="char-hint">還、高</div><div class="char-stroke">8畫</div><div class="flip-hint">點我翻面 👆</div></div>
+        <div class="flip-back"><div class="back-ping">shàng</div><div class="back-words">尚未・高尚<br/>風尚・崇尚</div><div class="back-memory">⬆️ 小＋口＝高尚</div></div>
+      </div>
+    </div>
+
+    <div class="flip-card" data-group="feel" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="char-big" style="color:var(--violet)">顫</div><div class="char-ping" style="color:var(--violet)">ㄓㄢˋ</div><div class="char-hint">發抖</div><div class="char-stroke">22畫</div><div class="flip-hint">點我翻面 👆</div></div>
+        <div class="flip-back"><div class="back-ping">chàn</div><div class="back-words">顫抖・冷顫<br/>顫動・震顫</div><div class="back-memory">😨 頁字旁＝頭在抖動</div></div>
+      </div>
+    </div>
+
+    <div class="flip-card" data-group="feel" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="char-big" style="color:var(--violet)">慕</div><div class="char-ping" style="color:var(--violet)">ㄇㄨˋ</div><div class="char-hint">仰慕</div><div class="char-stroke">14畫</div><div class="flip-hint">點我翻面 👆</div></div>
+        <div class="flip-back"><div class="back-ping">mù</div><div class="back-words">慕名・羨慕<br/>仰慕・愛慕</div><div class="back-memory">💜 心字底＝心裡崇拜</div></div>
+      </div>
+    </div>
+
+    <div class="flip-card" data-group="feel" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="char-big" style="color:var(--violet)">瀉</div><div class="char-ping" style="color:var(--violet)">ㄒㄧㄝˋ</div><div class="char-hint">流出</div><div class="char-stroke">18畫</div><div class="flip-hint">點我翻面 👆</div></div>
+        <div class="flip-back"><div class="back-ping">xiè</div><div class="back-words">腹瀉・一瀉千里<br/>傾瀉・奔瀉</div><div class="back-memory">💧 三點水＝水流出去</div></div>
+      </div>
+    </div>
+
+    <div class="flip-card" data-group="time" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="char-big" style="color:var(--orange)">暮</div><div class="char-ping" style="color:var(--orange)">ㄇㄨˋ</div><div class="char-hint">傍晚</div><div class="char-stroke">14畫</div><div class="flip-hint">點我翻面 👆</div></div>
+        <div class="flip-back"><div class="back-ping">mù</div><div class="back-words">朝暮・暮色<br/>天色入暮・暮年</div><div class="back-memory">🌇 草字頭＋日＋大<br/>太陽在草叢下山</div></div>
+      </div>
+    </div>
+
+    <div class="flip-card" data-group="time" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="char-big" style="color:var(--orange)">絨</div><div class="char-ping" style="color:var(--orange)">ㄖㄨㄥˊ</div><div class="char-hint">柔軟</div><div class="char-stroke">12畫</div><div class="flip-hint">點我翻面 👆</div></div>
+        <div class="flip-back"><div class="back-ping">róng</div><div class="back-words">絲絨・天鵝絨<br/>絨毛・毛絨絨</div><div class="back-memory">🧵 糸字旁＝像絲柔軟</div></div>
+      </div>
+    </div>
+
+    <div class="flip-card" data-group="time" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="char-big" style="color:var(--orange)">肩</div><div class="char-ping" style="color:var(--orange)">ㄐㄧㄢ</div><div class="char-hint">肩膀</div><div class="char-stroke">8畫</div><div class="flip-hint">點我翻面 👆</div></div>
+        <div class="flip-back"><div class="back-ping">jiān</div><div class="back-words">肩膀・披肩<br/>肩負・並肩</div><div class="back-memory">💪 肉月旁＝身體部位</div></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="palace-banner">
+    <div class="icon">🏛️</div>
+    <div>
+      <h3>記憶宮殿串聯法</h3>
+      <p>把生字編成故事記憶：「一株茂密的<strong>藤蔓</strong>（蔓・藤・茂）爬上了書桌，我在<strong>稿</strong>紙上<strong>栽</strong>了一朵花，為了<strong>添</strong>加美麗，<strong>免</strong>得太單調。窗外小鳥讓我的<strong>肩</strong>膀微微<strong>顫</strong>動，天色漸漸入<strong>暮</strong>……」</p>
+    </div>
+  </div>
+</div>
+
+<!-- ██ TAB: TEXT ██ -->
+<div class="tab-panel" id="tab-text">
+  <div class="sec-title"><span class="color-bar" style="background:var(--teal)"></span>課文欣賞</div>
+  <p class="sec-sub">閱讀全文，<span class="chip gold" style="color:var(--ink)">畫底線</span>詞語滑鼠移上去看解釋！</p>
+  <div class="story-wrap">
+    <div class="story-section">
+      <span class="story-label l1">第一段 ｜ 由來</span>
+      <div class="story-title">🎁 朋友送我珍珠鳥</div>
+      <div class="story-text">朋友送我一對<span class="hi" data-tip="天生害怕人的特性">生性怕人</span>的珍珠鳥，我把牠們養在一個用<span class="hi" data-tip="細長竹子做的條子">竹條</span>編成的籠子裡，籠內有一束乾草，那是小鳥<span class="hi" data-tip="舒適安穩">舒適</span>而溫暖的巢。</div>
+      <div class="annotation"><span class="icon">💡</span><span>開篇點出珍珠鳥的特性—<strong>「生性怕人」</strong>，為後文鳥兒漸漸親近作者埋下伏筆。</span></div>
+    </div>
+    <div class="story-section">
+      <span class="story-label l2">第二段 ｜ 鳥的家</span>
+      <div class="story-title">🌿 布置安全的環境</div>
+      <div class="story-text">我把籠子掛在窗前，那兒生著<span class="hi" data-tip="非常茂盛、密集">茂盛</span>的<span class="hi" data-tip="爬藤植物">小葉蔓藤</span>遮蓋。我用它<span class="hi" data-tip="種植">栽</span>長的，那兒最安全、幽深、溫暖，就像個隱密的家。小鳥兒在籠裡，叫聲也就格外<span class="hi" data-tip="充滿生機、輕鬆自在">盎然自在</span>了。</div>
+    </div>
+    <div class="story-section">
+      <span class="story-label l3">第三段 ｜ 小珍珠鳥出生</span>
+      <div class="story-title">🥚 三個月後的驚喜</div>
+      <div class="story-text">三個月後，忽然有一個小腦袋從葉縫鑽出來。正是這個小<span class="hi" data-tip="小傢伙，親暱的稱呼">傢伙</span>！牠<span class="hi" data-tip="紅色的嘴">紅嘴</span>、<span class="hi" data-tip="紅色的腳">紅腳</span>、<span class="hi" data-tip="藍灰色的身體">灰藍色身子</span>，身上長著一顆顆珍珠似的白色小圓點。</div>
+      <div class="annotation"><span class="icon">🔍</span><span>外貌描寫：<strong>紅嘴、紅腳、灰藍色身子</strong>—用顏色描寫，生動具體！</span></div>
+    </div>
+    <div class="story-section">
+      <span class="story-label l4">第四～六段 ｜ 初識熟悉</span>
+      <div class="story-title">🕊️ 漸漸靠近作者</div>
+      <div class="story-text">不久，那小傢伙就在屋裡飛了起來。牠先是離我較遠，見我不動，便漸漸敢伸出小腦袋看我。接著就在我寫<span class="hi" data-tip="寫作用的格子紙">稿</span>的桌上，<span class="hi" data-tip="跳來跳去">蹦來蹦去</span>，小紅爪子在稿紙上留下一排小印，並不時發出細微的「ㄚ」聲響。</div>
+    </div>
+    <div class="story-section">
+      <span class="story-label l5">第七～九段 ｜ 親近</span>
+      <div class="story-title">🤝 友好的互動</div>
+      <div class="story-text">漸漸地，牠膽子大了，<span class="hi" data-tip="竟然，乾脆">索性</span>站到我的杯子上，俯下頭來喝茶，再偷看我的反應。我用手輕輕摸一摸牠柔細的短毛，牠也不怕，反而<span class="hi" data-tip="親暱地用嘴咬">友好的啄</span>兩下我的手指。</div>
+    </div>
+    <div class="story-section">
+      <span class="story-label l6">第十～十一段 ｜ 信賴</span>
+      <div class="story-title">💤 在肩上睡著了</div>
+      <div class="story-text">有一天，我正<span class="hi" data-tip="全心全意地">專注</span>寫作，牠居然落到了我的<span class="hi" data-tip="肩膀">肩</span>上。我手中的筆不覺停了，牠竟伏在那兒不動了，把嘴插進背部羽毛，銀灰色的眼皮蓋住了眸子，牠睡著了，睡得好熟！</div>
+    </div>
+  </div>
+  <div class="climax-box">
+    <div class="big-quote">信賴，往往能創造出美好的境界。</div>
+    <p>📝 全文<strong>主旨句</strong>—信賴不只是人與鳥，更是所有感情的基礎！</p>
+  </div>
+  <div class="sensory-grid">
+    <div class="sensory-card"><span class="sensory-icon">👁️</span><div class="sensory-type">視覺描寫</div><div class="sensory-content">紅嘴紅腳、灰藍色身子、白色小圓點、銀灰色眼皮</div></div>
+    <div class="sensory-card"><span class="sensory-icon">👂</span><div class="sensory-type">聽覺描寫</div><div class="sensory-content">細微的「ㄚ」聲、爪子在稿紙上的聲響</div></div>
+    <div class="sensory-card"><span class="sensory-icon">✋</span><div class="sensory-type">觸覺描寫</div><div class="sensory-content">柔細的短毛、友好啄兩下手指的感覺</div></div>
+    <div class="sensory-card"><span class="sensory-icon">🚫</span><div class="sensory-type">未使用感官</div><div class="sensory-content">嗅覺（全文無氣味描寫）<br/>⭐段考常考！</div></div>
+  </div>
+</div>
+
+<!-- ██ TAB: RHETORIC ██ -->
+<div class="tab-panel" id="tab-rhetoric">
+  <div class="sec-title"><span class="color-bar" style="background:var(--gold-dk)"></span>修辭技巧</div>
+  <p class="sec-sub">課文用了多種修辭法，讓文字更有畫面感！</p>
+  <div class="rhet-grid">
+    <div class="rhet-card">
+      <div class="rhet-header"><span class="rhet-tag" style="background:var(--teal)">擬人</span><div><div class="rhet-name">把動物當成人來寫</div><div class="rhet-sub">用人的動作和情感描寫動物</div></div></div>
+      <div class="rhet-body">
+        <div class="rhet-example">「牠先是<u>喝茶</u>，然後<u>偷看</u>我的反應，再<u>蹦</u>到我肩上。」<br/>「牠也不怕，反而<u>友好</u>的啄兩下我的手指。」</div>
+        <div class="rhet-explain">「喝茶」、「偷看」、「友好」—這些都是人才有的行為，用在小鳥身上，讓鳥兒形象<strong>生動可愛</strong>。</div>
+        <div class="analysis-box"><div class="alabel">✍️ 答題鷹架</div>這句話用了【擬人】修辭。<br/>畫面：我看到一隻像人一樣 ______ 的小鳥。<br/>效果：突顯小鳥的可愛和人鳥之間的親密感情。</div>
+      </div>
+    </div>
+    <div class="rhet-card">
+      <div class="rhet-header"><span class="rhet-tag" style="background:var(--blue)">比喻</span><div><div class="rhet-name">甲像乙，說明相似點</div><div class="rhet-sub">用熟悉的事物比喻不熟悉的</div></div></div>
+      <div class="rhet-body">
+        <div class="rhet-example">「那小傢伙整個身子<u>好像一顆鬆軟的球兒</u>，只在籠子四周活動。」<br/>「身上長著一顆顆<u>珍珠似的</u>白色小圓點。」</div>
+        <div class="rhet-explain"><strong>本體</strong>：小鳥的身子　<strong>喻詞</strong>：好像、似的　<strong>喻體</strong>：球兒、珍珠<br/>效果：讓讀者立刻「看見」小鳥的<strong>圓胖可愛</strong>。</div>
+      </div>
+    </div>
+    <div class="rhet-card">
+      <div class="rhet-header"><span class="rhet-tag" style="background:var(--red)">排比</span><div><div class="rhet-name">三個以上平行結構</div><div class="rhet-sub">加強語氣、表現豐富動作</div></div></div>
+      <div class="rhet-body">
+        <div class="rhet-example">「牠<u>一會兒</u>飛到書架上，<u>一會兒</u>落在燈繩上，<u>一會兒</u>把書背上那些大文豪的名字，一一嚼著磨。」</div>
+        <div class="rhet-explain">三個「一會兒」形成排比，展現小鳥<strong>活潑好動</strong>的樣子，讀起來節奏感強！</div>
+        <div class="analysis-box"><div class="alabel">🔑 排比辨認法</div>找出 3 個以上相同句型或詞語，結構一樣就是排比！</div>
+      </div>
+    </div>
+    <div class="rhet-card">
+      <div class="rhet-header"><span class="rhet-tag" style="background:var(--violet)">細節描寫</span><div><div class="rhet-name">連續動作的細膩描寫</div><div class="rhet-sub">將動作分解，讓畫面慢動作播放</div></div></div>
+      <div class="rhet-body">
+        <div class="rhet-example">「這小傢伙<u>先是</u>離我較遠，便漸漸<u>敢伸出</u>小腦袋，<u>然後</u>跳到杯子上喝茶，<u>再偷蹦</u>到我的肩上。」</div>
+        <div class="rhet-explain">用「先是→漸漸→然後→再」把動作一步步寫出，就像<strong>慢動作播放</strong>，讀者身歷其境。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ██ TAB: PATTERNS ██ -->
+<div class="tab-panel" id="tab-patterns">
+  <div class="sec-title"><span class="color-bar" style="background:var(--violet)"></span>句型練習</div>
+  <p class="sec-sub">學會本課重要句型，自己造句！</p>
+
+  <div class="pattern-card">
+    <div class="pattern-header"><span class="pattern-tag">連貫複句</span><span class="pattern-name">先是…然後…再…</span></div>
+    <div class="pattern-body">
+      <div class="pattern-formula">先是【動作1】，然後【動作2】，再【動作3】。</div>
+      <div class="pattern-examples">
+        <p>📖 <strong>課文例句：</strong>這小傢伙先是離我較遠，然後漸漸敢伸出小腦袋，再跳到我的肩上。</p>
+        <p>✏️ <strong>範例：</strong>媽媽先是將食材洗乾淨，然後一一切好，再放入鍋裡熬煮，美味的濃湯就完成了。</p>
+      </div>
+      <div class="pattern-practice">
+        <strong>✏️ 練習：</strong>用「先是…然後…再…」描述一件事的順序
+        <input class="practice-input" type="text" placeholder="在這裡輸入你的句子…">
+        <button class="check-btn" onclick="checkPattern(this)">檢查句型 ✓</button>
+        <div class="feedback" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pattern-card">
+    <div class="pattern-header"><span class="pattern-tag">並列複句</span><span class="pattern-name">一會兒…一會兒…一會兒…</span></div>
+    <div class="pattern-body">
+      <div class="pattern-formula">一會兒【動作1】，一會兒【動作2】，一會兒【動作3】。</div>
+      <div class="pattern-examples">
+        <p>📖 <strong>課文例句：</strong>牠一會兒飛到書架上，一會兒落在燈繩上，一會兒蹦到杯子邊。</p>
+        <p>✏️ <strong>範例：</strong>下課時，同學一會兒在走廊追跑，一會兒在教室聊天，一會兒在操場玩球。</p>
+      </div>
+      <div class="pattern-practice">
+        <strong>✏️ 練習：</strong>用「一會兒…一會兒…一會兒…」描寫一個人或動物的活動
+        <input class="practice-input" type="text" placeholder="在這裡輸入你的句子…">
+        <button class="check-btn" onclick="checkPattern(this)">檢查句型 ✓</button>
+        <div class="feedback" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pattern-card">
+    <div class="pattern-header"><span class="pattern-tag">仿寫練習</span><span class="pattern-name">養在一個用…編成的…裡</span></div>
+    <div class="pattern-body">
+      <div class="pattern-formula">養在【一個/一棟/一面】用【材料】【動詞】的【地點】裡/旁/邊。</div>
+      <div class="pattern-examples">
+        <p>📖 <strong>課文例句：</strong>我把牠們養在一個用竹條編成的籠子裡。</p>
+        <p>✏️ <strong>範例1：</strong>種在一棟用木頭建造的房屋旁。</p>
+        <p>✏️ <strong>範例2：</strong>放在一面用壁紙裝飾的牆壁邊。</p>
+      </div>
+      <div class="pattern-practice">
+        <strong>✏️ 仿寫：</strong>用相同句型，換成不同的材料和地點
+        <input class="practice-input" type="text" placeholder="___在一個用___做成的___裡/旁/邊。">
+        <button class="check-btn" onclick="checkPattern(this)">看看格式 ✓</button>
+        <div class="feedback" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pattern-card">
+    <div class="pattern-header"><span class="pattern-tag">造句練習</span><span class="pattern-name">天色入暮</span></div>
+    <div class="pattern-body">
+      <div class="pattern-formula">天色入暮，【後面發生的事情】。</div>
+      <div class="pattern-examples">
+        <p>📖 <strong>範例：</strong>天色入暮，路燈紛紛亮起，照亮這座城市。</p>
+      </div>
+      <div class="pattern-practice">
+        <strong>✏️ 造句：</strong>以「天色入暮」開頭，寫一個情境
+        <input class="practice-input" type="text" placeholder="天色入暮，……">
+        <button class="check-btn" onclick="checkPattern(this)">檢查句型 ✓</button>
+        <div class="feedback" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ██ TAB: IDIOMS ██ -->
+<div class="tab-panel" id="tab-idioms">
+  <div class="sec-title"><span class="color-bar" style="background:var(--orange)"></span>成語世界</div>
+  <p class="sec-sub">本課延伸五個成語，讀懂意思、會用情境！</p>
+  <div class="idiom-grid">
+    <div class="idiom-card" data-char="錦">
+      <div class="idiom-chars">錦上添花</div>
+      <div class="idiom-ping">jǐn shàng tiān huā</div>
+      <div class="idiom-meaning">比喻在美好的事物上，再加上更美好的東西。（已經很好，還要更好！）</div>
+      <div class="idiom-example">🌸 <em>例：這幅畫已經很美，老師再幫她點上星光，真是<strong>錦上添花</strong>！</em></div>
+      <div class="idiom-star" style="color:var(--teal-dk)">★「添」注音是ㄊㄧㄢ（一聲）</div>
+    </div>
+    <div class="idiom-card" data-char="駒">
+      <div class="idiom-chars">白駒過隙</div>
+      <div class="idiom-ping">bái jū guò xì</div>
+      <div class="idiom-meaning">比喻時間過得很快，就像白馬飛奔而過，只看見一道白影。</div>
+      <div class="idiom-example">⏱️ <em>例：<strong>白駒過隙</strong>，轉眼間小明從幼兒園長大到六年級了。</em></div>
+      <div class="idiom-star" style="color:var(--blue-dk)">★「隙」是縫隙，別寫成「際」</div>
+    </div>
+    <div class="idiom-card" data-char="覆">
+      <div class="idiom-chars">覆水難收</div>
+      <div class="idiom-ping">fù shuǐ nán shōu</div>
+      <div class="idiom-meaning">潑出去的水收不回來，比喻已發生的事無法挽回。</div>
+      <div class="idiom-example">💧 <em>例：說了傷心話，再道歉也<strong>覆水難收</strong>，要三思而後行。</em></div>
+      <div class="idiom-star" style="color:var(--red-dk)">★「覆」是倒翻的意思</div>
+    </div>
+    <div class="idiom-card" data-char="暮">
+      <div class="idiom-chars">朝三暮四</div>
+      <div class="idiom-ping">zhāo sān mù sì</div>
+      <div class="idiom-meaning">心意不定，常常改變，做事沒有恆心。</div>
+      <div class="idiom-example">🙈 <em>例：他<strong>朝三暮四</strong>，今天學鋼琴，明天又要學畫畫。</em></div>
+      <div class="idiom-star" style="color:var(--gold-dk)">★「暮」是課本生字！</div>
+    </div>
+    <div class="idiom-card" data-char="瀉">
+      <div class="idiom-chars">一瀉千里</div>
+      <div class="idiom-ping">yī xiè qiān lǐ</div>
+      <div class="idiom-meaning">江河奔流直下、速度極快；也形容文筆流暢，氣勢豪邁。</div>
+      <div class="idiom-example">🌊 <em>例：李白的詩氣勢<strong>一瀉千里</strong>，讀起來令人熱血沸騰！</em></div>
+      <div class="idiom-star" style="color:var(--violet-dk)">★「瀉」是課本生字！</div>
+    </div>
+  </div>
+  <div class="memory-tip">
+    <strong>🧠 成語記憶口訣：</strong>「<strong>錦添</strong>美麗更美麗，<strong>白駒</strong>飛奔時光急，<strong>覆水</strong>難收要謹慎，<strong>朝暮</strong>反覆心不定，<strong>一瀉</strong>千里筆如飛！」
+  </div>
+</div>
+
+<!-- ██ TAB: QUIZ ██ -->
+<div class="tab-panel" id="tab-quiz">
+  <div class="sec-title"><span class="color-bar" style="background:var(--red)"></span>小測驗</div>
+  <p class="sec-sub">根據課文和教材內容，挑戰自己！共 7 題。</p>
+  <div class="quiz-wrap">
+    <div class="quiz-progress" id="qProgress"></div>
+    <div id="quizArea"></div>
+    <div class="score-box" id="scoreBox">
+      <div class="score-ring">
+        <div class="score-big" id="scoreBig">7/7</div>
+        <div class="score-label">SCORE</div>
+      </div>
+      <div class="score-msg" id="scoreMsg">太厲害了！珍珠鳥對你非常信賴！🐦</div>
+      <button class="restart-btn" onclick="startQuiz()">再挑戰一次 🔄</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+// ── TABS ──
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ── VOCAB FLIP ──
+function flipAll()  { document.querySelectorAll('.flip-card').forEach(c => c.classList.add('flipped')); }
+function resetAll() { document.querySelectorAll('.flip-card').forEach(c => c.classList.remove('flipped')); }
+
+// ── PATTERN CHECK ──
+function checkPattern(btn) {
+  const input = btn.previousElementSibling;
+  const fb = btn.nextElementSibling;
+  const val = input.value.trim();
+  fb.style.display = 'block';
+  if (!val) { fb.className='feedback show no'; fb.textContent='請先輸入一個句子再來檢查喔！'; return; }
+  const kw = ['先是','然後','再','一會兒','養在','用','天色入暮','做成','建造','裝飾'];
+  const matched = kw.filter(p => val.includes(p)).length;
+  if (matched >= 2 || val.length >= 12) {
+    fb.className = 'feedback show ok';
+    fb.innerHTML = '✅ <strong>很棒！</strong>句子使用了正確的句型格式，繼續保持！';
+  } else {
+    fb.className = 'feedback show no';
+    fb.innerHTML = '🔄 記得加入句型的關鍵詞喔，例如：「先是」、「然後」、「再」等等。';
+  }
+}
+
+// ── QUIZ ──
+const questions = [
+  { q:'依據課文，人與鳥的相處情況，從一開始到最後，依序為何？',
+    opts:['親近 → 熟悉 → 害怕 → 信賴','信賴 → 親近 → 害怕 → 熟悉','熟悉 → 害怕 → 親近 → 信賴','害怕 → 熟悉 → 親近 → 信賴'],
+    ans:3, explain:'珍珠鳥生性怕人（害怕）→ 漸漸熟悉環境（熟悉）→ 越來越靠近作者（親近）→ 睡在肩上（信賴）。' },
+  { q:'課文中描寫小珍珠鳥時，沒有使用哪一種感官的描寫技巧？',
+    opts:['聽覺','視覺','觸覺','嗅覺'],
+    ans:3, explain:'課文有視覺（紅嘴紅腳）、聽覺（ㄚ聲響）、觸覺（摸柔細短毛），但全文沒有描寫任何氣味，所以沒有使用嗅覺描寫。' },
+  { q:'「整個身子好像一顆鬆軟的球兒」這句話使用了什麼修辭手法？',
+    opts:['擬人','排比','比喻','誇飾'],
+    ans:2, explain:'這句話用「好像」把小鳥的身子比喻成「一顆鬆軟的球兒」，本體是小鳥身子，喻詞是「好像」，喻體是「球兒」，所以是比喻。' },
+  { q:'「牠先是離我較遠，然後漸漸靠近，再跳到我的肩上。」這句話使用了什麼句型？',
+    opts:['並列複句（一會兒…）','條件複句（只要…就…）','連貫複句（先是…然後…再…）','轉折複句（雖然…但是…）'],
+    ans:2, explain:'用了「先是…然後…再…」的句型，按照時間順序描寫動作，叫做連貫複句，表示動作一個接一個依序發生。' },
+  { q:'本課的主旨句是什麼？',
+    opts:['珍珠鳥是一種怕人的鳥，要細心照料。','信賴，往往能創造出美好的境界。','小鳥的外表十分可愛，讓人想飼養。','人與動物之間應該和平相處。'],
+    ans:1, explain:'全文結尾的主旨句是「信賴，往往能創造出美好的境界。」作者透過珍珠鳥的故事，傳達信賴的重要性。' },
+  { q:'「成語：錦上添花」的「添」字注音是？',
+    opts:['ㄊㄧㄢ（一聲）','ㄊㄧㄢˊ（二聲）','ㄊㄧㄢˇ（三聲）','ㄊㄧㄢˋ（四聲）'],
+    ans:0, explain:'「添」的注音是ㄊㄧㄢ（一聲，陰平），不要跟「甜」（ㄊㄧㄢˊ）搞混！' },
+  { q:'下列哪一句最適合用「白駒過隙」這個成語？',
+    opts:['他做事三心二意，今天做這個，明天做那個。','轉眼間，小明從嬰兒長成了一個高中生。','媽媽做的蛋糕美味又好看，讓人讚不絕口。','大雨突然下個不停，把操場都淹沒了。'],
+    ans:1, explain:'「白駒過隙」比喻時間過得很快。第二句描述時間飛逝（從嬰兒到高中生），最適合使用這個成語。' }
+];
+
+let current = 0, score = 0;
+
+function buildProgress() {
+  document.getElementById('qProgress').innerHTML = questions.map((_, i) =>
+    `<div class="qp-dot${i < current ? ' done' : i === current ? ' current' : ''}"></div>`
+  ).join('');
+}
+
+function renderQuestion() {
+  const q = questions[current];
+  document.getElementById('quizArea').innerHTML = `
+    <div class="quiz-card">
+      <div class="quiz-num">第 ${current+1} 題 ／ 共 ${questions.length} 題</div>
+      <div class="quiz-q">${q.q}</div>
+      <div class="quiz-options">
+        ${q.opts.map((o, i) => `<button class="q-opt" data-idx="${i}" onclick="answer(${i})"><span class="opt-label">${['①','②','③','④'][i]}</span>${o}</button>`).join('')}
+      </div>
+      <div class="feedback" id="fb"></div>
+      <button class="next-btn" id="nextBtn" onclick="nextQ()">${current < questions.length-1 ? '下一題 →' : '看結果 🏁'}</button>
+    </div>`;
+  buildProgress();
+}
+
+function answer(idx) {
+  const q = questions[current];
+  document.querySelectorAll('.q-opt').forEach(o => { o.classList.add('disabled'); o.onclick = null; });
+  const fb = document.getElementById('fb');
+  if (idx === q.ans) {
+    document.querySelectorAll('.q-opt')[idx].classList.add('correct');
+    fb.className = 'feedback show ok';
+    fb.innerHTML = `✅ <strong>答對了！</strong> ${q.explain}`;
+    score++;
+  } else {
+    document.querySelectorAll('.q-opt')[idx].classList.add('wrong');
+    document.querySelectorAll('.q-opt')[q.ans].classList.add('correct');
+    fb.className = 'feedback show no';
+    fb.innerHTML = `❌ <strong>再想想！</strong> 正確答案是 ${['①','②','③','④'][q.ans]}。${q.explain}`;
+  }
+  document.getElementById('nextBtn').classList.add('show');
+}
+
+function nextQ() {
+  current++;
+  if (current >= questions.length) {
+    document.getElementById('quizArea').style.display = 'none';
+    document.getElementById('qProgress').style.display = 'none';
+    document.getElementById('scoreBox').classList.add('show');
+    document.getElementById('scoreBig').textContent = `${score}/${questions.length}`;
+    const msgs = ['再多複習幾次吧！🌱','快要全對了！💪','答得很好！🐦','完美！你是珍珠鳥的好朋友！🏆'];
+    document.getElementById('scoreMsg').textContent = msgs[Math.min(Math.floor(score/questions.length*(msgs.length-1)), msgs.length-1)];
+  } else {
+    renderQuestion();
+  }
+}
+
+function startQuiz() {
+  current = 0; score = 0;
+  document.getElementById('quizArea').style.display = '';
+  document.getElementById('qProgress').style.display = '';
+  document.getElementById('scoreBox').classList.remove('show');
+  renderQuestion();
+}
+
+startQuiz();
+</script>
+</body>
+</html>
