@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在天晴了的時候・互動自學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+
+<style>
+/* ── TOKENS (bright, sunny) ── */
+:root {
+  --bg: #FFFBF0;
+  --surface: #FFFFFF;
+  --text: #1C1C2E;
+  --muted: #5C607A;
+  --border: #E0D8CC;
+
+  --c1: #00ACC1; --c1l: #E0F7FA; --c1d: #006064;
+  --c2: #F4511E; --c2l: #FBE9E7; --c2d: #BF360C;
+  --c3: #1976D2; --c3l: #E3F2FD; --c3d: #0D47A1;
+  --c4: #8E24AA; --c4l: #F3E5F5; --c4d: #4A148C;
+  --c5: #E53935; --c5l: #FFEBEE; --c5d: #B71C1C;
+
+  --ok: #2E7D32; --ok-bg: #E8F5E9; --ok-b: #A5D6A7;
+  --err: #C62828; --err-bg: #FFEBEE; --err-b: #EF9A9A;
+  --tip: #E65100; --tip-bg: #FFF3E0; --tip-b: #FFD740;
+
+  --r: 12px; --r-sm: 8px; --r-pill: 100px;
+  --sh: 0 1px 4px rgba(0,0,0,.09);
+  --sh-md: 0 4px 14px rgba(0,0,0,.11);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 15px;
+  line-height: 1.85;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.hdr {
+  background: #fff;
+  border-bottom: 2px solid var(--border);
+  padding: .85rem 1.1rem .65rem;
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: var(--sh);
+}
+.hdr-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: .55rem; }
+.hdr-title { font-family: 'Noto Serif TC', serif; font-size: 1.05rem; font-weight: 700; }
+.hdr-sub { font-size: 11px; color: var(--muted); }
+.score-pill {
+  background: linear-gradient(135deg,#FF9800,#FF5722);
+  color: #fff; font-weight: 700; font-size: 13.5px;
+  padding: .28rem .9rem; border-radius: var(--r-pill);
+  white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+.prog-track { height: 7px; background: #EEE; border-radius: 4px; overflow: hidden; }
+.prog-fill { height: 100%; background: linear-gradient(90deg,#FF9800,#4CAF50); border-radius: 4px; transition: width .4s ease; width: 0%; }
+
+/* ── TABS ── */
+.tabs {
+  display: flex; overflow-x: auto; background: #F0EDE8;
+  border-bottom: 1px solid #DDD; padding: 0 .4rem;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex-shrink: 0; padding: .6rem .95rem;
+  border: none; background: transparent; color: var(--muted);
+  font-family: 'Noto Sans TC', sans-serif; font-size: 13px; font-weight: 500;
+  cursor: pointer; border-bottom: 3px solid transparent;
+  transition: all .18s; white-space: nowrap;
+}
+.tab:hover { color: var(--text); background: rgba(0,0,0,.04); }
+.tab.active { color: #fff; border-radius: 8px 8px 0 0; border-bottom-color: transparent; }
+.t0.active{background:var(--c1);} .t1.active{background:var(--c2);} .t2.active{background:var(--c3);}
+.t3.active{background:var(--c4);} .t4.active{background:var(--c5);}
+.tab.done::after { content: ' ✓'; }
+
+/* ── PANELS ── */
+.panel { display: none; max-width: 820px; margin: 0 auto; padding: 1.1rem 1rem 3rem; }
+.panel.active { display: block; }
+
+/* ── MODULE HERO ── */
+.hero {
+  border-radius: var(--r); padding: 1.1rem 1.4rem;
+  margin-bottom: 1.1rem; color: #fff;
+  display: flex; align-items: center; gap: .9rem;
+}
+.hero-icon { font-size: 2.2rem; line-height: 1; }
+.hero-name { font-family: 'Noto Serif TC', serif; font-size: 1.2rem; font-weight: 700; }
+.hero-tip { font-size: 12.5px; opacity: .88; margin-top: .15rem; }
+.hero-score { margin-left: auto; text-align: right; }
+.hero-num { font-size: 1.9rem; font-weight: 700; line-height: 1; }
+.hero-max { font-size: 11px; opacity: .8; }
+.h0{background:linear-gradient(135deg,#00ACC1,#006064);}
+.h1{background:linear-gradient(135deg,#F4511E,#BF360C);}
+.h2{background:linear-gradient(135deg,#1976D2,#0D47A1);}
+.h3{background:linear-gradient(135deg,#8E24AA,#4A148C);}
+.h4{background:linear-gradient(135deg,#E53935,#B71C1C);}
+
+/* ── POEM BLOCK ── */
+.poem {
+  background: #FFFDE7; border: 1.5px solid #FFD54F;
+  border-radius: var(--r); padding: 1.1rem 1.4rem; margin-bottom: 1.1rem;
+  font-family: 'Noto Serif TC', serif;
+}
+.poem-lbl { font-size: 11px; color: #F57F17; font-weight: 700; letter-spacing: .08em; margin-bottom: .6rem; font-family: 'Noto Sans TC', sans-serif; }
+.poem-st { line-height: 2.2; font-size: 14.5px; margin-bottom: .5rem; }
+.poem-by { text-align: right; font-size: 12.5px; color: var(--muted); margin-top: .4rem; }
+
+/* ── SECTION LABEL ── */
+.slbl {
+  font-family: 'Noto Serif TC', serif; font-size: .8rem; font-weight: 700;
+  color: var(--muted); letter-spacing: .07em;
+  display: flex; align-items: center; gap: .5rem; margin: 1.1rem 0 .55rem;
+}
+.slbl::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* ── QUESTION CARD ── */
+.qcard {
+  background: #fff; border-radius: var(--r);
+  padding: 1rem 1.1rem; margin-bottom: .8rem;
+  box-shadow: var(--sh); border: 1.5px solid var(--border);
+}
+.qhdr { display: flex; align-items: baseline; gap: .55rem; margin-bottom: .75rem; }
+.qnum {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 1.7rem; height: 1.7rem; border-radius: 50%;
+  font-size: 11.5px; font-weight: 700; color: #fff; flex-shrink: 0;
+}
+.qstem { font-size: 14.5px; line-height: 1.85; flex: 1; }
+.opts { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; margin-bottom: .5rem; }
+@media(max-width:520px){.opts{grid-template-columns:1fr;}}
+
+.opt {
+  display: flex; align-items: flex-start; gap: .45rem;
+  padding: .55rem .85rem; border: 1.5px solid var(--border);
+  border-radius: var(--r-sm); background: #fff; color: var(--text);
+  font-family: 'Noto Sans TC', sans-serif; font-size: 13.5px;
+  cursor: pointer; text-align: left; transition: all .14s; line-height: 1.65;
+}
+.opt:hover:not(:disabled) { border-color: #AAA; background: #F8F8FF; }
+.opt:disabled { cursor: default; }
+.olbl { font-weight: 700; flex-shrink: 0; width: 1.4rem; text-align: center; }
+.opt.ok  { border-color: var(--ok);  background: var(--ok-bg);  color: var(--ok);  font-weight: 600; }
+.opt.err { border-color: var(--err); background: var(--err-bg); color: var(--err); }
+
+/* ── FEEDBACK ── */
+.fb {
+  border-radius: var(--r-sm); padding: .6rem .9rem;
+  font-size: 13.5px; margin-top: .45rem; display: none;
+  animation: sld .2s ease; line-height: 1.7;
+}
+.fb.show { display: block; }
+.fb.ok-fb  { background: var(--ok-bg);  border: 1px solid var(--ok-b);  color: var(--ok); }
+.fb.err-fb { background: var(--err-bg); border: 1px solid var(--err-b); color: var(--err); }
+.fb-ttl { font-weight: 700; margin-bottom: .2rem; }
+
+/* ── MEMORY TIP ── */
+.mtip {
+  background: var(--tip-bg); border: 1.5px solid var(--tip-b);
+  border-radius: var(--r-sm); padding: .65rem .9rem;
+  margin-top: .45rem; font-size: 13px; display: none;
+  animation: sld .25s ease; color: #5D3900; line-height: 1.7;
+}
+.mtip.show { display: block; }
+.mtip-ttl { font-weight: 700; color: var(--tip); margin-bottom: .15rem; display: flex; align-items: center; gap: .3rem; }
+
+@keyframes sld { from{opacity:0;transform:translateY(-5px)} to{opacity:1;transform:translateY(0)} }
+@keyframes pop { from{transform:scale(.7);opacity:0} to{transform:scale(1);opacity:1} }
+
+/* ── IDIOM FLIP CARDS ── */
+.fc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1.1rem; }
+@media(max-width:450px){.fc-grid{grid-template-columns:1fr;}}
+
+.fc { height: 170px; perspective: 900px; cursor: pointer; }
+.fc-inner { position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .45s cubic-bezier(.4,0,.2,1); }
+.fc.flipped .fc-inner { transform: rotateY(180deg); }
+.fcf, .fcb {
+  position: absolute; inset: 0; border-radius: var(--r);
+  backface-visibility: hidden; padding: .95rem 1.05rem;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.fcf { background: linear-gradient(135deg,#FF7043,#E53935); color: #fff; text-align: center; align-items: center; }
+.fc-idiom { font-family: 'Noto Serif TC', serif; font-size: 1.7rem; font-weight: 700; margin: .2rem 0; }
+.fc-cat { font-size: 11px; background: rgba(255,255,255,.22); padding: .12rem .5rem; border-radius: 20px; margin-bottom: .2rem; }
+.fc-tap { font-size: 11px; opacity: .78; margin-top: .25rem; }
+.fcb { background: #fff; border: 1.5px solid #FFB74D; transform: rotateY(180deg); }
+.fcb-meaning { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: .35rem; }
+.fcb-story { font-size: 12px; color: var(--muted); line-height: 1.65; }
+.fcb-kw { margin-top: .45rem; font-size: 11.5px; font-weight: 700; color: var(--tip); background: var(--tip-bg); padding: .12rem .5rem; border-radius: 20px; display: inline-block; }
+
+/* ── OPEN QUESTIONS ── */
+.open-q { background: #fff; border-radius: var(--r); padding: 1rem 1.1rem; margin-bottom: .8rem; box-shadow: var(--sh); border: 1.5px solid var(--border); }
+.open-stem { font-size: 14.5px; margin-bottom: .75rem; line-height: 1.85; }
+.open-quote { background: #FFFDE7; border-left: 3px solid #FFD740; border-radius: 0 6px 6px 0; padding: .55rem .85rem; font-family: 'Noto Serif TC', serif; font-size: 13.5px; margin-bottom: .75rem; }
+.fill-row { display: flex; align-items: center; gap: .45rem; margin-bottom: .38rem; font-size: 14px; }
+.fill-lbl { color: var(--muted); white-space: nowrap; font-size: 12.5px; min-width: 5em; }
+.fill-inp { flex:1; border:none; border-bottom:1.5px solid #CCC; padding:.2rem .3rem; font-family:'Noto Sans TC',sans-serif; font-size:14px; background:transparent; color:var(--text); }
+.fill-inp:focus { outline:none; border-bottom-color:var(--c3); }
+.rvl-btn { margin-top:.65rem; padding:.45rem 1.1rem; border:1.5px solid #999; border-radius:var(--r-pill); background:#fff; color:var(--muted); font-size:13px; cursor:pointer; transition:all .14s; font-family:'Noto Sans TC',sans-serif; }
+.rvl-btn:hover { background:#F5F5F5; border-color:#666; }
+.rvl-content { display:none; margin-top:.65rem; background:var(--ok-bg); border:1px solid var(--ok-b); border-radius:var(--r-sm); padding:.65rem .9rem; font-size:13.5px; color:var(--ok); line-height:1.7; animation:sld .2s ease; }
+.rvl-content.show { display:block; }
+
+/* ── SCAFFOLD ── */
+.scaffold { background:#EDE7F6; border:1.5px solid #CE93D8; border-radius:var(--r-sm); padding:.85rem 1rem; font-family:'Noto Serif TC',serif; font-size:14px; line-height:2.1; margin-bottom:.65rem; color:#3D006F; }
+.scaffold-lbl { font-size:11px; color:#7B1FA2; font-family:'Noto Sans TC',sans-serif; letter-spacing:.05em; margin-bottom:.35rem; font-weight:700; }
+
+/* ── WRITING PANEL ── */
+.wtip { background:linear-gradient(135deg,#FFECB3,#FFE082); border:1.5px solid #FFD740; border-radius:var(--r); padding:.85rem 1.1rem; margin-bottom:.9rem; }
+.wtip-ttl { font-weight:700; color:#E65100; margin-bottom:.35rem; font-family:'Noto Serif TC',serif; }
+.wtip-list { font-size:13.5px; line-height:2.05; color:#4E342E; }
+.wprompt { background:#fff; border-radius:var(--r); padding:1rem 1.1rem; margin-bottom:.8rem; box-shadow:var(--sh); border:1.5px solid var(--border); }
+.wprompt h3 { font-family:'Noto Serif TC',serif; font-size:1rem; margin-bottom:.45rem; display:flex; align-items:center; gap:.4rem; }
+.ptag { font-size:11px; font-family:'Noto Sans TC',sans-serif; background:var(--c5l); color:var(--c5); border-radius:var(--r-pill); padding:.1rem .5rem; }
+.wprompt p { font-size:13.5px; color:var(--muted); margin-bottom:.55rem; line-height:1.7; }
+.ex-q { background:var(--ok-bg); border-left:3px solid #4CAF50; border-radius:0 6px 6px 0; padding:.5rem .8rem; font-family:'Noto Serif TC',serif; font-size:13.5px; color:#1B5E20; margin-bottom:.6rem; }
+.wtxt { width:100%; border:1.5px solid var(--border); border-radius:var(--r-sm); padding:.65rem .85rem; font-family:'Noto Sans TC',sans-serif; font-size:14px; line-height:1.9; resize:vertical; background:#FAFAFA; color:var(--text); }
+.wtxt:focus { outline:none; border-color:var(--c3); background:#fff; }
+
+/* ── CHECKLIST ── */
+.chklist { list-style:none; font-size:13.5px; }
+.chklist li { display:flex; align-items:center; gap:.55rem; padding:.3rem 0; color:var(--muted); cursor:pointer; transition:color .14s; }
+.chklist li.ck { color:var(--ok); text-decoration:line-through; }
+.chkbox { width:1.25rem; height:1.25rem; border:2px solid #CCC; border-radius:4px; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .14s; font-size:.72rem; }
+.chklist li.ck .chkbox { background:var(--ok); border-color:var(--ok); color:#fff; }
+
+/* ── RUBRIC TABLE ── */
+.rtbl-wrap { overflow-x:auto; margin-top:.65rem; }
+.rtbl { width:100%; border-collapse:collapse; font-size:13px; min-width:460px; }
+.rtbl th { background:#F3E5F5; color:#6A1B9A; padding:.4rem .65rem; font-weight:700; border:1px solid #CE93D8; }
+.rtbl td { padding:.4rem .65rem; border:1px solid var(--border); color:var(--text); vertical-align:top; }
+
+/* ── GLOBAL TIP BANNER ── */
+.gtip { border-radius:var(--r-sm); padding:.65rem 1rem; font-size:13px; line-height:1.75; margin-bottom:.9rem; color:#5D3900; background:var(--tip-bg); border:1.5px solid var(--tip-b); }
+.gtip b { color:var(--tip); }
+
+/* ── RESULT MINI BANNER ── */
+.mini-result { margin-top:1.2rem; text-align:center; background:linear-gradient(135deg,#FFF9C4,#DCEDC8); border-radius:var(--r); padding:1.5rem 1.2rem; display:none; animation:pop .4s ease; }
+.mini-result.show { display:block; }
+.mr-emoji { font-size:3rem; }
+.mr-score { font-size:2rem; font-weight:700; color:var(--tip); font-variant-numeric:tabular-nums; }
+.mr-msg { font-size:13.5px; color:var(--muted); margin-top:.25rem; }
+</style>
+</head>
+<body>
+<!-- ████  HEADER  ████ -->
+<header class="hdr">
+  <div class="hdr-row">
+    <div>
+      <div class="hdr-title">在天晴了的時候・互動自學</div>
+      <div class="hdr-sub">六上第一課・戴望舒・五大能力模組</div>
+    </div>
+    <div class="score-pill" id="scorePill">得分：0 / 68</div>
+  </div>
+  <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
+</header>
+
+<!-- ████  TABS  ████ -->
+<nav class="tabs" id="tabBar">
+  <button class="tab t0 active" onclick="sw(0)">📖 一、閱讀</button>
+  <button class="tab t1" onclick="sw(1)">🈳 二、成語</button>
+  <button class="tab t2" onclick="sw(2)">✏️ 三、語病</button>
+  <button class="tab t3" onclick="sw(3)">🎭 四、修辭</button>
+  <button class="tab t4" onclick="sw(4)">📝 五、寫作</button>
+</nav>
+
+<main>
+
+<!-- ══ PANEL 0: READING ══ -->
+<section class="panel active" id="p0">
+  <div class="hero h0">
+    <div class="hero-icon">📖</div>
+    <div><div class="hero-name">閱讀理解</div><div class="hero-tip">答案在文章裡，不在腦袋裡！</div></div>
+    <div class="hero-score"><div class="hero-num" id="s0">0</div><div class="hero-max">/ 32 分</div></div>
+  </div>
+
+  <div class="poem">
+    <div class="poem-lbl">▸ 仔細閱讀全詩，再回答下方 8 題</div>
+    <div class="poem-st">在天晴了的時候，<br>到小徑中去走走，<br>是溼潤的泥路，<br>炫耀著新綠的小草，<br>小白菊將開未開的花苞，——<br>試試爽，試試寒，<br>後一辨辨的綻透。</div>
+    <div class="poem-st">抖去水珠的鳳蝶兒，<br>在木葉間自在的閒遊；<br>把他的飾彩的智慧書，<br>暢曬在陽光下。</div>
+    <div class="poem-st">踏著腳，攜著手，<br>赤著腳，踏著新泥，<br>涉過溪流，<br>到溫暖的山谷去。</div>
+    <div class="poem-st">在天晴了的時候，<br>看山間移動的暗綠——<br>雲的腳跡……<br>溪水在溫風中曇皺了，<br>新陽推開了陰霾，<br>它也在閒遊。</div>
+    <div class="poem-by">—— 戴望舒</div>
+  </div>
+
+  <div class="slbl">第一層｜表層理解（找資訊）</div>
+  <div id="z-r1"></div>
+  <div class="slbl">第二層｜推論理解（連結資訊）</div>
+  <div id="z-r2"></div>
+  <div class="slbl">第三層｜評鑑理解（判斷與詮釋）</div>
+  <div id="z-r3"></div>
+  <div class="mini-result" id="res-reading"></div>
+</section>
+
+<!-- ══ PANEL 1: IDIOMS ══ -->
+<section class="panel" id="p1">
+  <div class="hero h1">
+    <div class="hero-icon">🈳</div>
+    <div><div class="hero-name">成語情境判斷</div><div class="hero-tip">先翻牌記牢，再答題驗收！</div></div>
+    <div class="hero-score"><div class="hero-num" id="s1">0</div><div class="hero-max">/ 16 分</div></div>
+  </div>
+
+  <div class="slbl">STEP 1｜翻牌記憶（點卡片翻面）</div>
+  <div class="fc-grid" id="fcGrid"></div>
+
+  <div class="slbl">STEP 2｜情境選擇題</div>
+  <div id="z-idioms"></div>
+  <div class="mini-result" id="res-idioms"></div>
+</section>
+
+<!-- ══ PANEL 2: GRAMMAR ══ -->
+<section class="panel" id="p2">
+  <div class="hero h2">
+    <div class="hero-icon">✏️</div>
+    <div><div class="hero-name">語病句型結構</div><div class="hero-tip">三看口訣：找主語→看關聯詞→刪重複</div></div>
+    <div class="hero-score"><div class="hero-num" id="s2">0</div><div class="hero-max">/ 12 分</div></div>
+  </div>
+
+  <div class="gtip">
+    <b>🧠 語病三看記憶口訣</b><br>
+    ① 找主語：句子有沒有「誰做什麼」？少主語就是語病！<br>
+    ② 看關聯詞：雖然配<b>但是</b>；不但配<b>而且</b>，搭錯就出錯！<br>
+    ③ 刪重複：有沒有意思一樣的字並排？（例如「非常的很」）有→刪掉一個！
+  </div>
+
+  <div class="slbl">（一）選出沒有語病的句子（每題 4 分）</div>
+  <div id="z-g1"></div>
+
+  <div class="slbl">（二）找出語病並改寫（4 分）</div>
+  <div id="z-g2"></div>
+  <div class="mini-result" id="res-grammar"></div>
+</section>
+
+<!-- ══ PANEL 3: RHETORIC ══ -->
+<section class="panel" id="p3">
+  <div class="hero h3">
+    <div class="hero-icon">🎭</div>
+    <div><div class="hero-name">修辭分析</div><div class="hero-tip">畫面＋情緒，讀出文字背後的感受</div></div>
+    <div class="hero-score"><div class="hero-num" id="s3">0</div><div class="hero-max">/ 20 分</div></div>
+  </div>
+
+  <div class="gtip">
+    <b>🧠 修辭快速記憶</b><br>
+    🧍 <b>擬人</b>：給東西裝上「人的靈魂」→ 它會走、炫耀、閒遊…<br>
+    🔗 <b>比喻</b>：說「A 像 B」或「A 是 B」→ 找到兩個比較的東西<br>
+    ✨ <b>疊字</b>：同一個字重複出現（試試、一辨辨）→ 輕柔、慢慢來的感覺
+  </div>
+
+  <div class="slbl">（一）修辭辨識（每題 3 分）</div>
+  <div id="z-rh1"></div>
+
+  <div class="slbl">（二）修辭效果分析（8 分）</div>
+  <div id="z-rh2"></div>
+  <div class="mini-result" id="res-rhetoric"></div>
+</section>
+
+<!-- ══ PANEL 4: WRITING ══ -->
+<section class="panel" id="p4">
+  <div class="hero h4">
+    <div class="hero-icon">📝</div>
+    <div><div class="hero-name">寫作整合</div><div class="hero-tip">加感覺・加畫面・加心情轉折</div></div>
+    <div class="hero-score"><div class="hero-num">20</div><div class="hero-max">分・自評</div></div>
+  </div>
+
+  <div class="wtip">
+    <div class="wtip-ttl">✎ 寫作升級三招（貼在心裡）</div>
+    <div class="wtip-list">
+      ① <b>加感覺（五感）</b>：✗ 我很開心 → ✓ 我笑到肚子痛，眼睛都瞇起來了<br>
+      ② <b>加畫面</b>：✗ 下雨很大 → ✓ 雨像用倒的一樣，打在地上濺起白色水花<br>
+      ③ <b>加心情轉折</b>：一開始……後來……最後我發現……（讓文章有故事感）
+    </div>
+  </div>
+
+  <div class="slbl">（一）仿寫練習（8 分）</div>
+  <div class="wprompt">
+    <h3>✍️ 仿寫 <span class="ptag">8 分</span></h3>
+    <div class="ex-q">【例句】炫耀著新綠的小草，小白菊將開未開的花苞，——試試爽，試試寒，後一辨辨的綻透。</div>
+    <p>請仿照例句，選一種你喜歡的植物或動物，用具體畫面描寫它的特徵或動作，並使用至少一種修辭（比喻或擬人）。字數：50–80 字</p>
+    <textarea class="wtxt" rows="5" placeholder="在這裡寫下你的仿寫…"></textarea>
+    <div class="slbl" style="margin-top:.3rem">☑ 自評清單</div>
+    <ul class="chklist" id="ck1">
+      <li onclick="ck(this)"><span class="chkbox"></span>有描寫植物或動物的具體特徵</li>
+      <li onclick="ck(this)"><span class="chkbox"></span>使用了比喻或擬人修辭</li>
+      <li onclick="ck(this)"><span class="chkbox"></span>字數在 50–80 字之間</li>
+      <li onclick="ck(this)"><span class="chkbox"></span>語句通順，沒有語病</li>
+    </ul>
+  </div>
+
+  <div class="slbl">（二）短文寫作（12 分）</div>
+  <div class="wprompt">
+    <h3>📄 我的美好時刻 <span class="ptag">12 分</span></h3>
+    <p>描述你生活中一個讓你覺得「美好」的時刻（大自然、與人相處、獨處皆可），運用五感描寫（至少兩種），寫出當時的心情或領悟。字數：150–200 字</p>
+    <textarea class="wtxt" rows="11" placeholder="在這裡寫下你的短文…"></textarea>
+    <div class="slbl" style="margin-top:.3rem">☑ 自評清單</div>
+    <ul class="chklist" id="ck2">
+      <li onclick="ck(this)"><span class="chkbox"></span>描述了一個具體的美好時刻</li>
+      <li onclick="ck(this)"><span class="chkbox"></span>運用了兩種以上的五感描寫</li>
+      <li onclick="ck(this)"><span class="chkbox"></span>有心情的轉折或領悟</li>
+      <li onclick="ck(this)"><span class="chkbox"></span>字數在 150–200 字之間</li>
+      <li onclick="ck(this)"><span class="chkbox"></span>語句通順，結構清晰</li>
+    </ul>
+    <div class="slbl" style="margin-top:.8rem">教師評分鷹架</div>
+    <div class="rtbl-wrap">
+      <table class="rtbl">
+        <thead><tr><th>向度</th><th>3 分（優）</th><th>2 分（良）</th><th>1 分（加強）</th></tr></thead>
+        <tbody>
+          <tr><td><b>內容</b></td><td>具體，有細節與五感</td><td>完整但偏平淡</td><td>空洞或偏題</td></tr>
+          <tr><td><b>結構</b></td><td>起承轉合，心情轉折清楚</td><td>結構尚可</td><td>缺乏組織</td></tr>
+          <tr><td><b>語言</b></td><td>用詞精準，有修辭</td><td>通順但平淡</td><td>語病多</td></tr>
+          <tr><td><b>書寫</b></td><td>整齊清晰</td><td>尚整齊</td><td>潦草難辨</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────
+
+const RQ = [
+  {id:'r1',z:'z-r1',pts:4,
+   stem:'根據詩文，天晴了之後，作者建議去做什麼？',
+   opts:['到河邊釣魚放空','到小徑中去走走','登上山頂眺望遠方','在田野中奔跑遊戲'],
+   ans:1,
+   ex:'✓ 詩文第一句「到小徑中去走走」，答案可直接在文中找到。',
+   tip:'💡 答案就藏在詩的第一行！找到「小徑」這個關鍵詞了嗎？'},
+  {id:'r2',z:'z-r1',pts:4,
+   stem:'詩中的小白菊，此時處於什麼狀態？',
+   opts:['花瓣全部盛開，色彩鮮豔','被雨水打落，散落在地','正值「將開未開」的花苞狀態','枯萎凋謝，等待再生'],
+   ans:2,
+   ex:'✓ 詩中明確寫「小白菊將開未開的花苞」，「將開未開」＝快開但還沒開。',
+   tip:'💡 在詩裡找「小白菊」，緊接在後面的詞就是答案。「將開未開」＝即將開放的花苞狀態！'},
+  {id:'r3',z:'z-r2',pts:4,
+   stem:'「炫耀著新綠的小草」，這裡的「炫耀」一詞主要運用了什麼修辭？表達了什麼效果？',
+   opts:['比喻；把小草比作人，顯得親切','擬人；賦予小草人的動作，表現雨後生命力旺盛','誇飾；誇大小草的顏色，強調格外顯眼','排比；列出多種小草特性，加深印象'],
+   ans:1,
+   ex:'✓ 「炫耀」是人的行為，用來描寫小草→擬人。讓小草顯得充滿活力，雨後生命力旺盛的感覺。',
+   tip:'💡 擬人口訣：這個動詞是「人」才會做的嗎？「炫耀」→ 只有人才會炫耀 → 擬人！'},
+  {id:'r4',z:'z-r2',pts:4,
+   stem:'「把他的飾彩的智慧書，暢曬在陽光下」，這裡的「智慧書」指的是什麼？',
+   opts:['詩人隨身攜帶的一本彩色書籍','鳳蝶展開的彩色翅膀','陽光照射下閃亮的水珠','雨後山間移動的大片雲朵'],
+   ans:1,
+   ex:'✓ 作者把鳳蝶的彩色翅膀比作「飾彩的智慧書」，展翅＝把書頁晒在陽光下。',
+   tip:'💡 往上看！這段第一句是「抖去水珠的鳳蝶兒」，所以「他」指鳳蝶。翅膀打開像書頁展開，超美的比喻！'},
+  {id:'r5',z:'z-r2',pts:4,
+   stem:'詩中第一段與最後一段都以「在天晴了的時候」開頭，這樣的寫法主要有什麼效果？',
+   opts:['提醒讀者詩的標題，方便記憶','暗示詩人忘記了前段，重新開始','形成段落呼應，加深「天晴閒遊」的主題印象','暗示時間流逝，景色已完全改變'],
+   ans:2,
+   ex:'✓ 以相同句式開頭，形成首尾呼應，不斷強化「天晴時走出戶外親近自然」的核心主題。',
+   tip:'💡 就像歌曲的「副歌」！反覆出現，就是要讓你記住最重要的主題。'},
+  {id:'r6',z:'z-r3',pts:4,
+   stem:'這首詩書寫視角「由下而上」，依序描寫了哪些景物？排列順序最正確的是？',
+   opts:['鳳蝶兒→小白菊→小草→泥路','泥路→小草→小白菊→鳳蝶兒','雲影→鳳蝶兒→小白菊→泥路','小草→泥路→鳳蝶兒→雲影'],
+   ans:1,
+   ex:'✓ 第一段：溼潤泥路（最低）→ 新綠小草 → 小白菊花苞 → 飛舞的鳳蝶（最高）。由下而上！',
+   tip:'💡 想像鏡頭從地面慢慢往上掃：先看到濕泥→小草→花苞→蝴蝶飛翔。這就是「由下而上」的書寫視角！'},
+  {id:'r7',z:'z-r3',pts:4,
+   stem:'這首詩的主旨，以下哪個說法最貼切？',
+   opts:['說明雨天的各種危險，呼籲大家小心出門','描寫天晴後親近自然的美好，表達閒遊的喜悅','批評現代人不懂得欣賞大自然的美景','介紹蝴蝶與花草的生物知識'],
+   ans:1,
+   ex:'✓ 全詩以天晴後的自然美景貫穿，鼓勵讀者走入戶外，體驗生命中的美好時刻。',
+   tip:'💡 主旨題：整首詩在「說什麼」？詩一直描寫天晴後的美好自然並邀你一起去走走 → 親近自然、感受美好！'},
+  {id:'r8',z:'z-r3',pts:4,
+   stem:'「看山間移動的暗綠——雲的腳跡……」，破折號「——」和刪節號「……」分別有什麼作用？',
+   opts:['破折號：解釋說明；刪節號：意猶未盡、引人想像','破折號：表示省略；刪節號：表示語氣轉折','兩者都是表示停頓換氣','破折號：表示列舉；刪節號：另起話題'],
+   ans:0,
+   ex:'✓ 破折號補充說明「暗綠」就是「雲的腳跡」；刪節號讓語氣延伸，帶出悠遠、令人遐想的意境。',
+   tip:'💡 記憶：破折號「——」像一個長解釋，「我說的是→」；刪節號「……」像話說到一半，讓人自己想像後續。'}
+];
+
+const FC = [
+  {idiom:'風塵僕僕',cat:'描寫旅人',meaning:'形容旅途奔波、疲憊不堪的樣子',
+   story:'🧳 旅人阿風跑了一整天路，全身都是灰塵，腳步「僕僕」作響，累到快走不動了！',
+   kw:'長途旅行 = 疲憊 = 灰塵'},
+  {idiom:'蓬頭垢面',cat:'描寫外貌',meaning:'頭髮散亂、臉面骯髒，外表十分狼狽',
+   story:'🦔 想像頭髮蓬得像炸毛刺蝟（蓬頭），臉上有三塊泥垢（垢面），整個人亂成一團！',
+   kw:'頭亂 + 臉髒 = 超狼狽'},
+  {idiom:'鳳毛麟角',cat:'形容稀有',meaning:'比喻極為稀少珍貴的人或事物，非常難得',
+   story:'🦅 鳳凰的羽毛加麒麟的角，這兩種都是傳說中的珍獸，你一生見過嗎？沒有！→ 超級罕見！',
+   kw:'鳳凰+麒麟 = 世上最罕見'},
+  {idiom:'野人獻曝',cat:'謙遜說法',meaning:'謙虛地說以粗淺有限的東西貢獻給別人',
+   story:'☀️ 山中野人第一次感受陽光溫暖，以為是世上最珍貴的禮物獻給國王，但城裡人早就知道啦！',
+   kw:'謙虛 + 貢獻有限 = 野人獻曝'}
+];
+
+const IQ = [
+  {id:'i1',pts:4,
+   stem:'小明剛打完籃球，全身都是汗，頭髮亂翹，臉上黑黑的，看起來非常狼狽。用哪個成語形容最恰當？',
+   opts:['風塵僕僕','蓬頭垢面','鳳毛麟角','野人獻曝'],ans:1,
+   ex:'✓ 「蓬頭垢面」指頭髮散亂、臉很髒，最符合打球後的外貌狼狽。',
+   tip:'💡 小明的問題是「外貌」（頭亂＋臉髒），不是旅途疲憊，所以選蓬頭垢面！'},
+  {id:'i2',pts:4,
+   stem:'全校作文比賽，兩千名學生中只有兩位得了滿分，老師說這樣的表現實在難能可貴。用哪個成語最適合？',
+   opts:['風塵僕僕','蓬頭垢面','鳳毛麟角','野人獻曝'],ans:2,
+   ex:'✓ 「鳳毛麟角」比喻極為罕見珍貴。兩千人中只有兩人得滿分，非常稀少！',
+   tip:'💡 關鍵詞：「難能可貴」「只有兩位」→ 稀有 → 鳳毛麟角！'},
+  {id:'i3',pts:4,
+   stem:'阿姨在國外工作了半年，趁假期搭長途飛機趕回台灣，一落地就直奔奶奶家，看起來旅途非常疲憊。用哪個成語最適合描述阿姨的狀態？',
+   opts:['風塵僕僕','蓬頭垢面','鳳毛麟角','野人獻曝'],ans:0,
+   ex:'✓ 「風塵僕僕」形容長途奔波後的疲憊感，符合長途飛行後趕回家的情境。',
+   tip:'💡 阿姨的重點是「旅途疲憊」，不是外貌問題。風塵僕僕的「風塵」就代表旅途中的灰塵！'},
+  {id:'i4',pts:4,
+   stem:'小華受邀分享種蔬菜的心得，她謙虛地說：「我只是把土法煉鋼的種菜方法說說，真是＿＿＿＿，希望對大家有一點點用。」空格應填哪個成語？',
+   opts:['風塵僕僕','蓬頭垢面','鳳毛麟角','野人獻曝'],ans:3,
+   ex:'✓ 「野人獻曝」是謙虛說法，以粗淺的東西獻給別人，符合小華謙遜分享的語境。',
+   tip:'💡 關鍵詞：「謙虛」「土法煉鋼」「希望有一點點用」→ 貢獻微薄又謙虛 → 野人獻曝！'}
+];
+
+const GQ = [
+  {id:'g1',pts:4,
+   stem:'以下哪一個句子沒有語病？',
+   opts:['天晴了，我不但走到小徑去，而且也到溪邊涉水玩。',
+         '透過這次戶外教學，使我們更加了解自然的美麗。',
+         '雨後的泥路雖然溼潤，但走起來卻格外清爽舒服。',
+         '我非常的很喜歡在天晴後去戶外走走。'],
+   ans:2,
+   ex:'✓ 選(C)。<br>(A) 「不但/而且+也」→「也」多餘，語意重複<br>(B) 「透過……使……」→ 缺少主語，句子沒有「誰」<br>(D) 「非常的很」→ 重複，擇一即可',
+   tip:'💡 (A)「不但」+「而且」後面再加「也」=意思一樣說兩遍 → 刪掉「也」！'},
+  {id:'g2',pts:4,
+   stem:'以下哪一個句子沒有語病？',
+   opts:['雖然戴望舒身患重病，而且他仍然堅持創作不懈。',
+         '小白菊慢慢地、悄悄地、慢慢地一辨一辨的綻放了。',
+         '詩人用細膩的文字，捕捉了大自然中令人感動的美好時刻。',
+         '鳳蝶在木葉間，牠的翅膀閃耀著五彩光芒非常的美麗。'],
+   ans:2,
+   ex:'✓ 選(C)。<br>(A) 「雖然/而且」→ 應改「雖然/但是」（轉折配對錯了！）<br>(B) 「慢慢地」出現兩次 → 語意重複<br>(D) 結構混亂，「閃耀著五彩光芒非常的美麗」不通順',
+   tip:'💡 (A) 關聯詞配對口訣：「雖然」一定配「但是/卻」！「雖然/而且」是錯的！'}
+];
+
+const RHQ = [
+  {id:'rh1',pts:3,
+   stem:'「炫耀著新綠的小草」，使用了什麼修辭手法？',
+   opts:['比喻','擬人','誇飾','排比'],ans:1,
+   ex:'✓ 擬人。「炫耀」是人的行為，賦予小草人的動作。',
+   tip:'💡 擬人口訣：動詞是「人」才做的事嗎？「炫耀」→ 只有人才炫耀 → 擬人！'},
+  {id:'rh2',pts:3,
+   stem:'「把他的飾彩的智慧書，暢曬在陽光下」（指鳳蝶展翅），使用了什麼修辭手法？',
+   opts:['擬人','排比','比喻','設問'],ans:2,
+   ex:'✓ 比喻。將鳳蝶的彩色翅膀比作「飾彩的智慧書」，翅膀（本體）＝書（喻體）。',
+   tip:'💡 比喻口訣：找「本體」和「喻體」。翅膀（本體）被比成智慧書（喻體）→ 比喻！'},
+  {id:'rh3',pts:3,
+   stem:'「試試爽，試試寒，後一辨辨的綻透」，「試試」和「一辨辨」運用了什麼技巧？',
+   opts:['誇飾','疊字','排比','對偶'],ans:1,
+   ex:'✓ 疊字。相同的字重複出現（試試、一辨辨），讓語調輕柔，生動描繪花苞慢慢試探綻放的過程。',
+   tip:'💡 疊字特徵：同一個字重複＋讀起來輕巧可愛，有「慢慢來、一點一點」的感覺 → 疊字！'},
+  {id:'rh4',pts:3,
+   stem:'「雲的腳跡……」使用了什麼修辭手法？',
+   opts:['比喻','誇飾','擬人','設問'],ans:2,
+   ex:'✓ 擬人。「腳跡」是人或動物才有的，賦予雲彷彿行走留下足跡，讓雲的移動顯得生動輕盈。',
+   tip:'💡 雲會有「腳跡」嗎？不會！作者把雲當成有腳的人在走路 → 擬人！'}
+];
+
+// ─── STATE ──────────────────────────────────────────────────────────
+
+const S = {
+  scores: {reading:0,idioms:0,grammar:0,rhetoric:0},
+  max: {reading:32,idioms:16,grammar:8,rhetoric:12},
+  answered: {},  // qId → chosen idx
+};
+
+// ─── RENDER ─────────────────────────────────────────────────────────
+
+function e(s){return (s||'').replace(/'/g,"&#39;").replace(/"/g,'&quot;');}
+
+function mkQ(q, num, color, mod) {
+  return `<div class="qcard" id="qc-${q.id}">
+    <div class="qhdr">
+      <div class="qnum" style="background:${color}">${num}</div>
+      <div class="qstem">${q.stem}</div>
+    </div>
+    <div class="opts">
+      ${q.opts.map((o,i)=>`<button class="opt" id="op-${q.id}-${i}"
+        onclick="ans('${q.id}',${i},${q.ans},${q.pts},'${mod}','${e(q.ex)}','${e(q.tip)}')"
+        ><span class="olbl">(${['A','B','C','D'][i]})</span>${o}</button>`).join('')}
+    </div>
+    <div class="fb" id="fb-${q.id}"></div>
+    <div class="mtip" id="mt-${q.id}"></div>
+  </div>`;
+}
+
+function bootReadingZones() {
+  [['z-r1','reading-1'],['z-r2','reading-2'],['z-r3','reading-3']].forEach(([zid,zone])=>{
+    const el = document.getElementById(zid);
+    let n=1;
+    RQ.filter(q=>q.z==='z-'+zone.replace('reading-','')).forEach ? null : null;
+  });
+  const zones = {r1:'z-r1',r2:'z-r1',r3:'z-r2',r4:'z-r2',r5:'z-r2',r6:'z-r3',r7:'z-r3',r8:'z-r3'};
+  const nums  = {r1:1,r2:2,r3:1,r4:2,r5:3,r6:1,r7:2,r8:3};
+  RQ.forEach(q=>{
+    const el=document.getElementById(zones[q.id]);
+    if(el) el.insertAdjacentHTML('beforeend',mkQ(q,nums[q.id],'#00ACC1','reading'));
+  });
+}
+
+function bootFC() {
+  const g=document.getElementById('fcGrid');
+  FC.forEach((f,i)=>{
+    const d=document.createElement('div');
+    d.className='fc'; d.id='fc'+i;
+    d.onclick=()=>d.classList.toggle('flipped');
+    d.innerHTML=`<div class="fc-inner">
+      <div class="fcf"><div class="fc-cat">${f.cat}</div><div class="fc-idiom">${f.idiom}</div><div class="fc-tap">👆 點擊翻牌</div></div>
+      <div class="fcb"><div class="fcb-meaning">📖 ${f.meaning}</div><div class="fcb-story">${f.story}</div><div class="fcb-kw">🔑 ${f.kw}</div></div>
+    </div>`;
+    g.appendChild(d);
+  });
+}
+
+function bootIdioms() {
+  const z=document.getElementById('z-idioms');
+  IQ.forEach((q,i)=>z.insertAdjacentHTML('beforeend',mkQ(q,i+1,'#F4511E','idioms')));
+}
+
+function bootGrammar() {
+  const z=document.getElementById('z-g1');
+  GQ.forEach((q,i)=>z.insertAdjacentHTML('beforeend',mkQ(q,i+1,'#1976D2','grammar')));
+  // open question
+  document.getElementById('z-g2').innerHTML=`
+    <div class="open-q">
+      <div class="open-stem"><span class="qnum" style="background:#1976D2;display:inline-flex;align-items:center;justify-content:center;width:1.7rem;height:1.7rem;border-radius:50%;font-size:11.5px;font-weight:700;color:#fff;margin-right:.5rem">3</span>下面這個句子有語病，請找出問題並改寫正確的句子。（4 分）</div>
+      <div class="open-quote">「因為天氣晴朗，所以給我們帶來了很多戶外活動的好機會。」</div>
+      <div class="fill-row"><span class="fill-lbl">語病說明：</span><input class="fill-inp" type="text" placeholder="這句話哪裡有問題？"></div>
+      <div class="fill-row" style="margin-top:.35rem"><span class="fill-lbl">改寫後：</span><input class="fill-inp" type="text" placeholder="改成正確的句子…"></div>
+      <button class="rvl-btn" onclick="rvl('g-open')">查看參考答案</button>
+      <div class="rvl-content" id="rvl-g-open"><b>✓ 語病說明：</b>「因為……所以」後的句子缺少主語，不知道「誰」帶來了機會，主語不明確。<br><b>✓ 改寫後：</b>「因為天氣晴朗，所以<u>我們</u>有了很多戶外活動的好機會。」</div>
+    </div>`;
+}
+
+function bootRhetoric() {
+  const z=document.getElementById('z-rh1');
+  RHQ.forEach((q,i)=>z.insertAdjacentHTML('beforeend',mkQ(q,i+1,'#8E24AA','rhetoric')));
+  document.getElementById('z-rh2').innerHTML=`
+    <div class="open-q">
+      <div class="open-stem"><span class="qnum" style="background:#8E24AA;display:inline-flex;align-items:center;justify-content:center;width:1.7rem;height:1.7rem;border-radius:50%;font-size:11.5px;font-weight:700;color:#fff;margin-right:.5rem">5</span>讀完詩中最後一句「新陽推開了陰霾，它也在閒遊」，請用鷹架說明這句話的修辭效果與帶給你的感受。（8 分）</div>
+      <div class="scaffold"><div class="scaffold-lbl">▸ 修辭分析答題鷹架（填完後查看答案）</div>
+        這句話用了【　　　　　】修辭。<br>
+        畫面：我看到了　　　　　　　　　　　　　　<br>
+        情緒：這讓我感覺　　　　　　　　　　　　<br>
+        作者想強調的是
+      </div>
+      <button class="rvl-btn" onclick="rvl('rh-open')">查看參考答案</button>
+      <div class="rvl-content" id="rvl-rh-open">
+        <b>修辭：</b>擬人<br>
+        <b>畫面：</b>新陽推開陰霾後，陽光（或雲）像人一樣在天地間悠閒漫遊<br>
+        <b>情緒：</b>輕鬆、自由、愉快、充滿生命力<br>
+        <b>作者想強調：</b>天晴後萬物都充滿生機，連陽光也彷彿在快樂閒遊，整個大自然沉浸在美好的時刻中
+      </div>
+    </div>`;
+}
+
+// ─── INTERACTIONS ────────────────────────────────────────────────────
+
+function sw(idx) {
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
+}
+
+function ans(qId, chosen, correct, pts, mod, ex, tip) {
+  if (S.answered[qId] !== undefined) return;
+  S.answered[qId] = chosen;
+  const isOK = chosen === correct;
+
+  // Disable all options
+  for(let i=0;i<4;i++){
+    const b=document.getElementById(`op-${qId}-${i}`);
+    if(b) b.disabled=true;
+  }
+
+  // Highlight chosen + correct
+  const cb = document.getElementById(`op-${qId}-${chosen}`);
+  const ob = document.getElementById(`op-${qId}-${correct}`);
+  if(cb) cb.classList.add(isOK?'ok':'err');
+  if(!isOK && ob) ob.classList.add('ok');
+
+  // Score
+  if(isOK) {
+    S.scores[mod] = (S.scores[mod]||0) + pts;
+    updScore();
+  }
+
+  // Feedback
+  const fb = document.getElementById(`fb-${qId}`);
+  if(fb){
+    fb.className=`fb show ${isOK?'ok-fb':'err-fb'}`;
+    fb.innerHTML=`<div class="fb-ttl">${isOK?'🎉 答對了！':'❌ 答錯了，再想想！'}</div>${ex}`;
+  }
+
+  // Memory tip (on wrong only)
+  if(!isOK && tip){
+    const mt=document.getElementById(`mt-${qId}`);
+    if(mt){mt.className='mtip show';mt.innerHTML=`<div class="mtip-ttl">🧠 記憶技巧</div>${tip}`;}
+  }
+
+  // Check module done
+  checkModDone(mod);
+}
+
+function rvl(id) {
+  const c=document.getElementById(`rvl-${id}`);
+  if(!c) return;
+  c.classList.add('show');
+  c.previousElementSibling.style.display='none';
+}
+
+function ck(li) {
+  li.classList.toggle('ck');
+  li.querySelector('.chkbox').textContent = li.classList.contains('ck') ? '✓' : '';
+}
+
+function updScore() {
+  const auto=Object.values(S.scores).reduce((a,b)=>a+b,0);
+  const mx=Object.values(S.max).reduce((a,b)=>a+b,0);
+  document.getElementById('scorePill').textContent=`得分：${auto} / ${mx}`;
+  document.getElementById('progFill').style.width=`${(auto/mx)*100}%`;
+  const map=['reading','idioms','grammar','rhetoric'];
+  map.forEach((m,i)=>{const el=document.getElementById(`s${i}`);if(el)el.textContent=S.scores[m]||0;});
+}
+
+function checkModDone(mod) {
+  const modQMap={reading:RQ,idioms:IQ,grammar:GQ,rhetoric:RHQ};
+  const qs=modQMap[mod];
+  if(!qs) return;
+  const allDone=qs.every(q=>S.answered[q.id]!==undefined);
+  if(!allDone) return;
+  const got=qs.reduce((a,q)=>a+(S.answered[q.id]===q.ans?q.pts:0),0);
+  const total=qs.reduce((a,q)=>a+q.pts,0);
+  const res=document.getElementById(`res-${mod}`);
+  if(!res||res.classList.contains('show')) return;
+  const pct=Math.round(got/total*100);
+  let emoji='😊',msg='繼續加油，多練習！';
+  if(pct===100){emoji='🏆';msg='滿分！太厲害了，你完全掌握了！';}
+  else if(pct>=75){emoji='🌟';msg='表現很好！答錯的題目再看一遍解析喔！';}
+  else if(pct>=50){emoji='💪';msg='有進步空間，建議把記憶技巧多看幾次！';}
+  res.classList.add('show');
+  res.innerHTML=`<div class="mr-emoji">${emoji}</div><div class="mr-score">${got} / ${total} 分</div><div class="mr-msg">${msg}</div>`;
+}
+
+// ─── BOOT ───────────────────────────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded',()=>{
+  bootReadingZones();
+  bootFC();
+  bootIdioms();
+  bootGrammar();
+  bootRhetoric();
+});
+</script>
+</body>
+</html>
