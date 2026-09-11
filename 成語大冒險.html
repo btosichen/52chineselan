@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>成語大冒險</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<style>
+/* ═══════════════════════════════
+   TOKENS — light (parchment/navy festival aesthetic)
+   ═══════════════════════════════ */
+:root {
+  --ground:      #0F1E35;
+  --ground-mid:  #1A2F4A;
+  --ground-lift: #213862;
+  --card:        #FDF6E3;
+  --card-mid:    #F5EBCF;
+  --card-dim:    #EBE0BB;
+  --red:         #C8381A;
+  --red-bright:  #E5431F;
+  --red-soft:    #F4C5BC;
+  --gold:        #F0A500;
+  --gold-bright: #FFB900;
+  --gold-soft:   #FDE9A0;
+  --jade:        #27A98C;
+  --jade-soft:   #B2EAE0;
+  --ink:         #1A2744;
+  --ink-mid:     #2D4060;
+  --text-on-card:  #1A2744;
+  --text-dim:      #6B6344;
+  --text-on-dark:  #EBD8A8;
+  --text-muted:    #8A9BB0;
+  --border:        rgba(240,165,0,0.25);
+  --shadow:        0 4px 24px rgba(0,0,0,0.35);
+  --radius-card:   20px;
+  --radius-btn:    14px;
+  --radius-sm:     10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    /* already dark-first; keep as-is */
+  }
+}
+:root[data-theme="light"] {
+  --ground:      #F5EDD8;
+  --ground-mid:  #EDE0C0;
+  --ground-lift: #E5D4A5;
+  --card:        #FFFFFF;
+  --card-mid:    #F9F3E3;
+  --card-dim:    #EDE0C0;
+  --text-on-card: #1A2744;
+  --text-on-dark: #1A2744;
+  --text-muted:   #6B6344;
+  --shadow: 0 4px 24px rgba(0,0,0,0.12);
+  --border: rgba(200,56,26,0.2);
+}
+
+/* ═══════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+  background: var(--ground);
+  color: var(--text-on-dark);
+  min-height: 100vh;
+  padding-inline: 16px;
+  padding-block: 16px;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* Decorative top band */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--red), var(--gold), var(--jade), var(--gold), var(--red));
+  z-index: 100;
+}
+
+.wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ═══════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════ */
+.display { font-family: 'ZCOOL KuaiLe', cursive; }
+.idiom-display {
+  font-family: 'ZCOOL KuaiLe', cursive;
+  letter-spacing: 0.18em;
+  line-height: 1.2;
+}
+h1, h2, h3 { text-wrap: balance; font-weight: 900; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.15rem; }
+
+/* ═══════════════════════════════
+   CARD (parchment)
+   ═══════════════════════════════ */
+.card {
+  background: var(--card);
+  border-radius: var(--radius-card);
+  padding: 22px 24px;
+  box-shadow: var(--shadow);
+  color: var(--text-on-card);
+  margin-bottom: 14px;
+}
+.card-mid { background: var(--card-mid); }
+
+/* Lantern-top accent */
+.card-red-top { border-top: 5px solid var(--red); }
+.card-gold-top { border-top: 5px solid var(--gold); }
+.card-jade-top { border-top: 5px solid var(--jade); }
+
+/* ═══════════════════════════════
+   BUTTONS
+   ═══════════════════════════════ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 24px; border-radius: var(--radius-btn); border: none;
+  font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit;
+  transition: transform .18s, box-shadow .18s; text-decoration: none;
+  line-height: 1;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.btn:active { transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+
+.btn-red    { background: var(--red); color: #fff; }
+.btn-red:hover { background: var(--red-bright); }
+.btn-gold   { background: var(--gold); color: var(--ink); }
+.btn-gold:hover { background: var(--gold-bright); }
+.btn-jade   { background: var(--jade); color: #fff; }
+.btn-ghost  { background: transparent; color: var(--text-on-dark); border: 2px solid var(--border); }
+.btn-ghost-card { background: transparent; color: var(--text-on-card); border: 2px solid var(--card-dim); }
+.btn-ghost-card:hover { border-color: var(--red); color: var(--red); }
+.btn-lg { padding: 16px 32px; font-size: 1.15rem; border-radius: 16px; }
+.btn-sm { padding: 8px 16px; font-size: .88rem; border-radius: var(--radius-sm); }
+.btn-full { width: 100%; }
+
+/* ═══════════════════════════════
+   HOME SCREEN
+   ═══════════════════════════════ */
+.hero {
+  text-align: center;
+  padding: 32px 16px 20px;
+}
+.hero-title {
+  font-size: clamp(2.2rem, 8vw, 3.4rem);
+  font-family: 'ZCOOL KuaiLe', cursive;
+  color: var(--gold);
+  text-shadow: 0 3px 0 rgba(0,0,0,0.4), 0 0 30px rgba(240,165,0,0.3);
+  letter-spacing: .06em;
+  margin-bottom: 6px;
+}
+.hero-sub {
+  color: var(--text-muted);
+  font-size: .95rem;
+  letter-spacing: .05em;
+}
+
+.lesson-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 6px 0;
+}
+.lesson-tile {
+  background: var(--ground-mid);
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex; align-items: center; gap: 12px;
+  cursor: pointer; border: 2px solid transparent;
+  transition: all .2s; color: var(--text-on-dark);
+}
+.lesson-tile:hover { border-color: var(--gold); background: var(--ground-lift); }
+.lesson-tile.selected { border-color: var(--gold); background: var(--ground-lift); }
+.lesson-tile.all {
+  grid-column: 1 / -1;
+  border-color: rgba(240,165,0,.35);
+  background: linear-gradient(135deg, rgba(200,56,26,.15), rgba(240,165,0,.1));
+}
+.lesson-tile.all.selected { border-color: var(--gold); }
+.tile-em { font-size: 1.8rem; min-width: 40px; text-align: center; }
+.tile-name { font-weight: 700; font-size: .95rem; }
+.tile-desc { font-size: .8rem; color: var(--text-muted); margin-top: 1px; }
+
+.mode-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-top: 14px;
+}
+.mode-card {
+  background: var(--ground-mid);
+  border-radius: 18px; padding: 20px 16px;
+  text-align: center; cursor: pointer;
+  border: 2px solid transparent; transition: all .2s;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.mode-card:hover { border-color: var(--red); background: var(--ground-lift); }
+.mode-card .mode-icon { font-size: 2.2rem; }
+.mode-card .mode-title { font-size: 1.1rem; font-weight: 900; color: var(--text-on-dark); }
+.mode-card .mode-desc { font-size: .8rem; color: var(--text-muted); }
+
+.aux-row { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+
+/* API Box */
+.api-panel {
+  background: var(--ground-mid); border-radius: 16px;
+  padding: 18px 20px; margin-top: 12px;
+  border: 1px solid rgba(240,165,0,0.2);
+}
+.api-panel h3 { font-size: 1rem; color: var(--gold); margin-bottom: 8px; }
+.api-input {
+  width: 100%; padding: 10px 14px; border-radius: var(--radius-sm);
+  border: 1px solid var(--ground-lift); background: var(--ground);
+  color: var(--text-on-dark); font-size: .9rem; font-family: monospace;
+  margin-top: 6px;
+}
+.api-input:focus { outline: 2px solid var(--gold); outline-offset: 1px; border-color: transparent; }
+.api-msg { font-size: .85rem; color: var(--jade); margin-top: 6px; min-height: 18px; }
+
+/* ═══════════════════════════════
+   LEARN SCREEN — Flashcard
+   ═══════════════════════════════ */
+.learn-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px; flex-wrap: wrap; gap: 8px;
+}
+.card-counter {
+  font-size: 1rem; font-weight: 700; color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Progress bar */
+.pbar-wrap {
+  background: var(--ground-mid); border-radius: 50px; height: 8px; overflow: hidden;
+  margin-bottom: 14px;
+}
+.pbar-fill {
+  height: 100%; background: linear-gradient(90deg, var(--red), var(--gold));
+  border-radius: 50px; transition: width .4s ease;
+}
+
+/* 3-D Flip Card */
+.fc-scene {
+  perspective: 1100px; height: 310px; cursor: pointer;
+  margin-bottom: 14px;
+  -webkit-tap-highlight-color: transparent;
+}
+.fc-inner {
+  width: 100%; height: 100%; position: relative;
+  transform-style: preserve-3d;
+  transition: transform .65s cubic-bezier(.4,0,.2,1);
+}
+.fc-scene.flipped .fc-inner { transform: rotateY(180deg); }
+.fc-face {
+  position: absolute; inset: 0; backface-visibility: hidden;
+  border-radius: 22px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 28px 28px 20px; text-align: center;
+}
+.fc-front {
+  background: var(--card);
+  border-top: 5px solid var(--red);
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.6);
+}
+.fc-back {
+  background: var(--ground-mid);
+  border-top: 5px solid var(--gold);
+  transform: rotateY(180deg);
+  box-shadow: var(--shadow);
+  overflow-y: auto; justify-content: flex-start;
+  color: var(--text-on-dark);
+}
+.fc-emoji { font-size: 2.5rem; margin-bottom: 8px; }
+.fc-idiom {
+  font-size: clamp(2rem, 8vw, 3rem);
+  font-family: 'ZCOOL KuaiLe', cursive;
+  letter-spacing: .2em;
+  color: var(--ink);
+}
+.fc-hint {
+  font-size: .82rem; color: var(--text-dim);
+  margin-top: 14px; animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:.7} 50%{opacity:.3} }
+.fc-meaning {
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--gold-bright); margin-bottom: 12px; line-height: 1.5;
+}
+.fc-example {
+  font-size: .88rem; color: var(--text-muted);
+  background: rgba(255,255,255,.06); border-radius: var(--radius-sm);
+  padding: 8px 12px; margin-bottom: 10px; line-height: 1.5; width: 100%;
+}
+.fc-story {
+  font-size: .9rem; color: var(--text-on-dark); line-height: 1.6;
+  background: rgba(240,165,0,.1); border-left: 3px solid var(--gold);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 8px 12px; width: 100%;
+}
+.ai-gen-btn {
+  margin-top: 10px; padding: 6px 14px;
+  border-radius: 50px; border: 1px solid rgba(240,165,0,.4);
+  background: rgba(240,165,0,.1); color: var(--gold); font-size: .82rem;
+  cursor: pointer; font-family: inherit; font-weight: 700; transition: all .2s;
+}
+.ai-gen-btn:hover { background: rgba(240,165,0,.2); }
+
+.card-nav {
+  display: flex; align-items: center; gap: 10px;
+}
+.card-nav .btn { flex: 1; }
+
+/* ═══════════════════════════════
+   QUIZ SCREEN
+   ═══════════════════════════════ */
+.quiz-hud {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px; flex-wrap: wrap; gap: 8px;
+}
+.hud-score {
+  font-size: 1.1rem; font-weight: 900; color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+.hud-num {
+  font-size: .9rem; color: var(--text-muted); font-variant-numeric: tabular-nums;
+}
+.timer {
+  width: 54px; height: 54px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--red), #A02010);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; font-weight: 900; color: #fff;
+  box-shadow: 0 3px 14px rgba(200,56,26,.5);
+  font-variant-numeric: tabular-nums;
+}
+.timer.fast {
+  background: linear-gradient(135deg, #7B1F0A, var(--red));
+  animation: pulse .5s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+
+.type-chip {
+  display: inline-block; padding: 4px 14px; border-radius: 50px;
+  font-size: .78rem; font-weight: 700; letter-spacing: .04em; margin-bottom: 12px;
+}
+.tc1 { background: rgba(27,118,210,.2); color: #64B5F6; border: 1px solid rgba(27,118,210,.3); }
+.tc2 { background: rgba(200,56,26,.15); color: #FF8A65; border: 1px solid rgba(200,56,26,.3); }
+.tc3 { background: rgba(39,169,140,.15); color: #4DB6AC; border: 1px solid rgba(39,169,140,.3); }
+.tc4 { background: rgba(240,165,0,.15); color: #FFD54F; border: 1px solid rgba(240,165,0,.3); }
+
+.q-stage {
+  text-align: center; padding: 22px 18px;
+  background: var(--ground-mid); border-radius: 18px; margin-bottom: 16px;
+  min-height: 110px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px;
+}
+.q-idiom {
+  font-family: 'ZCOOL KuaiLe', cursive; font-size: 2.4rem;
+  letter-spacing: .18em; color: var(--gold-bright);
+}
+.q-text { font-size: 1.05rem; color: var(--text-on-dark); line-height: 1.6; }
+.q-wrong {
+  font-family: 'ZCOOL KuaiLe', cursive; font-size: 2rem;
+  letter-spacing: .15em; color: var(--red-bright);
+  text-decoration: line-through wavy rgba(200,56,26,.6);
+}
+.blank-display {
+  font-family: 'ZCOOL KuaiLe', cursive; font-size: 2.2rem;
+  letter-spacing: .18em; color: var(--gold-bright);
+}
+.blank-slot { color: var(--red-bright); border-bottom: 3px solid var(--red); padding: 0 4px; }
+
+.opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.opt {
+  padding: 15px 12px; border-radius: 16px;
+  border: 2px solid var(--ground-lift); background: var(--ground-mid);
+  font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit;
+  color: var(--text-on-dark); text-align: center; line-height: 1.4;
+  min-height: 58px; display: flex; align-items: center; justify-content: center;
+  transition: border-color .15s, background .15s, transform .15s;
+}
+.opt:hover:not(:disabled) { border-color: var(--gold); background: var(--ground-lift); transform: scale(1.02); }
+.opt:disabled { cursor: not-allowed; }
+.opt.correct { border-color: var(--jade); background: rgba(39,169,140,.18); color: var(--jade); animation: pop .35s ease-out; }
+.opt.wrong { border-color: var(--red); background: rgba(200,56,26,.15); color: #FF8A65; animation: shk .35s ease-in-out; }
+@keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.06)} 100%{transform:scale(1)} }
+@keyframes shk { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+@media (prefers-reduced-motion: reduce) { .opt.correct,.opt.wrong { animation: none; } }
+
+.q-feedback {
+  text-align: center; min-height: 28px; margin-top: 10px;
+  font-size: .95rem; font-weight: 700;
+}
+
+/* ═══════════════════════════════
+   RESULTS SCREEN
+   ═══════════════════════════════ */
+.result-hero { text-align: center; padding: 10px 0 20px; }
+.stars { font-size: 3rem; animation: starPop .5s ease-out; display: block; }
+@keyframes starPop { 0%{transform:scale(0);opacity:0} 70%{transform:scale(1.2)} 100%{transform:scale(1);opacity:1} }
+.result-score-num {
+  font-family: 'ZCOOL KuaiLe', cursive;
+  font-size: 5rem; color: var(--gold); line-height: 1;
+  text-shadow: 0 3px 0 rgba(0,0,0,0.3);
+}
+.result-msg { font-size: 1rem; color: var(--text-muted); margin-top: 4px; }
+.stat-row {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 18px;
+}
+.stat-cell {
+  background: var(--ground-mid); border-radius: 14px; padding: 14px;
+  text-align: center;
+}
+.stat-val { font-size: 1.8rem; font-weight: 900; color: var(--gold); font-variant-numeric: tabular-nums; }
+.stat-lbl { font-size: .8rem; color: var(--text-muted); margin-top: 2px; }
+
+.result-btns { display: flex; gap: 10px; margin-top: 18px; }
+.result-btns .btn { flex: 1; }
+
+.wrong-item {
+  padding: 14px 16px;
+  border-left: 4px solid var(--red);
+  background: rgba(200,56,26,.08);
+  border-radius: 0 12px 12px 0; margin-bottom: 10px;
+}
+.wi-idiom { font-family: 'ZCOOL KuaiLe', cursive; font-size: 1.6rem; color: var(--gold-bright); letter-spacing: .1em; }
+.wi-meaning { font-size: .9rem; color: var(--text-muted); margin-top: 3px; }
+.wi-answer { font-size: .88rem; margin-top: 6px; }
+.wi-wrong { color: #FF8A65; } .wi-correct { color: var(--jade); }
+
+/* ═══════════════════════════════
+   HISTORY SCREEN
+   ═══════════════════════════════ */
+.hist-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px; background: var(--ground-mid); border-radius: 14px;
+  margin-bottom: 8px;
+}
+.hist-score { font-size: 1.5rem; font-weight: 900; color: var(--gold); font-variant-numeric: tabular-nums; }
+.hist-meta { font-size: .82rem; color: var(--text-muted); margin-top: 2px; }
+.hist-date { font-size: .82rem; color: var(--text-muted); text-align: right; }
+
+/* ═══════════════════════════════
+   FEEDBACK FLOAT
+   ═══════════════════════════════ */
+#feedback {
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%,-50%) scale(0);
+  font-size: 4.5rem; z-index: 500; pointer-events: none;
+}
+#feedback.show { animation: fbPop .65s ease-out forwards; }
+@keyframes fbPop {
+  0%   { transform: translate(-50%,-50%) scale(0); opacity: 1; }
+  45%  { transform: translate(-50%,-50%) scale(1.4); opacity: 1; }
+  100% { transform: translate(-50%,-50%) scale(0.8); opacity: 0; }
+}
+
+/* ═══════════════════════════════
+   CONFETTI
+   ═══════════════════════════════ */
+.cf {
+  position: fixed; top: -14px; border-radius: 2px;
+  animation: cfFall linear forwards; z-index: 999; pointer-events: none;
+}
+@keyframes cfFall {
+  0%   { opacity: 1; transform: translateY(0) rotate(0deg); }
+  80%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(105vh) rotate(720deg); }
+}
+
+/* ═══════════════════════════════
+   UTILITIES
+   ═══════════════════════════════ */
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-center { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.flex-col { display: flex; flex-direction: column; }
+.gap-sm { gap: 8px; } .gap-md { gap: 14px; }
+.mt-sm { margin-top: 8px; } .mt-md { margin-top: 16px; } .mt-lg { margin-top: 24px; }
+.text-center { text-align: center; }
+.text-sm { font-size: .85rem; color: var(--text-muted); }
+.divider { height: 1px; background: var(--ground-lift); margin: 14px 0; }
+.no-records { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: .95rem; }
+
+@media (max-width: 480px) {
+  .lesson-grid, .mode-grid { grid-template-columns: 1fr; }
+  .lesson-tile.all { grid-column: auto; }
+  .opts { grid-template-columns: 1fr; }
+  .result-btns { flex-direction: column; }
+  .fc-scene { height: 280px; }
+  .fc-idiom { font-size: 2.2rem; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<!-- ════════════ HOME ════════════ -->
+<div id="home" class="screen active">
+  <div class="hero">
+    <div class="hero-title">🏆 成語大冒險</div>
+    <div class="hero-sub">六年級成語超強記憶訓練・36個成語・4種題型</div>
+  </div>
+
+  <div class="card card-gold-top">
+    <h3 style="color:var(--red);margin-bottom:12px">📚 選擇練習課次</h3>
+    <div class="lesson-grid" id="lessonGrid"></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:var(--text-dim);margin-bottom:12px">🎯 選擇模式</h3>
+    <div class="mode-grid">
+      <div class="mode-card" onclick="startLearn()">
+        <div class="mode-icon">🃏</div>
+        <div class="mode-title">記憶學習</div>
+        <div class="mode-desc">3D翻轉卡片・TTS語音・AI故事</div>
+      </div>
+      <div class="mode-card" onclick="startQuiz()">
+        <div class="mode-icon">⚔️</div>
+        <div class="mode-title">闖關測驗</div>
+        <div class="mode-desc">20題計時・4種題型・成績報告</div>
+      </div>
+    </div>
+    <div class="aux-row mt-sm">
+      <button class="btn btn-ghost btn-sm" onclick="showHistory()">🏅 歷史成績</button>
+      <button class="btn btn-ghost btn-sm" onclick="toggleSettings()">⚙️ AI設定</button>
+    </div>
+  </div>
+
+  <div id="settingsPanel" style="display:none">
+    <div class="api-panel">
+      <h3>🤖 Anthropic API Key（選填）</h3>
+      <p class="text-sm">輸入後，學習模式背面卡片可自動產生 AI 記憶故事！</p>
+      <input class="api-input" type="password" id="apiKeyInput" placeholder="sk-ant-api03-...">
+      <div class="flex-center gap-sm mt-sm">
+        <button class="btn btn-gold btn-sm" onclick="saveApiKey()">儲存 Key</button>
+        <button class="btn btn-ghost btn-sm" onclick="clearApiKey()">清除</button>
+      </div>
+      <div class="api-msg" id="apiMsg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ LEARN ════════════ -->
+<div id="learn" class="screen">
+  <div class="learn-header">
+    <button class="btn btn-ghost btn-sm" onclick="goHome()">← 回首頁</button>
+    <span class="card-counter" id="learnCounter">1 / 36</span>
+    <button class="btn btn-sm" style="background:var(--ground-mid);color:var(--text-on-dark)" onclick="speakCurrent()">🔊 朗讀</button>
+  </div>
+  <div class="pbar-wrap"><div class="pbar-fill" id="learnPbar" style="width:0%"></div></div>
+
+  <div class="fc-scene" id="fcScene" onclick="flipCard()">
+    <div class="fc-inner" id="fcInner">
+      <div class="fc-face fc-front">
+        <div class="fc-emoji" id="fcEmoji">🌸</div>
+        <div class="fc-idiom idiom-display" id="fcIdiom">成語</div>
+        <button class="btn btn-sm mt-sm" style="background:var(--red-soft);color:var(--red);z-index:2"
+          onclick="event.stopPropagation();speakCurrent()">🔊 發音</button>
+        <div class="fc-hint">點擊卡片翻面看解釋 👆</div>
+      </div>
+      <div class="fc-face fc-back" id="fcBack">
+        <div class="fc-meaning" id="fcMeaning"></div>
+        <div class="fc-example" id="fcExample"></div>
+        <div class="fc-story" id="fcStory"></div>
+        <button class="ai-gen-btn" id="aiBtn" onclick="event.stopPropagation();generateStory()">🤖 AI 生成故事</button>
+        <div class="fc-hint" style="margin-top:auto;padding-top:10px">點擊翻回正面 👆</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:14px 16px">
+    <div class="card-nav">
+      <button class="btn btn-ghost-card" onclick="prevCard()">◀ 上一張</button>
+      <button class="btn btn-gold" onclick="speakCurrent()">🔊 朗讀成語</button>
+      <button class="btn btn-ghost-card" onclick="nextCard()">下一張 ▶</button>
+    </div>
+    <div class="mt-md">
+      <button class="btn btn-red btn-full btn-lg" onclick="startQuiz()">⚔️ 開始闖關測驗！</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ QUIZ ════════════ -->
+<div id="quiz" class="screen">
+  <div class="card" style="padding:14px 16px">
+    <div class="quiz-hud">
+      <div>
+        <div class="hud-score">✅ <span id="qScore">0</span> 分</div>
+      </div>
+      <div class="hud-num">第 <span id="qNum">1</span> / <span id="qTotal">20</span> 題</div>
+      <div class="timer" id="timerEl">0</div>
+    </div>
+    <div class="pbar-wrap" style="margin-top:8px"><div class="pbar-fill" id="qPbar" style="width:0%"></div></div>
+  </div>
+
+  <div class="card card-red-top">
+    <div class="text-center">
+      <span class="type-chip" id="typeChip"></span>
+    </div>
+    <div class="q-stage" id="qStage"></div>
+    <div class="opts" id="optsGrid"></div>
+    <div class="q-feedback" id="qFeedback"></div>
+  </div>
+</div>
+
+<!-- ════════════ RESULTS ════════════ -->
+<div id="results" class="screen">
+  <div class="card card-gold-top">
+    <div class="result-hero">
+      <span class="stars" id="starsEl"></span>
+      <div class="result-score-num" id="rScore"></div>
+      <div class="result-msg" id="rMsg"></div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-cell"><div class="stat-val" id="rCorrect">0</div><div class="stat-lbl">答對題數</div></div>
+      <div class="stat-cell"><div class="stat-val" id="rTime">0s</div><div class="stat-lbl">總用時</div></div>
+      <div class="stat-cell"><div class="stat-val" id="rAccuracy">0%</div><div class="stat-lbl">正確率</div></div>
+      <div class="stat-cell"><div class="stat-val" id="rLesson">-</div><div class="stat-lbl">練習課次</div></div>
+    </div>
+    <div class="result-btns">
+      <button class="btn btn-red btn-lg" onclick="startQuiz()">🔄 再玩一次</button>
+      <button class="btn btn-ghost-card" onclick="goHome()">🏠 首頁</button>
+    </div>
+  </div>
+
+  <div class="card" id="wrongBox" style="display:none">
+    <h3 style="color:var(--red);margin-bottom:14px">❌ 錯題回顧</h3>
+    <div id="wrongList"></div>
+  </div>
+</div>
+
+<!-- ════════════ HISTORY ════════════ -->
+<div id="history" class="screen">
+  <div class="flex-between mb-md" style="margin-bottom:14px">
+    <h2 style="color:var(--gold)">🏅 歷史成績</h2>
+    <button class="btn btn-ghost btn-sm" onclick="goHome()">← 回首頁</button>
+  </div>
+  <div id="histList"></div>
+</div>
+
+</div><!-- /wrapper -->
+
+<div id="feedback"></div>
+
+<script>
+// ╔═══════════════════════════════════════════╗
+// ║  DATA: 36 idioms  (6 lessons × 6 each)   ║
+// ╚═══════════════════════════════════════════╝
+const IDIOMS = [
+  // ── L1: 在天晴了的時候 ──
+  {l:1,ln:"在天晴了的時候",em:"🌸",i:"萬紫千紅",m:"形容顏色繽紛，百花盛開的美麗景象",e:"春天來了，公園裡萬紫千紅，美不勝收。",s:"超大象穿萬件紫背心，踩著千朵紅玫瑰散步，路人全部驚呆了！🐘",w:"萬子千紅",fp:1,fw:["子","志","紫色"]},
+  {l:1,ln:"在天晴了的時候",em:"🌿",i:"生機盎然",m:"形容充滿生命力、朝氣蓬勃的樣子",e:"春雨過後，整片森林生機盎然，充滿活力。",s:"青蛙博士宣布：雨後樹木全喝了能量飲料，精神超好！🐸",w:"生機昂然",fp:2,fw:["昂","亢","盆"]},
+  {l:1,ln:"在天晴了的時候",em:"🌼",i:"春暖花開",m:"春天溫暖、百花盛開，形容美好的時光",e:"春暖花開的季節，大家都喜歡出去踏青。",s:"春天奶奶送暖暖包給花朵，花朵高興大喊：我要開！🌺",w:"春暖花閉",fp:3,fw:["閉","謝","合"]},
+  {l:1,ln:"在天晴了的時候",em:"☀️",i:"風和日麗",m:"微風輕柔、陽光明媚，形容天氣晴朗舒適",e:"風和日麗的天氣，最適合在公園散步。",s:"風姐和太陽哥約會，到處散播笑臉，連烏雲都害羞躲走了！😊",w:"風合日麗",fp:1,fw:["合","暖","調"]},
+  {l:1,ln:"在天晴了的時候",em:"😌",i:"神清氣爽",m:"精神飽滿、心情舒暢的感覺",e:"運動後，他覺得神清氣爽，心情大好。",s:"神仙喝了仙露，立刻全身超爽，一秒飛上天！✨",w:"神清氣象",fp:3,fw:["象","順","順暢"]},
+  {l:1,ln:"在天晴了的時候",em:"🌈",i:"心曠神怡",m:"心情開朗、精神愉快，形容舒暢的感受",e:"站在山頂看著美景，他頓時心曠神怡。",s:"小明爬上山頂，心立刻變成大廣場，神仙住進來高喊：太舒適了！🏔️",w:"心曠神移",fp:3,fw:["移","遺","愉"]},
+
+  // ── L2: 珍珠鳥 ──
+  {l:2,ln:"珍珠鳥",em:"🥚",i:"小心翼翼",m:"做事非常謹慎小心，不敢有絲毫大意",e:"她小心翼翼地端著蛋糕，深怕不小心摔落。",s:"老鷹媽媽夾住蛋說：再輕一點！蛋說：太癢了啦哈哈！🦅",w:"小心義義",fp:2,fw:["義","意","益"]},
+  {l:2,ln:"珍珠鳥",em:"🦋",i:"自由自在",m:"不受任何拘束，悠然自得地生活",e:"假日沒有功課，他自由自在地玩了一整天。",s:"蝴蝶拿到宇宙通行證，飛到哪都沒人管，開心翻百個跟斗！🎫",w:"自由自载",fp:2,fw:["载","造","哉"]},
+  {l:2,ln:"珍珠鳥",em:"😊",i:"無憂無慮",m:"沒有任何煩惱和憂愁，生活輕鬆快樂",e:"小動物們在草原上無憂無慮地玩耍。",s:"小豬把煩惱裝進氣球放飛，從此每天都是晴天！🎈",w:"無優無慮",fp:1,fw:["優","幽","悠"]},
+  {l:2,ln:"珍珠鳥",em:"💕",i:"相依為命",m:"互相依靠，共度生活中的一切甘苦",e:"爺爺和奶奶相依為命，感情非常好。",s:"兩隻企鵝互靠說：沒你我活不下去！旁邊的企鵝感動大哭！🐧",w:"相衣為命",fp:1,fw:["衣","倚","伊"]},
+  {l:2,ln:"珍珠鳥",em:"🤝",i:"愛不釋手",m:"非常喜愛，捨不得放開",e:"他一拿到新書，就愛不釋手地讀了起來。",s:"小明拿到遊戲機，手指和機器直接黏在一起，媽媽用剪刀才分開！✂️",w:"愛不棄手",fp:2,fw:["棄","捨","舍"]},
+  {l:2,ln:"珍珠鳥",em:"🌙",i:"形影不離",m:"形容關係密切，總是在一起，像身體和影子一樣",e:"這對好朋友形影不離，每天一起上下學。",s:"小鳥和影子開會：你到哪我去哪，影子說：好，那晚上我休息！🌑",w:"形影不鄰",fp:3,fw:["鄰","隣","近"]},
+
+  // ── L3: 客至 ──
+  {l:3,ln:"客至",em:"🏠",i:"賓至如歸",m:"客人到來，感覺像回到自己家一樣舒適自在",e:"這家民宿服務超好，讓人有賓至如歸的感覺。",s:"老闆把客人名字貼在床頭，客人進門：等等，這是我家嗎？！🤩",w:"賓至如回",fp:3,fw:["回","走","來"]},
+  {l:3,ln:"客至",em:"🤗",i:"相見恨晚",m:"形容和某人相遇，後悔認識得太晚，情投意合",e:"兩人初次見面，談話投機，不禁感到相見恨晚。",s:"兩隻烏龜一見面，抱頭大哭：我們五百年前就應該認識啊！🐢",w:"相見恨完",fp:3,fw:["完","久","早"]},
+  {l:3,ln:"客至",em:"🍵",i:"把酒言歡",m:"端著杯子歡快交談，形容朋友歡聚暢飲",e:"老朋友重聚，把酒言歡，聊了整個下午。",s:"老朋友用茶杯假裝酒杯，喝到臉紅，還說：這茶真有勁！😄",w:"把灑言歡",fp:1,fw:["灑","水","料"]},
+  {l:3,ln:"客至",em:"🔥",i:"熱情洋溢",m:"充滿熱情，感情豐富，非常熱心積極",e:"他熱情洋溢地迎接每一位客人的到來。",s:"歡迎委員太熱情，連旁邊的烤肉爐都被他重新點燃！🎊",w:"熱情洋益",fp:3,fw:["益","満","湧"]},
+  {l:3,ln:"客至",em:"🌞",i:"開門見山",m:"說話直接，不拐彎抹角，一開始就進入正題",e:"他開門見山地說明來意，讓大家一聽就懂。",s:"老師打開門，指著山說：看到嗎？這就叫開門見山！同學傻眼！🏔️",w:"開問見山",fp:1,fw:["問","閂","關"]},
+  {l:3,ln:"客至",em:"💝",i:"春風化雨",m:"比喻良善的教化，和風細雨般感化人心",e:"老師春風化雨般的教導，讓同學受益良多。",s:"老師說話如春風，學生以為真在下雨，全打開雨傘！老師笑了！☔",w:"春風化語",fp:3,fw:["語","話","育"]},
+
+  // ── L4: 贏得喝采的輸家 ──
+  {l:4,ln:"贏得喝采的輸家",em:"💪",i:"不屈不撓",m:"面對困難挫折絕不退縮，堅持不懈地努力",e:"他不屈不撓地練習，終於在比賽中獲得好成績。",s:"超人被打倒一百次，每次站起來喊：再來！對手先累倒了！🦸",w:"不曲不撓",fp:1,fw:["曲","服","退"]},
+  {l:4,ln:"贏得喝采的輸家",em:"🔑",i:"鍥而不捨",m:"做事持之以恆，堅持到底，絕不輕易放棄",e:"她鍥而不捨地學習，終於說得一口流利的英語。",s:"小螞蟻搬糖掉了兩百次，每次說：繼續！最後吃糖最多！🐜",w:"契而不捨",fp:0,fw:["契","楔","挈"]},
+  {l:4,ln:"贏得喝采的輸家",em:"🏋️",i:"百折不撓",m:"遭受無數挫折，依然不屈服，繼續前進",e:"科學家百折不撓地實驗，終於發明了新藥。",s:"橡皮筋被折一百次，每次彈回說：你傷不了我！折的人先累了！🦾",w:"百折不繞",fp:3,fw:["繞","退","棄"]},
+  {l:4,ln:"贏得喝采的輸家",em:"😞",i:"名落孫山",m:"考試或比賽落榜，未達到目標",e:"他這次考試名落孫山，決定更努力準備下次。",s:"孫山是古代第一名，後面的人排在他後=落榜，孫山：怎麼都賴我！😅",w:"名絡孫山",fp:1,fw:["絡","路","落榜"]},
+  {l:4,ln:"贏得喝采的輸家",em:"🏅",i:"堅忍不拔",m:"意志堅定、能忍受困難，不動搖",e:"她靠著堅忍不拔的意志，克服了重重困難。",s:"大樹被颱風吹了一夜，早上出來說：我沒事！小草：佩服！🌳",w:"尖忍不拔",fp:0,fw:["尖","艱","硬"]},
+  {l:4,ln:"贏得喝采的輸家",em:"🎯",i:"全力以赴",m:"竭盡全部力量去做，毫不保留",e:"他在比賽中全力以赴，發揮出最好的水準。",s:"小明考試全力以赴，把所有腦細胞叫出來開會，一次寫完！🧠",w:"全力以附",fp:3,fw:["附","副","符"]},
+
+  // ── L5: 哇！原來如此 ──
+  {l:5,ln:"哇！原來如此",em:"💡",i:"恍然大悟",m:"突然明白了之前不懂的道理或事情",e:"聽了老師的解釋，他恍然大悟，點頭稱是。",s:"小明看謎題三天，突然一拍腦袋，燈泡在頭上爆閃，鄰居以為閃電！⚡",w:"晃然大悟",fp:0,fw:["晃","慌","曠"]},
+  {l:5,ln:"哇！原來如此",em:"🚪",i:"茅塞頓開",m:"心裡的困惑突然解開，豁然開朗",e:"老師一句話讓他茅塞頓開，終於解開了難題。",s:"腦袋塞滿茅草的小鬼，聽到答案後，茅草被龍捲風吹走，陽光照進！☀️",w:"矛塞頓開",fp:0,fw:["矛","毛","貓"]},
+  {l:5,ln:"哇！原來如此",em:"🕸️",i:"觸類旁通",m:"學通一種知識，可以推知其他相關事物",e:"他數學學好了，觸類旁通，理化也越來越好。",s:"學會一件事就像解鎖技能樹，旁邊全部連鎖解鎖，滿天金光！🎮",w:"觸類傍通",fp:2,fw:["傍","伴","邊"]},
+  {l:5,ln:"哇！原來如此",em:"🤔",i:"百思不解",m:"想了很多次，仍然無法理解或想通",e:"這道數學題讓他百思不解，想了一整天也沒答案。",s:"小明對著題目想了一百次，頭開始冒煙，最後只畫超大問號！💭",w:"百思不懈",fp:3,fw:["懈","答","通"]},
+  {l:5,ln:"哇！原來如此",em:"🌅",i:"豁然開朗",m:"突然變得開朗明亮，也形容思路突然開通",e:"走出森林後，眼前豁然開朗，美麗的草原出現了。",s:"黑暗隧道盡頭突然出現大草原，小鳥驚叫：原來隧道通天堂！🌈",w:"豁然開明",fp:3,fw:["明","聰","暢"]},
+  {l:5,ln:"哇！原來如此",em:"🔭",i:"舉一反三",m:"學一件事後，能推想出其他類似的事情",e:"老師教了一種解法，他舉一反三，解出了所有難題。",s:"老師舉起一根手指，小明反射三根說：這樣嗎？老師：太聰明了！🧠",w:"舉一反四",fp:3,fw:["四","二","多"]},
+
+  // ── L6: 登月先鋒 ──
+  {l:6,ln:"登月先鋒",em:"🚀",i:"勇往直前",m:"無所畏懼，勇敢地一直向前進",e:"面對困難，他勇往直前，絕不退縮。",s:"太空人字典沒有「退後」，只有「前進再前進」，火箭立刻起飛！🌟",w:"勇往直錢",fp:3,fw:["錢","上","衝"]},
+  {l:6,ln:"登月先鋒",em:"⚔️",i:"披荊斬棘",m:"排除重重困難與障礙，勇敢前進",e:"探險家披荊斬棘，終於找到了失落的寶藏。",s:"勇士砍掉所有荊棘，荊棘說：我們只是想要個擁抱，嗚嗚！🌵",w:"披荊斬疾",fp:3,fw:["疾","刺","路"]},
+  {l:6,ln:"登月先鋒",em:"🌙",i:"前無古人",m:"從來沒有人做過，是空前的成就",e:"登上月球是前無古人的壯舉，令全世界驚嘆。",s:"阿姆斯壯踏上月球，月球說：你是第一個來我家的人，我好緊張！🎉",w:"前無故人",fp:2,fw:["故","舊","老"]},
+  {l:6,ln:"登月先鋒",em:"☁️",i:"壯志凌雲",m:"志向遠大、雄心壯志，有崇高的理想",e:"他胸懷壯志凌雲，立志成為偉大的科學家。",s:"小孩夢想高到踩著雲，雲說：你的夢想太重了，快撐不住啦！😤",w:"壯志凌零",fp:3,fw:["零","高","霄"]},
+  {l:6,ln:"登月先鋒",em:"🏆",i:"功成名就",m:"事業成功、名聲顯赫，獲得成就與名望",e:"經過多年努力，她終於功成名就，成為著名的醫生。",s:"努力一百年後終於成功，連外星人都說：地球最強！👽",w:"功成名究",fp:3,fw:["究","名就","立"]},
+  {l:6,ln:"登月先鋒",em:"💥",i:"一鳴驚人",m:"平時默默無聞，突然有驚人的表現",e:"他平時沉默，比賽時卻一鳴驚人，拿下第一名。",s:"靜靜的小雞突然開嗓，聲音震飛屋頂，全村人跑出：雞在說話？！🐔",w:"一鳴警人",fp:2,fw:["警","京","叫"]}
+];
+
+const LESSON_META = [
+  {l:0, name:"📚 全部課次", desc:"36個成語全練習", em:"🌟"},
+  {l:1, name:"第一課", desc:"在天晴了的時候", em:"🌸"},
+  {l:2, name:"第二課", desc:"珍珠鳥", em:"🦅"},
+  {l:3, name:"第三課", desc:"客至", em:"🏠"},
+  {l:4, name:"第四課", desc:"贏得喝采的輸家", em:"🏆"},
+  {l:5, name:"第五課", desc:"哇！原來如此", em:"💡"},
+  {l:6, name:"第六課", desc:"登月先鋒", em:"🚀"}
+];
+
+// ╔═══════════════════════════════════════════╗
+// ║  STATE                                    ║
+// ╚═══════════════════════════════════════════╝
+let selLesson = 0;
+let pool = [];
+let cardIdx = 0;
+let isFlipped = false;
+
+let questions = [];
+let qi = 0, qScore = 0, qTimer = 0;
+let timerInt = null;
+let wrongItems = [];
+let startMs = 0;
+
+let apiKey = localStorage.getItem('cy_ak') || '';
+
+// ╔═══════════════════════════════════════════╗
+// ║  BOOT                                     ║
+// ╚═══════════════════════════════════════════╝
+function init() {
+  if (apiKey) document.getElementById('apiKeyInput').value = apiKey;
+  renderLessons();
+}
+
+function renderLessons() {
+  const grid = document.getElementById('lessonGrid');
+  grid.innerHTML = LESSON_META.map(lm => {
+    const cls = `lesson-tile${lm.l===0?' all':''}${selLesson===lm.l?' selected':''}`;
+    return `<div class="${cls}" onclick="selectLesson(${lm.l})">
+      <div class="tile-em">${lm.em}</div>
+      <div>
+        <div class="tile-name">${lm.name}</div>
+        <div class="tile-desc">${lm.desc}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function selectLesson(l) { selLesson = l; renderLessons(); }
+
+function getPool() {
+  return selLesson === 0 ? [...IDIOMS] : IDIOMS.filter(x => x.l === selLesson);
+}
+
+// ╔═══════════════════════════════════════════╗
+// ║  NAVIGATION                               ║
+// ╚═══════════════════════════════════════════╝
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+function goHome() {
+  clearInterval(timerInt);
+  showScreen('home');
+}
+function showHistory() {
+  const hist = JSON.parse(localStorage.getItem('cy_hist') || '[]');
+  const el = document.getElementById('histList');
+  if (!hist.length) {
+    el.innerHTML = '<div class="no-records">還沒有記錄，快去闖關吧！🚀</div>';
+  } else {
+    el.innerHTML = hist.slice().reverse().slice(0, 20).map(h =>
+      `<div class="hist-item">
+        <div>
+          <div class="hist-score">${h.score}分 ${stars(h.score)}</div>
+          <div class="hist-meta">${h.lesson} · ${h.correct}/${h.total}答對 · ${h.time}秒</div>
+        </div>
+        <div class="hist-date">${h.date}</div>
+      </div>`
+    ).join('');
+  }
+  showScreen('history');
+}
+function toggleSettings() {
+  const p = document.getElementById('settingsPanel');
+  p.style.display = p.style.display === 'none' ? 'block' : 'none';
+}
+function saveApiKey() {
+  apiKey = document.getElementById('apiKeyInput').value.trim();
+  localStorage.setItem('cy_ak', apiKey);
+  document.getElementById('apiMsg').textContent = apiKey ? '✅ 已儲存！' : '⚠️ Key 為空';
+}
+function clearApiKey() {
+  apiKey = ''; localStorage.removeItem('cy_ak');
+  document.getElementById('apiKeyInput').value = '';
+  document.getElementById('apiMsg').textContent = '🗑️ 已清除';
+}
+
+// ╔═══════════════════════════════════════════╗
+// ║  LEARN MODE                               ║
+// ╚═══════════════════════════════════════════╝
+function startLearn() {
+  pool = shuffle(getPool());
+  cardIdx = 0; isFlipped = false;
+  showScreen('learn');
+  renderCard();
+}
+
+function renderCard() {
+  const c = pool[cardIdx];
+  document.getElementById('fcEmoji').textContent = c.em;
+  document.getElementById('fcIdiom').textContent = c.i;
+  document.getElementById('fcMeaning').textContent = '📖 ' + c.m;
+  document.getElementById('fcExample').textContent = '💬 ' + c.e;
+  document.getElementById('fcStory').textContent = '🧠 ' + c.s;
+  document.getElementById('learnCounter').textContent = `${cardIdx + 1} / ${pool.length}`;
+  document.getElementById('learnPbar').style.width = `${((cardIdx + 1) / pool.length) * 100}%`;
+  document.getElementById('aiBtn').textContent = '🤖 AI 生成故事';
+  document.getElementById('aiBtn').disabled = false;
+  // reset flip
+  const sc = document.getElementById('fcScene');
+  sc.classList.remove('flipped');
+  isFlipped = false;
+}
+
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('fcScene').classList.toggle('flipped', isFlipped);
+}
+
+function prevCard() { if (cardIdx > 0) { cardIdx--; renderCard(); } }
+function nextCard() { if (cardIdx < pool.length - 1) { cardIdx++; renderCard(); } }
+function speakCurrent() { speak(pool[cardIdx].i); }
+
+async function generateStory() {
+  const c = pool[cardIdx];
+  if (!apiKey) { alert('請先在⚙️設定中輸入 Anthropic API Key！'); return; }
+  const btn = document.getElementById('aiBtn');
+  btn.textContent = '⏳ AI思考中…'; btn.disabled = true;
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01' },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5', max_tokens: 150,
+        messages: [{ role: 'user', content: `為成語「${c.i}」（意思：${c.m}）創作一個超誇張、超好笑、讓小學六年級學生一看就忘不了的記憶小故事，30字以內，加上emoji。` }]
+      })
+    });
+    const data = await res.json();
+    const story = data.content?.[0]?.text || '生成失敗，請再試';
+    document.getElementById('fcStory').textContent = '🤖 ' + story;
+  } catch (e) {
+    document.getElementById('fcStory').textContent = '❌ ' + e.message;
+  }
+  btn.textContent = '🔄 重新生成'; btn.disabled = false;
+}
+
+// ╔═══════════════════════════════════════════╗
+// ║  QUIZ MODE                                ║
+// ╚═══════════════════════════════════════════╝
+function startQuiz() {
+  const p = getPool();
+  if (p.length < 4) { alert('至少需要4個成語！請選擇更多課次。'); return; }
+  questions = shuffle([...p]).slice(0, Math.min(20, p.length));
+  qi = 0; qScore = 0; wrongItems = [];
+  startMs = Date.now(); qTimer = 0;
+  clearInterval(timerInt);
+  timerInt = setInterval(() => {
+    qTimer++;
+    const el = document.getElementById('timerEl');
+    el.textContent = qTimer;
+    el.className = 'timer' + (qTimer > 90 ? ' fast' : '');
+  }, 1000);
+  showScreen('quiz');
+  renderQ();
+}
+
+const TYPE_NAMES = {1:'👁️ 看成語→選解釋', 2:'📖 看解釋→選成語', 3:'🔍 改錯字成語', 4:'✏️ 成語填空'};
+const TYPE_CLS   = {1:'tc1', 2:'tc2', 3:'tc3', 4:'tc4'};
+
+function renderQ() {
+  const q = questions[qi];
+  const type = (qi % 4) + 1;
+  document.getElementById('qNum').textContent = qi + 1;
+  document.getElementById('qTotal').textContent = questions.length;
+  document.getElementById('qScore').textContent = qScore;
+  document.getElementById('qPbar').style.width = `${(qi / questions.length) * 100}%`;
+  document.getElementById('qFeedback').textContent = '';
+
+  const chip = document.getElementById('typeChip');
+  chip.textContent = TYPE_NAMES[type];
+  chip.className = 'type-chip ' + TYPE_CLS[type];
+
+  // wrong choices from other idioms
+  const others = shuffle(IDIOMS.filter(x => x.i !== q.i));
+  const w3 = others.slice(0, 3);
+
+  const stage = document.getElementById('qStage');
+  const grid  = document.getElementById('optsGrid');
+  let correctAns, choices;
+
+  if (type === 1) {
+    stage.innerHTML = `<div class="q-idiom">${q.i}</div><div class="q-text" style="margin-top:6px">${q.em} 這個成語是什麼意思？</div>`;
+    correctAns = q.m;
+    choices = shuffle([q.m, ...w3.map(x => x.m)]);
+
+  } else if (type === 2) {
+    stage.innerHTML = `<div class="q-text">📖 ${q.m}</div><div class="q-text" style="font-size:.9rem;color:var(--text-muted);margin-top:6px">哪個成語符合這個意思？</div>`;
+    correctAns = q.i;
+    choices = shuffle([q.i, ...w3.map(x => x.i)]);
+
+  } else if (type === 3) {
+    stage.innerHTML = `<div class="q-text" style="margin-bottom:6px">❌ 下面這個成語寫錯了一個字：</div><div class="q-wrong">${q.w}</div><div class="q-text" style="font-size:.9rem;margin-top:4px">正確的成語是？</div>`;
+    correctAns = q.i;
+    choices = shuffle([q.i, ...w3.map(x => x.i)]);
+
+  } else {
+    // fill blank
+    const pos = q.fp;
+    const chars = q.i.split('');
+    const correctChar = chars[pos];
+    const blankHtml = chars.map((c, i) =>
+      i === pos ? `<span class="blank-slot">＿</span>` : c
+    ).join('');
+    stage.innerHTML = `<div class="q-text" style="margin-bottom:8px">✏️ 選出正確的字填入空白：</div><div class="blank-display">${blankHtml}</div>`;
+    correctAns = correctChar;
+    choices = shuffle([correctChar, ...q.fw]);
+  }
+
+  // Build option buttons
+  grid.innerHTML = '';
+  const labels = ['A', 'B', 'C', 'D'];
+  choices.forEach((ch, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.innerHTML = `<strong>${labels[idx]}.</strong>&nbsp;${ch}`;
+    btn.addEventListener('click', () => handleAnswer(btn, ch, correctAns, q, type, choices));
+    grid.appendChild(btn);
+  });
+}
+
+function handleAnswer(btn, chosen, correct, q, type, allChoices) {
+  clearInterval(timerInt);
+  document.querySelectorAll('.opt').forEach(b => b.disabled = true);
+  const ok = chosen === correct;
+  btn.classList.add(ok ? 'correct' : 'wrong');
+  if (!ok) {
+    document.querySelectorAll('.opt').forEach(b => {
+      if (b.textContent.replace(/^[ABCD]\.\s*/,'').trim() === correct.trim()) b.classList.add('correct');
+    });
+    wrongItems.push({ idiom: q.i, meaning: q.m, chosen, correct });
+  }
+  if (ok) { qScore += 5; }
+
+  const fb = document.getElementById('qFeedback');
+  if (ok) {
+    fb.innerHTML = `<span style="color:var(--jade)">🎉 答對了！+5分</span>`;
+    playSound('ok'); showFb('🎊');
+  } else {
+    fb.innerHTML = `<span style="color:var(--red-bright)">❌ 正確答案：${correct}</span>`;
+    playSound('no'); showFb('💔');
+  }
+  setTimeout(() => speak(q.i), 250);
+
+  setTimeout(() => {
+    qi++;
+    if (qi >= questions.length) { endQuiz(); return; }
+    clearInterval(timerInt);
+    timerInt = setInterval(() => {
+      qTimer++;
+      const el = document.getElementById('timerEl');
+      el.textContent = qTimer;
+      el.className = 'timer' + (qTimer > 90 ? ' fast' : '');
+    }, 1000);
+    renderQ();
+  }, 1700);
+}
+
+function endQuiz() {
+  clearInterval(timerInt);
+  const elapsed = Math.round((Date.now() - startMs) / 1000);
+  const correct = questions.length - wrongItems.length;
+  const acc = Math.round((correct / questions.length) * 100);
+
+  document.getElementById('starsEl').textContent = stars(qScore);
+  document.getElementById('rScore').textContent = qScore + ' 分';
+  document.getElementById('rMsg').textContent = scoreMsg(qScore);
+  document.getElementById('rCorrect').textContent = correct;
+  document.getElementById('rTime').textContent = elapsed + 's';
+  document.getElementById('rAccuracy').textContent = acc + '%';
+  document.getElementById('rLesson').textContent = selLesson === 0 ? '全課次' : '第' + selLesson + '課';
+
+  const wrongBox = document.getElementById('wrongBox');
+  if (wrongItems.length > 0) {
+    wrongBox.style.display = 'block';
+    document.getElementById('wrongList').innerHTML = wrongItems.map(w =>
+      `<div class="wrong-item">
+        <div class="wi-idiom">${w.idiom}</div>
+        <div class="wi-meaning">📖 ${w.meaning}</div>
+        <div class="wi-answer"><span class="wi-wrong">❌ ${w.chosen}</span>&nbsp;&nbsp;<span class="wi-correct">✅ ${w.correct}</span></div>
+      </div>`
+    ).join('');
+  } else { wrongBox.style.display = 'none'; }
+
+  // Save to history
+  const hist = JSON.parse(localStorage.getItem('cy_hist') || '[]');
+  hist.push({
+    score: qScore, correct, total: questions.length,
+    time: elapsed, lesson: selLesson === 0 ? '全課次' : '第' + selLesson + '課',
+    date: new Date().toLocaleDateString('zh-TW', { month: 'numeric', day: 'numeric' })
+  });
+  if (hist.length > 60) hist.shift();
+  localStorage.setItem('cy_hist', JSON.stringify(hist));
+
+  if (qScore >= 80) confetti();
+  showScreen('results');
+}
+
+// ╔═══════════════════════════════════════════╗
+// ║  HELPERS                                  ║
+// ╚═══════════════════════════════════════════╝
+function stars(s) {
+  if (s >= 90) return '⭐⭐⭐';
+  if (s >= 70) return '⭐⭐';
+  if (s >= 40) return '⭐';
+  return '💪';
+}
+function scoreMsg(s) {
+  if (s >= 95) return '🏆 完美！你是成語達人！';
+  if (s >= 80) return '🎉 太棒了！繼續加油！';
+  if (s >= 60) return '👍 不錯喔！再練習一次！';
+  if (s >= 40) return '💪 繼續努力，你可以的！';
+  return '📚 多複習幾次，加油加油！';
+}
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function speak(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'zh-TW'; u.rate = 0.85; u.pitch = 1.1;
+  window.speechSynthesis.speak(u);
+}
+
+// ── Audio ──
+let actx = null;
+function getActx() { return actx = actx || new (window.AudioContext || window.webkitAudioContext)(); }
+function playSound(type) {
+  try {
+    const ctx = getActx();
+    const osc = ctx.createOscillator();
+    const g   = ctx.createGain();
+    osc.connect(g); g.connect(ctx.destination);
+    if (type === 'ok') {
+      osc.frequency.setValueAtTime(523, ctx.currentTime);
+      osc.frequency.setValueAtTime(659, ctx.currentTime + .1);
+      osc.frequency.setValueAtTime(784, ctx.currentTime + .22);
+      g.gain.setValueAtTime(.28, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .5);
+      osc.start(); osc.stop(ctx.currentTime + .5);
+    } else {
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(220, ctx.currentTime);
+      osc.frequency.setValueAtTime(180, ctx.currentTime + .18);
+      g.gain.setValueAtTime(.22, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .42);
+      osc.start(); osc.stop(ctx.currentTime + .42);
+    }
+  } catch(e) {}
+}
+
+// ── Confetti ──
+function confetti() {
+  const cols = ['#C8381A','#F0A500','#27A98C','#E8341A','#FFB900','#F5EBCF','#1A2744'];
+  for (let i = 0; i < 90; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'cf';
+      const dur = 1.6 + Math.random() * 2;
+      el.style.cssText = `left:${Math.random()*100}%;background:${cols[Math.floor(Math.random()*cols.length)]};animation-duration:${dur}s;width:${9+Math.random()*10}px;height:${9+Math.random()*10}px;border-radius:${Math.random()>.5?'50%':'3px'}`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), dur * 1000 + 100);
+    }, i * 28);
+  }
+}
+
+// ── Feedback overlay ──
+function showFb(em) {
+  const el = document.getElementById('feedback');
+  el.textContent = em;
+  el.className = 'show';
+  setTimeout(() => el.className = '', 700);
+}
+
+init();
+</script>
+</body>
+</html>
