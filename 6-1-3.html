@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>客至 自學寶典</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+/* Layout: 草堂主題。頂部固定標題＋可橫捲分頁；內容單欄 860px；詩句用直書宣紙卡片呈現 */
+:root{
+  color-scheme:light;
+  --bg:#F2F9FF; --paper:#FFFFFF; --paper2:#FFF7DD; --line:#CFE3F7;
+  --ink:#1F2A44; --ink2:#44506B; --ink3:#7A86A0;
+  --water:#1E90FF; --water-lt:#E0F1FF;      /* 天空藍 */
+  --bamboo:#1FB25A; --bamboo-lt:#DDF7E7;    /* 青草綠 */
+  --seal:#FF4D6D; --seal-lt:#FFE3E9;        /* 草莓紅 */
+  --straw:#FF8C1A; --straw-lt:#FFEFD9;      /* 橘子橙 */
+  --plum:#9B5DE5; --plum-lt:#F1E6FF;        /* 葡萄紫 */
+  --sun:#FFC93C;
+  --ok:#18A957; --ok-lt:#DFF7E9; --bad:#FF4D6D; --bad-lt:#FFE3E9;
+  --shadow:0 3px 14px rgba(30,144,255,.13);
+  --f-display:'LXGW WenKai TC','Kaiti TC','BiauKai','DFKai-SB','Noto Serif TC',serif;
+  --f-body:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  --r:16px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.75}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:linear-gradient(100deg,#FF5E8A 0%,#FF9A3C 45%,#FFC93C 75%,#3FC1F2 100%);box-shadow:0 4px 18px rgba(255,94,138,.28);color:#fff}
+.top-in{max-width:900px;margin:0 auto;padding:10px 16px 0;display:flex;align-items:center;gap:12px}
+.seal{flex:none;width:44px;height:44px;border-radius:12px;background:#fff;color:var(--seal);box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:var(--f-display);font-weight:700;display:grid;place-items:center;font-size:1.15rem;line-height:1;writing-mode:vertical-rl;letter-spacing:.05em}
+.top h1{margin:0;text-shadow:0 1px 4px rgba(0,0,0,.18);font-family:var(--f-display);font-size:1.35rem;letter-spacing:.08em;line-height:1.2}
+.top .sub{font-size:.78rem;color:#fff;opacity:.95}
+.overall{margin-left:auto;text-align:right;font-size:.75rem;color:#fff;white-space:nowrap}
+.overall b{display:block;font-size:1.05rem;color:#fff;font-variant-numeric:tabular-nums;text-shadow:0 1px 4px rgba(0,0,0,.18)}
+.tabs{max-width:900px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;padding:8px 12px 0;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;border:0;background:rgba(255,255,255,.22);padding:8px 13px;border-radius:12px 12px 0 0;cursor:pointer;font-weight:700;font-size:.88rem;color:#fff;border-bottom:3px solid transparent;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.15)}
+.tab:hover{background:rgba(255,255,255,.4)}
+.tab.on{color:var(--tc,var(--water));border-bottom-color:var(--tc,var(--water));background:var(--bg);text-shadow:none}
+.tab .n{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#fff;color:var(--tc,var(--water));text-shadow:none;font-size:.72rem;margin-right:5px;vertical-align:1px}
+
+main{max-width:900px;margin:0 auto;padding-inline:16px;padding-block:24px 80px}
+.panel[hidden]{display:none}
+h2.sec{font-family:var(--f-display);font-size:1.6rem;color:var(--tc,var(--water));margin:0 0 4px;letter-spacing:.04em;text-wrap:balance}
+.lead{color:var(--ink2);margin:0 0 20px}
+h3.sub{font-family:var(--f-display);font-size:1.2rem;margin:30px 0 12px;display:flex;align-items:center;gap:8px}
+h3.sub::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--tc,var(--water));transform:rotate(45deg)}
+.core{background:var(--straw-lt);border-left:4px solid var(--straw);padding:10px 14px;border-radius:0 10px 10px 0;margin:0 0 18px;font-weight:500}
+.core b{color:var(--straw)}
+
+/* home hero */
+.hero{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:start;margin-bottom:22px}
+.scroll{display:flex;justify-content:center;background:#FFFDF6;border:3px solid var(--sun);border-radius:18px;padding:18px 16px;box-shadow:var(--shadow);position:relative;overflow-x:auto;max-width:100%}
+.vpoem{writing-mode:vertical-rl;font-family:var(--f-display);font-size:1.32rem;line-height:2.05;letter-spacing:.18em;height:9.8em;margin:0 auto}
+.vpoem .t{font-weight:700;font-size:1.5rem;color:var(--seal)}
+.vpoem .a{font-size:.95rem;color:var(--ink3)}
+.vpoem .l{display:block}
+.hero-side{display:grid;gap:12px;min-width:0;align-content:start}
+.fact{background:var(--paper);border:2px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.fact .k{display:inline-block;font-size:.75rem;letter-spacing:.12em;color:#fff;background:var(--water);border-radius:20px;padding:0 10px;font-weight:700;margin-bottom:4px}
+.fact .v{font-size:1rem}
+.fact .v b{color:var(--seal)}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:6px 0 4px}
+.stage{border-radius:var(--r);padding:12px;background:color-mix(in srgb,var(--c) 11%,#fff);border:2px solid color-mix(in srgb,var(--c) 35%,#fff);border-top:6px solid var(--c);min-width:0}
+.stage .nm{font-family:var(--f-display);font-size:1.35rem;color:var(--c);font-weight:700}
+.stage .ln{font-family:var(--f-display);font-size:.95rem;margin:2px 0 6px}
+.stage .ds{font-size:.85rem;color:var(--ink2)}
+.stage .mood{display:inline-block;font-size:.75rem;font-weight:700;margin-top:6px;padding:2px 10px;border-radius:20px;background:var(--c);color:#fff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.box{background:var(--paper);border:2px solid var(--line);border-radius:var(--r);padding:14px 16px;min-width:0}
+.box h4{margin:0 0 6px;font-size:1rem;color:var(--tc,var(--water))}
+.box ul{margin:0;padding-left:1.2em}
+.box li{margin:2px 0}
+.must{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.must li{display:flex;gap:10px;align-items:flex-start;background:var(--paper);border:2px solid var(--line);border-radius:10px;padding:9px 12px}
+.must input{width:20px;height:20px;margin-top:4px;accent-color:var(--bamboo);flex:none}
+.must label{cursor:pointer}
+.prog{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.pcard{background:color-mix(in srgb,var(--c) 9%,#fff);border:2px solid color-mix(in srgb,var(--c) 35%,#fff);border-radius:var(--r);padding:12px;cursor:pointer;text-align:left}
+.pcard:hover{border-color:var(--c)}
+.pcard .pn{font-weight:700;font-size:.9rem}
+.pcard .pv{font-size:.8rem;color:var(--ink3);font-variant-numeric:tabular-nums}
+.bar{height:10px;background:#fff;border-radius:8px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--c);width:0;transition:width .3s}
+
+/* poem study */
+.couplet{background:var(--paper);border:2px solid color-mix(in srgb,var(--c) 40%,#fff);border-top:6px solid var(--c);border-radius:var(--r);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.ch{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
+.chip{font-size:.75rem;font-weight:700;padding:2px 10px;border-radius:20px;background:var(--paper2);color:var(--ink2)}
+.chip.c{background:var(--c);color:#fff}
+.pl{font-family:var(--f-display);font-size:1.5rem;letter-spacing:.12em;line-height:1.9;display:flex;flex-wrap:wrap;align-items:baseline}
+.w{border:0;background:none;padding:0 1px;cursor:pointer;font:inherit;letter-spacing:inherit;border-bottom:2px dotted var(--water);color:var(--ink)}
+.w:hover,.w.on{background:var(--water-lt)}
+.punc{color:var(--ink3)}
+.note{min-height:0;font-size:.92rem;background:var(--water-lt);border-radius:8px;padding:8px 12px;margin:6px 0 4px}
+.note[hidden]{display:none}
+.note b{color:var(--water)}
+.tr-btn{margin-top:8px;border:1px solid var(--line);background:var(--paper2);border-radius:8px;padding:5px 12px;cursor:pointer;font-size:.85rem;font-weight:700}
+.tr{margin-top:8px;padding:10px 12px;border-radius:8px;background:var(--bamboo-lt);font-size:.95rem}
+.points{margin:10px 0 0;padding-left:1.2em;font-size:.92rem;color:var(--ink2)}
+.points b{color:var(--seal)}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--paper)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--water-lt);color:var(--ink);font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.big{font-family:var(--f-display);font-size:1.1rem;white-space:nowrap}
+
+/* vocab */
+.chars{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.cc{background:var(--paper);border:2px solid var(--line);border-radius:var(--r);padding:10px 12px;cursor:pointer;text-align:left;display:grid;gap:2px;min-width:0}
+.cc:hover{border-color:var(--water)}
+.cc .z{display:flex;align-items:center;gap:8px}
+.cc .zc{font-family:var(--f-display);font-size:2rem;line-height:1.1;color:var(--seal)}
+.cc .zy{font-size:.85rem;color:var(--water);font-weight:700}
+.cc .rs{font-size:.72rem;color:var(--ink3)}
+.cc .more{font-size:.85rem;color:var(--ink2);border-top:1px dashed var(--line);padding-top:4px;margin-top:4px}
+.cc .more[hidden]{display:none}
+.cc .more b{color:var(--seal)}
+.warn{background:var(--seal-lt);border:1px solid var(--seal);border-radius:var(--r);padding:12px 16px}
+.warn b{color:var(--seal)}
+.pairs{display:flex;flex-wrap:wrap;gap:8px}
+.pair{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:4px 12px;font-size:.92rem}
+
+/* idioms */
+.idioms{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.idc{background:var(--paper);border:2px solid var(--straw-lt);border-top:6px solid var(--straw);border-radius:var(--r);padding:14px;min-width:0}
+.idc .nm{font-family:var(--f-display);font-size:1.45rem;letter-spacing:.12em}
+.idc .nm em{font-style:normal;color:var(--seal)}
+.idc .mn{font-size:.92rem;margin:2px 0 8px}
+.ctx{font-size:.86rem;border-radius:8px;padding:6px 10px;margin-top:6px}
+.ctx.y{background:var(--ok-lt)}
+.ctx.n{background:var(--bad-lt)}
+.ctx b{font-weight:700}
+.ctx.y b{color:var(--ok)}
+.ctx.n b{color:var(--bad)}
+.rel{font-size:.78rem;color:var(--ink3);margin-top:8px}
+
+/* rhetoric & patterns cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.rc{background:var(--paper);border:2px solid color-mix(in srgb,var(--tc,var(--water)) 25%,#fff);border-top:6px solid var(--tc,var(--water));border-radius:var(--r);padding:14px;min-width:0}
+.rc .rn{font-weight:700;font-size:1.05rem;color:var(--tc,var(--water))}
+.rc .rd{font-size:.88rem;color:var(--ink2);margin:2px 0 8px}
+.rc .ex{font-family:var(--f-display);font-size:1.05rem;background:var(--paper2);border-radius:8px;padding:8px 10px}
+.rc .ex mark{background:var(--straw-lt);color:var(--ink);border-bottom:2px solid var(--straw);padding:0 1px}
+.rc .ef{font-size:.86rem;margin-top:8px}
+.scaf{font-family:var(--f-display);background:var(--paper);border:1px dashed var(--straw);border-radius:var(--r);padding:12px 16px;font-size:1.02rem;line-height:2}
+
+/* quiz */
+.qtools{box-shadow:var(--shadow);display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px;margin-bottom:14px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 108px);z-index:5}
+.score{font-weight:700;font-variant-numeric:tabular-nums}
+.score small{font-weight:400;color:var(--ink3)}
+.btn{border:2px solid var(--line);background:#fff;border-radius:20px;padding:6px 12px;cursor:pointer;font-size:.85rem;font-weight:700}
+.btn:hover{border-color:var(--tc,var(--water))}
+.btn.pri{background:var(--tc,var(--water));border-color:var(--tc,var(--water));color:#fff}
+.q{background:var(--paper);border:2px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px;scroll-margin-top:180px}
+.q.right{border-color:var(--ok)}
+.q.wrong{border-color:var(--bad)}
+.qh{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:6px}
+.qno{font-weight:700;color:var(--ink3);font-variant-numeric:tabular-nums}
+.lay{font-size:.72rem;font-weight:700;padding:1px 9px;border-radius:20px}
+.lay.L1{background:var(--water-lt);color:var(--water)}
+.lay.L2{background:var(--bamboo-lt);color:var(--bamboo)}
+.lay.L3{background:var(--plum-lt);color:var(--plum)}
+.lay.L4{background:var(--straw-lt);color:var(--straw)}
+.lay.L5{background:var(--seal-lt);color:var(--seal)}
+.qt{font-weight:500;margin-bottom:8px}
+.qt .poem{font-family:var(--f-display);font-size:1.08rem}
+.qctx{background:var(--paper2);border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:.95rem}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;border:1.5px solid var(--line);background:var(--paper);border-radius:10px;padding:9px 12px;cursor:pointer}
+.opt:hover:not([disabled]){border-color:var(--tc,var(--water));background:var(--paper2)}
+.opt .k{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--tc,var(--water)) 18%,#fff);color:var(--tc,var(--water));font-weight:700;font-size:.85rem}
+.opt[disabled]{cursor:default}
+.opt.ok{border-color:var(--ok);background:var(--ok-lt)}
+.opt.ok .k{background:var(--ok);color:#fff}
+.opt.no{border-color:var(--bad);background:var(--bad-lt)}
+.opt.no .k{background:var(--bad);color:#fff}
+.fb{margin-top:10px;border-radius:10px;padding:10px 12px;font-size:.93rem;background:var(--paper2)}
+.fb[hidden]{display:none}
+.fb .verdict{font-weight:700}
+.fb .verdict.ok{color:var(--ok)}
+.fb .verdict.no{color:var(--bad)}
+.ev{margin-top:6px;padding:6px 10px;border-left:3px solid var(--straw);background:var(--straw-lt);border-radius:0 6px 6px 0;font-family:var(--f-display)}
+.ev::before{content:"文中證據　";font-family:var(--f-body);font-size:.75rem;font-weight:700;color:var(--straw)}
+.open textarea{width:100%;min-height:84px;border:1.5px solid var(--line);border-radius:10px;padding:10px;font:inherit;background:var(--paper);color:var(--ink);resize:vertical}
+.open .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.hint{font-size:.88rem;color:var(--ink2);background:var(--paper2);border-radius:8px;padding:6px 10px;margin-bottom:8px}
+.sample{margin-top:8px;background:var(--bamboo-lt);border-radius:10px;padding:10px 12px;font-size:.93rem}
+.sample[hidden]{display:none}
+.sample b{color:var(--bamboo)}
+.selfok{display:flex;gap:6px;align-items:center;font-size:.85rem;color:var(--ink2);cursor:pointer}
+.selfok input{accent-color:var(--bamboo);width:18px;height:18px}
+.count{font-size:.8rem;color:var(--ink3);font-variant-numeric:tabular-nums;margin-left:auto}
+.count.good{color:var(--ok);font-weight:700}
+.empty{text-align:center;color:var(--ink3);padding:30px 10px;background:var(--paper);border:1px dashed var(--line);border-radius:var(--r)}
+.wr-item{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;margin-bottom:10px}
+.wr-item .mod{font-size:.75rem;color:var(--ink3);font-weight:700}
+.wr-item .a{margin-top:4px}
+.wr-item .a b{color:var(--ok)}
+.wr-item .y{color:var(--bad)}
+.rubric td:first-child{font-weight:700;white-space:nowrap}
+.check{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:6px}
+.check label{display:flex;gap:8px;align-items:center;cursor:pointer;font-size:.92rem}
+.check input{accent-color:var(--bamboo);width:18px;height:18px}
+
+@media (max-width:640px){
+  .hero{grid-template-columns:1fr}
+  .vpoem{font-size:1.12rem}
+  .flow{grid-template-columns:1fr 1fr}
+  .grid2{grid-template-columns:1fr}
+  .pl{font-size:1.28rem}
+  .overall{display:none}
+  .qtools{top:calc(env(safe-area-inset-top,0px) + 104px)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="seal" aria-hidden="true">客至</div>
+    <div>
+      <h1>客至 自學寶典</h1>
+      <div class="sub">南一版 六上 第三課｜杜甫｜七言律詩</div>
+    </div>
+    <div class="overall">選擇題總進度<b id="overall">0 / 0</b></div>
+  </div>
+  <nav class="tabs" id="tabs" aria-label="分頁">
+    <button class="tab" data-tab="home" style="--tc:var(--seal)">重點總覽</button>
+    <button class="tab" data-tab="poem" style="--tc:var(--water)">詩句精讀</button>
+    <button class="tab" data-tab="words" style="--tc:var(--bamboo)">生字語詞</button>
+    <button class="tab" data-tab="m1" style="--tc:var(--water)"><span class="n">1</span>閱讀理解</button>
+    <button class="tab" data-tab="m2" style="--tc:var(--straw)"><span class="n">2</span>成語情境</button>
+    <button class="tab" data-tab="m3" style="--tc:var(--plum)"><span class="n">3</span>語病句型</button>
+    <button class="tab" data-tab="m4" style="--tc:var(--bamboo)"><span class="n">4</span>修辭</button>
+    <button class="tab" data-tab="m5" style="--tc:var(--seal)"><span class="n">5</span>寫作</button>
+    <button class="tab" data-tab="wrong" style="--tc:var(--bad)">錯題本</button>
+  </nav>
+</header>
+
+<main>
+<!-- ═════════ 重點總覽 ═════════ -->
+<section class="panel" id="p-home" style="--tc:var(--seal)">
+  <h2 class="sec">先看懂這首詩在說什麼</h2>
+  <p class="lead">一句話記住：杜甫住在偏僻的草堂，平常只有水鳥作伴；今天好朋友來了，他開心的打掃、開門、拿出僅有的酒菜，還想叫隔壁老爺爺一起來喝。</p>
+
+  <div class="hero">
+    <div class="scroll" aria-label="客至全詩">
+      <div class="vpoem">
+        <span class="l t">客至</span>
+        <span class="l a">唐・杜甫</span>
+        <span class="l">舍南舍北皆春水，</span>
+        <span class="l">但見群鷗日日來。</span>
+        <span class="l">花徑不曾緣客掃，</span>
+        <span class="l">蓬門今始為君開。</span>
+        <span class="l">盤飧市遠無兼味，</span>
+        <span class="l">樽酒家貧只舊醅。</span>
+        <span class="l">肯與鄰翁相對飲，</span>
+        <span class="l">隔籬呼取盡餘杯。</span>
+      </div>
+    </div>
+    <div class="hero-side">
+      <div class="fact"><div class="k" style="background:var(--seal)">主旨</div><div class="v">因<b>客人來訪</b>而表現出<b>喜悅</b>之情。</div></div>
+      <div class="fact"><div class="k" style="background:var(--bamboo)">文體</div><div class="v">詩歌｜<b>七言律詩</b>（8 句 × 7 字 = 56 字）</div></div>
+      <div class="fact"><div class="k" style="background:var(--straw)">作者</div><div class="v"><b>杜甫</b>，字子美，號少陵野老，唐代人。被譽為「<b>詩聖</b>」；作品反映社會現實，又稱「<b>詩史</b>」。曾任工部員外郎，人稱杜工部。與李白並稱「李杜」。</div></div>
+      <div class="fact"><div class="k" style="background:var(--plum)">寫作背景</div><div class="v">西元 761 年春天，杜甫 50 歲，住在<b>成都草堂</b>（浣花溪畔）。這是他少數描寫<b>生活閒情</b>的作品，和他平常沉鬱的詩風不同。</div></div>
+    </div>
+  </div>
+
+  <h3 class="sub">課文結構：客人來訪的四個階段</h3>
+  <div class="flow">
+    <div class="stage" style="--c:var(--water)"><div class="nm">無客</div><div class="ln">第 1～2 句</div><div class="ds">春水圍繞，群鷗相伴，冷清沒有訪客。</div><span class="mood">孤寂</span></div>
+    <div class="stage" style="--c:var(--bamboo)"><div class="nm">迎客</div><div class="ln">第 3～4 句</div><div class="ds">打掃花徑，敞開蓬門，迎接客人。</div><span class="mood">期待、重視</span></div>
+    <div class="stage" style="--c:var(--straw)"><div class="nm">待客</div><div class="ln">第 5～6 句</div><div class="ds">準備小菜，拿出舊酒，招待客人。</div><span class="mood">盡其所能</span></div>
+    <div class="stage" style="--c:var(--seal)"><div class="nm">陪客</div><div class="ln">第 7～8 句</div><div class="ds">隔著籬笆，呼喚鄰翁，陪伴客人。</div><span class="mood">熱鬧盡興</span></div>
+  </div>
+  <p style="font-size:.9rem;color:var(--ink2)">口訣：<b>無 → 迎 → 待 → 陪</b>。考題常把四個階段打亂，請你排回詩句順序。</p>
+
+  <h3 class="sub">寫作技巧</h3>
+  <div class="grid2">
+    <div class="box"><h4>時間：順敘</h4>跟著客人來訪的過程一步步寫：冷清 → 客人到 → 熱鬧 → 賓主盡歡。</div>
+    <div class="box"><h4>空間：由遠而近、由外而內</h4>屋外的春水、群鷗 → 門前花徑、蓬門 → 屋裡的酒菜 → 隔著籬笆喊鄰居。</div>
+    <div class="box"><h4>對比</h4>前兩句的<b>冷清</b>，襯托後面的<b>熱鬧</b>；「不曾」對「今始」，凸顯這位客人特別重要。</div>
+    <div class="box"><h4>全詩核心（詩眼）</h4>「花徑不曾緣客掃，蓬門今始為君開」<b>承上啟下</b>：上接無客的冷清，下開待客的熱鬧。</div>
+  </div>
+
+  <h3 class="sub">考前必背清單</h3>
+  <ul class="must" id="must"></ul>
+
+  <h3 class="sub">我的五大模組進度</h3>
+  <div class="prog" id="prog"></div>
+</section>
+
+<!-- ═════════ 詩句精讀 ═════════ -->
+<section class="panel" id="p-poem" hidden style="--tc:var(--water)">
+  <h2 class="sec">詩句精讀</h2>
+  <p class="lead">點一下有虛線的詞，看注釋。先自己想意思，再按「看語譯」對答案。</p>
+  <div id="couplets"></div>
+
+  <h3 class="sub">律詩小百科</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>項目</th><th>律詩的規則</th><th>在〈客至〉裡</th></tr>
+    <tr><td>句數字數</td><td>8 句；五言律詩每句 5 字，七言律詩每句 7 字</td><td>每句 7 字 → 七言律詩</td></tr>
+    <tr><td>四聯</td><td>每兩句一聯：首聯、頷聯、頸聯、尾聯</td><td>首聯＝無客｜頷聯＝迎客｜頸聯＝待客｜尾聯＝陪客</td></tr>
+    <tr><td>對仗</td><td>頷聯（3、4 句）和頸聯（5、6 句）必須對仗</td><td>花徑／蓬門、盤飧／樽酒 都上下對稱</td></tr>
+    <tr><td>押韻</td><td>偶數句最後一字押韻（第 1 句可押可不押）</td><td>韻腳：來、開、醅、杯</td></tr>
+  </table></div>
+
+  <h3 class="sub">兩個讀古詩的祕密</h3>
+  <div class="grid2">
+    <div class="box"><h4>倒裝：為了押韻和對仗，把詞語換位置</h4>
+      <ul><li>花徑不曾緣客掃 → 不曾緣客掃<b>花徑</b></li><li>蓬門今始為君開 → 今始為君開<b>蓬門</b></li><li>盤飧市遠無兼味 → <b>市遠</b>盤飧無兼味</li><li>樽酒家貧只舊醅 → <b>家貧</b>樽酒只舊醅</li></ul></div>
+    <div class="box"><h4>互文（把話藏在句子裡）</h4>
+      對偶的上下兩句意思互相補充：<br>花徑不曾緣客掃，今始為君<b>掃</b>；<br>蓬門不曾緣客<b>開</b>，今始為君開。<br>花徑和蓬門<b>都</b>是平常不為客人整理，今天特地為你準備。</div>
+  </div>
+
+  <h3 class="sub">讀古詩的方法（加油小站）</h3>
+  <div class="box">① <b>圈難詞</b> → ② <b>猜詞義</b>：看部首、看上下文 → ③ <b>放回句中檢查</b>：通順就懂了，不通順就查工具書。<br>
+  例：「蓬」是艸部，跟草有關 → 蓬門是草編的門 → 「這扇蓬草編成的小門，今天才為你打開」，通順。</div>
+</section>
+
+<!-- ═════════ 生字語詞 ═════════ -->
+<section class="panel" id="p-words" hidden style="--tc:var(--bamboo)">
+  <h2 class="sec">生字語詞</h2>
+  <p class="lead">點生字卡看造詞和形近字。部首／總筆畫是常考題。</p>
+  <div class="chars" id="chars"></div>
+
+  <h3 class="sub">隨堂卷常見錯字</h3>
+  <div class="warn">
+    <b>蓬</b>蓽生輝（不是「逢」）｜一片<b>寂</b>靜（不是「叔」）｜有口<b>皆</b>碑（不是「諧」）｜整齊<b>陳</b>列（不是「沉」）｜<b>籬笆</b>（不是「蘺芭」）｜盤<b>飧</b>（夕＋食，不是「餐」）
+  </div>
+
+  <h3 class="sub">新詞解釋</h3>
+  <div class="tbl-wrap"><table id="newwords"><tr><th>語詞</th><th>解釋</th><th>例句</th></tr></table></div>
+
+  <h3 class="sub">相似詞・相反詞</h3>
+  <p style="margin:0 0 6px;font-weight:700;color:var(--bamboo)">相似詞</p>
+  <div class="pairs"><span class="pair">孤寂 ≈ 孤單</span><span class="pair">重視 ≈ 注重</span><span class="pair">核心 ≈ 中心</span><span class="pair">招待 ≈ 款待</span></div>
+  <p style="margin:12px 0 6px;font-weight:700;color:var(--seal)">相反詞</p>
+  <div class="pairs"><span class="pair">貧窮 ↔ 富裕</span><span class="pair">冷清 ↔ 熱鬧</span><span class="pair">重視 ↔ 輕視</span><span class="pair">簡陋 ↔ 豪華</span><span class="pair">流露 ↔ 隱藏</span><span class="pair">無與倫比 ↔ 不相上下</span></div>
+</section>
+
+<!-- ═════════ 模組 1–5 ═════════ -->
+<section class="panel" id="p-m1" hidden style="--tc:var(--water)">
+  <h2 class="sec">模組一｜閱讀理解</h2>
+  <p class="core"><b>核心觀念：</b>答案一定在詩裡，不在腦袋裡。每一題先找到「文中證據」再選。</p>
+  <div class="hint">題目分四層：<span class="lay L1">表層・找資訊</span> <span class="lay L2">推論・連結資訊</span> <span class="lay L3">評鑑・判斷詮釋</span> <span class="lay L4">延伸・律詩</span></div>
+  <div data-quiz="m1"></div>
+</section>
+
+<section class="panel" id="p-m2" hidden style="--tc:var(--straw)">
+  <h2 class="sec">模組二｜成語情境判斷</h2>
+  <p class="core"><b>核心觀念：</b>不只要知道意思，還要會用在對的情境。每個成語都看「✓ 對的用法」和「✗ 錯的用法」。</p>
+  <div class="idioms" id="idioms"></div>
+  <h3 class="sub">本課好用語詞</h3>
+  <div class="cards" id="phrases"></div>
+  <h3 class="sub">情境練習</h3>
+  <div data-quiz="m2"></div>
+</section>
+
+<section class="panel" id="p-m3" hidden style="--tc:var(--plum)">
+  <h2 class="sec">模組三｜語病與句型結構</h2>
+  <p class="core"><b>核心觀念：</b>找出句子裡「多餘的字」和「搭錯的結構」，並說得出錯在哪裡。</p>
+  <h3 class="sub">本課三個句型</h3>
+  <div class="cards" id="patterns"></div>
+  <h3 class="sub">常見語病五類</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>語病類型</th><th>怎麼看出來</th><th>錯誤例句</th><th>改正</th></tr>
+    <tr><td>關聯詞誤用</td><td>前後連接詞配不起來</td><td>雖然家裡很窮，<u>而且</u>杜甫仍熱情待客。</td><td>雖然……<b>但是</b>……</td></tr>
+    <tr><td>語意重複</td><td>兩個詞意思一樣</td><td><u>每天</u>只見水鳥<u>日日</u>飛來。</td><td>刪掉其中一個</td></tr>
+    <tr><td>成分殘缺</td><td>找不到「誰」做這件事</td><td><u>透過</u>這首詩，<u>讓</u>我們感受到友情。</td><td>刪「透過」或刪「讓」</td></tr>
+    <tr><td>搭配不當</td><td>動詞和名詞配不上</td><td>我的古詩知識<u>提高</u>了。</td><td>知識<b>增加</b>／<b>豐富</b>了</td></tr>
+    <tr><td>兩面對一面</td><td>前面「能不能」，後面只講一面</td><td><u>能不能</u>讀懂古詩，關鍵在多讀。</td><td><b>要</b>讀懂古詩，關鍵在多讀。</td></tr>
+  </table></div>
+  <h3 class="sub">練習題</h3>
+  <div data-quiz="m3"></div>
+</section>
+
+<section class="panel" id="p-m4" hidden style="--tc:var(--bamboo)">
+  <h2 class="sec">模組四｜修辭：畫面＋情緒</h2>
+  <p class="core"><b>核心觀念：</b>先把文字變成畫面，再從畫面讀出情緒。</p>
+  <div class="cards" id="rhet"></div>
+  <h3 class="sub">修辭分析答題鷹架</h3>
+  <div class="scaf">這句話用了【　　】修辭。<br>畫面：我看到了＿＿＿＿＿<br>情緒：這讓我感覺＿＿＿＿＿<br>作者想強調的是＿＿＿＿＿</div>
+  <h3 class="sub">練習題</h3>
+  <div data-quiz="m4"></div>
+</section>
+
+<section class="panel" id="p-m5" hidden style="--tc:var(--seal)">
+  <h2 class="sec">模組五｜寫作整合</h2>
+  <p class="core"><b>寫作升級三招：</b>① 加感覺（五感）② 加畫面 ③ 加心情轉折（一開始 → 後來 → 最後我發現……）</p>
+  <div class="grid2">
+    <div class="box"><h4>✗ 直白</h4>朋友來我家，我很開心。</div>
+    <div class="box"><h4>✓ 升級</h4>門鈴一響，我衝去開門，笑到眼睛都瞇成一條線。</div>
+  </div>
+  <h3 class="sub">練習（寫完再按「看參考答案」）</h3>
+  <div data-quiz="m5"></div>
+  <h3 class="sub">寫作評分表</h3>
+  <div class="tbl-wrap"><table class="rubric">
+    <tr><th>向度</th><th>3 分（優）</th><th>2 分（良）</th><th>1 分（需加強）</th></tr>
+    <tr><td>內容</td><td>具體，有細節與感受</td><td>內容完整但平淡</td><td>內容空洞或偏題</td></tr>
+    <tr><td>結構</td><td>有起承轉合</td><td>結構尚可</td><td>缺乏組織</td></tr>
+    <tr><td>語言</td><td>用詞精準，有修辭</td><td>通順但平淡</td><td>語病多或句型重複</td></tr>
+    <tr><td>書寫</td><td>整齊，字跡清晰</td><td>尚整齊</td><td>潦草難辨</td></tr>
+  </table></div>
+</section>
+
+<section class="panel" id="p-wrong" hidden style="--tc:var(--bad)">
+  <h2 class="sec">錯題本</h2>
+  <p class="lead">這裡會自動收集你答錯的選擇題。重做答對後，就會從錯題本消失。</p>
+  <div id="wrongList"></div>
+</section>
+</main>
+
+<script>
+/* ───────── 資料 ───────── */
+const COUPLETS = [
+ {name:'首聯',stage:'無客',c:'var(--water)',lines:[
+   [['舍','房屋。指杜甫在成都的草堂。'],'南',['舍','房屋。「舍南舍北」＝房子的南邊、北邊。'],'北',['皆','全、都。'],['春水','春天的溪水。']],
+   [['但','僅、只。注意：不是「但是」！'],'見',['群鷗','成群的鷗鳥（水鳥）。'],['日日','每天。疊字。'],'來']],
+  tr:'春天來臨，我家的南面、北面都被潺潺溪水環繞，每天只見成群的水鳥不斷飛來。',
+  pts:['<b>視覺摹寫</b>：寫春水和群鷗的自然景色。','「但見」＝只看見水鳥，看不到人 → 暗示<b>冷清、孤寂</b>，期待有人來訪。','「舍南舍北皆春水」也說明住家<b>偏僻</b>，為後面的「市遠」埋下伏筆。']},
+ {name:'頷聯',stage:'迎客',c:'var(--bamboo)',lines:[
+   [['花徑','長滿花草的小路。'],['不曾','從來沒有。'],['緣','因為、由於。'],'客','掃'],
+   [['蓬門','用蓬草編成的門戶，形容房屋簡陋。'],['今始','今天才。'],['為君','為了你（指來訪的客人）。'],'開']],
+  tr:'長滿花草的小路，我還沒有因為客人到訪而打掃，今天特別為你打掃。這扇蓬草編成的小門，也特地為你打開。',
+  pts:['<b>對偶</b>：花徑／蓬門、不曾／今始、緣客／為君、掃／開。','<b>互文</b>：花徑和蓬門都是「以前不曾，今天才」為你整理 → 表示<b>重視客人</b>。','全詩<b>核心</b>，承上啟下：從冷清轉向熱鬧。']},
+ {name:'頸聯',stage:'待客',c:'var(--straw)',lines:[
+   [['盤飧','盤中的食物。'],['市遠','離城鎮（市集）太遠。'],'無',['兼味','多種菜色。「無兼味」＝菜色簡單。']],
+   [['樽酒','酒器中的酒。'],['家貧','家裡貧窮。'],['只','只有。'],['舊醅','存放一段時間、沒有過濾的酒。']]],
+  tr:'家裡距離城鎮太遠，買不到更多的食材，因此飯菜不豐盛。又因家中貧窮，未造新酒，只好拿沒有過濾的舊酒招待你。',
+  pts:['<b>對偶＋倒裝</b>：原本是「市遠盤飧無兼味，家貧樽酒只舊醅」。','兩個原因：<b>市遠</b>（呼應第 1 句的住家環境）、<b>家貧</b>。','語氣帶點歉意，但仍<b>盡其所能</b>熱情款待。']},
+ {name:'尾聯',stage:'陪客',c:'var(--seal)',lines:[
+   [['肯','願意。有向客人詢問意願的意思。'],'與',['鄰翁','隔壁的老人家。'],['相對飲','面對面一起喝酒。']],
+   [['隔籬','隔著籬笆（竹子或樹枝編成的柵欄）。'],['呼取','叫，招呼。'],['盡餘杯','把剩下的酒喝光。']]],
+  tr:'如果你願意與隔壁的老翁共飲，我可以隔著籬笆呼喚，請他過來和我們一起喝完這幾杯。',
+  pts:['「肯」：先問客人願不願意 → 詩人<b>體貼</b>。','隔著籬笆喊一聲就能請來 → 平常和鄰翁<b>相處融洽</b>。','邀鄰翁是為了讓聚會<b>更熱鬧</b>、客人更<b>盡興</b>，表現詩人<b>純樸好客</b>。']}
+];
+
+const CHARS = [
+ ['舍','ㄕㄜˋ','舌','8','農舍、宿舍','捨：捨棄'],
+ ['皆','ㄐㄧㄝ','白','9','皆大歡喜','階：階梯'],
+ ['緣','ㄩㄢˊ','糸','15','緣故、人緣','綠：綠洲｜錄：抄錄'],
+ ['蓬','ㄆㄥˊ','艸','15','蓬鬆、蓬勃','縫：裂縫'],
+ ['飧','ㄙㄨㄣ','食','12','盤飧','上面是「夕」，不是「餐」'],
+ ['兼','ㄐㄧㄢ','八','10','兼顧、兼具','歉：歉收｜讀音同「尖」'],
+ ['樽','ㄗㄨㄣ','木','16','金樽、移樽就教','蹲：蹲坐｜尊：尊重｜遵：遵守'],
+ ['酒','ㄐㄧㄡˇ','酉','10','酒精、喜酒','酉部的字多和酒有關'],
+ ['舊','ㄐㄧㄡˋ','臼','18','依舊、懷舊','部首是「臼」，常考'],
+ ['醅','ㄆㄟ','酉','15','舊醅','陪：陪伴｜倍：加倍'],
+ ['籬','ㄌㄧˊ','竹','25','竹籬、圍籬','離：離開'],
+ ['簡','ㄐㄧㄢˇ','竹','18','簡單、簡潔','筒：筆筒'],
+ ['陋','ㄌㄡˋ','阜','9','簡陋、粗陋','部首「阝」在左邊＝阜'],
+ ['鎮','ㄓㄣˋ','金','18','鄉鎮、鎮定','慎：慎重'],
+ ['濾','ㄌㄩˋ','水','18','過濾、濾紙','慮：憂慮'],
+ ['潺','ㄔㄢˊ','水','15','潺潺','狀聲詞，形容流水聲'],
+ ['笆','ㄅㄚ','竹','10','籬笆','巴：泥巴｜芭：芭樂'],
+ ['寂','ㄐㄧˋ','宀','11','寂寞、寂靜','叔：叔父｜椒：辣椒'],
+ ['陳','ㄔㄣˊ','阜','11','陳列、陳年','陣：陣地']
+];
+
+const NEWWORDS = [
+ ['蓬門','用蓬草編成的門戶，形容房屋簡陋。','梅梅雖然生於陋巷蓬門，但她抱負遠大，力爭上游。'],
+ ['盤飧','盤中的食物。','餐桌上的盤飧都是奶奶用心準備的，不可以浪費。'],
+ ['兼味','多種菜色。','劉爺爺生活簡樸，食不兼味，只重修身養性。'],
+ ['樽酒','酒器中的酒。','詩人痛飲樽酒，提筆一揮而就，留下傳世名篇。'],
+ ['舊醅','存放一段時間，沒過濾的酒。','因為家貧，只能與你共飲舊醅，請勿見怪！'],
+ ['簡陋','簡單粗陋。','獵人在山中搭建了簡陋的小木屋，作為休憩的處所。'],
+ ['城鎮','城市和鄉鎮市集。','火車駛過一座又一座的城鎮，載著我回到故鄉。'],
+ ['過濾','將液體通過濾紙或網狀器具，把固體分離出來。','製作豆漿時，其中一道步驟就是過濾豆渣。'],
+ ['潺潺','狀聲詞。形容流水聲。','山谷中潺潺流水伴著蟲鳴鳥叫，真是天籟之音。'],
+ ['籬笆','用竹條或木條編成的柵欄。','爸爸在籬笆旁種了許多花草，使院落更雅致。'],
+ ['孤寂','孤單寂寞。','每逢年節，孤身在國外求學的文文就倍感孤寂。'],
+ ['鋪陳','詳細陳述。','這個故事用太多篇幅鋪陳背景，讓讀者感到厭煩。']
+];
+
+const MUST = [
+ '作者杜甫：詩聖、詩史、杜工部；與李白並稱「李杜」',
+ '文體：七言律詩，8 句 56 字；頷聯、頸聯對仗；韻腳「來、開、醅、杯」',
+ '主旨：因客人來訪而表現出喜悅之情',
+ '結構四階段：無客 → 迎客 → 待客 → 陪客',
+ '注釋：舍＝房屋、皆＝全都、但＝只、緣＝因為、兼味＝多種菜色、舊醅＝沒過濾的舊酒、肯＝願意',
+ '核心句：花徑不曾緣客掃，蓬門今始為君開（重視客人、承上啟下）',
+ '修辭：摹寫（視覺、聽覺）、對偶、類疊（日日、潺潺、舍南舍北）',
+ '句型：……因此……｜因……只好……｜如果……可以……',
+ '成語：退避三舍、草木皆兵、蓬蓽生輝、深居簡出、萬籟俱寂'
+];
+
+const IDIOMS = [
+ {n:'退避三<em>舍</em>',m:'比喻主動退讓，不與人相爭。',y:'阿猛總是惡狠狠的對待別人，難怪大家見到他都退避三舍。',x:'他上台領獎時，開心得退避三舍。（領獎不是退讓）',r:'近：避其鋒芒｜反：當仁不讓'},
+ {n:'草木<em>皆</em>兵',m:'形容疑神疑鬼、驚恐不安。',y:'這個國家爆發戰爭後，人民個個草木皆兵，擔驚受怕。',x:'弟弟在公園裡草木皆兵，開心的種了好多樹。（不是指植物）',r:'近：風聲鶴唳｜反：處變不驚'},
+ {n:'<em>蓬</em>蓽生輝',m:'比喻他人所贈之物或貴客來訪，令人倍感光彩。',y:'名作家來我們班分享，班長說：「您的到來讓教室蓬蓽生輝！」',x:'客人誇主人：「你家裝潢得真是蓬蓽生輝。」（蓬蓽是謙稱自己簡陋的家，不能拿來誇別人）',r:'近：蓬蓽增輝'},
+ {n:'深居<em>簡</em>出',m:'指人平日待在家裡，很少外出。',y:'一向深居簡出的阿靜，竟然參加了這場活動，真令人驚訝。',x:'他深居簡出，每個週末都到各地旅行。（前後矛盾）',r:'近：杜門不出｜反：東奔西走'},
+ {n:'萬籟俱<em>寂</em>',m:'萬物無聲，一片寂靜。',y:'夜晚的山林萬籟俱寂，時間彷彿停止流逝。',x:'菜市場萬籟俱寂，攤販熱情的叫賣。（熱鬧≠寂靜）',r:'近：鴉雀無聲｜反：人聲鼎沸'}
+];
+
+const PHRASES = [
+ {n:'無與倫比',m:'沒有可以相比的。',e:'這座城堡金碧輝煌，呈現無與倫比的華麗風格。'},
+ {n:'盡其所能',m:'竭盡所有的能力。',e:'爺爺十分熱心，總是盡其所能的幫助別人。'},
+ {n:'字裡行間',m:'字句之間；也指文章流露出的思想情感。',e:'離鄉遊子的書信裡，字裡行間流露出對家人的思念。'}
+];
+
+const PATTERNS = [
+ {n:'……因此……（因果）',d:'前面說原因，後面說結果。',src:'家裡距離城鎮太遠，買不到更多的食材，<mark>因此</mark>飯菜不豐盛。',e:'這家理容院的美髮師個個心靈手巧，因此生意興隆。',w:'✗ 因為……<u>但是</u>……（因果句不能接轉折詞）'},
+ {n:'因……只好……（因果）',d:'「只好」表示沒辦法，退而求其次。',src:'<mark>因</mark>家中貧窮，未造新酒，<mark>只好</mark>拿沒有過濾的舊酒招待你。',e:'因車子故障送修，爸爸只好搭公車上班。',w:'✗ 因……<u>就可以</u>……（「只好」要有不得已的感覺）'},
+ {n:'如果……可以……（假設）',d:'前面假設一個情況，後面說實現時的結果。',src:'<mark>如果</mark>你願意與隔壁的老翁共飲，我<mark>可以</mark>隔著籬笆呼喚。',e:'如果天氣早一點放晴，我們可以到草原上拍照。',w:'✗ 如果……<u>因此</u>……（假設句不能接因果詞）'}
+];
+
+const RHET = [
+ {n:'摹寫（視覺）',d:'把看到的景象具體寫出來。',ex:'<mark>舍南舍北皆春水，但見群鷗日日來</mark>。',ef:'畫面：溪水圍繞房子，水鳥飛來飛去。情緒：安靜到有點冷清。'},
+ {n:'摹寫（聽覺）',d:'把聽到的聲音寫出來。',ex:'我家的南面、北面都被<mark>潺潺</mark>溪水環繞。（語譯）',ef:'「潺潺」是流水聲，讓讀者好像聽到溪水。'},
+ {n:'類疊',d:'同一字詞重複使用。連在一起＝疊字；隔開＝類字。',ex:'疊字：<mark>日日</mark>來、<mark>潺潺</mark>溪水<br>類字：<mark>舍</mark>南<mark>舍</mark>北',ef:'加強語氣，讀起來有節奏感。「日日」強調天天都只有水鳥。'},
+ {n:'對偶',d:'上下兩句字數相等、語法相同、詞性一致。',ex:'<mark>花徑</mark>不曾緣客<mark>掃</mark>，<mark>蓬門</mark>今始為君<mark>開</mark>。<br><mark>盤飧</mark>市遠無兼味，<mark>樽酒</mark>家貧只舊醅。',ef:'形式整齊、好記；律詩的頷聯、頸聯一定要對仗。'},
+ {n:'倒裝',d:'為了強調、押韻或對仗，把句子順序對調，意思不變。',ex:'原句：不曾緣客掃<mark>花徑</mark><br>詩句：<mark>花徑</mark>不曾緣客掃',ef:'把「花徑」放前面，讓畫面先出現，也符合律詩格律。'},
+ {n:'對比（寫作技巧）',d:'把相反的情況放在一起，讓重點更明顯。',ex:'前兩句<mark>冷清無客</mark> ↔ 後六句<mark>熱鬧待客</mark><br><mark>不曾</mark>緣客掃 ↔ <mark>今始</mark>為君開',ef:'先寫孤寂，更能襯托客人到來的歡喜。'}
+];
+
+/* 題庫：mc = 選擇題；open = 開放題 */
+const QUIZ = {
+m1:[
+ {l:'L1',t:'表層',q:'杜甫住的地方，周圍環境是什麼樣子？',o:['熱鬧的市集旁，人來人往','溪水環繞，常有成群水鳥飛來','高山頂上，終年積雪','大城市裡，交通便利'],a:1,ev:'舍南舍北皆春水，但見群鷗日日來。',w:'「舍」是房屋，房子的南邊、北邊都是春水；「但見」是只看見，群鷗天天飛來。'},
+ {l:'L1',t:'表層',q:'客人來訪前，詩人做了哪些準備？',o:['到市集買了好幾道菜','釀了一罈新酒','打掃長滿花草的小路，打開蓬門','先請鄰翁過來幫忙'],a:2,ev:'花徑不曾緣客掃，蓬門今始為君開。',w:'詩中說「市遠」買不到菜、「家貧」只有舊酒，所以 A、B 錯；請鄰翁是喝酒時才提議，D 錯。'},
+ {l:'L1',t:'表層',q:'「盤飧市遠無兼味」的意思最接近哪一個？',o:['盤子裡的食物離市集很遠，沒有味道','因為離市集太遠，盤中的菜色很簡單','市集裡的菜太貴，詩人買不起','盤子太小，裝不下多種菜'],a:1,ev:'盤飧市遠無兼味',w:'盤飧＝盤中食物；市遠＝離城鎮太遠；兼味＝多種菜色。A 是一個字一個字硬翻，把「無兼味」誤當成「沒有味道」。'},
+ {l:'L1',t:'表層',q:'「但見群鷗日日來」的「但」是什麼意思？',o:['但是','只、僅','全、都','因為'],a:1,ev:'但見群鷗日日來',w:'古詩裡的「但」常是「只」。「全、都」是「皆」，「因為」是「緣」，都是本課字，要分清楚。'},
+ {l:'L2',t:'推論',q:'為什麼從「群鷗日日來」可以看出詩人平時生活冷清？',o:['因為鷗鳥很吵，讓人心煩','因為很少有人來往，沒有人聲，水鳥才敢天天停留','因為詩人養了很多鷗鳥當寵物','因為春天鷗鳥一定會出現'],a:1,ev:'但見群鷗日日來。',w:'「但見」＝只看見鷗鳥，表示看不到人。水鳥怕人，人多就不敢來，所以可以推出這裡很少人來。'},
+ {l:'L2',t:'推論',q:'詩人沒有豐盛的酒菜招待客人，原因是什麼？',o:['客人不喜歡吃大餐','住家離城鎮太遠，加上家境貧窮','詩人捨不得花錢','客人來得太突然'],a:1,ev:'盤飧市遠無兼味，樽酒家貧只舊醅。',w:'兩句各藏一個原因：「市遠」和「家貧」。C、D 詩裡都沒寫，是自己腦補的。'},
+ {l:'L2',t:'推論',q:'詩人說「盤飧市遠無兼味」，詩中哪一句可以印證「市遠」？',o:['舍南舍北皆春水','花徑不曾緣客掃','樽酒家貧只舊醅','隔籬呼取盡餘杯'],a:0,ev:'舍南舍北皆春水',w:'城鎮人多，住家不會被溪水環繞。房子四周都是溪水，可見位置偏遠。這題要把第 1 句和第 5 句連起來想。'},
+ {l:'L2',t:'推論',q:'詩人為什麼想邀請鄰翁一起喝酒？',o:['酒太多，兩個人喝不完','鄰翁是客人的老朋友','想讓聚會更熱鬧，讓客人更盡興','詩人不想自己陪客人'],a:2,ev:'肯與鄰翁相對飲，隔籬呼取盡餘杯。',w:'「盡餘杯」是喝完剩下的酒，酒並不多，A 錯；詩中沒說鄰翁認識客人，B 錯。隔籬一喊就來，也看得出詩人和鄰翁平常很要好。'},
+ {l:'L2',t:'推論',q:'「花徑不曾緣客掃，蓬門今始為君開」隱含詩人想表達什麼？',o:['持家勤奮','重視客人','生活悠閒','淡泊名利'],a:1,ev:'不曾……今始……',w:'「不曾」（以前從沒有）對比「今始」（今天才），表示這位客人很特別，詩人非常重視他。'},
+ {l:'L3',t:'評鑑',q:'本詩寫客人來訪分成四個階段，依詩句順序應該是？',o:['無客 → 迎客 → 待客 → 陪客','迎客 → 無客 → 陪客 → 待客','待客 → 陪客 → 無客 → 迎客','無客 → 待客 → 迎客 → 陪客'],a:0,w:'第 1～2 句無客、第 3～4 句迎客、第 5～6 句待客、第 7～8 句陪客。D 把迎客、待客對調了。'},
+ {l:'L3',t:'評鑑',q:'〈客至〉想呈現生活中哪一種美好時刻？',o:['親近自然','人際關係','人與動物','作物豐收'],a:1,w:'雖然寫到春水、群鷗，但那是「無客」的冷清背景；全詩重點在迎接、款待朋友，是人與人之間的情誼。'},
+ {l:'L3',t:'評鑑',q:'杜甫被稱為「詩史」，作品常反映社會現實。〈客至〉符合這種風格嗎？',o:['符合，因為寫出了百姓的貧窮','符合，因為寫了戰爭','不符合，這首詩寫的是生活閒情和待客的喜悅','不符合，因為這首詩只是寫景'],a:2,w:'課本說〈客至〉是杜甫「難得表現閒情」的作品。D 錯在後六句都在寫人和待客，不是只寫景。'},
+ {l:'L3',t:'評鑑',q:'如果要替〈客至〉換一個標題，哪一個最適合？',o:['春水群鷗','貧窮的草堂','喜迎貴客','鄰家老翁'],a:2,w:'主旨是「因客人來訪而喜悅」。A 只寫到前兩句，B 抓錯重點，D 只寫到最後兩句。'},
+ {l:'L4',t:'律詩',q:'關於〈客至〉的形式，下列何者正確？',o:['五言絕句，共四句','七言律詩，共八句，每句七字','七言絕句，共八句','五言律詩，共八句'],a:1,w:'八句是律詩，四句是絕句；每句七字是七言。'},
+ {l:'L4',t:'律詩',q:'律詩中規定一定要對仗的是哪兩聯？',o:['首聯和尾聯','首聯和頷聯','頷聯和頸聯','頸聯和尾聯'],a:2,ev:'花徑不曾緣客掃，蓬門今始為君開／盤飧市遠無兼味，樽酒家貧只舊醅',w:'頷聯是第 3、4 句，頸聯是第 5、6 句。'},
+ {l:'L4',t:'律詩',q:'〈客至〉的韻腳是哪一組？',o:['水、掃、味、飲','來、開、醅、杯','春、客、遠、翁','南、徑、飧、籬'],a:1,w:'律詩是偶數句最後一個字押韻：第 2 句「來」、第 4 句「開」、第 6 句「醅」、第 8 句「杯」。'},
+ {open:true,l:'L3',t:'簡答',q:'詩中哪些行為，看得出主人為了客人很用心？至少舉兩個，用自己的話說明。',h:'從「迎客、待客、陪客」三個階段各找一個行為。',s:'① 特地打掃平常不掃的花徑、打開蓬門，表示重視客人。② 雖然市遠家貧，仍拿出家裡所有的酒菜熱情招待。③ 為了讓客人喝得更盡興，還想隔著籬笆請鄰翁來同歡。'}
+],
+m2:[
+ {l:'L1',t:'情境選擇',ctx:'學校邀請得獎作家來班上分享。班長致詞：「您的到來，讓我們小小的教室＿＿＿＿！」',q:'空格填哪個成語最適合？',o:['金碧輝煌','蓬蓽生輝','萬籟俱寂','深居簡出'],a:1,w:'貴客來訪令自己的地方倍感光彩，用「蓬蓽生輝」，而且是主人（班上）說自己的地方。「金碧輝煌」是形容建築華麗，有「輝」字但用法不對。'},
+ {l:'L1',t:'情境選擇',ctx:'深夜的山中露營區，大家都睡了，連風聲、蟲鳴都停了下來，四周＿＿＿＿。',q:'空格填哪個成語最適合？',o:['人聲鼎沸','萬籟俱寂','草木皆兵','退避三舍'],a:1,w:'「萬籟」是大自然的一切聲音，全部安靜下來就是萬籟俱寂。「人聲鼎沸」是它的反義詞。'},
+ {l:'L1',t:'情境選擇',ctx:'小偷偷了東西後逃走，一聽到風吹樹葉的沙沙聲，就以為警察追來了，嚇得到處躲。',q:'這個情境最適合用哪個成語？',o:['草木皆兵','退避三舍','處變不驚','深居簡出'],a:0,w:'把草木都當成敵兵，形容疑神疑鬼、驚恐不安。「處變不驚」意思正好相反。'},
+ {l:'L1',t:'情境選擇',ctx:'阿公退休後，喜歡待在家裡種花、看書，很少出門。',q:'這個情境最適合用哪個成語？',o:['東奔西走','深居簡出','退避三舍','蓬蓽生輝'],a:1,w:'平日待在家裡、很少外出＝深居簡出。「東奔西走」是反義詞。'},
+ {l:'L1',t:'情境選擇',ctx:'球場上的小霸王動不動就推人，同學們看到他都＿＿＿＿，不想跟他起衝突。',q:'空格填哪個成語最適合？',o:['當仁不讓','退避三舍','蓬蓽生輝','萬籟俱寂'],a:1,w:'主動退讓、不與人相爭＝退避三舍。「當仁不讓」是遇到該做的事不推辭，是反義詞。'},
+ {l:'L3',t:'成語辨析',q:'下列哪一句成語用得最恰當？',o:['小美家剛裝潢好，客人誇她家真是蓬蓽生輝。','他深居簡出，每個週末都到各地參加活動。','敵軍連吃敗仗後草木皆兵，看到樹影晃動就以為有伏兵。','菜市場裡萬籟俱寂，攤販熱情的叫賣著。'],a:2,w:'A：蓬蓽是主人謙稱自己簡陋的家，不能拿來誇別人家。B：很少出門卻每週到處跑，前後矛盾。D：叫賣聲很熱鬧，不是寂靜。'},
+ {l:'L2',t:'語詞填空',ctx:'讀〈客至〉時，＿＿＿＿都流露出杜甫對這位客人的熱烈歡迎。',q:'空格填哪個語詞最適合？',o:['字裡行間','一目十行','白紙黑字','一字千金'],a:0,w:'「字裡行間」指文章流露出的思想情感。「一目十行」是讀得很快，和情感無關。'},
+ {l:'L2',t:'語詞填空',ctx:'雖然家裡只有舊酒和簡單的菜，杜甫仍然＿＿＿＿的招待客人。',q:'空格填哪個語詞最適合？',o:['盡其所能','無與倫比','退避三舍','草木皆兵'],a:0,w:'竭盡所有能力去做＝盡其所能，正好呼應「市遠、家貧」仍熱情款待。'},
+ {l:'L2',t:'詞語關係',q:'「無與倫比／不相上下」是相反詞。下列哪一組的關係和它「不同」？',o:['冷清／熱鬧','流露／隱藏','招待／款待','重視／輕視'],a:2,w:'招待和款待意思相近，是相似詞；其他三組都是相反詞。'},
+ {open:true,l:'L2',t:'說出理由',q:'請用「蓬蓽生輝」寫一句話，情境要是「自己的家或地方」來了貴客，並說明為什麼這樣用才對。',h:'「蓬蓽」是用蓬草、荊竹做的門，是主人對自己家的謙稱。',s:'例：外婆難得從鄉下來看我們，媽媽笑著說：「您一來，我們家真是蓬蓽生輝！」理由：說話的人是主人，用「蓬蓽」謙稱自己的家，表示客人的到來讓家裡增添光彩。'}
+],
+m3:[
+ {l:'L1',t:'語病判斷',q:'下列哪一句「沒有」語病？',o:['因為家裡離城鎮太遠，但是買不到更多食材。','雖然家裡很窮，而且杜甫還是熱情招待客人。','因家中貧窮，沒有新酒，杜甫只好拿舊酒招待客人。','如果你願意和鄰翁一起喝酒，因此我可以隔著籬笆叫他。'],a:2,w:'A：「因為……但是」搭錯，應改「因此」。B：「雖然……而且」搭錯，應改「但是」。D：「如果……因此」搭錯，應改「如果……就可以」。'},
+ {l:'L1',t:'語意重複',q:'下列哪一句有「語意重複」的毛病？',o:['每天只見成群的水鳥日日飛來。','詩人特地為客人打開蓬門。','鄰翁住在詩人家的隔壁。','客人和詩人喝完了剩下的酒。'],a:0,w:'「每天」和「日日」意思一樣，留一個就好：「每天只見成群的水鳥飛來」。'},
+ {l:'L2',t:'成分殘缺',q:'「透過讀〈客至〉這首詩，讓我們感受到杜甫的好客。」這句話的問題是什麼？',o:['關聯詞用錯','缺少主語，不知道是誰「讓」我們感受到','詞序顛倒','沒有問題'],a:1,w:'「透過……」和「讓……」連用，主語不見了。改法：刪「透過」→「讀〈客至〉這首詩，讓我們感受到……」；或刪「讓」→「透過讀〈客至〉，我們感受到……」。'},
+ {l:'L2',t:'搭配不當',q:'「杜甫的詩，被後人尊稱為『詩聖』。」這句話錯在哪裡？',o:['「詩聖」應該是「詩仙」','被尊稱為詩聖的是杜甫這個人，不是他的詩','「後人」應改為「前人」','沒有錯誤'],a:1,w:'主語和後面搭不起來。改：「杜甫被後人尊稱為『詩聖』。」「詩仙」是李白。'},
+ {l:'L2',t:'兩面對一面',q:'「能不能讀懂古詩，關鍵在於多讀多想。」這句話的問題是什麼？',o:['前面有兩面（能／不能），後面只說了一面','語意重複','缺少主語','沒有問題'],a:0,w:'「多讀多想」只能讓人「能」讀懂，對應不到「不能」。改：「要讀懂古詩，關鍵在於多讀多想。」'},
+ {l:'L2',t:'搭配不當',q:'「讀了〈客至〉，我的古詩知識提高了很多。」這句話的問題是什麼？',o:['動詞和名詞搭配不當：知識不說「提高」','關聯詞誤用','語意重複','缺少主語'],a:0,w:'能力可以「提高」，知識要說「增加」或「豐富」。改：「我的古詩知識增加了很多。」'},
+ {l:'L1',t:'句型選用',ctx:'＿＿颱風來襲，畢業旅行＿＿延期。',q:'空格依序填入哪一組關聯詞最恰當？',o:['因／只好','雖然／但是','如果／可以','不但／而且'],a:0,w:'颱風是原因，延期是不得已的結果，用「因……只好……」。'},
+ {l:'L1',t:'句型選用',ctx:'＿＿你每天背一首唐詩，一年後＿＿背出三百多首。',q:'空格依序填入哪一組關聯詞最恰當？',o:['因／只好','如果／就可以','雖然／卻','因為／但是'],a:1,w:'先假設一個情況，再說會有的結果，用假設複句「如果……就可以……」。'},
+ {open:true,l:'L3',t:'改寫語病句',q:'原句：「雖然杜甫家裡很窮，所以他還是盡其所能招待客人。」這句話有什麼問題？應該怎麼改？',h:'看關聯詞：「雖然」後面應該接什麼？',s:'<b>問題：</b>關聯詞誤用，「雖然」是轉折，不能接因果的「所以」。<br><b>改寫：</b>雖然杜甫家裡很窮，<b>但是</b>他還是盡其所能招待客人。'},
+ {open:true,l:'L3',t:'改寫語病句',q:'原句：「經過這次的閱讀，使我明白了朋友的珍貴。」這句話有什麼問題？應該怎麼改？',h:'找找看：是「誰」明白了？句子的主語在哪裡？',s:'<b>問題：</b>成分殘缺。「經過……」加上「使……」，句子沒有主語。<br><b>改寫：</b>①「這次的閱讀，使我明白了朋友的珍貴。」②「經過這次的閱讀，我明白了朋友的珍貴。」'},
+ {open:true,l:'L3',t:'改寫語病句',q:'原句：「春天來臨，潺潺溪水的南面、北面環繞著我家。」這句話有什麼問題？應該怎麼改？',h:'是「誰」的南面、北面？',s:'<b>問題：</b>詞序錯誤，把「我家」和「溪水」的位置放反了，變成「溪水的南面北面」。<br><b>改寫：</b>春天來臨，我家的南面、北面都被潺潺溪水環繞。'}
+],
+m4:[
+ {l:'L1',t:'修辭辨識',q:'下列哪一句使用了「對偶」？',o:['舍南舍北皆春水','花徑不曾緣客掃，蓬門今始為君開','但見群鷗日日來','肯與鄰翁相對飲'],a:1,w:'花徑／蓬門（名詞）、不曾／今始、緣客／為君、掃／開（動詞），上下兩句字數相等、詞性一致。單獨一句不能構成對偶。'},
+ {l:'L1',t:'修辭辨識',q:'「舍南舍北皆春水」用了哪一種修辭？',o:['類疊（類字）','譬喻','誇飾','設問'],a:0,w:'「舍」字隔開重複出現，是類字。如果是「日日」這樣連在一起，就是疊字。'},
+ {l:'L1',t:'修辭辨識',q:'「我家的南面、北面都被潺潺溪水環繞」中的「潺潺」屬於什麼？',o:['視覺摹寫','聽覺摹寫，也是疊字','嗅覺摹寫','觸覺摹寫'],a:1,w:'「潺潺」是形容流水的聲音，屬於聽覺摹寫；兩個字連在一起重複，也是疊字。'},
+ {l:'L2',t:'倒裝',q:'「花徑不曾緣客掃」是倒裝句，原本的語序應該是？',o:['不曾緣客掃花徑','花徑緣客不曾掃','客不曾掃花徑','緣花徑不曾掃客'],a:0,w:'原句是「不曾因為客人打掃花徑」，詩人把「花徑」提到前面，配合律詩的格律和對仗。'},
+ {l:'L2',t:'修辭效果',q:'詩的前兩句先寫冷清，後面寫熱鬧，這樣安排有什麼效果？',o:['讓詩看起來比較長','用對比襯托出客人到來的喜悅','說明杜甫喜歡安靜','介紹成都的風景'],a:1,w:'先寫孤寂，後寫歡聚，反差讓讀者更感受到客人來訪的喜悅。這叫對比。'},
+ {l:'L2',t:'修辭效果',q:'「花徑不曾緣客掃，蓬門今始為君開」用了互文的寫法，完整的意思是？',o:['只有花徑為客人打掃，蓬門平常就開著','花徑和蓬門都是平常不為客人整理，今天特地為你掃、為你開','客人自己打掃了花徑','蓬門壞了，今天才修好'],a:1,w:'上下兩句互相補充：花徑不曾緣客掃，今始為君掃；蓬門不曾緣客開，今始為君開。'},
+ {l:'L3',t:'畫面＋情緒',q:'「但見群鷗日日來」除了寫景，還透露了詩人什麼心情？',o:['熱鬧歡樂','孤單冷清，期待有人來訪','害怕鷗鳥','生氣客人不來'],a:1,ev:'但見群鷗日日來',w:'畫面：每天只看到水鳥。情緒：身邊沒有人，有些孤寂，所以客人一來特別開心。'},
+ {open:true,l:'L3',t:'鷹架分析',q:'請用答題鷹架分析：「盤飧市遠無兼味，樽酒家貧只舊醅。」',h:'這句話用了【　】修辭。畫面：＿＿ 情緒：＿＿ 作者想強調：＿＿',s:'這句話用了【<b>對偶</b>】修辭。<br>畫面：桌上只有幾盤簡單的菜，和一壺沒過濾的舊酒。<br>情緒：詩人有點不好意思，但仍然很熱情。<br>作者想強調：雖然市遠家貧，他還是盡其所能招待朋友。'},
+ {open:true,l:'L3',t:'仿寫修辭',q:'仿照「舍南舍北皆春水」的類字句型，寫一句描寫景色的句子。',h:'句型：＿前＿後皆＿＿　或　＿東＿西都是＿＿',s:'例：山前山後皆楓紅。／街頭街尾都是燈籠。／屋前屋後都是盛開的櫻花。'}
+],
+m5:[
+ {open:true,l:'L1',t:'造句',q:'用「……因此……」造句。',h:'前面寫原因，後面寫結果。',s:'例：忽然下起大雨，因此體育課改在室內進行。'},
+ {open:true,l:'L1',t:'造句',q:'用「因……只好……」造句。',h:'「只好」要有不得已、退而求其次的感覺。',s:'例：因氣象報告說天候不佳，明天的出遊計畫只好作罷。'},
+ {open:true,l:'L1',t:'造句',q:'用「如果……可以……」造句。',h:'前面假設一個情況，後面說實現時的結果。',s:'例：如果改掉賴床的壞習慣，就可以避免上學遲到。'},
+ {open:true,l:'L2',t:'短語仿寫',q:'仿寫：「想為這場聚會添加熱鬧氣氛」',h:'結構：想為＋這＋量詞＋名詞＋動詞＋形容詞＋名詞',s:'例：想為這張圖畫增添豐富色彩／想為這群孩子準備豐盛禮物／想為這齣戲劇編寫生動劇情'},
+ {open:true,l:'L2',t:'短語仿寫',q:'仿寫：「字裡行間流露著詩人的期待」',h:'結構：四字語詞＋動詞＋著（出）＋名詞＋的＋名詞',s:'例：一舉一動顯現出主人的誠意／一顰一笑洋溢著青春的氣息／街頭巷尾瀰漫著節慶的氣氛'},
+ {open:true,l:'L2',t:'美化語譯',q:'把尾聯「肯與鄰翁相對飲，隔籬呼取盡餘杯」改寫成優美的白話文。',h:'先直譯，再加入形容詞、副詞或動作，讓畫面更生動，但不能偏離原意。',s:'直譯：如果你願意和鄰居老翁對飲，我隔著籬笆叫他來把剩下的酒喝完。<br>美化：如果你願意和隔壁那位和氣的老爺爺對坐共飲，我這就隔著竹籬笆喊他一聲，請他過來，我們三人開開心心的把剩下的酒都喝光吧！'},
+ {open:true,essay:true,l:'L5',t:'短文寫作',q:'題目：〈好朋友來我家〉，寫一篇 150～250 字的短文。',h:'借用〈客至〉的四段結構：① 等待（無客）→ ② 準備迎接（迎客）→ ③ 招待（待客）→ ④ 一起玩、邀家人加入（陪客）。記得加五感描寫和心情轉折。',s:'星期六早上，家裡安安靜靜的，只聽得見時鐘滴答滴答的聲音。我趴在窗邊，一次又一次望向巷口，心裡像有一面小鼓咚咚敲著，因為好朋友小安要來我家玩！<br>平常懶得整理房間的我，今天特地把書桌擦得亮晶晶，還把珍藏的漫畫排得整整齊齊。門鈴一響，我飛快的打開大門，大喊：「歡迎光臨！」<br>媽媽端出剛烤好的餅乾，奶油香瞬間飄滿客廳。雖然只是簡單的點心，小安卻吃得眉開眼笑。後來我們玩起桌遊，我還把隔壁的小宇叫來一起玩，笑聲一陣陣衝出窗外。<br>送小安回家時，我才發現：招待朋友不需要山珍海味，真心才是最好的禮物。就像杜甫用舊酒待客，朋友感受到的是滿滿的心意。'}
+]};
+const MODS = {m1:['閱讀理解','var(--water)'],m2:['成語情境','var(--straw)'],m3:['語病句型','var(--plum)'],m4:['修辭','var(--bamboo)'],m5:['寫作','var(--seal)']};
+const LAYER_CLASS = {L1:'L1',L2:'L2',L3:'L3',L4:'L4',L5:'L5'};
+const KEYS = ['A','B','C','D'];
+
+/* ───────── 儲存 ───────── */
+const SKEY = 'kezhi-review-v1';
+let S = {ans:{}, txt:{}, self:{}, must:{}, tab:'home', rev:{}};
+try { const raw = localStorage.getItem(SKEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch(e) {}
+function save(){ try { localStorage.setItem(SKEY, JSON.stringify(S)); } catch(e) {} }
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+const qid = (m,i)=>m+'-'+i;
+
+/* ───────── 分頁 ───────── */
+function showTab(t){
+  if(!document.getElementById('p-'+t)) t='home';
+  $$('.panel').forEach(p=>p.hidden = p.id!=='p-'+t);
+  $$('.tab').forEach(b=>b.classList.toggle('on', b.dataset.tab===t));
+  S.tab=t; save();
+  if(t==='wrong') renderWrong();
+  if(t==='home') renderProg();
+  const on=$('.tab.on'); if(on) on.scrollIntoView({block:'nearest',inline:'nearest'});
+}
+$$('.tab').forEach(b=>b.addEventListener('click',()=>{showTab(b.dataset.tab); window.scrollTo({top:0});}));
+
+/* ───────── 重點總覽 ───────── */
+$('#must').innerHTML = MUST.map((m,i)=>`<li><input type="checkbox" id="must${i}" ${S.must[i]?'checked':''}><label for="must${i}">${m}</label></li>`).join('');
+$$('#must input').forEach((c,i)=>c.addEventListener('change',()=>{S.must[i]=c.checked; save();}));
+
+function stats(m){
+  const qs=QUIZ[m]; let tot=0,done=0,ok=0,open=0,openDone=0;
+  qs.forEach((q,i)=>{ if(q.open){open++; if(S.self[qid(m,i)]) openDone++; return;}
+    tot++; const a=S.ans[qid(m,i)]; if(a!==undefined){done++; if(a===q.a) ok++;} });
+  return {tot,done,ok,open,openDone};
+}
+function renderProg(){
+  $('#prog').innerHTML = Object.keys(MODS).map(m=>{
+    const s=stats(m); const pct = s.tot ? Math.round(s.ok/s.tot*100) : Math.round(s.openDone/s.open*100);
+    const line = s.tot ? `選擇題 答對 ${s.ok}/${s.tot}` : '';
+    const ol = s.open ? `${line?'｜':''}練習 ${s.openDone}/${s.open}` : '';
+    return `<button class="pcard" style="--c:${MODS[m][1]}" data-go="${m}"><div class="pn">${m.slice(1)}. ${MODS[m][0]}</div><div class="pv">${line}${ol}</div><div class="bar"><i style="width:${pct}%"></i></div></button>`;
+  }).join('');
+  $$('#prog .pcard').forEach(b=>b.addEventListener('click',()=>{showTab(b.dataset.go); window.scrollTo({top:0});}));
+}
+function renderOverall(){
+  let t=0,o=0; Object.keys(MODS).forEach(m=>{const s=stats(m); t+=s.tot; o+=s.ok;});
+  $('#overall').textContent = `答對 ${o} / ${t}`;
+}
+
+/* ───────── 詩句精讀 ───────── */
+$('#couplets').innerHTML = COUPLETS.map((c,ci)=>{
+  const lines = c.lines.map((ln,li)=>{
+    const parts = ln.map(p=> Array.isArray(p) ? `<button class="w" data-n="${p[1]}" data-k="${p[0]}">${p[0]}</button>` : `<span>${p}</span>`).join('');
+    return `<div class="pl">${parts}<span class="punc">${li===0?'，':'。'}</span></div>`;
+  }).join('');
+  return `<article class="couplet" style="--c:${c.c}">
+    <div class="ch"><span class="chip">${c.name}</span><span class="chip c">${c.stage}</span><span class="chip">第 ${ci*2+1}～${ci*2+2} 句</span></div>
+    ${lines}
+    <div class="note" hidden></div>
+    <button class="tr-btn" aria-expanded="false">看語譯</button>
+    <div class="tr" hidden>${c.tr}</div>
+    <ul class="points">${c.pts.map(p=>`<li>${p}</li>`).join('')}</ul>
+  </article>`;
+}).join('');
+$$('.couplet').forEach(card=>{
+  const note=$('.note',card);
+  $$('.w',card).forEach(w=>w.addEventListener('click',()=>{
+    const was=w.classList.contains('on');
+    $$('.w',card).forEach(x=>x.classList.remove('on'));
+    if(was){note.hidden=true;return;}
+    w.classList.add('on'); note.innerHTML=`<b>${w.dataset.k}</b>：${w.dataset.n}`; note.hidden=false;
+  }));
+  const b=$('.tr-btn',card), tr=$('.tr',card);
+  b.addEventListener('click',()=>{tr.hidden=!tr.hidden; b.textContent=tr.hidden?'看語譯':'收起語譯'; b.setAttribute('aria-expanded',String(!tr.hidden));});
+});
+
+/* ───────── 生字語詞 ───────── */
+$('#chars').innerHTML = CHARS.map(c=>`<button class="cc" aria-expanded="false">
+  <span class="z"><span class="zc">${c[0]}</span><span><span class="zy">${c[1]}</span><br><span class="rs">部首 ${c[2]}｜${c[3]} 畫</span></span></span>
+  <span class="more" hidden>造詞：${c[4]}<br><b>小心：</b>${c[5]}</span></button>`).join('');
+$$('.cc').forEach(b=>b.addEventListener('click',()=>{const m=$('.more',b); m.hidden=!m.hidden; b.setAttribute('aria-expanded',String(!m.hidden));}));
+$('#newwords').insertAdjacentHTML('beforeend', NEWWORDS.map(w=>`<tr><td class="big">${w[0]}</td><td>${w[1]}</td><td>${w[2]}</td></tr>`).join(''));
+
+/* ───────── 成語、句型、修辭卡 ───────── */
+$('#idioms').innerHTML = IDIOMS.map(d=>`<div class="idc"><div class="nm">${d.n}</div><div class="mn">${d.m}</div>
+  <div class="ctx y"><b>✓ 對的用法</b>　${d.y}</div><div class="ctx n"><b>✗ 錯的用法</b>　${d.x}</div><div class="rel">${d.r}｜紅字是本課生字</div></div>`).join('');
+$('#phrases').innerHTML = PHRASES.map(p=>`<div class="rc"><div class="rn">${p.n}</div><div class="rd">${p.m}</div><div class="ef">例：${p.e}</div></div>`).join('');
+$('#patterns').innerHTML = PATTERNS.map(p=>`<div class="rc"><div class="rn">${p.n}</div><div class="rd">${p.d}</div><div class="ex">${p.src}</div><div class="ef">例：${p.e}</div><div class="ef" style="color:var(--bad)">${p.w}</div></div>`).join('');
+$('#rhet').innerHTML = RHET.map(r=>`<div class="rc"><div class="rn">${r.n}</div><div class="rd">${r.d}</div><div class="ex">${r.ex}</div><div class="ef">${r.ef}</div></div>`).join('');
+
+/* ───────── 題目 ───────── */
+function renderQuiz(m){
+  const host=$(`[data-quiz="${m}"]`); const qs=QUIZ[m];
+  const hasMc = qs.some(q=>!q.open);
+  let html = `<div class="qtools"><span class="score" id="score-${m}"></span><span style="display:flex;gap:8px">
+     ${hasMc?`<button class="btn" data-act="wrongonly">只看錯題</button>`:''}<button class="btn" data-act="reset">全部重做</button></span></div>`;
+  let n=0;
+  qs.forEach((q,i)=>{
+    n++; const id=qid(m,i);
+    const head = `<div class="qh"><span class="qno">第 ${n} 題</span><span class="lay ${LAYER_CLASS[q.l]}">${q.t}</span></div>`;
+    const ctx = q.ctx ? `<div class="qctx">${q.ctx}</div>` : '';
+    if(q.open){
+      html += `<div class="q open" id="q-${id}">${head}${ctx}<div class="qt">${q.q}</div>
+        <div class="hint">提示：${q.h}</div>
+        <textarea id="t-${id}" placeholder="把答案寫在這裡（會自動保存在這台裝置）">${(S.txt[id]||'').replace(/</g,'&lt;')}</textarea>
+        <div class="row"><button class="btn pri" data-rev="${id}">看參考答案</button>
+        <label class="selfok"><input type="checkbox" id="s-${id}" ${S.self[id]?'checked':''}>我會了</label>
+        ${q.essay?`<span class="count" id="c-${id}"></span>`:''}</div>
+        ${q.essay?`<ul class="check">${['有寫出等待時的心情（無客）','有寫出為朋友做的準備（迎客）','有用到至少兩種感官（看、聽、聞、嚐、摸）','有心情轉折或最後的發現','字數 150～250 字'].map((c,k)=>`<li><label><input type="checkbox" id="ck-${id}-${k}" ${S.self[id+'-'+k]?'checked':''}>${c}</label></li>`).join('')}</ul>`:''}
+        <div class="sample" id="sp-${id}" ${S.rev[id]?'':'hidden'}><b>參考答案</b><br>${q.s}</div></div>`;
+    } else {
+      html += `<div class="q mc" id="q-${id}" data-id="${id}">${head}${ctx}<div class="qt">${q.q}</div>
+        <div class="opts">${q.o.map((o,k)=>`<button class="opt" data-k="${k}"><span class="k">${KEYS[k]}</span><span>${o}</span></button>`).join('')}</div>
+        <div class="fb" hidden></div></div>`;
+    }
+  });
+  host.innerHTML = html;
+
+  // 選擇題
+  $$('.q.mc',host).forEach(card=>{
+    const id=card.dataset.id; const i=+id.split('-')[1]; const q=qs[i];
+    $$('.opt',card).forEach(b=>b.addEventListener('click',()=>{ S.ans[id]=+b.dataset.k; save(); paintMc(card,q,id); updScore(m); renderOverall(); }));
+    paintMc(card,q,id);
+  });
+  // 開放題
+  $$('.q.open',host).forEach(card=>{
+    const id=card.id.slice(2); const ta=$('textarea',card); const cnt=$('#c-'+id);
+    const upd=()=>{ if(cnt){ const L=ta.value.replace(/\s/g,'').length; cnt.textContent=`${L} 字`; cnt.classList.toggle('good',L>=150&&L<=250);} };
+    ta.addEventListener('input',()=>{S.txt[id]=ta.value; save(); upd();}); upd();
+    $('[data-rev]',card).addEventListener('click',e=>{const sp=$('#sp-'+id); sp.hidden=!sp.hidden; S.rev[id]=!sp.hidden; e.target.textContent=sp.hidden?'看參考答案':'收起參考答案'; save();});
+    if(S.rev[id]) $('[data-rev]',card).textContent='收起參考答案';
+    $('#s-'+id).addEventListener('change',e=>{S.self[id]=e.target.checked; save(); updScore(m);});
+    $$('.check input',card).forEach((c,k)=>c.addEventListener('change',()=>{S.self[id+'-'+k]=c.checked; save();}));
+  });
+  // 工具列
+  $('[data-act="reset"]',host).addEventListener('click',e=>{
+    const b=e.currentTarget;
+    if(b.dataset.armed!=='1'){ b.dataset.armed='1'; b.textContent='再按一次確認重做'; setTimeout(()=>{b.dataset.armed=''; b.textContent='全部重做';},3000); return; }
+    qs.forEach((q,i)=>{ const id=qid(m,i); delete S.ans[id]; delete S.self[id]; delete S.rev[id]; });
+    save(); renderQuiz(m); renderOverall();
+  });
+  const wo=$('[data-act="wrongonly"]',host);
+  if(wo) wo.addEventListener('click',()=>{
+    const on = wo.classList.toggle('pri');
+    wo.textContent = on ? '顯示全部' : '只看錯題';
+    $$('.q',host).forEach(c=>{ c.hidden = on && !c.classList.contains('wrong'); });
+  });
+  updScore(m);
+}
+function paintMc(card,q,id){
+  const a=S.ans[id]; const opts=$$('.opt',card); const fb=$('.fb',card);
+  card.classList.remove('right','wrong');
+  opts.forEach(o=>{o.classList.remove('ok','no'); o.disabled=false;});
+  if(a===undefined){ fb.hidden=true; return; }
+  const right = a===q.a;
+  card.classList.add(right?'right':'wrong');
+  opts.forEach((o,k)=>{ o.disabled=true; if(k===q.a) o.classList.add('ok'); else if(k===a) o.classList.add('no'); });
+  fb.hidden=false;
+  fb.innerHTML = `<div class="verdict ${right?'ok':'no'}">${right?'答對了！':'再想想：正確答案是 '+KEYS[q.a]}</div>${q.ev?`<div class="ev">${q.ev}</div>`:''}<div style="margin-top:6px">${q.w}</div>
+    ${right?'':`<button class="btn" style="margin-top:8px" data-retry>重做這題</button>`}`;
+  const r=$('[data-retry]',fb); if(r) r.addEventListener('click',()=>{ delete S.ans[id]; save(); paintMc(card,q,id); updScore(id.split('-')[0]); renderOverall(); });
+}
+function updScore(m){
+  const s=stats(m); const el=$('#score-'+m); if(!el) return;
+  el.innerHTML = s.tot ? `答對 ${s.ok} / ${s.tot} <small>（已作答 ${s.done}）</small>${s.open?` <small>｜練習 ${s.openDone}/${s.open} 會了</small>`:''}` : `練習 ${s.openDone} / ${s.open} 會了`;
+}
+
+/* ───────── 錯題本 ───────── */
+function renderWrong(){
+  const items=[];
+  Object.keys(MODS).forEach(m=>QUIZ[m].forEach((q,i)=>{ const a=S.ans[qid(m,i)]; if(!q.open && a!==undefined && a!==q.a) items.push({m,i,q,a}); }));
+  const host=$('#wrongList');
+  if(!items.length){ host.innerHTML='<div class="empty">目前沒有錯題。去各模組做題吧！答錯的題目會自動出現在這裡。</div>'; return; }
+  host.innerHTML = items.map(({m,i,q,a})=>`<div class="wr-item"><div class="mod">模組 ${m.slice(1)}・${MODS[m][0]}・${q.t}</div>
+    ${q.ctx?`<div class="qctx" style="margin-top:6px">${q.ctx}</div>`:''}<div class="qt">${q.q}</div>
+    <div class="y">你選：${KEYS[a]}. ${q.o[a]}</div><div class="a">正解：<b>${KEYS[q.a]}. ${q.o[q.a]}</b></div>
+    ${q.ev?`<div class="ev">${q.ev}</div>`:''}<div style="margin-top:6px;font-size:.93rem">${q.w}</div>
+    <button class="btn" style="margin-top:8px" data-goq="${m}|${i}">回到題目重做</button></div>`).join('');
+  $$('[data-goq]',host).forEach(b=>b.addEventListener('click',()=>{
+    const [m,i]=b.dataset.goq.split('|'); const id=qid(m,+i);
+    delete S.ans[id]; save(); renderQuiz(m); renderOverall(); showTab(m);
+    const el=document.getElementById('q-'+id); if(el) el.scrollIntoView({block:'start'});
+  }));
+}
+
+/* ───────── 啟動 ───────── */
+Object.keys(MODS).forEach(renderQuiz);
+renderOverall(); renderProg();
+const h=(location.hash||'').slice(1);
+showTab(document.getElementById('p-'+h) ? h : (S.tab||'home'));
+</script>
+
+</body>
+</html>
