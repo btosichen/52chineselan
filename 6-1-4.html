@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>贏得喝采的輸家 自學寶典</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+/* Layout: 賽道主題。頂部固定標題＋可橫捲分頁；內容單欄 900px */
+:root{
+  color-scheme:light;
+  --bg:#F2F9FF; --paper:#FFFFFF; --paper2:#FFF7DD; --line:#CFE3F7;
+  --ink:#1F2A44; --ink2:#44506B; --ink3:#7A86A0;
+  --water:#1E90FF; --water-lt:#E0F1FF;      /* 天空藍 */
+  --bamboo:#1FB25A; --bamboo-lt:#DDF7E7;    /* 青草綠 */
+  --seal:#FF4D6D; --seal-lt:#FFE3E9;        /* 草莓紅 */
+  --straw:#FF8C1A; --straw-lt:#FFEFD9;      /* 橘子橙 */
+  --plum:#9B5DE5; --plum-lt:#F1E6FF;        /* 葡萄紫 */
+  --sun:#FFC93C;
+  --ok:#18A957; --ok-lt:#DFF7E9; --bad:#FF4D6D; --bad-lt:#FFE3E9;
+  --shadow:0 3px 14px rgba(30,144,255,.13);
+  --f-display:'LXGW WenKai TC','Kaiti TC','BiauKai','DFKai-SB','Noto Serif TC',serif;
+  --f-body:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  --r:16px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.75}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:linear-gradient(100deg,#FF5E8A 0%,#FF9A3C 45%,#FFC93C 75%,#3FC1F2 100%);box-shadow:0 4px 18px rgba(255,94,138,.28);color:#fff}
+.top-in{max-width:900px;margin:0 auto;padding:10px 16px 0;display:flex;align-items:center;gap:12px}
+.seal{flex:none;width:44px;height:44px;border-radius:12px;background:#fff;color:var(--seal);box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:var(--f-display);font-weight:700;display:grid;place-items:center;font-size:1.15rem;line-height:1;writing-mode:vertical-rl;letter-spacing:.05em}
+.top h1{margin:0;text-shadow:0 1px 4px rgba(0,0,0,.18);font-family:var(--f-display);font-size:1.35rem;letter-spacing:.08em;line-height:1.2}
+.top .sub{font-size:.78rem;color:#fff;opacity:.95}
+.overall{margin-left:auto;text-align:right;font-size:.75rem;color:#fff;white-space:nowrap}
+.overall b{display:block;font-size:1.05rem;color:#fff;font-variant-numeric:tabular-nums;text-shadow:0 1px 4px rgba(0,0,0,.18)}
+.tabs{max-width:900px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;padding:8px 12px 0;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;border:0;background:rgba(255,255,255,.22);padding:8px 13px;border-radius:12px 12px 0 0;cursor:pointer;font-weight:700;font-size:.88rem;color:#fff;border-bottom:3px solid transparent;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.15)}
+.tab:hover{background:rgba(255,255,255,.4)}
+.tab.on{color:var(--tc,var(--water));border-bottom-color:var(--tc,var(--water));background:var(--bg);text-shadow:none}
+.tab .n{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#fff;color:var(--tc,var(--water));text-shadow:none;font-size:.72rem;margin-right:5px;vertical-align:1px}
+
+main{max-width:900px;margin:0 auto;padding-inline:16px;padding-block:24px 80px}
+.panel[hidden]{display:none}
+h2.sec{font-family:var(--f-display);font-size:1.6rem;color:var(--tc,var(--water));margin:0 0 4px;letter-spacing:.04em;text-wrap:balance}
+.lead{color:var(--ink2);margin:0 0 20px}
+h3.sub{font-family:var(--f-display);font-size:1.2rem;margin:30px 0 12px;display:flex;align-items:center;gap:8px}
+h3.sub::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--tc,var(--water));transform:rotate(45deg)}
+.core{background:var(--straw-lt);border-left:4px solid var(--straw);padding:10px 14px;border-radius:0 10px 10px 0;margin:0 0 18px;font-weight:500}
+.core b{color:var(--straw)}
+
+/* home hero */
+.hero{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:start;margin-bottom:22px}
+.scroll{display:flex;justify-content:center;background:#FFFDF6;border:3px solid var(--sun);border-radius:18px;padding:18px 16px;box-shadow:var(--shadow);position:relative;overflow-x:auto;max-width:100%}
+.vpoem{writing-mode:vertical-rl;font-family:var(--f-display);font-size:1.32rem;line-height:2.05;letter-spacing:.18em;height:9.8em;margin:0 auto}
+.vpoem .t{font-weight:700;font-size:1.5rem;color:var(--seal)}
+.vpoem .a{font-size:.95rem;color:var(--ink3)}
+.vpoem .l{display:block}
+.hero-side{display:grid;gap:12px;min-width:0;align-content:start}
+.fact{background:var(--paper);border:2px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.fact .k{display:inline-block;font-size:.75rem;letter-spacing:.12em;color:#fff;background:var(--water);border-radius:20px;padding:0 10px;font-weight:700;margin-bottom:4px}
+.fact .v{font-size:1rem}
+.fact .v b{color:var(--seal)}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:6px 0 4px}
+.stage{border-radius:var(--r);padding:12px;background:color-mix(in srgb,var(--c) 11%,#fff);border:2px solid color-mix(in srgb,var(--c) 35%,#fff);border-top:6px solid var(--c);min-width:0}
+.stage .nm{font-family:var(--f-display);font-size:1.35rem;color:var(--c);font-weight:700}
+.stage .ln{font-family:var(--f-display);font-size:.95rem;margin:2px 0 6px}
+.stage .ds{font-size:.85rem;color:var(--ink2)}
+.stage .mood{display:inline-block;font-size:.75rem;font-weight:700;margin-top:6px;padding:2px 10px;border-radius:20px;background:var(--c);color:#fff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.box{background:var(--paper);border:2px solid var(--line);border-radius:var(--r);padding:14px 16px;min-width:0}
+.box h4{margin:0 0 6px;font-size:1rem;color:var(--tc,var(--water))}
+.box ul{margin:0;padding-left:1.2em}
+.box li{margin:2px 0}
+.must{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.must li{display:flex;gap:10px;align-items:flex-start;background:var(--paper);border:2px solid var(--line);border-radius:10px;padding:9px 12px}
+.must input{width:20px;height:20px;margin-top:4px;accent-color:var(--bamboo);flex:none}
+.must label{cursor:pointer}
+.prog{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.pcard{background:color-mix(in srgb,var(--c) 9%,#fff);border:2px solid color-mix(in srgb,var(--c) 35%,#fff);border-radius:var(--r);padding:12px;cursor:pointer;text-align:left}
+.pcard:hover{border-color:var(--c)}
+.pcard .pn{font-weight:700;font-size:.9rem}
+.pcard .pv{font-size:.8rem;color:var(--ink3);font-variant-numeric:tabular-nums}
+.bar{height:10px;background:#fff;border-radius:8px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--c);width:0;transition:width .3s}
+
+/* poem study */
+.couplet{background:var(--paper);border:2px solid color-mix(in srgb,var(--c) 40%,#fff);border-top:6px solid var(--c);border-radius:var(--r);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.ch{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
+.chip{font-size:.75rem;font-weight:700;padding:2px 10px;border-radius:20px;background:var(--paper2);color:var(--ink2)}
+.chip.c{background:var(--c);color:#fff}
+.pl{font-family:var(--f-display);font-size:1.5rem;letter-spacing:.12em;line-height:1.9;display:flex;flex-wrap:wrap;align-items:baseline}
+.w{border:0;background:none;padding:0 1px;cursor:pointer;font:inherit;letter-spacing:inherit;border-bottom:2px dotted var(--water);color:var(--ink)}
+.w:hover,.w.on{background:var(--water-lt)}
+.punc{color:var(--ink3)}
+.note{min-height:0;font-size:.92rem;background:var(--water-lt);border-radius:8px;padding:8px 12px;margin:6px 0 4px}
+.note[hidden]{display:none}
+.note b{color:var(--water)}
+.tr-btn{margin-top:8px;border:1px solid var(--line);background:var(--paper2);border-radius:8px;padding:5px 12px;cursor:pointer;font-size:.85rem;font-weight:700}
+.tr{margin-top:8px;padding:10px 12px;border-radius:8px;background:var(--bamboo-lt);font-size:.95rem}
+.points{margin:10px 0 0;padding-left:1.2em;font-size:.92rem;color:var(--ink2)}
+.points b{color:var(--seal)}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--paper)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--water-lt);color:var(--ink);font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.big{font-family:var(--f-display);font-size:1.1rem;white-space:nowrap}
+
+/* vocab */
+.chars{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.cc{background:var(--paper);border:2px solid var(--line);border-radius:var(--r);padding:10px 12px;cursor:pointer;text-align:left;display:grid;gap:2px;min-width:0}
+.cc:hover{border-color:var(--water)}
+.cc .z{display:flex;align-items:center;gap:8px}
+.cc .zc{font-family:var(--f-display);font-size:2rem;line-height:1.1;color:var(--seal)}
+.cc .zy{font-size:.85rem;color:var(--water);font-weight:700}
+.cc .rs{font-size:.72rem;color:var(--ink3)}
+.cc .more{font-size:.85rem;color:var(--ink2);border-top:1px dashed var(--line);padding-top:4px;margin-top:4px}
+.cc .more[hidden]{display:none}
+.cc .more b{color:var(--seal)}
+.warn{background:var(--seal-lt);border:1px solid var(--seal);border-radius:var(--r);padding:12px 16px}
+.warn b{color:var(--seal)}
+.pairs{display:flex;flex-wrap:wrap;gap:8px}
+.pair{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:4px 12px;font-size:.92rem}
+
+/* idioms */
+.idioms{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.idc{background:var(--paper);border:2px solid var(--straw-lt);border-top:6px solid var(--straw);border-radius:var(--r);padding:14px;min-width:0}
+.idc .nm{font-family:var(--f-display);font-size:1.45rem;letter-spacing:.12em}
+.idc .nm em{font-style:normal;color:var(--seal)}
+.idc .mn{font-size:.92rem;margin:2px 0 8px}
+.ctx{font-size:.86rem;border-radius:8px;padding:6px 10px;margin-top:6px}
+.ctx.y{background:var(--ok-lt)}
+.ctx.n{background:var(--bad-lt)}
+.ctx b{font-weight:700}
+.ctx.y b{color:var(--ok)}
+.ctx.n b{color:var(--bad)}
+.rel{font-size:.78rem;color:var(--ink3);margin-top:8px}
+
+/* rhetoric & patterns cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.rc{background:var(--paper);border:2px solid color-mix(in srgb,var(--tc,var(--water)) 25%,#fff);border-top:6px solid var(--tc,var(--water));border-radius:var(--r);padding:14px;min-width:0}
+.rc .rn{font-weight:700;font-size:1.05rem;color:var(--tc,var(--water))}
+.rc .rd{font-size:.88rem;color:var(--ink2);margin:2px 0 8px}
+.rc .ex{font-family:var(--f-display);font-size:1.05rem;background:var(--paper2);border-radius:8px;padding:8px 10px}
+.rc .ex mark{background:var(--straw-lt);color:var(--ink);border-bottom:2px solid var(--straw);padding:0 1px}
+.rc .ef{font-size:.86rem;margin-top:8px}
+.scaf{font-family:var(--f-display);background:var(--paper);border:1px dashed var(--straw);border-radius:var(--r);padding:12px 16px;font-size:1.02rem;line-height:2}
+
+/* quiz */
+.qtools{box-shadow:var(--shadow);display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px;margin-bottom:14px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 108px);z-index:5}
+.score{font-weight:700;font-variant-numeric:tabular-nums}
+.score small{font-weight:400;color:var(--ink3)}
+.btn{border:2px solid var(--line);background:#fff;border-radius:20px;padding:6px 12px;cursor:pointer;font-size:.85rem;font-weight:700}
+.btn:hover{border-color:var(--tc,var(--water))}
+.btn.pri{background:var(--tc,var(--water));border-color:var(--tc,var(--water));color:#fff}
+.q{background:var(--paper);border:2px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px;scroll-margin-top:180px}
+.q.right{border-color:var(--ok)}
+.q.wrong{border-color:var(--bad)}
+.qh{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:6px}
+.qno{font-weight:700;color:var(--ink3);font-variant-numeric:tabular-nums}
+.lay{font-size:.72rem;font-weight:700;padding:1px 9px;border-radius:20px}
+.lay.L1{background:var(--water-lt);color:var(--water)}
+.lay.L2{background:var(--bamboo-lt);color:var(--bamboo)}
+.lay.L3{background:var(--plum-lt);color:var(--plum)}
+.lay.L4{background:var(--straw-lt);color:var(--straw)}
+.lay.L5{background:var(--seal-lt);color:var(--seal)}
+.qt{font-weight:500;margin-bottom:8px}
+.qt .poem{font-family:var(--f-display);font-size:1.08rem}
+.qctx{background:var(--paper2);border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:.95rem}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;border:1.5px solid var(--line);background:var(--paper);border-radius:10px;padding:9px 12px;cursor:pointer}
+.opt:hover:not([disabled]){border-color:var(--tc,var(--water));background:var(--paper2)}
+.opt .k{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--tc,var(--water)) 18%,#fff);color:var(--tc,var(--water));font-weight:700;font-size:.85rem}
+.opt[disabled]{cursor:default}
+.opt.ok{border-color:var(--ok);background:var(--ok-lt)}
+.opt.ok .k{background:var(--ok);color:#fff}
+.opt.no{border-color:var(--bad);background:var(--bad-lt)}
+.opt.no .k{background:var(--bad);color:#fff}
+.fb{margin-top:10px;border-radius:10px;padding:10px 12px;font-size:.93rem;background:var(--paper2)}
+.fb[hidden]{display:none}
+.fb .verdict{font-weight:700}
+.fb .verdict.ok{color:var(--ok)}
+.fb .verdict.no{color:var(--bad)}
+.ev{margin-top:6px;padding:6px 10px;border-left:3px solid var(--straw);background:var(--straw-lt);border-radius:0 6px 6px 0;font-family:var(--f-display)}
+.ev::before{content:"文中證據　";font-family:var(--f-body);font-size:.75rem;font-weight:700;color:var(--straw)}
+.open textarea{width:100%;min-height:84px;border:1.5px solid var(--line);border-radius:10px;padding:10px;font:inherit;background:var(--paper);color:var(--ink);resize:vertical}
+.open .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.hint{font-size:.88rem;color:var(--ink2);background:var(--paper2);border-radius:8px;padding:6px 10px;margin-bottom:8px}
+.sample{margin-top:8px;background:var(--bamboo-lt);border-radius:10px;padding:10px 12px;font-size:.93rem}
+.sample[hidden]{display:none}
+.sample b{color:var(--bamboo)}
+.selfok{display:flex;gap:6px;align-items:center;font-size:.85rem;color:var(--ink2);cursor:pointer}
+.selfok input{accent-color:var(--bamboo);width:18px;height:18px}
+.count{font-size:.8rem;color:var(--ink3);font-variant-numeric:tabular-nums;margin-left:auto}
+.count.good{color:var(--ok);font-weight:700}
+.empty{text-align:center;color:var(--ink3);padding:30px 10px;background:var(--paper);border:1px dashed var(--line);border-radius:var(--r)}
+.wr-item{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;margin-bottom:10px}
+.wr-item .mod{font-size:.75rem;color:var(--ink3);font-weight:700}
+.wr-item .a{margin-top:4px}
+.wr-item .a b{color:var(--ok)}
+.wr-item .y{color:var(--bad)}
+.rubric td:first-child{font-weight:700;white-space:nowrap}
+.check{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:6px}
+.check label{display:flex;gap:8px;align-items:center;cursor:pointer;font-size:.92rem}
+.check input{accent-color:var(--bamboo);width:18px;height:18px}
+
+@media (max-width:640px){
+  .hero{grid-template-columns:1fr}
+  .vpoem{font-size:1.12rem}
+  .flow{grid-template-columns:1fr 1fr}
+  .grid2{grid-template-columns:1fr}
+  .pl{font-size:1.28rem}
+  .overall{display:none}
+  .qtools{top:calc(env(safe-area-inset-top,0px) + 104px)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* lesson 4 additions: 賽道主題 */
+.track{position:relative;background:linear-gradient(180deg,#FF8A5B 0%,#FF6F61 100%);border-radius:22px;padding:18px 14px 16px;box-shadow:var(--shadow);margin:0 0 22px;color:#fff;overflow:hidden}
+.track::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:3px dashed rgba(255,255,255,.55)}
+.track-h{position:relative;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:.85rem;margin-bottom:10px}
+.track-h .flag{background:#fff;color:var(--seal);border-radius:20px;padding:2px 12px}
+.lanes{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.cp{background:#fff;color:var(--ink);border-radius:14px;padding:10px 10px 12px;border-top:6px solid var(--c);min-width:0;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.cp .no{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--c);color:#fff;font-weight:700;font-size:.8rem}
+.cp .nm{font-family:var(--f-display);font-weight:700;font-size:1.05rem;color:var(--c);margin:4px 0 2px;line-height:1.3}
+.cp .ds{font-size:.8rem;color:var(--ink2);line-height:1.55}
+.cp .mood{display:inline-block;margin-top:6px;font-size:.72rem;font-weight:700;padding:1px 9px;border-radius:20px;background:color-mix(in srgb,var(--c) 16%,#fff);color:var(--c)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:8px}
+.para{background:var(--paper);border:2px solid color-mix(in srgb,var(--c) 40%,#fff);border-top:6px solid var(--c);border-radius:var(--r);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.ptxt{font-size:1.1rem;line-height:2.15;margin:4px 0 6px}
+.ptxt .w{font-size:inherit;letter-spacing:0}
+.ptxt q{quotes:none;color:var(--seal);font-weight:500}
+.sum{margin-top:8px;padding:10px 12px;border-radius:8px;background:var(--bamboo-lt);font-size:.95rem}
+.sum b{color:var(--bamboo)}
+.news{background:#FFFDF2;border:2px dashed var(--sun);border-radius:var(--r);padding:14px 16px;font-size:.95rem}
+.news .tag{display:inline-block;background:var(--sun);color:var(--ink);font-weight:700;font-size:.75rem;border-radius:20px;padding:0 10px;margin-bottom:4px}
+.passage{background:#FFFDF2;border:2px solid var(--sun);border-radius:var(--r);padding:12px 16px;margin-bottom:12px;font-size:.98rem;line-height:2}
+.passage h4{margin:0 0 4px;color:var(--straw);font-size:1rem}
+.tiny{font-size:.82rem;color:var(--ink3)}
+.rc .rn em{font-style:normal;color:var(--seal)}
+@media (max-width:760px){ .lanes{grid-template-columns:repeat(3,1fr)} }
+@media (max-width:460px){ .lanes{grid-template-columns:1fr 1fr} .ptxt{font-size:1.02rem} }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="seal" aria-hidden="true">喝采</div>
+    <div>
+      <h1>贏得喝采的輸家 自學寶典</h1>
+      <div class="sub">南一版 六上 第四課｜記敘文｜第一人稱</div>
+    </div>
+    <div class="overall">選擇題總進度<b id="overall">0 / 0</b></div>
+  </div>
+  <nav class="tabs" id="tabs" aria-label="分頁">
+    <button class="tab" data-tab="home" style="--tc:var(--seal)">重點總覽</button>
+    <button class="tab" data-tab="text" style="--tc:var(--water)">課文精讀</button>
+    <button class="tab" data-tab="words" style="--tc:var(--bamboo)">生字語詞</button>
+    <button class="tab" data-tab="m1" style="--tc:var(--water)"><span class="n">1</span>閱讀理解</button>
+    <button class="tab" data-tab="m2" style="--tc:var(--straw)"><span class="n">2</span>成語情境</button>
+    <button class="tab" data-tab="m3" style="--tc:var(--plum)"><span class="n">3</span>語病句型</button>
+    <button class="tab" data-tab="m4" style="--tc:var(--bamboo)"><span class="n">4</span>修辭</button>
+    <button class="tab" data-tab="m5" style="--tc:var(--seal)"><span class="n">5</span>寫作</button>
+    <button class="tab" data-tab="wrong" style="--tc:var(--bad)">錯題本</button>
+  </nav>
+</header>
+
+<main>
+<!-- ═════════ 重點總覽 ═════════ -->
+<section class="panel" id="p-home" style="--tc:var(--seal)">
+  <h2 class="sec">先看懂這個故事在說什麼</h2>
+  <p class="lead">一句話記住：馬拉松比賽中，落後的安納亞發現領先的穆太<b>誤把氣球拱門當成終點</b>而停下來。他明明可以反敗為勝，卻選擇<b>伸手指路</b>，讓穆太跑到真正的終點。他輸了比賽，卻贏得全場最熱烈的喝采。</p>
+
+  <div class="track" aria-label="故事賽道">
+    <div class="track-h"><span>🏃 起跑：故事賽道</span><span class="flag">🏁 終點：運動家精神</span></div>
+    <div class="lanes">
+      <div class="cp" style="--c:var(--water)"><span class="no">1</span><div class="nm">苦苦追趕</div><div class="ds">寒風中內心沸騰，想贏，但穆太一路領先。</div><span class="mood">想贏・激動</span></div>
+      <div class="cp" style="--c:var(--plum)"><span class="no">2</span><div class="nm">穆太停下</div><div class="ds">觀眾吶喊「再跑！」，穆太卻在終點前 10 公尺停下。</div><span class="mood">不解</span></div>
+      <div class="cp" style="--c:var(--straw)"><span class="no">3</span><div class="nm">內心掙扎</div><div class="ds">拱門是頒獎地點不是終點；勝利近在眼前，該怎麼做？</div><span class="mood">掙扎・矛盾</span></div>
+      <div class="cp" style="--c:var(--bamboo)"><span class="no">4</span><div class="nm">伸手指路</div><div class="ds">拍拍穆太的背，伸長食指指向前方。</div><span class="mood">做出決定</span></div>
+      <div class="cp" style="--c:var(--seal)"><span class="no">5</span><div class="nm">贏得喝采</div><div class="ds">教練沒責罵反而稱讚；觀眾歡聲雷動。</div><span class="mood">意外・感動</span></div>
+      <div class="cp" style="--c:#E0A800"><span class="no">6</span><div class="nm">名次不是唯一</div><div class="ds">可貴的是運動家精神。</div><span class="mood">領悟</span></div>
+    </div>
+  </div>
+
+  <div class="facts">
+    <div class="fact"><div class="k" style="background:var(--seal)">主旨</div><div class="v">運動家精神<b>不是只追求輸贏</b>，而是在過程中<b>公平競爭</b>；能發揚這種精神的人，不論勝負都值得最熱烈的喝采。</div></div>
+    <div class="fact"><div class="k" style="background:var(--bamboo)">文體</div><div class="v"><b>記敘文</b>，取材自真實新聞（2012 年 12 月，西班牙的馬拉松比賽）。</div></div>
+    <div class="fact"><div class="k" style="background:var(--water)">敘事人稱</div><div class="v">用<b>第一人稱「我」</b>（安納亞）來寫，像他自己在說心裡話（獨白），讀者更有<b>臨場感</b>。</div></div>
+    <div class="fact"><div class="k" style="background:var(--plum)">人物</div><div class="v"><b>安納亞</b>：西班牙選手，故事中的「我」。<br><b>穆太</b>：肯亞選手，一路領先，不懂西班牙語。</div></div>
+  </div>
+
+  <h3 class="sub">課文結構</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>部分</th><th>內容</th></tr>
+    <tr><td><b>開頭</b></td><td>安納亞想贏得比賽，但穆太一路領先，讓他苦苦追趕。</td></tr>
+    <tr><td><b>經過①</b></td><td>想逆轉局勢的安納亞，發現穆太還沒到終點就停下腳步。</td></tr>
+    <tr><td><b>經過②</b></td><td>安納亞有機會奪冠，卻不斷問自己應該怎麼做。</td></tr>
+    <tr><td><b>經過③</b></td><td>安納亞伸長食指指向前方，指引穆太跑到終點。</td></tr>
+    <tr><td><b>結果</b></td><td>教練誇獎安納亞是個優秀的人，觀眾報以最熱烈的掌聲及喝采。</td></tr>
+    <tr><td><b>啟示</b></td><td>名次不是唯一，重要的是可貴的運動家精神。</td></tr>
+  </table></div>
+
+  <h3 class="sub">寫作技巧（三大考點）</h3>
+  <div class="grid2">
+    <div class="box"><h4>① 第一人稱 vs 第三人稱</h4><b>課文</b>用「我」：能寫出內心的掙扎，讀者有臨場感。<br><b>新聞報導</b>用「他」：像旁觀的觀察員，客觀描述事件。</div>
+    <div class="box"><h4>② 用「摹寫法」開頭</h4>第一句「寒風吹進運動衫」是<b>觸覺摹寫</b>，像先搭好舞臺，讓讀者彷彿身歷其境。</div>
+    <div class="box"><h4>③ 用「對比」凸顯重點</h4>寒風很冷 ↔ 內心沸騰（凸顯激動）<br>黝黑的肌膚 ↔ 一口白牙（凸顯笑得開懷）</div>
+    <div class="box"><h4>標題的祕密</h4>「<b>贏得</b>喝采的<b>輸家</b>」：一個輸家怎麼會贏？輸的是名次，贏的是大家的<b>尊敬與掌聲</b>。</div>
+  </div>
+
+  <h3 class="sub">考前必背清單</h3>
+  <ul class="must" id="must"></ul>
+
+  <h3 class="sub">我的五大模組進度</h3>
+  <div class="prog" id="prog"></div>
+</section>
+
+<!-- ═════════ 課文精讀 ═════════ -->
+<section class="panel" id="p-text" hidden style="--tc:var(--water)">
+  <h2 class="sec">課文精讀</h2>
+  <p class="lead">點一下有虛線的詞，看解釋。先自己說說這段在講什麼，再按「看段落大意」對答案。</p>
+  <div id="paras"></div>
+
+  <h3 class="sub">比一比：課文 vs 新聞報導</h3>
+  <div class="news"><span class="tag">新聞報導｜贏得世界掌聲的輸家</span><br>【外電訊】2012/12/3　昨日於西班牙布拉達市的一場馬拉松比賽中，西班牙選手艾文‧費南德茲‧安納亞與冠軍寶座失之交臂，卻意外獲得場外熱烈掌聲。跟他角逐金牌的肯亞運動員阿貝爾‧穆太，因誤以為已抵達終點，而在終點前十公尺停下腳步。隨後追上的安納亞，卻選擇提醒並指引穆太跑到終點，將冠軍拱手讓給穆太。</div>
+  <div class="tbl-wrap" style="margin-top:12px"><table>
+    <tr><th></th><th>課文</th><th>新聞報導</th></tr>
+    <tr><td><b>人稱</b></td><td>第一人稱「我」</td><td>第三人稱「他」</td></tr>
+    <tr><td><b>像誰在說</b></td><td>安納亞自己說心裡話（獨白）</td><td>旁邊的觀察員</td></tr>
+    <tr><td><b>寫得出什麼</b></td><td>內心的掙扎、擔心、驚訝</td><td>人、事、時、地，客觀的經過</td></tr>
+    <tr><td><b>效果</b></td><td>加深<b>臨場感</b>，更能理解人物的想法和感情</td><td>不受限制，可以寫出每個人的一言一行</td></tr>
+  </table></div>
+</section>
+
+<!-- ═════════ 生字語詞 ═════════ -->
+<section class="panel" id="p-words" hidden style="--tc:var(--bamboo)">
+  <h2 class="sec">生字語詞</h2>
+  <p class="lead">點生字卡看造詞和形近字。部首和總筆畫是常考題。</p>
+  <div class="chars" id="chars"></div>
+
+  <h3 class="sub">隨堂卷常見錯字</h3>
+  <div class="warn">
+    欣欣向<b>榮</b>（不是「容」）｜布<b>置</b>（不是「至」）｜<b>搞</b>笑（不是「槁」）｜<b>抵</b>達（不是「柢」）｜<b>摟</b>著（不是「樓」）｜<b>兀</b>自（不是「几」）｜容<b>納</b>（不是「吶」）｜神仙眷<b>屬</b>（不是「囑」）｜揚湯止<b>沸</b>（不是「狒」）
+  </div>
+  <p class="tiny" style="margin-top:8px">分辨口訣：<b>吶</b>喊用嘴巴（口部）；容<b>納</b>、<b>納</b>悶是糸部。<b>摟</b>抱用手（手部）；<b>樓</b>梯是木部。</p>
+
+  <h3 class="sub">新詞解釋</h3>
+  <div class="tbl-wrap"><table id="newwords"><tr><th>語詞</th><th>解釋</th><th>例句</th></tr></table></div>
+
+  <h3 class="sub">相似詞・相反詞</h3>
+  <p style="margin:0 0 6px;font-weight:700;color:var(--bamboo)">相似詞</p>
+  <div class="pairs"><span class="pair">兀自 ≈ 還是</span><span class="pair">局勢 ≈ 形勢</span><span class="pair">吶喊 ≈ 大叫</span><span class="pair">抵達 ≈ 到達</span><span class="pair">設置 ≈ 設立</span><span class="pair">獲勝 ≈ 告捷</span><span class="pair">訝異 ≈ 詫異</span><span class="pair">優秀 ≈ 傑出</span><span class="pair">喝采 ≈ 叫好</span></div>
+  <p style="margin:12px 0 6px;font-weight:700;color:var(--seal)">相反詞</p>
+  <div class="pairs"><span class="pair">沸騰 ↔ 冷卻</span><span class="pair">領先 ↔ 落後</span><span class="pair">滿意 ↔ 不滿</span><span class="pair">獲勝 ↔ 敗北</span><span class="pair">黝黑 ↔ 白皙</span><span class="pair">責罵 ↔ 稱讚</span><span class="pair">優秀 ↔ 平庸</span></div>
+
+  <h3 class="sub">一字多義：「屬」</h3>
+  <div class="grid2">
+    <div class="box"><h4>歸於、附著（課文的意思）</h4>勝利即將<b>屬於</b>我、<b>歸屬</b></div>
+    <div class="box"><h4>其他意思</h4>家<b>屬</b>（親人）、部<b>屬</b>（下屬）、金<b>屬</b>（類別）</div>
+  </div>
+</section>
+
+<!-- ═════════ 模組 1–5 ═════════ -->
+<section class="panel" id="p-m1" hidden style="--tc:var(--water)">
+  <h2 class="sec">模組一｜閱讀理解</h2>
+  <p class="core"><b>核心觀念：</b>答案一定在文章裡，不在腦袋裡。每一題先找到「文中證據」再選。</p>
+  <div class="hint">題目分四層：<span class="lay L1">表層・找資訊</span> <span class="lay L2">推論・連結資訊</span> <span class="lay L3">評鑑・判斷詮釋</span> <span class="lay L4">延伸閱讀</span></div>
+  <div data-quiz="m1"></div>
+</section>
+
+<section class="panel" id="p-m2" hidden style="--tc:var(--straw)">
+  <h2 class="sec">模組二｜成語情境判斷</h2>
+  <p class="core"><b>核心觀念：</b>不只要知道意思，還要會用在對的情境。每個成語都看「✓ 對的用法」和「✗ 錯的用法」。</p>
+  <h3 class="sub">課文裡的四字語詞（必考）</h3>
+  <div class="idioms" id="idioms"></div>
+  <h3 class="sub">生字延伸成語</h3>
+  <div class="idioms" id="idioms2"></div>
+  <h3 class="sub">成語博物館（加分）</h3>
+  <div class="cards" id="phrases"></div>
+  <h3 class="sub">情境練習</h3>
+  <div data-quiz="m2"></div>
+</section>
+
+<section class="panel" id="p-m3" hidden style="--tc:var(--plum)">
+  <h2 class="sec">模組三｜語病與句型結構</h2>
+  <p class="core"><b>核心觀念：</b>找出句子裡「多餘的字」和「搭錯的結構」，並說得出錯在哪裡。</p>
+  <h3 class="sub">本課四個句型＋一個照樣造句</h3>
+  <div class="cards" id="patterns"></div>
+  <h3 class="sub">常見語病五類</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>語病類型</th><th>怎麼看出來</th><th>錯誤例句</th><th>改正</th></tr>
+    <tr><td>關聯詞誤用</td><td>前後連接詞配不起來</td><td><u>只要</u>再幾步，我<u>才</u>能反敗為勝。</td><td>只要……<b>就</b>……</td></tr>
+    <tr><td>語意重複</td><td>兩個詞意思一樣</td><td>穆太<u>一路上</u>始終<u>一路領先</u>。</td><td>穆太始終一路領先。</td></tr>
+    <tr><td>成分殘缺</td><td>找不到「誰」做這件事</td><td><u>透過</u>這場比賽，<u>讓</u>全世界看見運動家精神。</td><td>刪「透過」或刪「讓」</td></tr>
+    <tr><td>搭配不當</td><td>形容詞／動詞和名詞配不上</td><td>觀眾的歡呼聲非常<u>明亮</u>。</td><td>歡呼聲非常<b>響亮</b></td></tr>
+    <tr><td>詞序錯誤</td><td>詞語位置放錯</td><td>穆太停下了<u>在終點前十公尺</u>腳步。</td><td>穆太<b>在終點前十公尺</b>停下了腳步。</td></tr>
+  </table></div>
+  <h3 class="sub">練習題</h3>
+  <div data-quiz="m3"></div>
+</section>
+
+<section class="panel" id="p-m4" hidden style="--tc:var(--bamboo)">
+  <h2 class="sec">模組四｜修辭：畫面＋情緒</h2>
+  <p class="core"><b>核心觀念：</b>先把文字變成畫面，再從畫面讀出情緒。</p>
+  <div class="cards" id="rhet"></div>
+  <h3 class="sub">設問的兩種：提問 vs 激問</h3>
+  <div class="grid2">
+    <div class="box"><h4>提問：自問自答</h4>答案就在問題<b>後面</b>。<br>「這是屬於我的勝利嗎？<b>穆太才是這場比賽的勝利者</b>。」</div>
+    <div class="box"><h4>激問：有問無答</h4>答案藏在問題的<b>反面</b>。<br>「比賽不就是為了要求得勝利嗎？」→ 意思是：比賽<b>就是</b>為了求勝利。</div>
+  </div>
+  <h3 class="sub">修辭分析答題鷹架</h3>
+  <div class="scaf">這句話用了【　　】修辭。<br>畫面：我看到了＿＿＿＿＿<br>情緒：這讓我感覺＿＿＿＿＿<br>作者想強調的是＿＿＿＿＿</div>
+  <h3 class="sub">練習題</h3>
+  <div data-quiz="m4"></div>
+</section>
+
+<section class="panel" id="p-m5" hidden style="--tc:var(--seal)">
+  <h2 class="sec">模組五｜寫作整合</h2>
+  <p class="core"><b>寫作升級三招：</b>① 加感覺（五感）② 加畫面 ③ 加心情轉折（一開始 → 後來 → 最後我發現……）</p>
+  <div class="grid2">
+    <div class="box"><h4>✗ 直白</h4>比賽快結束了，我很緊張。</div>
+    <div class="box"><h4>✓ 升級（摹寫開頭＋對比）</h4>冷風一陣陣灌進球衣，我的手心卻全是汗，心臟撲通撲通跳得好快。</div>
+  </div>
+  <h3 class="sub">練習（寫完再按「看參考答案」）</h3>
+  <div data-quiz="m5"></div>
+  <h3 class="sub">寫作評分表</h3>
+  <div class="tbl-wrap"><table class="rubric">
+    <tr><th>向度</th><th>3 分（優）</th><th>2 分（良）</th><th>1 分（需加強）</th></tr>
+    <tr><td>內容</td><td>具體，有細節與感受</td><td>內容完整但平淡</td><td>內容空洞或偏題</td></tr>
+    <tr><td>結構</td><td>有起承轉合</td><td>結構尚可</td><td>缺乏組織</td></tr>
+    <tr><td>語言</td><td>用詞精準，有修辭</td><td>通順但平淡</td><td>語病多或句型重複</td></tr>
+    <tr><td>書寫</td><td>整齊，字跡清晰</td><td>尚整齊</td><td>潦草難辨</td></tr>
+  </table></div>
+</section>
+
+<section class="panel" id="p-wrong" hidden style="--tc:var(--bad)">
+  <h2 class="sec">錯題本</h2>
+  <p class="lead">這裡會自動收集你答錯的選擇題。重做答對後，就會從錯題本消失。</p>
+  <div id="wrongList"></div>
+</section>
+</main>
+
+<script>
+/* ───────── 資料 ───────── */
+const PARAS = [
+ {name:'意義段一',stage:'苦苦追趕',c:'var(--water)',segs:[
+   '十二月的寒風一陣陣吹進',['運動衫','運動時穿的上衣，吸汗、易洗、耐穿。'],'，但我絲毫不覺得冷，因為我的',['肌膚','肌肉與皮膚。'],'發燙，內心正',['沸騰','比喻情緒激動、高漲。'],'著。我想贏，但就在前方不遠處，那位來自',['肯亞','國名，在非洲東部，首都奈洛比。'],'的運動員阿貝爾‧穆太卻',['一路領先','一路上都處在領先的位置。'],'，',['兀自','還是、仍然。（兀 ㄨˋ）'],'把我拋在後頭，讓我苦苦追趕。'],
+  sum:'安納亞想贏得比賽的心沸騰著，然而來自肯亞的穆太卻一路領先。',
+  pts:['<b>觸覺摹寫＋映襯</b>：寒風很冷 ↔ 肌膚發燙、內心沸騰 → 凸顯<b>想贏的激動</b>。','<b>映襯</b>：穆太「一路領先」↔ 我「苦苦追趕」→ 襯托比賽的艱辛。','這就是「用摹寫法開頭」，讓讀者一開始就走進比賽現場。']},
+ {name:'意義段二',stage:'穆太停下',c:'var(--plum)',segs:[
+   '整場馬拉松比賽，我',['唯一','獨一無二、只有一個。'],'能做的，就是盯著穆太的',['後腦勺','腦袋後面較突出的部位。（勺 ㄕㄠˊ）'],'，想著何時能追過他而',['逆轉局勢','把整個情況扭轉過來。'],'。就剩幾十公尺，我想',['大勢已去','整個局勢已經無法挽回。'],'了吧？場邊的西班牙觀眾正熱烈的為我們加油著，<q>「還沒結束，在前面！」「再跑！再跑！」</q>前方的觀眾忽然開始',['吶喊','高聲叫喊。（吶 ㄋㄚˋ，口部）'],'。我不解的望向前方，就在終點前十公尺處，穆太停下腳步了。'],
+  sum:'觀眾忽然吶喊著，因為穆太還沒有到達終點，就停下腳步。',
+  pts:['「我想大勢已去了吧？」是<b>設問（激問）</b>：其實是說「我覺得追不上了」。','觀眾喊「還沒結束，在前面！」→ 證據：穆太停的地方<b>不是真正的終點</b>。','「我不解的望向前方」：安納亞一開始也不明白發生什麼事。']},
+ {name:'意義段三',stage:'內心掙扎',c:'var(--straw)',segs:[
+   '穆太',['握拳','手指向掌心彎曲抓緊成拳頭。'],'做了個滿意的手勢，並望向群眾享受歡呼，穿過拱門的他以為自己已經',['抵達','到達。'],'終點。但他不懂得西班牙語，根本不知道，大家是要他趕緊繼續往前跑。我知道那道氣球拱門不是終點，而是主辦單位',['設置','設立、裝置。'],'的',['頒獎','發給獎品、獎金或獎狀。'],'地點。',
+   '<br>我們的距離漸漸拉近了，眼看我就要追過他，這場比賽的勝利即將',['屬於','歸於。'],'我，這面金牌將',['榮耀','光采顯耀，讓……感到光榮。'],'我的家鄉西班牙。只要再幾步，我就能',['反敗為勝','扭轉即將落敗的劣勢而得到勝利。'],'。但，這是屬於我的勝利嗎？穆太才是這場比賽的勝利者，他一直領先著，而我似乎也早已沒有追過他的力氣，若他知道終點的正確位置，我根本就不可能獲勝。可是，這是一場公平公開的比賽，比賽不就是為了要求得勝利，追求第一個抵達終點嗎？',['搞錯','弄錯。'],'的人是他，不是我，知道正確終點位置的我，不就應該是比賽的獲勝者嗎？面對這',['近在眼前','形容事物極為接近，就在面前。'],'的勝利，我該怎麼做……。'],
+  sum:'穆太誤把拱門當成終點而停下腳步，讓安納亞有機會反敗為勝。可是安納亞知道自己並不是真的勝過穆太，因此內心不斷掙扎，不停的反問自己該怎麼做。',
+  pts:['穆太停下的兩個原因：①把<b>頒獎地點的氣球拱門</b>當成終點 ②<b>聽不懂西班牙語</b>，把提醒當成歡呼。','句型：那道氣球拱門<b>不是</b>終點，<b>而是</b>主辦單位設置的頒獎地點。（並列）／<b>只要</b>再幾步，我<b>就</b>能反敗為勝。（條件）','安納亞的<b>獨白</b>連問三個問題：「這是屬於我的勝利嗎？」（提問）、「比賽不就是……嗎？」「不就應該是……獲勝者嗎？」（激問）→ 一邊想贏、一邊覺得不公平，<b>內心掙扎</b>。','<b>頂真</b>：這是一場公平公開的<b>比賽</b>，<b>比賽</b>不就是為了要求得勝利……']},
+ {name:'意義段四',stage:'伸手指路',c:'var(--bamboo)',segs:[
+   '現在，穆太就在我面前了，他笑得開懷，',['黝黑','深黑或青黑。（黝 ㄧㄡˇ）'],'的肌膚',['襯','烘托。'],'得一口白牙，更顯亮眼。看著他高興的樣子，我伸出手，輕輕拍了他的背，我不會說肯亞的語言，但我伸長食指，指向前方。穆太露出',['訝異','驚訝、奇怪。'],'的表情，接著繼續往前跑了起來，跑到那原本就屬於他的勝利終點。'],
+  sum:'安納亞先輕輕拍穆太的後背，再伸長食指，指向前方正確的終點位置，讓穆太繼續保持領先，跑到終點。',
+  pts:['<b>視覺摹寫＋映襯</b>：黝黑的肌膚 ↔ 一口白牙 → 凸顯穆太<b>笑得開懷</b>。','<b>疊字</b>：「輕輕」拍了他的背 → 動作溫和、友善。','語言不通，所以用<b>動作</b>（拍背、伸長食指）提醒。','「那<b>原本就屬於他</b>的勝利終點」→ 安納亞認為勝利本來就是穆太的。']},
+ {name:'意義段五',stage:'贏得喝采',c:'var(--seal)',segs:[
+   '我們一前一後的抵達終點，穆太搭上我的肩膀，向我直道謝。我對穆太報以淺淺的微笑，然後準備走向教練，我想著也許會',['惹','招引、引起。'],'來他一頓責罵吧！沒想到教練竟',['摟','用手臂攏住。（摟 ㄌㄡˇ，手部）'],'著我的肩膀，對我說：<q>「比賽就是要贏，你沒有成為優秀的運動員，但成了一個更優秀的人。」</q>優秀的人？我沒聽錯吧？我抬頭看向場邊',['歡聲雷動','歡呼的聲音像打雷一樣，形容熱烈歡呼的場面。'],'的群眾，我心愛的西班牙觀眾，用最熱烈的掌聲及',['喝采','大聲叫好。'],'告訴我，我做對了！'],
+  sum:'教練沒有責備安納亞，反而讚美他是一個優秀的人；觀眾則回以最熱烈的掌聲及喝采，告訴他做對了。',
+  pts:['心情轉折：擔心被<b>責罵</b> → 意外被<b>稱讚</b>。','句型：你<b>沒有</b>成為優秀的運動員，<b>但</b>成了一個更優秀的人。（轉折）','「優秀的人？我沒聽錯吧？」是<b>激問</b>，表現安納亞的<b>驚訝、不敢相信</b>。','<b>疊字</b>：「淺淺」的微笑。<b>頂真</b>：……告訴<b>我</b>，<b>我</b>做對了！']},
+ {name:'意義段六',stage:'名次不是唯一',c:'#E0A800',segs:[
+   '我，艾文‧費南德茲‧安納亞，用我的方式讓家鄉為我感到榮耀，讓所有人知道：名次不是唯一，更重要的是，身為運動員對自己的要求與可貴的',['運動家精神','公平競爭、尊重對手、輸贏都有風度的精神。'],'。'],
+  sum:'比賽的結果，名次不是唯一，重要的是運動員對自己的要求與可貴的運動家精神。',
+  pts:['這一段是<b>主旨句</b>，考試最常考！','前面擔心「金牌將榮耀我的家鄉」，最後是「用我的方式」讓家鄉感到榮耀 → 頭尾<b>呼應</b>。']}
+];
+
+const CHARS = [
+ ['衫','ㄕㄢ','衣','8','運動衫、襯衫','杉：杉木（木部）'],
+ ['肌','ㄐㄧ','肉','6','肌膚、肌肉','飢：飢餓'],
+ ['沸','ㄈㄟˋ','水','8','沸騰、鼎沸','拂：拂曉｜狒：狒狒'],
+ ['騰','ㄊㄥˊ','馬','20','奔騰、歡騰','藤：藤椅（艸部）'],
+ ['兀','ㄨˋ','儿','3','兀自、突兀','元：元氣｜几：茶几'],
+ ['唯','ㄨㄟˊ','口','11','唯一、唯獨','誰：鹿死誰手'],
+ ['勺','ㄕㄠˊ','勹','3','後腦勺、湯勺','句：句號'],
+ ['吶','ㄋㄚˋ','口','7','吶喊、嗩吶','納：納悶、容納（糸部）'],
+ ['握','ㄨㄛˋ','手','12','握拳、掌握','屋：屋簷'],
+ ['抵','ㄉㄧˇ','手','8','抵達、抵抗','底：底片｜柢：根柢'],
+ ['置','ㄓˋ','网','13','設置、布置','值：價值'],
+ ['頒','ㄅㄢ','頁','13','頒獎、頒發','分：讀音不同，別寫錯'],
+ ['屬','ㄕㄨˇ','尸','21','屬於、家屬','囑：叮囑（口部）'],
+ ['榮','ㄖㄨㄥˊ','木','14','榮耀、欣欣向榮','營：營養｜容：容易'],
+ ['搞','ㄍㄠˇ','手','13','搞錯、搞笑','稿：寫稿｜槁：枯槁'],
+ ['黝','ㄧㄡˇ','黑','17','黝黑','幼：幼兒'],
+ ['襯','ㄔㄣˋ','衣','21','襯托、襯衫','親：親人'],
+ ['惹','ㄖㄜˇ','心','13','招惹、惹禍','若：好像'],
+ ['摟','ㄌㄡˇ','手','14','摟抱、摟住','樓：樓梯｜數：數字']
+];
+
+const NEWWORDS = [
+ ['沸騰','喧噪、高漲。比喻情緒激動。','隨著球員擊出逆轉全壘打，觀眾的情緒沸騰到最高點。'],
+ ['兀自','尚自、還是。','午休結束，只有大雄兀自趴在桌上呼呼大睡。'],
+ ['唯一','獨一無二。','發生土石流，這個山村唯一的連外道路被阻斷。'],
+ ['後腦勺','腦袋後面較突出的部位。','爸爸總是低頭滑手機，經常後腦勺疼痛。'],
+ ['吶喊','高聲叫喊。','運動賽場上，觀眾們高聲吶喊，為選手加油。'],
+ ['抵達','到達。','我們一大早就出發，抵達目的地時天已經黑了。'],
+ ['設置','設立、裝置。','伯父的公司設置了一個部門，負責研發新產品。'],
+ ['頒獎','發給獎品、獎金或獎狀等。','因為颱風來襲，頒獎典禮將延期到下週。'],
+ ['屬於','隸屬、歸於。','成功屬於勤奮的人。'],
+ ['榮耀','光采顯耀。','人們往往只看見選手的榮耀，卻看不到平時訓練的刻苦。'],
+ ['搞錯','弄錯。','這對雙胞胎長得一模一樣，大家常把他們搞錯。'],
+ ['黝黑','深黑或青黑。','阿曹長年在陽光下工作，皮膚變得相當黝黑。'],
+ ['襯','烘托。','黝黑的肌膚襯得一口白牙更顯亮眼。'],
+ ['惹','招引、引起。','我想著也許會惹來教練一頓責罵。'],
+ ['摟','用手臂攏住，不像「抱」那樣完全圍住。','教練摟著我的肩膀。']
+];
+
+const MUST = [
+ '主旨：運動家精神不只追求輸贏，而是公平競爭；名次不是唯一',
+ '人物：安納亞（西班牙，故事中的「我」）、穆太（肯亞，一路領先，不懂西班牙語）',
+ '穆太停下的原因：誤把頒獎地點的氣球拱門當終點＋聽不懂觀眾的提醒',
+ '人稱：課文＝第一人稱（臨場感、寫得出內心）；新聞＝第三人稱（觀察員）',
+ '寫作技巧：摹寫法開頭（觸覺）、對比凸顯重點',
+ '修辭：摹寫（觸覺、視覺）、映襯、設問（提問／激問）、頂真、疊字',
+ '句型：不是……而是……／只要……就……／……接著……／沒有……但……',
+ '四字語詞：一路領先、大勢已去、反敗為勝、近在眼前、歡聲雷動',
+ '延伸成語：揚湯止沸、飛黃騰達、唯唯諾諾、搖旗吶喊、本末倒置',
+ '易錯字：兀（不是几）、吶喊／容納、摟（不是樓）、抵達、搞錯'
+];
+
+const IDIOMS = [
+ {n:'一路領先',m:'一路上都處在領先的位置。',y:'阿超在八百公尺賽跑中一路領先，卻在終點前被超越，屈居第二。',x:'他一路領先，最後一名抵達終點。（一路領先怎麼會最後一名？）',r:'反：一路落後'},
+ {n:'大勢已去',m:'整個局勢已經無法挽回。',y:'隨著警方團團包圍，綁匪眼看大勢已去，只能棄械投降。',x:'比賽才剛開始，我們隊大勢已去，一路領先。（前後矛盾）',r:'近：回天乏術｜反：勝券在握'},
+ {n:'反敗為勝',m:'扭轉即將落敗的劣勢而得到勝利。',y:'我們隊在比賽結束前十秒踢進關鍵一球，反敗為勝！',x:'我們從頭到尾都領先，最後反敗為勝。（從沒落後，不能說「反敗」）',r:'近：轉敗為勝｜反：功敗垂成'},
+ {n:'近在眼前',m:'形容事物極為接近，就在面前。',y:'明明眼鏡近在眼前，爸爸卻找了老半天。',x:'暑假還有半年，真是近在眼前。（時間還很遠）',r:'近：近在咫尺｜反：遙不可及'},
+ {n:'歡聲雷動',m:'歡呼聲像打雷一樣，形容熱烈歡呼的場面。',y:'司儀宣布班上獲得大隊接力冠軍時，全班歡聲雷動。',x:'圖書館裡歡聲雷動，大家安靜的看書。（安靜≠歡呼）',r:'近：歡聲震天｜反：鴉雀無聲'}
+];
+const IDIOMS2 = [
+ {n:'揚湯止<em>沸</em>',m:'比喻暫時紓解困境，無法根本解決問題。',y:'光吃止痛藥來緩解頭痛，只是揚湯止沸，無法根治病因。',x:'醫生找到病因並徹底治好，真是揚湯止沸。（徹底解決是「釜底抽薪」）',r:'近：救火揚沸｜反：釜底抽薪'},
+ {n:'飛黃<em>騰</em>達',m:'比喻仕途得意，很快到達高位。',y:'叔叔受到公司賞識，從此在商場上飛黃騰達。',x:'他生意失敗，從此飛黃騰達。（失敗≠得意）',r:'近：平步青雲｜反：窮途潦倒'},
+ {n:'<em>唯</em>唯諾諾',m:'順從而無所違逆。用於貶義。',y:'我們要勇於表達想法，不能總是唯唯諾諾，毫無主見。',x:'班長唯唯諾諾，勇敢的提出反對意見。（前後矛盾）',r:'近：唯命是從｜反：據理力爭'},
+ {n:'搖旗<em>吶</em>喊',m:'比喻為他人助長聲勢。',y:'槍聲一響，同學們立刻為大隊接力的隊員搖旗吶喊。',x:'他在一旁冷眼旁觀，為選手搖旗吶喊。（冷眼旁觀是「作壁上觀」）',r:'反：作壁上觀'},
+ {n:'本末倒置',m:'比喻不知事情的輕重緩急。',y:'為了工作常常熬夜，反而犧牲了健康，真是本末倒置！',x:'他先寫完功課再去玩，真是本末倒置。（這是正確的先後）',r:'近：捨本逐末｜反：按部就班'}
+];
+
+const PHRASES = [
+ {n:'衣<em>衫</em>不整',m:'衣著隨便、不整齊。',e:'半夜突發地震，大家在衣衫不整的狀況下緊急逃生。'},
+ {n:'面黃<em>肌</em>瘦',m:'形容人消瘦、營養不良的樣子。',e:'電影中，主角餓得面黃肌瘦，在寒風中發抖。'},
+ {n:'大權在<em>握</em>',m:'握有處理重大事務的權力。',e:'他當上總經理後大權在握，公司大小事都由他決定。'},
+ {n:'<em>抵</em>死不從',m:'拚死也不服從，態度堅決。',e:'面對敵軍的招降，士兵抵死不從，堅守崗位。'},
+ {n:'神仙眷<em>屬</em>',m:'比喻婚姻美滿、感情和睦的夫婦。',e:'爺爺奶奶相守到老，真摯的感情有如神仙眷屬。'},
+ {n:'衣錦<em>榮</em>歸',m:'功成名就後，光榮回到故鄉。',e:'合唱團期待在海外比賽拿下名次，衣錦榮歸。'},
+ {n:'<em>惹</em>是生非',m:'招引是非麻煩。',e:'那名男子到處惹是生非，讓人很頭疼。'}
+];
+
+const PATTERNS = [
+ {n:'不是……而是……（並列）',d:'否定前面，肯定後面，兩邊是相對的關係。',src:'那道氣球拱門<mark>不是</mark>終點，<mark>而是</mark>主辦單位設置的頒獎地點。',e:'明天的比賽，我擔心的不是對手的實力，而是我們的團隊默契。',w:'✗ 不是……<u>就是</u>……（這是二選一，意思不同）'},
+ {n:'只要……就……（條件）',d:'前面是條件，後面是結果；條件在前，結果在後。',src:'<mark>只要</mark>再幾步，我<mark>就</mark>能反敗為勝。',e:'我相信，只要付出努力，就會有收穫。',w:'✗ 只要……<u>才</u>……（「才」要配「只有」）'},
+ {n:'……接著……（連貫）',d:'表示動作的先後次序。',src:'穆太露出訝異的表情，<mark>接著</mark>繼續往前跑了起來。',e:'天空閃過一道亮光，接著雷聲大作，下起雨來。',w:'✗ 先後順序寫反：「<u>接著</u>天空閃過亮光，雷聲大作」'},
+ {n:'沒有……但……（轉折）',d:'後面和前面的意思相反或相對，有明顯轉折。',src:'你<mark>沒有</mark>成為優秀的運動員，<mark>但</mark>成了一個更優秀的人。',e:'他沒有足夠的時間做簡報，但流利的口條彌補了不足。',w:'✗ 沒有……<u>所以</u>……（轉折不能接因果）'},
+ {n:'照樣造句',d:'結構：這＋量詞＋名詞＋將＋動詞＋名詞＋的＋名詞',src:'<mark>這面</mark>金牌<mark>將</mark>榮耀我的家鄉。',e:'這盆玫瑰將美化教室的空間。／這張謝卡將溫暖大家的心靈。',w:'注意量詞要配對：一<b>面</b>金牌、一<b>盆</b>玫瑰、一<b>座</b>橋梁'}
+];
+
+const RHET = [
+ {n:'摹寫（觸覺）＋映襯',d:'寫身體感覺到的冷熱；冷和熱放在一起對比。',ex:'十二月的<mark>寒風</mark>一陣陣吹進運動衫，但我絲毫<mark>不覺得冷</mark>，因為我的<mark>肌膚發燙</mark>，內心正沸騰著。',ef:'畫面：冷風呼呼吹。情緒：外面越冷，越顯出內心<b>想贏的激動</b>。'},
+ {n:'摹寫（視覺）＋映襯',d:'寫眼睛看到的顏色；黑和白放在一起對比。',ex:'他笑得開懷，<mark>黝黑</mark>的肌膚襯得一口<mark>白牙</mark>，更顯亮眼。',ef:'畫面：黑皮膚、白牙齒。情緒：凸顯穆太<b>笑得好開心</b>。'},
+ {n:'設問（激問）',d:'有問無答，答案在問題的反面。',ex:'就剩幾十公尺，<mark>我想大勢已去了吧？</mark><br>優秀的人？<mark>我沒聽錯吧？</mark>',ef:'第一句：其實是「追不上了」，表現<b>失望</b>。第二句：表現<b>驚訝、不敢相信</b>。'},
+ {n:'設問（提問）',d:'自問自答，答案就在問題後面。',ex:'<mark>這是屬於我的勝利嗎？</mark>穆太才是這場比賽的勝利者。',ef:'用問題引起注意，凸顯安納亞心中的答案：勝利是穆太的。'},
+ {n:'頂真',d:'上一句的最後一個詞，變成下一句的開頭。',ex:'這是一場公平公開的<mark>比賽</mark>，<mark>比賽</mark>不就是為了要求得勝利……<br>……告訴<mark>我</mark>，<mark>我</mark>做對了！',ef:'句子一個接一個，讀起來緊密連貫。'},
+ {n:'疊字',d:'同一個字連在一起重複。',ex:'<mark>輕輕</mark>拍了他的背｜<mark>淺淺</mark>的微笑｜寒風<mark>一陣陣</mark>',ef:'加強語氣，有節奏感；「輕輕」「淺淺」讓動作顯得溫和。'}
+];
+
+/* 題庫：mc = 選擇題；open = 開放題 */
+const QUIZ = {
+m1:[
+ {l:'L1',t:'表層',q:'課文開頭，比賽是在什麼樣的天氣下進行的？',o:['炎熱的夏天午後','十二月的寒風中','下著大雨的早晨','颳颱風的晚上'],a:1,ev:'十二月的寒風一陣陣吹進運動衫',w:'第一句就寫出時間和天氣：十二月、寒風。'},
+ {l:'L1',t:'表層',q:'穆太在終點前十公尺停下來，是因為他以為什麼？',o:['自己受傷跑不動了','安納亞已經超過他','穿過的氣球拱門就是終點','比賽被裁判暫停了'],a:2,ev:'穿過拱門的他以為自己已經抵達終點。',w:'穆太把氣球拱門誤當成終點，還握拳享受歡呼。'},
+ {l:'L1',t:'表層',q:'那道氣球拱門其實是什麼？',o:['真正的終點線','主辦單位設置的頒獎地點','觀眾休息區的入口','補給水站'],a:1,ev:'那道氣球拱門不是終點，而是主辦單位設置的頒獎地點。',w:'這句也是本課句型「不是……而是……」。'},
+ {l:'L1',t:'表層',q:'安納亞用什麼方法提醒穆太？',o:['用肯亞話大聲告訴他','請裁判去通知他','輕拍他的背，再伸長食指指向前方','推著他一起跑過終點'],a:2,ev:'我伸出手，輕輕拍了他的背，我不會說肯亞的語言，但我伸長食指，指向前方。',w:'安納亞不會說肯亞的語言，所以用動作提醒。'},
+ {l:'L1',t:'表層',q:'比賽結束後，教練對安納亞的反應是什麼？',o:['大聲責罵他放棄金牌','摟著他的肩膀，稱讚他成了更優秀的人','叫他下次一定要贏','不理他，轉身離開'],a:1,ev:'教練竟摟著我的肩膀，對我說：「……你沒有成為優秀的運動員，但成了一個更優秀的人。」',w:'安納亞原本擔心被責罵，「沒想到」教練反而稱讚他。'},
+ {l:'L2',t:'推論',q:'觀眾為什麼忽然對著穆太大喊「再跑！再跑！」？',o:['為穆太得到冠軍歡呼','穆太還沒到終點就停下來，觀眾在提醒他','觀眾希望安納亞追過穆太','觀眾在抗議比賽不公平'],a:1,ev:'「還沒結束，在前面！」「再跑！再跑！」……就在終點前十公尺處，穆太停下腳步了。',w:'「還沒結束，在前面」說明終點還在前面，觀眾是在提醒。穆太卻把它當成歡呼。'},
+ {l:'L2',t:'推論',q:'觀眾一直提醒，穆太為什麼還是沒有繼續跑？',o:['他太累了，故意休息','他聽不懂西班牙語，以為大家在為他歡呼','他想讓安納亞贏','他不喜歡西班牙觀眾'],a:1,ev:'但他不懂得西班牙語，根本不知道，大家是要他趕緊繼續往前跑。',w:'要把兩個線索連起來：比賽在西班牙，穆太來自肯亞，聽不懂觀眾說什麼。'},
+ {l:'L2',t:'推論',q:'勝利近在眼前，安納亞為什麼還不斷在心裡問自己問題？',o:['他不確定終點在哪裡','他知道自己不是憑實力勝過穆太，覺得這樣贏不公平','他擔心觀眾不喜歡他','他想先休息一下再跑'],a:1,ev:'穆太才是這場比賽的勝利者……若他知道終點的正確位置，我根本就不可能獲勝。',w:'安納亞一方面想贏，一方面知道穆太才是真正的勝利者，所以內心掙扎。'},
+ {l:'L2',t:'推論',q:'安納亞走向教練時，為什麼擔心「也許會惹來他一頓責罵」？',o:['因為他跑得太慢','因為他覺得教練希望他拿到金牌，比賽就是要贏','因為他和穆太吵架','因為他沒有向觀眾揮手'],a:1,ev:'比賽就是要贏',w:'安納亞放棄了到手的金牌，他以為教練會不高興。教練說的第一句也是「比賽就是要贏」。'},
+ {l:'L2',t:'推論',q:'安納亞發現穆太停下來後，他的心情轉折和最後的決定是什麼？',o:['竊喜 → 趁機追趕','掙扎 → 趁機追趕','掙扎 → 提醒對方','勝券在握 → 炫耀自己'],a:2,w:'先是一連串自問的「掙扎」，最後伸長食指「提醒」穆太。（隨堂卷考題）'},
+ {l:'L2',t:'推論',q:'「就剩幾十公尺，我想大勢已去了吧？」這時安納亞心裡在想什麼？',o:['自己穩拿冠軍了','剩下的距離太短，追不上穆太了','比賽要延長了','他想放棄比賽回家'],a:1,ev:'就剩幾十公尺，我想大勢已去了吧？',w:'「大勢已去」＝局勢無法挽回。只剩幾十公尺還落後，所以覺得追不上了。'},
+ {l:'L3',t:'評鑑',q:'本課的主旨最接近下列哪一句話？',o:['每一次的失敗，都是成長的養分','就算輸，也要讓對手贏得很辛苦','好與壞都是過程，最重要的是相信自己','寧可有光明的失敗，絕不要不榮譽的成功'],a:3,w:'安納亞寧願輸掉比賽，也不要靠對手搞錯而贏。這就是「光明的失敗」勝過「不榮譽的成功」。（習作考題）'},
+ {l:'L3',t:'評鑑',q:'下列何者「不是」本課要告訴我們的道理？',o:['比賽過程要公平競爭','不管手段如何，一定要得到冠軍','堅持到最後，不論輸贏都應得到掌聲','名次不是唯一，最重要的是運動家精神'],a:1,w:'「不管手段如何都要冠軍」正好和安納亞的選擇相反。注意題目問的是「不是」。'},
+ {l:'L3',t:'評鑑',q:'課文用「我」（第一人稱）來寫，最大的好處是什麼？',o:['可以客觀的報導比賽的時間地點','可以同時寫出每一個人心裡在想什麼','能寫出安納亞內心的掙扎，讓讀者有臨場感','可以讓文章比較短'],a:2,w:'第一人稱只能寫「我」看到、想到的，但能深入寫出內心感受。A、B 比較像第三人稱新聞報導的特色。'},
+ {l:'L3',t:'評鑑',q:'標題「贏得喝采的輸家」，「輸家」和「贏得」看起來矛盾，作者想表達什麼？',o:['安納亞其實偷偷贏了比賽','安納亞輸了名次，卻贏得大家的尊敬和掌聲','輸家都會得到掌聲','觀眾喜歡看選手輸'],a:1,w:'輸的是名次，贏的是喝采。用相反的詞放在一起，讓讀者印象更深。'},
+ {l:'L3',t:'評鑑',q:'課文最後附了一則新聞報導。關於兩者的比較，下列何者正確？',o:['新聞報導用第一人稱，寫出安納亞的內心掙扎','課文用第三人稱，像觀察員一樣客觀','新聞報導用第三人稱，交代了時間、地點和事件經過','兩篇都用第二人稱「你」'],a:2,ev:'【外電訊】2012/12/3 昨日於西班牙布拉達市的一場馬拉松比賽中……',w:'新聞用「他」，有日期、地點，像觀察員；課文用「我」，寫出內心。'},
+ {l:'L4',t:'延伸閱讀',ctx:'<div class="passage"><h4>習作短文（節錄）</h4>我汗如雨下，踏出的每一步都濺起泥濘。……拐過最後一個彎，越過拱門──我做到了！我為自己感到光榮，內心歡騰！賽道旁人聲鼎沸，雖然聽不懂他們說什麼，但一定是為我歡呼吧！……穿著綠色運動衫的西班牙選手也越過了「終點」。不對勁，他怎麼沒有停下來，還持續朝我逼近？……這時他伸出手指，指示我繼續向前。……如果我是他，我會做出同樣的決定嗎？</div>',q:'這篇短文裡的「我」是誰？',o:['安納亞','穆太','教練','場邊的觀眾'],a:1,ev:'雖然聽不懂他們說什麼……穿著綠色運動衫的西班牙選手也越過了「終點」。',w:'「我」聽不懂觀眾說話、越過拱門以為到了，西班牙選手還指示「我」向前 → 是穆太。同一件事，換人當「我」來寫。'},
+ {l:'L4',t:'延伸閱讀',q:'承上題，短文中第二個「終點」為什麼加上引號？',o:['因為那是真正的終點','暗示那不是真正的終點，只是穆太以為的終點','因為作者寫錯字','因為要強調比賽結束了'],a:1,w:'引號可以表示「特殊意思」：這裡的「終點」其實是氣球拱門，不是真的終點。'},
+ {open:true,l:'L3',t:'簡答',q:'如果你是安納亞，你會告訴穆太終點的位置嗎？說說你的理由。',h:'先寫「會／不會」，再用「因為……」說理由，最好連結課文裡的一句話。',s:'我會告訴穆太。雖然我也想贏，但我更想靠自己的實力堂堂正正的獲勝，而不是靠對手搞錯。就像課文說的「名次不是唯一」，用不公平的方法拿到金牌，我也不會真正開心。'}
+],
+m2:[
+ {l:'L1',t:'情境選擇',ctx:'大隊接力決賽，紅隊從第一棒到最後一棒都跑在最前面，沒有被任何一隊超越過。',q:'這個情境最適合用哪個語詞？',o:['反敗為勝','一路領先','大勢已去','近在眼前'],a:1,w:'從頭到尾都在前面＝一路領先。紅隊從沒落後，所以不能說「反敗為勝」。'},
+ {l:'L1',t:'情境選擇',ctx:'籃球賽最後一分鐘，我們落後二十分，大家都知道已經不可能追上了。',q:'這個情境最適合用哪個語詞？',o:['大勢已去','歡聲雷動','反敗為勝','飛黃騰達'],a:0,w:'局勢已無法挽回＝大勢已去。'},
+ {l:'L1',t:'情境選擇',ctx:'足球賽一直落後一分，沒想到最後五分鐘連進兩球，最後贏得比賽！',q:'這個情境最適合用哪個語詞？',o:['一路領先','大勢已去','反敗為勝','本末倒置'],a:2,w:'本來快要輸，最後扭轉成贏＝反敗為勝。'},
+ {l:'L1',t:'情境選擇',ctx:'偶像歌手一走上舞臺，臺下上萬名歌迷同時尖叫歡呼，聲音大得像打雷。',q:'這個情境最適合用哪個語詞？',o:['唯唯諾諾','歡聲雷動','揚湯止沸','近在眼前'],a:1,w:'歡呼聲像雷響＝歡聲雷動。'},
+ {l:'L2',t:'情境選擇',ctx:'哥哥每天熬夜打電動，第二天上課一直打瞌睡，成績一落千丈。',q:'這個情境最適合用哪個成語？',o:['本末倒置','飛黃騰達','搖旗吶喊','大權在握'],a:0,w:'把重要的（課業、健康）放到後面，不重要的放前面＝本末倒置。'},
+ {l:'L2',t:'情境選擇',ctx:'班會討論時，小明完全沒有自己的意見，老師說什麼他都只會點頭說「好、好、是」。',q:'這個情境最適合用哪個成語？',o:['搖旗吶喊','唯唯諾諾','抵死不從','飛黃騰達'],a:1,w:'一味順從、沒主見＝唯唯諾諾（貶義）。「抵死不從」意思正好相反。'},
+ {l:'L2',t:'情境選擇',ctx:'家裡的水管一直漏水，爸爸每次都只拿抹布擦乾地板，卻從來不找人來修水管。',q:'這個情境最適合用哪個成語？',o:['揚湯止沸','反敗為勝','本末倒置','衣錦榮歸'],a:0,w:'只處理表面、沒有解決根本問題＝揚湯止沸。'},
+ {l:'L3',t:'成語辨析',q:'下列哪一句的成語用得「最恰當」？',o:['我們隊從頭到尾都贏，最後反敗為勝。','暑假還有半年，真是近在眼前。','運動會上，啦啦隊揮舞彩球，為選手搖旗吶喊。','他生意失敗後，從此飛黃騰達。'],a:2,w:'A：從沒落後，不能「反敗」。B：半年很遠，不是近在眼前。D：失敗和飛黃騰達矛盾。'},
+ {l:'L3',t:'選詞填寫',ctx:'對方在比賽中（甲），眼看我方（乙），場上士氣低迷。最後一分鐘，教練換上候補球員，在最後一秒驚險投進三分球，更讓我方（丙）！現場瞬間（丁）。',q:'（甲）（乙）（丙）（丁）依序應填入哪一組？',o:['一路領先／大勢已去／反敗為勝／歡聲雷動','大勢已去／一路領先／歡聲雷動／反敗為勝','反敗為勝／大勢已去／一路領先／歡聲雷動','一路領先／反敗為勝／大勢已去／歡聲雷動'],a:0,w:'對方一直在前面（一路領先）→ 我方快輸了（大勢已去）→ 最後扭轉（反敗為勝）→ 大家歡呼（歡聲雷動）。（隨堂卷考題）'},
+ {l:'L2',t:'錯字辨識',q:'下列哪一個成語「沒有」錯字？',o:['神仙眷囑','搖旗訥喊','揚湯止沸','飛黃藤達'],a:2,w:'正確寫法：神仙眷<b>屬</b>、搖旗<b>吶</b>喊、飛黃<b>騰</b>達。'},
+ {open:true,l:'L2',t:'說出理由',q:'請用「反敗為勝」寫一句話，並說明為什麼你的情境適合用這個成語。',h:'「反敗為勝」的情境一定要有「本來快輸了」→「最後贏了」的轉變。',s:'例：拔河比賽我們班一開始被拉到快過線，大家咬緊牙關一起用力，最後竟然反敗為勝！<br>理由：一開始快要輸（敗），後來扭轉局面贏了（勝），符合「扭轉落敗的劣勢而得到勝利」。'}
+],
+m3:[
+ {l:'L1',t:'語病判斷',q:'下列哪一句「沒有」語病？',o:['只要再幾步，我才能反敗為勝。','那道拱門不是終點，就是頒獎的地點。','你沒有成為優秀的運動員，但成了一個更優秀的人。','雖然穆太一路領先，而且他停下了腳步。'],a:2,w:'A：「只要」配「就」。B：要表示「否定前面、肯定後面」應用「不是……而是……」。D：「雖然」配「但是／卻」。'},
+ {l:'L1',t:'語意重複',q:'下列哪一句有「語意重複」的毛病？',o:['穆太一路上始終一路領先。','安納亞伸長食指指向前方。','觀眾熱烈的為選手加油。','教練摟著安納亞的肩膀。'],a:0,w:'「一路上」「始終」「一路領先」意思重複。改：穆太始終領先。／穆太一路領先。'},
+ {l:'L2',t:'成分殘缺',q:'「透過這場比賽，讓全世界看見了可貴的運動家精神。」這句話的問題是什麼？',o:['關聯詞用錯','缺少主語，不知道是誰讓全世界看見','詞序顛倒','沒有問題'],a:1,w:'「透過……」加上「讓……」，主語不見了。改：①刪「透過」：這場比賽讓全世界看見…… ②刪「讓」：透過這場比賽，全世界看見……'},
+ {l:'L2',t:'搭配不當',q:'「場邊觀眾的歡呼聲非常明亮。」這句話錯在哪裡？',o:['聲音不能用「明亮」形容，應改成「響亮」','「觀眾」應改成「選手」','缺少主語','語意重複'],a:0,w:'「明亮」是形容光線（視覺），聲音要用「響亮」（聽覺）。'},
+ {l:'L2',t:'詞序錯誤',q:'「穆太停下了在終點前十公尺腳步。」怎麼改才正確？',o:['穆太在終點前十公尺停下了腳步。','穆太停下了腳步在前十公尺終點。','在穆太終點前十公尺停下了腳步。','穆太停下了終點前十公尺的在腳步。'],a:0,w:'「在終點前十公尺」是說地點，要放在動作「停下」的前面。'},
+ {l:'L2',t:'兩面對一面',q:'「能不能遵守比賽規則，是成為好選手的重要條件。」這句話的問題是什麼？',o:['前面有「能／不能」兩面，後面只對應「能」這一面','語意重複','缺少主語','沒有問題'],a:0,w:'「不能遵守規則」不會是好選手的條件。改：「遵守比賽規則，是成為好選手的重要條件。」'},
+ {l:'L1',t:'句型選用',ctx:'我們擔心的＿＿＿對手太強，＿＿＿自己不夠團結。',q:'空格依序填入哪一組關聯詞最恰當？',o:['不是／而是','只要／就','雖然／而且','因為／但是'],a:0,w:'否定前面（對手太強），肯定後面（不夠團結）＝不是……而是……'},
+ {l:'L1',t:'句型選用',ctx:'＿＿＿每天練習跑步，你＿＿＿能在運動會跑出好成績。',q:'空格依序填入哪一組關聯詞最恰當？',o:['不是／而是','只要／就','沒有／但','雖然／卻'],a:1,w:'前面是條件，後面是結果＝只要……就……'},
+ {l:'L2',t:'照樣造句',q:'下列哪一句和「這面金牌將榮耀我的家鄉」的句子結構相同？',o:['這座橋梁將連結兩國的情誼。','金牌是我最大的榮耀。','我的家鄉有一面金牌。','這面金牌好漂亮啊！'],a:0,w:'結構：這＋量詞（座）＋名詞（橋梁）＋將＋動詞（連結）＋名詞（兩國）＋的＋名詞（情誼）。'},
+ {open:true,l:'L3',t:'改寫語病句',q:'原句：「雖然安納亞輸了比賽，所以他贏得了全場的喝采。」有什麼問題？應該怎麼改？',h:'看關聯詞：「雖然」後面應該接什麼？',s:'<b>問題：</b>關聯詞誤用，「雖然」是轉折，不能接因果的「所以」。<br><b>改寫：</b>雖然安納亞輸了比賽，<b>但是</b>他贏得了全場的喝采。'},
+ {open:true,l:'L3',t:'改寫語病句',q:'原句：「經過教練的稱讚，使安納亞明白自己做對了。」有什麼問題？應該怎麼改？',h:'找找看：是「誰」明白了？主語在哪裡？',s:'<b>問題：</b>成分殘缺，「經過……」加「使……」，句子沒有主語。<br><b>改寫：</b>①教練的稱讚，使安納亞明白自己做對了。②經過教練的稱讚，安納亞明白自己做對了。'},
+ {open:true,l:'L3',t:'改寫語病句',q:'原句：「只要堅持到最後，才能得到大家的掌聲。」有什麼問題？應該怎麼改？',h:'「只要」配什麼？「才」又配什麼？',s:'<b>問題：</b>關聯詞搭配錯誤。「只要」要配「就」；「才」要配「只有」。<br><b>改寫：</b>①<b>只要</b>堅持到最後，<b>就</b>能得到大家的掌聲。②<b>只有</b>堅持到最後，<b>才</b>能得到大家的掌聲。'}
+],
+m4:[
+ {l:'L1',t:'修辭辨識',q:'課文開頭「十二月的寒風一陣陣吹進運動衫，但我絲毫不覺得冷」用了哪一種感官摹寫？',o:['視覺','聽覺','觸覺','嗅覺'],a:2,w:'寒風、冷、肌膚發燙，都是身體皮膚的感覺，是觸覺摹寫。（習作考題）'},
+ {l:'L1',t:'修辭辨識',q:'「他笑得開懷，黝黑的肌膚襯得一口白牙，更顯亮眼。」用了哪些修辭？',o:['聽覺摹寫＋誇飾','視覺摹寫＋映襯','觸覺摹寫＋設問','嗅覺摹寫＋頂真'],a:1,w:'看到的黑、白顏色是視覺摹寫；黑白放在一起對比是映襯。'},
+ {l:'L1',t:'修辭辨識',q:'「這是一場公平公開的比賽，比賽不就是為了要求得勝利……」上下句以「比賽」相連，這是哪一種修辭？',o:['頂真','疊字','譬喻','排比'],a:0,w:'上句最後的詞＝下句開頭的詞，就是頂真。'},
+ {l:'L2',t:'設問分類',q:'下列哪一句屬於「提問」（自問自答）？',o:['我想大勢已去了吧？','這是屬於我的勝利嗎？穆太才是這場比賽的勝利者。','優秀的人？我沒聽錯吧？','比賽不就是為了要求得勝利嗎？'],a:1,w:'提問的答案就在問題後面：「穆太才是勝利者」。其他三句都是有問無答的激問。'},
+ {l:'L2',t:'設問效果',q:'「比賽不就是為了要求得勝利，追求第一個抵達終點嗎？」真正的意思是？',o:['比賽不是為了勝利','比賽就是為了求得勝利、第一個到終點','安納亞不知道比賽規則','安納亞在問觀眾問題'],a:1,w:'激問的答案在問題的「反面」：「不就是……嗎？」＝「就是……」。這時安納亞正在說服自己可以贏。'},
+ {l:'L2',t:'修辭辨識',q:'下列哪一組都是「疊字」？',o:['輕輕、淺淺','一前一後、公平公開','反敗為勝、大勢已去','握拳、摟著'],a:0,w:'同一個字連在一起重複＝疊字。「一前一後」是類字（隔開重複）。'},
+ {l:'L2',t:'摹寫判斷',q:'下列哪一句是「嗅覺摹寫」？',o:['咖啡在口中化開，先苦後甘。','門後傳來「ㄎㄚ！ㄎㄚ！」的高跟鞋聲。','走進魚市場，濃濃的魚腥味撲鼻而來。','我踩在灼熱的沙灘上，等待浪花的涼意。'],a:2,w:'A 味覺、B 聽覺、C 嗅覺（鼻子聞到）、D 觸覺。（課本加油小站題）'},
+ {l:'L3',t:'畫面＋情緒',q:'「兀自把我拋在後頭，讓我苦苦追趕」和「一路領先」放在一起，主要想表現什麼？',o:['穆太很不友善','用對比襯托出安納亞比賽的艱辛','安納亞跑得比穆太快','比賽很輕鬆'],a:1,ev:'穆太卻一路領先，兀自把我拋在後頭，讓我苦苦追趕。',w:'穆太「一路領先」↔ 我「苦苦追趕」是映襯，凸顯安納亞追得很辛苦。'},
+ {open:true,l:'L3',t:'鷹架分析',q:'請用答題鷹架分析：「十二月的寒風一陣陣吹進運動衫，但我絲毫不覺得冷，因為我的肌膚發燙，內心正沸騰著。」',h:'這句話用了【　】修辭。畫面：＿＿ 情緒：＿＿ 作者想強調：＿＿',s:'這句話用了【<b>觸覺摹寫＋映襯</b>】修辭。<br>畫面：冷冷的寒風灌進衣服，選手卻全身發燙、滿頭大汗。<br>情緒：緊張、激動，一心想贏。<br>作者想強調：外面越冷，越顯出安納亞內心想贏的熱情。'},
+ {open:true,l:'L3',t:'仿寫修辭',q:'仿照「黝黑的肌膚襯得一口白牙，更顯亮眼」，用兩種相反的顏色或事物，寫一句對比句。',h:'句型：＿＿的＿＿襯得＿＿，更顯＿＿。',s:'例：漆黑的夜空襯得一輪明月，更顯皎潔。／翠綠的荷葉襯得粉紅的荷花，更顯嬌豔。'}
+],
+m5:[
+ {open:true,l:'L1',t:'照樣造句',q:'仿寫：「這面金牌將榮耀我的家鄉。」',h:'結構：這＋量詞＋名詞＋將＋動詞＋名詞＋的＋名詞',s:'例：這副春聯將送來新年的祝福。／這筆資金將解決公司的困境。／這棟大樓將成為國內的地標。'},
+ {open:true,l:'L1',t:'造句',q:'用「不是……而是……」造句。',h:'否定前面，肯定後面。',s:'例：資源不是取之不盡，而是有限的，每個人都要珍惜。'},
+ {open:true,l:'L1',t:'造句',q:'用「只要……就……」造句。',h:'前面寫條件，後面寫結果。',s:'例：只要人人都願意站在對方的立場思考，社會就會變得更美好。'},
+ {open:true,l:'L1',t:'造句',q:'用「沒有……但……」造句。',h:'後面的意思要和前面相反或相對。',s:'例：弟弟今天參加歌唱比賽沒有獲得名次，但觀眾仍給予熱烈的掌聲。'},
+ {open:true,l:'L2',t:'對比造句',q:'穆太穿過拱門時心情「興高采烈」，觀眾卻「心急如焚」。請用這組對比寫一個完整的句子。',h:'把兩種相反的心情放在同一句裡，讓重點更明顯。',s:'例：跑過拱門的穆太興高采烈，觀眾卻為他心急如焚，不斷在場邊揮手，提醒他趕快向前跑。'},
+ {open:true,l:'L2',t:'摹寫開頭',q:'用「摹寫法」為一篇〈運動會〉寫開頭（至少用兩種感官）。',h:'可以寫：看到的顏色、聽到的聲音、皮膚感覺到的溫度……',s:'例：火辣辣的太陽曬得跑道發燙（觸覺），五顏六色的彩旗在風中啪啦啪啦的飄動（視覺＋聽覺），加油聲一波接一波，我站在起跑線上，心臟跳得比鼓聲還快。'},
+ {open:true,l:'L2',t:'改變人稱',q:'原文（第三人稱）：「小新從校門外跑進來，風把他的頭髮吹得都豎起來了。他一路往教室快走，當他一走進教室，鐘聲就響了，他很慶幸自己沒遲到。」請改寫成第一人稱「我」，並加入感受與想法。',h:'想一想：①趕進學校時的感受 ②快到教室時擔心什麼 ③發現沒遲到時的心情',s:'我大口的喘著氣，心跳得好快，只差幾分鐘就要遲到了！我飛快跑進校門。「別怕，還有時間！」我在心裡安慰著自己，邁開腳步朝教室前進。眼見教室就在眼前，我的雙腿卻快要不聽使喚。「噹噹噹！」鐘聲無情的響起，而我……順利達陣！「哇！我沒有遲到！」我喜不自勝的大聲歡呼！'},
+ {open:true,essay:true,ck:['用摹寫法開頭（至少一種感官）','有心情的轉折（一開始 → 後來 → 最後）','用到至少一組對比','寫出自己的領悟（例如：名次不是唯一）','字數 150～250 字'],l:'L5',t:'短文寫作',q:'題目：〈輸了，也值得〉，寫一篇 150～250 字的短文。',h:'寫一次比賽或競爭的經驗（運動、才藝、考試都可以）。借用課文的寫法：① 摹寫法開頭 ② 比賽中的心情 ③ 結果出乎意料 ④ 最後的領悟。',s:'「嗶──」哨聲一響，冷風颼颼的灌進球衣，我的手心卻全是汗。這是全校躲避球決賽，我們班一路落後，我心裡只想著：一定要贏！<br>比賽剩下最後一分鐘，我接到球，眼看對方的小傑背對著我綁鞋帶，只要輕輕一丟，就能把他打出場。可是，這樣贏真的光榮嗎？我猶豫了一下，大喊：「小傑，小心！」他轉過身，接住了我的球。<br>最後我們輸了。我低著頭走回隊伍，以為大家會生我的氣，沒想到班長拍拍我的肩說：「你剛剛好帥！」對面的小傑也跑過來跟我擊掌。<br>那一刻我才明白，名次只是一個數字，堂堂正正的比賽，才是最值得驕傲的事。'}
+]};
+const MODS = {m1:['閱讀理解','var(--water)'],m2:['成語情境','var(--straw)'],m3:['語病句型','var(--plum)'],m4:['修辭','var(--bamboo)'],m5:['寫作','var(--seal)']};
+const LAYER_CLASS = {L1:'L1',L2:'L2',L3:'L3',L4:'L4',L5:'L5'};
+const KEYS = ['A','B','C','D'];
+
+/* ───────── 儲存 ───────── */
+const SKEY = 'yingde-review-v1';
+let S = {ans:{}, txt:{}, self:{}, must:{}, tab:'home', rev:{}};
+try { const raw = localStorage.getItem(SKEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch(e) {}
+function save(){ try { localStorage.setItem(SKEY, JSON.stringify(S)); } catch(e) {} }
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+const qid = (m,i)=>m+'-'+i;
+
+/* ───────── 分頁 ───────── */
+function showTab(t){
+  if(!document.getElementById('p-'+t)) t='home';
+  $$('.panel').forEach(p=>p.hidden = p.id!=='p-'+t);
+  $$('.tab').forEach(b=>b.classList.toggle('on', b.dataset.tab===t));
+  S.tab=t; save();
+  if(t==='wrong') renderWrong();
+  if(t==='home') renderProg();
+  const on=$('.tab.on'); if(on) on.scrollIntoView({block:'nearest',inline:'nearest'});
+}
+$$('.tab').forEach(b=>b.addEventListener('click',()=>{showTab(b.dataset.tab); window.scrollTo({top:0});}));
+
+/* ───────── 重點總覽 ───────── */
+$('#must').innerHTML = MUST.map((m,i)=>`<li><input type="checkbox" id="must${i}" ${S.must[i]?'checked':''}><label for="must${i}">${m}</label></li>`).join('');
+$$('#must input').forEach((c,i)=>c.addEventListener('change',()=>{S.must[i]=c.checked; save();}));
+
+function stats(m){
+  const qs=QUIZ[m]; let tot=0,done=0,ok=0,open=0,openDone=0;
+  qs.forEach((q,i)=>{ if(q.open){open++; if(S.self[qid(m,i)]) openDone++; return;}
+    tot++; const a=S.ans[qid(m,i)]; if(a!==undefined){done++; if(a===q.a) ok++;} });
+  return {tot,done,ok,open,openDone};
+}
+function renderProg(){
+  $('#prog').innerHTML = Object.keys(MODS).map(m=>{
+    const s=stats(m); const pct = s.tot ? Math.round(s.ok/s.tot*100) : Math.round(s.openDone/s.open*100);
+    const line = s.tot ? `選擇題 答對 ${s.ok}/${s.tot}` : '';
+    const ol = s.open ? `${line?'｜':''}練習 ${s.openDone}/${s.open}` : '';
+    return `<button class="pcard" style="--c:${MODS[m][1]}" data-go="${m}"><div class="pn">${m.slice(1)}. ${MODS[m][0]}</div><div class="pv">${line}${ol}</div><div class="bar"><i style="width:${pct}%"></i></div></button>`;
+  }).join('');
+  $$('#prog .pcard').forEach(b=>b.addEventListener('click',()=>{showTab(b.dataset.go); window.scrollTo({top:0});}));
+}
+function renderOverall(){
+  let t=0,o=0; Object.keys(MODS).forEach(m=>{const s=stats(m); t+=s.tot; o+=s.ok;});
+  $('#overall').textContent = `答對 ${o} / ${t}`;
+}
+
+/* ───────── 課文精讀 ───────── */
+$('#paras').innerHTML = PARAS.map((p,pi)=>{
+  const txt = p.segs.map(s=> Array.isArray(s) ? `<button class="w" data-n="${s[1]}" data-k="${s[0]}">${s[0]}</button>` : s).join('');
+  return `<article class="para" style="--c:${p.c}">
+    <div class="ch"><span class="chip">${p.name}</span><span class="chip c">${p.stage}</span></div>
+    <div class="ptxt">${txt}</div>
+    <div class="note" hidden></div>
+    <button class="tr-btn" aria-expanded="false">看段落大意</button>
+    <div class="sum" hidden><b>段落大意：</b>${p.sum}</div>
+    <ul class="points">${p.pts.map(x=>`<li>${x}</li>`).join('')}</ul>
+  </article>`;
+}).join('');
+$$('.para').forEach(card=>{
+  const note=$('.note',card);
+  $$('.w',card).forEach(w=>w.addEventListener('click',()=>{
+    const was=w.classList.contains('on');
+    $$('.w',card).forEach(x=>x.classList.remove('on'));
+    if(was){note.hidden=true;return;}
+    w.classList.add('on'); note.innerHTML=`<b>${w.dataset.k}</b>：${w.dataset.n}`; note.hidden=false;
+  }));
+  const b=$('.tr-btn',card), sm=$('.sum',card);
+  b.addEventListener('click',()=>{sm.hidden=!sm.hidden; b.textContent=sm.hidden?'看段落大意':'收起段落大意'; b.setAttribute('aria-expanded',String(!sm.hidden));});
+});
+
+/* ───────── 生字語詞 ───────── */
+$('#chars').innerHTML = CHARS.map(c=>`<button class="cc" aria-expanded="false">
+  <span class="z"><span class="zc">${c[0]}</span><span><span class="zy">${c[1]}</span><br><span class="rs">部首 ${c[2]}｜${c[3]} 畫</span></span></span>
+  <span class="more" hidden>造詞：${c[4]}<br><b>小心：</b>${c[5]}</span></button>`).join('');
+$$('.cc').forEach(b=>b.addEventListener('click',()=>{const m=$('.more',b); m.hidden=!m.hidden; b.setAttribute('aria-expanded',String(!m.hidden));}));
+$('#newwords').insertAdjacentHTML('beforeend', NEWWORDS.map(w=>`<tr><td class="big">${w[0]}</td><td>${w[1]}</td><td>${w[2]}</td></tr>`).join(''));
+
+/* ───────── 成語、句型、修辭卡 ───────── */
+const idHTML = (arr,tip='') => arr.map(d=>`<div class="idc"><div class="nm">${d.n}</div><div class="mn">${d.m}</div>
+  <div class="ctx y"><b>✓ 對的用法</b>　${d.y}</div><div class="ctx n"><b>✗ 錯的用法</b>　${d.x}</div><div class="rel">${d.r}${tip}</div></div>`).join('');
+$('#idioms').innerHTML = idHTML(IDIOMS);
+$('#idioms2').innerHTML = idHTML(IDIOMS2,'｜紅字是本課生字');
+$('#phrases').innerHTML = PHRASES.map(p=>`<div class="rc"><div class="rn">${p.n}</div><div class="rd">${p.m}</div><div class="ef">例：${p.e}</div></div>`).join('');
+$('#patterns').innerHTML = PATTERNS.map(p=>`<div class="rc"><div class="rn">${p.n}</div><div class="rd">${p.d}</div><div class="ex">${p.src}</div><div class="ef">例：${p.e}</div><div class="ef" style="color:var(--bad)">${p.w}</div></div>`).join('');
+$('#rhet').innerHTML = RHET.map(r=>`<div class="rc"><div class="rn">${r.n}</div><div class="rd">${r.d}</div><div class="ex">${r.ex}</div><div class="ef">${r.ef}</div></div>`).join('');
+
+/* ───────── 題目 ───────── */
+function renderQuiz(m){
+  const host=$(`[data-quiz="${m}"]`); const qs=QUIZ[m];
+  const hasMc = qs.some(q=>!q.open);
+  let html = `<div class="qtools"><span class="score" id="score-${m}"></span><span style="display:flex;gap:8px">
+     ${hasMc?`<button class="btn" data-act="wrongonly">只看錯題</button>`:''}<button class="btn" data-act="reset">全部重做</button></span></div>`;
+  let n=0;
+  qs.forEach((q,i)=>{
+    n++; const id=qid(m,i);
+    const head = `<div class="qh"><span class="qno">第 ${n} 題</span><span class="lay ${LAYER_CLASS[q.l]}">${q.t}</span></div>`;
+    const ctx = q.ctx ? `<div class="qctx">${q.ctx}</div>` : '';
+    if(q.open){
+      html += `<div class="q open" id="q-${id}">${head}${ctx}<div class="qt">${q.q}</div>
+        <div class="hint">提示：${q.h}</div>
+        <textarea id="t-${id}" placeholder="把答案寫在這裡（會自動保存在這台裝置）">${(S.txt[id]||'').replace(/</g,'&lt;')}</textarea>
+        <div class="row"><button class="btn pri" data-rev="${id}">看參考答案</button>
+        <label class="selfok"><input type="checkbox" id="s-${id}" ${S.self[id]?'checked':''}>我會了</label>
+        ${q.essay?`<span class="count" id="c-${id}"></span>`:''}</div>
+        ${q.essay?`<ul class="check">${(q.ck||[]).map((c,k)=>`<li><label><input type="checkbox" id="ck-${id}-${k}" ${S.self[id+'-'+k]?'checked':''}>${c}</label></li>`).join('')}</ul>`:''}
+        <div class="sample" id="sp-${id}" ${S.rev[id]?'':'hidden'}><b>參考答案</b><br>${q.s}</div></div>`;
+    } else {
+      html += `<div class="q mc" id="q-${id}" data-id="${id}">${head}${ctx}<div class="qt">${q.q}</div>
+        <div class="opts">${q.o.map((o,k)=>`<button class="opt" data-k="${k}"><span class="k">${KEYS[k]}</span><span>${o}</span></button>`).join('')}</div>
+        <div class="fb" hidden></div></div>`;
+    }
+  });
+  host.innerHTML = html;
+
+  // 選擇題
+  $$('.q.mc',host).forEach(card=>{
+    const id=card.dataset.id; const i=+id.split('-')[1]; const q=qs[i];
+    $$('.opt',card).forEach(b=>b.addEventListener('click',()=>{ S.ans[id]=+b.dataset.k; save(); paintMc(card,q,id); updScore(m); renderOverall(); }));
+    paintMc(card,q,id);
+  });
+  // 開放題
+  $$('.q.open',host).forEach(card=>{
+    const id=card.id.slice(2); const ta=$('textarea',card); const cnt=$('#c-'+id);
+    const upd=()=>{ if(cnt){ const L=ta.value.replace(/\s/g,'').length; cnt.textContent=`${L} 字`; cnt.classList.toggle('good',L>=150&&L<=250);} };
+    ta.addEventListener('input',()=>{S.txt[id]=ta.value; save(); upd();}); upd();
+    $('[data-rev]',card).addEventListener('click',e=>{const sp=$('#sp-'+id); sp.hidden=!sp.hidden; S.rev[id]=!sp.hidden; e.target.textContent=sp.hidden?'看參考答案':'收起參考答案'; save();});
+    if(S.rev[id]) $('[data-rev]',card).textContent='收起參考答案';
+    $('#s-'+id).addEventListener('change',e=>{S.self[id]=e.target.checked; save(); updScore(m);});
+    $$('.check input',card).forEach((c,k)=>c.addEventListener('change',()=>{S.self[id+'-'+k]=c.checked; save();}));
+  });
+  // 工具列
+  $('[data-act="reset"]',host).addEventListener('click',e=>{
+    const b=e.currentTarget;
+    if(b.dataset.armed!=='1'){ b.dataset.armed='1'; b.textContent='再按一次確認重做'; setTimeout(()=>{b.dataset.armed=''; b.textContent='全部重做';},3000); return; }
+    qs.forEach((q,i)=>{ const id=qid(m,i); delete S.ans[id]; delete S.self[id]; delete S.rev[id]; });
+    save(); renderQuiz(m); renderOverall();
+  });
+  const wo=$('[data-act="wrongonly"]',host);
+  if(wo) wo.addEventListener('click',()=>{
+    const on = wo.classList.toggle('pri');
+    wo.textContent = on ? '顯示全部' : '只看錯題';
+    $$('.q',host).forEach(c=>{ c.hidden = on && !c.classList.contains('wrong'); });
+  });
+  updScore(m);
+}
+function paintMc(card,q,id){
+  const a=S.ans[id]; const opts=$$('.opt',card); const fb=$('.fb',card);
+  card.classList.remove('right','wrong');
+  opts.forEach(o=>{o.classList.remove('ok','no'); o.disabled=false;});
+  if(a===undefined){ fb.hidden=true; return; }
+  const right = a===q.a;
+  card.classList.add(right?'right':'wrong');
+  opts.forEach((o,k)=>{ o.disabled=true; if(k===q.a) o.classList.add('ok'); else if(k===a) o.classList.add('no'); });
+  fb.hidden=false;
+  fb.innerHTML = `<div class="verdict ${right?'ok':'no'}">${right?'答對了！':'再想想：正確答案是 '+KEYS[q.a]}</div>${q.ev?`<div class="ev">${q.ev}</div>`:''}<div style="margin-top:6px">${q.w}</div>
+    ${right?'':`<button class="btn" style="margin-top:8px" data-retry>重做這題</button>`}`;
+  const r=$('[data-retry]',fb); if(r) r.addEventListener('click',()=>{ delete S.ans[id]; save(); paintMc(card,q,id); updScore(id.split('-')[0]); renderOverall(); });
+}
+function updScore(m){
+  const s=stats(m); const el=$('#score-'+m); if(!el) return;
+  el.innerHTML = s.tot ? `答對 ${s.ok} / ${s.tot} <small>（已作答 ${s.done}）</small>${s.open?` <small>｜練習 ${s.openDone}/${s.open} 會了</small>`:''}` : `練習 ${s.openDone} / ${s.open} 會了`;
+}
+
+/* ───────── 錯題本 ───────── */
+function renderWrong(){
+  const items=[];
+  Object.keys(MODS).forEach(m=>QUIZ[m].forEach((q,i)=>{ const a=S.ans[qid(m,i)]; if(!q.open && a!==undefined && a!==q.a) items.push({m,i,q,a}); }));
+  const host=$('#wrongList');
+  if(!items.length){ host.innerHTML='<div class="empty">目前沒有錯題。去各模組做題吧！答錯的題目會自動出現在這裡。</div>'; return; }
+  host.innerHTML = items.map(({m,i,q,a})=>`<div class="wr-item"><div class="mod">模組 ${m.slice(1)}・${MODS[m][0]}・${q.t}</div>
+    ${q.ctx?`<div class="qctx" style="margin-top:6px">${q.ctx}</div>`:''}<div class="qt">${q.q}</div>
+    <div class="y">你選：${KEYS[a]}. ${q.o[a]}</div><div class="a">正解：<b>${KEYS[q.a]}. ${q.o[q.a]}</b></div>
+    ${q.ev?`<div class="ev">${q.ev}</div>`:''}<div style="margin-top:6px;font-size:.93rem">${q.w}</div>
+    <button class="btn" style="margin-top:8px" data-goq="${m}|${i}">回到題目重做</button></div>`).join('');
+  $$('[data-goq]',host).forEach(b=>b.addEventListener('click',()=>{
+    const [m,i]=b.dataset.goq.split('|'); const id=qid(m,+i);
+    delete S.ans[id]; save(); renderQuiz(m); renderOverall(); showTab(m);
+    const el=document.getElementById('q-'+id); if(el) el.scrollIntoView({block:'start'});
+  }));
+}
+
+/* ───────── 啟動 ───────── */
+Object.keys(MODS).forEach(renderQuiz);
+renderOverall(); renderProg();
+const h=(location.hash||'').slice(1);
+showTab(document.getElementById('p-'+h) ? h : (S.tab||'home'));
+</script>
+</script>
+
+</body>
+</html>
