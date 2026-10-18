@@ -1,0 +1,731 @@
+<!doctype html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>哇！原來如此 自學寶典</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+</head><body>
+<style>
+/* Layout：「祕密探險隊」主題。黏頂彩色標題＋可橫捲分頁；單欄 920px；每個模組一個糖果色 */
+:root{
+  color-scheme:light;
+  --bg:#EAF7FF; --paper:#FFFFFF; --cream:#FFF8E1; --line:#CDE6F7;
+  --ink:#1D2B4A; --ink2:#46557A; --ink3:#7C89A8;
+  --sky:#1F8FFF;  --sky-lt:#DDEFFF;
+  --tomato:#FF4F5E; --tomato-lt:#FFE3E6;
+  --sun:#FFC22E; --sun-lt:#FFF3CC;
+  --mint:#13B98F; --mint-lt:#D8F7EC;
+  --grape:#8B5CF6; --grape-lt:#EEE6FF;
+  --orange:#FF8A1F; --orange-lt:#FFEBD6;
+  --ok:#13A86B; --ok-lt:#DDF7EA; --bad:#F0384A; --bad-lt:#FFE2E5;
+  --shadow:0 4px 16px rgba(31,143,255,.14);
+  --f-display:'Huninn','jf-openhuninn','Yuanti TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  --f-body:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  --r:20px;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:19px;line-height:1.85;
+  background-image:radial-gradient(circle at 12px 12px,rgba(255,194,46,.28) 3px,transparent 4px),radial-gradient(circle at 40px 34px,rgba(31,143,255,.14) 3px,transparent 4px);
+  background-size:56px 56px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:#FF6B8B}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:4px solid var(--sun);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:linear-gradient(100deg,#FF6B8B 0%,#FF9A2E 40%,#FFC22E 68%,#38C5F5 100%);box-shadow:0 4px 18px rgba(255,107,139,.3);color:#fff}
+.top-in{max-width:920px;margin:0 auto;padding-top:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;gap:12px}
+.logo{flex:none;width:56px;height:56px;border-radius:18px;background:#fff;box-shadow:0 3px 10px rgba(0,0,0,.12);display:grid;place-items:center}
+.logo svg{width:46px;height:46px}
+.top h1{margin:0;font-family:var(--f-display);font-weight:400;font-size:1.55rem;line-height:1.15;letter-spacing:.06em;text-shadow:0 2px 4px rgba(0,0,0,.18)}
+.top .sub{font-size:.8rem;opacity:.96}
+.score{margin-left:auto;text-align:center;background:rgba(255,255,255,.25);border-radius:16px;padding:4px 12px;font-size:.75rem;white-space:nowrap}
+.score b{display:block;font-family:var(--f-display);font-weight:400;font-size:1.25rem;font-variant-numeric:tabular-nums;line-height:1.2}
+.tabs{max-width:920px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;padding:10px max(12px,env(safe-area-inset-right,0px)) 0 max(12px,env(safe-area-inset-left,0px));scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;border:0;background:rgba(255,255,255,.25);padding:8px 14px 9px;border-radius:16px 16px 0 0;font-weight:700;font-size:1rem;color:#fff;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.15);display:flex;align-items:center;gap:6px}
+.tab:hover{background:rgba(255,255,255,.42)}
+.tab.on{background:var(--bg);color:var(--tc);text-shadow:none}
+.tab .ic{font-size:1.1rem}
+
+main{max-width:920px;margin:0 auto;padding-block:22px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.panel{display:grid;gap:20px}
+.sec{margin:0;font-family:var(--f-display);font-weight:400;font-size:1.9rem;line-height:1.3;color:var(--tc);text-wrap:balance;display:flex;align-items:center;gap:10px}
+.sec .badge{font-family:var(--f-body);font-size:.9rem;font-weight:900;background:var(--tc);color:#fff;border-radius:999px;padding:2px 12px}
+.lead{margin:-8px 0 0;color:var(--ink2);font-size:1.02rem}
+h3{margin:0 0 10px;font-family:var(--f-display);font-weight:400;font-size:1.4rem;line-height:1.35;color:var(--ink)}
+h4{margin:0 0 6px;font-size:1.08rem}
+p{margin:0}
+.card{background:var(--paper);border-radius:var(--r);padding:20px 22px;box-shadow:var(--shadow);min-width:0}
+.card.soft{background:var(--cream);box-shadow:none;border:3px dashed var(--sun)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.tag{display:inline-block;font-size:.8rem;font-weight:900;border-radius:999px;padding:1px 10px;background:var(--tl,var(--sky-lt));color:var(--tc2,var(--sky));vertical-align:middle;letter-spacing:.04em}
+mark{background:linear-gradient(transparent 55%,#FFE58A 55%);color:inherit;padding:0 2px}
+.key{color:var(--tomato);font-weight:900}
+ul.dots{margin:0;padding-left:1.2em}
+ul.dots li{margin:4px 0}
+.mascot-say{display:flex;gap:12px;align-items:flex-start}
+.mascot-say svg{flex:none;width:58px;height:58px}
+.bubble{background:#fff;border:3px solid var(--sun);border-radius:18px 18px 18px 4px;padding:10px 16px;font-weight:500;min-width:0}
+
+/* hero */
+.hero{background:linear-gradient(135deg,#FFFFFF 0%,#FFF6D6 100%);border-radius:28px;padding:24px;box-shadow:var(--shadow);display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center}
+.hero svg.big{width:140px;height:140px}
+.hero h2{margin:0;font-family:var(--f-display);font-weight:400;font-size:2.3rem;line-height:1.2;color:var(--tomato)}
+.hero p{font-size:1.08rem;color:var(--ink2);margin-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{background:var(--sky-lt);color:var(--sky);font-weight:700;border-radius:999px;padding:3px 14px;font-size:.92rem}
+.chip.r{background:var(--tomato-lt);color:var(--tomato)}.chip.g{background:var(--mint-lt);color:var(--mint)}.chip.p{background:var(--grape-lt);color:var(--grape)}
+@media (max-width:560px){.hero{grid-template-columns:1fr;text-align:center}.hero svg.big{margin:0 auto;width:110px;height:110px}.chips{justify-content:center}}
+
+/* structure diagram */
+.flow{display:grid;gap:10px}
+.flow .end{background:var(--sky);color:#fff;border-radius:16px;padding:12px 18px;font-weight:700}
+.flow .end small{display:block;font-weight:400;opacity:.95;font-size:.95rem}
+.flow .mid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.flow .mid div{border-radius:16px;padding:12px 14px;font-weight:700;font-size:1rem;line-height:1.55}
+.flow .mid small{display:block;font-weight:400;font-size:.9rem;color:var(--ink2)}
+.flow .arrow{text-align:center;color:var(--ink3);font-weight:900;font-size:1.2rem;line-height:1}
+@media (max-width:640px){.flow .mid{grid-template-columns:1fr}}
+
+/* secret boxes */
+.secret{border-radius:24px;overflow:hidden;background:#fff;box-shadow:var(--shadow);display:flex;flex-direction:column;min-width:0}
+.secret .q{padding:18px 18px 14px;background:var(--sc);color:#fff}
+.secret .q .em{font-size:2.2rem;line-height:1}
+.secret .q h4{font-family:var(--f-display);font-weight:400;font-size:1.3rem;margin:6px 0 0;line-height:1.4}
+.secret .open{margin:14px 18px;border:0;border-radius:14px;background:var(--sun);color:var(--ink);font-weight:900;padding:10px;font-size:1.05rem;box-shadow:0 4px 0 #E2A200}
+.secret .open:active{transform:translateY(3px);box-shadow:0 1px 0 #E2A200}
+.secret .a{padding:0 18px 18px;font-size:1rem}
+.secret .a .wow{font-family:var(--f-display);font-size:1.25rem;color:var(--tomato);margin-bottom:4px}
+.pop{animation:pop .35s ease}
+@keyframes pop{0%{transform:scale(.94);opacity:.3}100%{transform:scale(1);opacity:1}}
+.layers{display:grid;gap:6px;margin:8px 0}
+.layers div{border-radius:10px;padding:6px 10px;font-size:.95rem}
+
+/* tables */
+.tw{overflow-x:auto;border-radius:16px}
+table{border-collapse:collapse;width:100%;min-width:480px;background:#fff;font-size:1rem}
+th,td{padding:10px 12px;border-bottom:2px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--tc);color:#fff;font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+
+/* lesson text */
+.para{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+.pn{width:44px;height:44px;border-radius:14px;background:var(--sky);color:#fff;display:grid;place-items:center;font-family:var(--f-display);font-size:1.3rem}
+.ptext{font-size:1.15rem;line-height:2.05;min-width:0}
+.sub-h{font-family:var(--f-display);font-size:1.45rem;color:var(--tomato);margin:6px 0 -6px;display:flex;align-items:center;gap:8px}
+.rh{border-bottom:3px wavy var(--grape);text-decoration:none}
+.rt{font-size:.72rem;font-weight:900;background:var(--grape);color:#fff;border-radius:6px;padding:0 6px;margin:0 3px;vertical-align:2px;white-space:nowrap}
+.lk{font-size:.72rem;font-weight:900;background:var(--orange);color:#fff;border-radius:6px;padding:0 6px;margin:0 3px;vertical-align:2px;white-space:nowrap}
+.pkey{margin-top:10px;background:var(--mint-lt);border-radius:14px;padding:10px 14px;font-size:1rem}
+.pkey b{color:var(--mint)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.95rem;color:var(--ink2)}
+
+/* words */
+.chars{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.ch{background:#fff;border-radius:18px;padding:12px 14px;box-shadow:var(--shadow);display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}
+.ch .z{font-family:var(--f-display);font-size:2.4rem;line-height:1;color:var(--mint);width:56px;height:56px;display:grid;place-items:center;background:var(--mint-lt);border-radius:14px}
+.ch .z.trap{background:var(--tomato-lt);color:var(--tomato)}
+.ch .info{font-size:.88rem;line-height:1.5;min-width:0}
+.ch .info b{font-size:1rem}
+.idioms{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
+.idm{background:#fff;border-radius:18px;padding:14px 16px;box-shadow:var(--shadow)}
+.idm .nm{font-family:var(--f-display);font-size:1.45rem;color:var(--orange)}
+.idm .mean{font-size:1rem}
+.idm .ex{font-size:.93rem;color:var(--ink2);margin-top:4px}
+.idm .warn{font-size:.9rem;margin-top:6px;background:var(--sun-lt);border-radius:10px;padding:4px 10px}
+
+/* quiz */
+.qset{display:grid;gap:16px}
+.qhead{display:flex;flex-wrap:wrap;align-items:center;gap:10px;justify-content:space-between}
+.meter{flex:1 1 200px;height:14px;background:#fff;border-radius:999px;overflow:hidden;box-shadow:inset 0 0 0 2px var(--line)}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--sun),var(--tc));border-radius:999px;transition:width .4s}
+.mtext{font-weight:700;color:var(--ink2);font-size:.95rem;font-variant-numeric:tabular-nums}
+.reset{border:2px solid var(--line);background:#fff;border-radius:999px;padding:4px 14px;font-size:.9rem;font-weight:700;color:var(--ink2)}
+.q{background:#fff;border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow);min-width:0}
+.q .qn{display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
+.q .num{font-family:var(--f-display);font-size:1.15rem;color:#fff;background:var(--tc);border-radius:12px;padding:0 10px}
+.q .stem{font-size:1.12rem;font-weight:500;line-height:1.8}
+.q .ctx{background:var(--cream);border-radius:14px;padding:10px 14px;margin:8px 0;font-size:1.05rem;border-left:0}
+.opts{display:grid;gap:10px;margin-top:12px}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;border:3px solid var(--line);background:#fff;border-radius:16px;padding:10px 14px;font-size:1.06rem;line-height:1.6;transition:transform .1s,border-color .15s}
+.opt:hover:not([disabled]){border-color:var(--tc);transform:translateY(-1px)}
+.opt .l{flex:none;width:30px;height:30px;border-radius:50%;background:var(--sky-lt);color:var(--sky);font-weight:900;display:grid;place-items:center;font-size:.95rem}
+.opt.right{border-color:var(--ok);background:var(--ok-lt)}
+.opt.right .l{background:var(--ok);color:#fff}
+.opt.wrong{border-color:var(--bad);background:var(--bad-lt)}
+.opt.wrong .l{background:var(--bad);color:#fff}
+.opt[disabled]{cursor:default}
+.opts.row{grid-template-columns:repeat(3,minmax(0,1fr))}
+.opts.row .opt{justify-content:center;font-weight:700}
+@media (max-width:480px){.opts.row{grid-template-columns:1fr}}
+.fb{margin-top:12px;border-radius:14px;padding:12px 16px;font-size:1.02rem}
+.fb.ok{background:var(--ok-lt)}.fb.no{background:var(--bad-lt)}
+.fb .v{font-family:var(--f-display);font-size:1.2rem}
+.fb.ok .v{color:var(--ok)}.fb.no .v{color:var(--bad)}
+.fb .ev{margin-top:6px;background:#fff;border-radius:10px;padding:6px 12px;font-size:.95rem;color:var(--ink2)}
+.retry{margin-top:8px;border:0;background:var(--bad);color:#fff;border-radius:999px;padding:4px 16px;font-weight:700;font-size:.95rem}
+.lvl{margin:8px 0 -4px;font-family:var(--f-display);font-size:1.3rem;color:var(--tc);display:flex;gap:8px;align-items:center}
+.lvl small{font-family:var(--f-body);font-size:.92rem;color:var(--ink3)}
+
+/* open questions */
+.oq textarea{width:100%;min-height:90px;border:3px solid var(--line);border-radius:14px;padding:10px 14px;font:inherit;font-size:1.05rem;background:#FCFEFF;color:var(--ink);resize:vertical;margin-top:10px}
+.oq textarea:focus{border-color:var(--tc);outline:none}
+.show{margin-top:10px;border:0;background:var(--tc);color:#fff;border-radius:999px;padding:6px 18px;font-weight:700;font-size:1rem;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+.ans{margin-top:10px;background:var(--mint-lt);border-radius:14px;padding:12px 16px;font-size:1.02rem}
+.ans b{color:var(--mint)}
+.scaf{background:var(--grape-lt);border-radius:14px;padding:10px 16px;font-size:1rem;margin-top:8px}
+
+.check{display:grid;gap:8px}
+.check label{display:flex;gap:10px;align-items:center;background:#fff;border-radius:14px;padding:8px 14px;font-size:1.02rem;cursor:pointer;box-shadow:var(--shadow)}
+.check input{width:24px;height:24px;accent-color:var(--mint);flex:none}
+.essay{background:#fff;border-radius:var(--r);padding:20px 24px;box-shadow:var(--shadow);font-size:1.08rem;line-height:2}
+.essay h4{text-align:center;font-family:var(--f-display);font-weight:400;font-size:1.35rem}
+.essay p{text-indent:2em;margin-bottom:6px}
+.note{font-size:.9rem;font-weight:900;color:#fff;background:var(--grape);border-radius:6px;padding:0 6px;margin-left:4px;text-indent:0;white-space:nowrap}
+
+.empty{text-align:center;padding:30px 20px;color:var(--ink2)}
+.empty .big{font-size:3rem}
+.next{display:flex;justify-content:flex-end}
+.next button{border:0;background:var(--tc);color:#fff;border-radius:999px;padding:10px 22px;font-weight:900;font-size:1.05rem;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:999px;padding:8px 20px;font-weight:700;z-index:80;font-size:1rem}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="bulb" viewBox="0 0 100 100">
+      <circle cx="50" cy="42" r="32" fill="#FFD84A" stroke="#F5A800" stroke-width="4"/>
+      <ellipse cx="38" cy="30" rx="8" ry="5" fill="#FFF3B0" transform="rotate(-30 38 30)"/>
+      <rect x="36" y="70" width="28" height="9" rx="3" fill="#7FB8FF" stroke="#2F7BDF" stroke-width="3"/>
+      <rect x="38" y="79" width="24" height="8" rx="3" fill="#7FB8FF" stroke="#2F7BDF" stroke-width="3"/>
+      <path d="M44 90 h12" stroke="#2F7BDF" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="40" cy="44" r="4.5" fill="#1D2B4A"/><circle cx="60" cy="44" r="4.5" fill="#1D2B4A"/>
+      <circle cx="41.5" cy="42.5" r="1.5" fill="#fff"/><circle cx="61.5" cy="42.5" r="1.5" fill="#fff"/>
+      <ellipse cx="50" cy="56" rx="6" ry="7" fill="#FF6B6B"/>
+      <circle cx="31" cy="52" r="4" fill="#FF9AA8" opacity=".8"/><circle cx="69" cy="52" r="4" fill="#FF9AA8" opacity=".8"/>
+      <path d="M12 18 l6 4 M88 18 l-6 4 M50 2 v7 M6 44 h7 M94 44 h-7" stroke="#FF8A1F" stroke-width="4" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="top-in">
+    <div class="logo"><svg><use href="#bulb"/></svg></div>
+    <div>
+      <h1>哇！原來如此</h1>
+      <div class="sub">六上國語 第五課・自學寶典</div>
+    </div>
+    <div class="score" title="選擇題答對數">⭐ 答對<b id="scoreNum">0/0</b></div>
+  </div>
+  <nav class="tabs" id="tabs" aria-label="分頁"></nav>
+</header>
+
+<main id="main">
+
+<!-- ============ 首頁：重點速覽 ============ -->
+<section class="panel" id="p-home" data-tc="var(--tomato)">
+  <div class="hero">
+    <svg class="big"><use href="#bulb"/></svg>
+    <div>
+      <h2>解開職業的祕密！</h2>
+      <p>表演者為什麼戴耳機？消防衣為什麼不怕火？拍電影為什麼要打板？讀完這課，你也會說：「哇！原來如此！」</p>
+      <div class="chips"><span class="chip r">事理類說明文</span><span class="chip">總—分—總</span><span class="chip p">設問法開頭</span><span class="chip g">19 個生字</span></div>
+    </div>
+  </div>
+
+  <div class="mascot-say">
+    <svg><use href="#bulb"/></svg>
+    <div class="bubble">我是「小靈光」💡 建議的讀法：①先看這頁的重點 → ②到「課文精讀」看原文 → ③背「字詞寶庫」→ ④做五大模組練習 → ⑤錯的題目會自動收進「錯題本」，再挑戰一次！</div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><h3>📌 大意</h3><p>有些工作內容背後藏著令人好奇的祕密，例如：<mark>表演者為什麼要戴耳機？消防衣為什麼不怕火？拍電影為什麼要打板？</mark>設法找出答案，就能得到「哇！原來如此」的樂趣。</p></div>
+    <div class="card"><h3>🎯 主旨</h3><p>透過探究工作內容背後的祕密，會發現<mark>平凡中其實有著不平凡的學問</mark>，鼓勵我們主動找答案、享受發現的樂趣。</p></div>
+  </div>
+
+  <div class="card">
+    <h3>🧱 課文結構：總—分—總</h3>
+    <div class="flow">
+      <div class="end">總起（第一段）<small>有些工作內容背後隱藏了一些祕密，可能會令你大吃一驚呵！</small></div>
+      <div class="arrow">▼ 分說三個例子（說明原理）▼</div>
+      <div class="mid">
+        <div style="background:var(--sky-lt)">🎤 為什麼表演者要戴耳機？<small>第二、三段</small></div>
+        <div style="background:var(--tomato-lt)">🧑‍🚒 為什麼消防衣能不怕火？<small>第四、五段</small></div>
+        <div style="background:var(--grape-lt)">🎬 為什麼拍電影需要打板？<small>第六、七段</small></div>
+      </div>
+      <div class="arrow">▼</div>
+      <div class="end">總結（第八段）<small>常見的職業裡，隱藏許多有趣的祕密，設法找出答案吧！</small></div>
+    </div>
+  </div>
+
+  <h2 class="sec" style="font-size:1.6rem">🎁 三個祕密箱：先想想看，再打開！</h2>
+  <div class="grid3" id="secrets"></div>
+
+  <div class="card">
+    <h3>✍️ 作者的寫法有什麼相同之處？（必考！）</h3>
+    <ul class="dots">
+      <li>每個例子都用<b class="key">「為什麼……？」小標題</b>提問，結構相似，加深讀者印象。</li>
+      <li>每段開頭先用<b class="key">設問</b>提出現象和疑問，引起好奇。</li>
+      <li>再寫出<b class="key">讀者可能的猜測</b>（或許你會猜／也許你知道／可能你會猜），接著用「但」揭開真正答案。</li>
+      <li>用<b class="key">分類、列數字</b>等方法說明，例如消防衣「三層」、「攝氏八百度」，讓說明更清楚。</li>
+    </ul>
+  </div>
+
+  <div class="card soft">
+    <h3>⚠️ 考試陷阱提醒</h3>
+    <ul class="dots">
+      <li>本課是<b>說明文</b>（事理類），不是記敘文、也不是議論文。</li>
+      <li>消防衣<b>最外層是反射層</b>，不是防水層！順序：反射層 → 防水層 → 隔熱層。</li>
+      <li>打板主要是為了<b>影片後製</b>，不是為了集合工作人員。</li>
+      <li>部首陷阱：<b>承</b>是「手」部、<b>蝕</b>是「虫」部、<b>攝</b>是「手」部、<b>觸</b>是「角」部。</li>
+      <li>「載歌載舞」的載念 ㄗㄞˋ；「千載難逢」的載念 ㄗㄞˇ。</li>
+    </ul>
+  </div>
+  <div class="next"><button data-go="text">開始讀課文 ➜</button></div>
+</section>
+
+<!-- ============ 課文精讀 ============ -->
+<section class="panel" id="p-text" hidden data-tc="var(--sky)">
+  <h2 class="sec">📖 課文精讀</h2>
+  <p class="lead">每段下面的綠色框是「段落重點」。看到標籤要注意：</p>
+  <div class="legend"><span><span class="rt">修辭</span>設問、感嘆</span><span><span class="lk">句型</span>關聯詞複句</span><span><mark>黃色螢光</mark>＝重要內容</span></div>
+  <div id="lesson" class="card" style="display:grid;gap:18px"></div>
+  <div class="next"><button data-go="words">背字詞 ➜</button></div>
+</section>
+
+<!-- ============ 字詞寶庫 ============ -->
+<section class="panel" id="p-words" hidden data-tc="var(--mint)">
+  <h2 class="sec">🔤 字詞寶庫</h2>
+  <p class="lead">紅色格子的字是「部首容易寫錯」的字，要特別記！</p>
+  <div class="chars" id="chars"></div>
+
+  <div class="card"><h3>👀 形近字辨析</h3><div class="tw" style="--tc:var(--mint)"><table id="lookalike"></table></div></div>
+
+  <div class="grid2">
+    <div class="card"><h3>🔊 多音字：載</h3>
+      <ul class="dots">
+        <li><b>ㄗㄞˋ</b>：載歌載舞（又、同時）、載貨・搭載（裝運）、水能載舟（承受）、怨聲載道（充滿）</li>
+        <li><b>ㄗㄞˇ</b>：千載難逢（年）、記載（記錄）</li>
+      </ul></div>
+    <div class="card"><h3>🔊 多音字：監</h3>
+      <ul class="dots">
+        <li><b>ㄐㄧㄢ</b>：監視、監聽、監督、監考、監獄</li>
+        <li><b>ㄐㄧㄢˋ</b>：欽天監、太監（古代官名或官府名稱）</li>
+      </ul></div>
+  </div>
+
+  <div class="card"><h3>📚 重要語詞</h3><div class="tw" style="--tc:var(--mint)"><table id="vocab"></table></div></div>
+
+  <div class="grid2">
+    <div class="card"><h3>🤝 相似詞</h3><ul class="dots">
+      <li>助益 ＝ 裨益</li><li>避免 ＝ 防止</li><li>迅速 ＝ 火速</li><li>陌生 ＝ 生疏</li><li>不足為奇 ＝ 司空見慣</li><li>大海撈針 ＝ 海底撈針</li></ul></div>
+    <div class="card"><h3>↔️ 相反詞</h3><ul class="dots">
+      <li>常見 ↔ 罕見</li><li>隱藏 ↔ 顯現</li><li>迅速 ↔ 緩慢</li><li>陌生 ↔ 熟悉</li><li>不足為奇 ↔ 難能可貴</li></ul></div>
+  </div>
+
+  <h2 class="sec" style="font-size:1.5rem">🧩 字音字形小測驗</h2>
+  <div class="qset" id="q-words"></div>
+  <div class="next"><button data-go="m1">去做閱讀理解 ➜</button></div>
+</section>
+
+<!-- ============ 模組一 ============ -->
+<section class="panel" id="p-m1" hidden data-tc="var(--sky)">
+  <h2 class="sec"><span class="badge">模組一</span>閱讀理解</h2>
+  <div class="mascot-say"><svg><use href="#bulb"/></svg><div class="bubble">口訣：<b>答案一定在文章裡，不在腦袋裡！</b>每一題都先回課文找「證據句」，再選答案。</div></div>
+  <div class="qset" id="q-m1"></div>
+  <div class="next"><button data-go="m2">下一關：成語 ➜</button></div>
+</section>
+
+<!-- ============ 模組二 ============ -->
+<section class="panel" id="p-m2" hidden data-tc="var(--orange)">
+  <h2 class="sec"><span class="badge">模組二</span>成語情境判斷</h2>
+  <div class="mascot-say"><svg><use href="#bulb"/></svg><div class="bubble">不只要知道意思，還要會用在<b>對的情境</b>。看完答案後，試著說出「為什麼不是別的選項」。</div></div>
+  <h3 style="margin-bottom:0">📒 本課成語卡</h3>
+  <div class="idioms" id="idioms"></div>
+  <div class="card soft"><h3>👩‍🏫 與職業有關的四字語詞</h3>
+    <div class="tw" style="--tc:var(--orange)"><table>
+      <tr><th>職業</th><th>可以用的語詞</th></tr>
+      <tr><td>醫生</td><td>仁心仁術、華佗再世、妙手回春</td></tr>
+      <tr><td>教師</td><td>百年樹人、春風化雨、杏壇之光</td></tr>
+      <tr><td>消防員</td><td>赴湯蹈火、勇往直前、出生入死</td></tr>
+      <tr><td>歌手</td><td>天籟之音、黃鶯出谷、餘音繞梁</td></tr>
+      <tr><td>律師</td><td>據理力爭、口若懸河、能言善辯</td></tr>
+      <tr><td>廚師</td><td>廚藝精湛、色味俱佳、手藝精巧</td></tr>
+      <tr><td>作家</td><td>下筆成文、出口成章、字字珠璣</td></tr>
+    </table></div></div>
+  <div class="qset" id="q-m2"></div>
+  <div class="next"><button data-go="m3">下一關：語病句型 ➜</button></div>
+</section>
+
+<!-- ============ 模組三 ============ -->
+<section class="panel" id="p-m3" hidden data-tc="var(--grape)">
+  <h2 class="sec"><span class="badge">模組三</span>語病句型結構</h2>
+  <div class="card">
+    <h3>🔗 本課四種複句（關聯詞要成對記）</h3>
+    <div class="tw" style="--tc:var(--grape)"><table>
+      <tr><th>句型</th><th>關係</th><th>課文原句</th></tr>
+      <tr><td><b>……不過……</b></td><td>轉折<br>（前後意思相反）</td><td>有些職業我們耳熟能詳……不足為奇。<b>不過</b>，有些職業的工作內容，背後隱藏了一些祕密……</td></tr>
+      <tr><td><b>每當……總是……</b></td><td>條件<br>（有這個條件就有這個結果）</td><td><b>每當</b>發生火災時，消防員<b>總是</b>迅速趕往現場撲滅火勢……</td></tr>
+      <tr><td><b>若……無疑是……</b></td><td>假設<br>（假如發生，結果會是）</td><td><b>若</b>沒有妥善安排……<b>無疑是</b>大海撈針。</td></tr>
+      <tr><td><b>……並……</b></td><td>並列<br>（同時做兩件事）</td><td>工作人員會利用「場記板」註明資訊，<b>並</b>藉由打板的聲音，提醒錄製的起始點。</td></tr>
+    </table></div>
+  </div>
+  <div class="card">
+    <h3>🩺 常見語病五大類</h3>
+    <div class="tw" style="--tc:var(--grape)"><table>
+      <tr><th>語病類型</th><th>怎麼看出來</th><th>例子 → 改法</th></tr>
+      <tr><td>語意重複</td><td>兩個詞意思一樣</td><td>迅速快速的趕到 → 迅速的趕到</td></tr>
+      <tr><td>關聯詞誤用</td><td>關聯詞配錯對</td><td>雖然……而且…… → 雖然……但是……</td></tr>
+      <tr><td>成分殘缺</td><td>找不到「誰」做這件事</td><td>透過說明，讓我知道…… → 透過說明，我知道……</td></tr>
+      <tr><td>搭配不當</td><td>動詞和名詞不搭</td><td>戴外套 → 穿外套</td></tr>
+      <tr><td>詞序錯誤</td><td>修飾語放錯位置</td><td>一副耳機新的 → 一副新的耳機</td></tr>
+    </table></div>
+  </div>
+  <div class="qset" id="q-m3"></div>
+  <div class="next"><button data-go="m4">下一關：修辭 ➜</button></div>
+</section>
+
+<!-- ============ 模組四 ============ -->
+<section class="panel" id="p-m4" hidden data-tc="var(--mint)">
+  <h2 class="sec"><span class="badge">模組四</span>修辭：畫面＋情緒</h2>
+  <div class="card">
+    <h3>❓ 設問的三種用法</h3>
+    <div class="tw" style="--tc:var(--mint)"><table>
+      <tr><th>種類</th><th>特徵</th><th>課文例句</th></tr>
+      <tr><td><b>懸問</b><br>只問不答</td><td>答案留給讀者想</td><td>提到生活中常見的職業，你會想到什麼呢？<br>你還想到哪些令你好奇的內容呢？</td></tr>
+      <tr><td><b>提問</b><br>自問自答</td><td>先問，答案就在後面</td><td>表演者明明能聽到舞臺上的音樂，為什麼還要戴著耳機呢？（後面說明答案）</td></tr>
+      <tr><td><b>激問</b><br>反問</td><td>答案在問題的「反面」，語氣更強</td><td>可以同時聽到伴奏和自己歌聲的耳機，是不是很神奇呢？（＝真的很神奇！）</td></tr>
+    </table></div>
+    <p style="margin-top:12px">💥 <b>感嘆</b>：用呼聲表露情感。題目「<b>哇！</b>原來如此」表達發現新知的驚喜與樂趣。</p>
+  </div>
+  <div class="card soft"><h3>🪜 修辭分析答題鷹架</h3>
+    <p>這句話用了【　　】修辭。<br>畫面：我看到了＿＿＿＿<br>情緒：這讓我感覺＿＿＿＿<br>作者想強調的是＿＿＿＿</p></div>
+  <div class="qset" id="q-m4"></div>
+  <div class="next"><button data-go="m5">下一關：寫作 ➜</button></div>
+</section>
+
+<!-- ============ 模組五 ============ -->
+<section class="panel" id="p-m5" hidden data-tc="var(--tomato)">
+  <h2 class="sec"><span class="badge">模組五</span>寫作整合</h2>
+  <div class="grid3">
+    <div class="card"><h4>① 加感覺（五感）</h4><p>✗ 我很驚訝<br>✓ 我張大嘴巴，眼睛瞪得像銅鈴</p></div>
+    <div class="card"><h4>② 加畫面／數據</h4><p>✗ 消防衣很耐熱<br>✓ 消防衣至多能承受攝氏八百度的高溫</p></div>
+    <div class="card"><h4>③ 加轉折</h4><p>先寫「也許你會猜……」<br>再寫「但其實……」<br>讀者就會說：原來如此！</p></div>
+  </div>
+  <div class="qset" id="q-m5a"></div>
+
+  <h2 class="sec" style="font-size:1.5rem">📝 短文挑戰：「○○的小祕密」</h2>
+  <div class="card">
+    <h3>寫作步驟（事理類說明文）</h3>
+    <div class="tw" style="--tc:var(--tomato)"><table>
+      <tr><th>段落</th><th>要寫什麼</th><th>可以用的句子</th></tr>
+      <tr><td>開頭</td><td>用<b>設問</b>點出主題</td><td>你有沒有注意過……？為什麼……呢？</td></tr>
+      <tr><td>中間①</td><td>寫出一般人的猜測</td><td>也許你會猜……，但其實……</td></tr>
+      <tr><td>中間②</td><td>有條理的說明原理</td><td>首先……接著……最後……／它有三個功能……</td></tr>
+      <tr><td>結尾</td><td>總結，表達發現的樂趣</td><td>原來，……真是「哇！原來如此」！</td></tr>
+    </table></div>
+    <p style="margin-top:10px">💡 讓說明更有說服力：<b>舉例子、列數字、作比較、分類別</b>。題材可以選：醫生為什麼穿綠色手術衣？捷運司機員為什麼用手指比來比去？外送員的保溫箱為什麼能保溫？</p>
+  </div>
+  <div class="essay">
+    <h4>範文：捷運司機員的小祕密</h4>
+    <p>搭捷運時，你有沒有注意過，司機員常常伸出手指，對著月臺比來比去，嘴裡還念念有詞？他是在跟誰打招呼嗎？<span class="note">設問開頭</span></p>
+    <p>也許你會猜，那只是司機員的小習慣，但其實這個動作叫作「指差確認」。<span class="note">先猜再揭曉</span>司機員用手指著要檢查的地方，同時大聲說出確認的內容，例如：「車門關閉，好！」眼睛看、手指比、嘴巴說，三個動作一起做，就不容易漏看任何細節。<span class="note">說明原理</span></p>
+    <p>每到一站，司機員總是要確認每一扇車門和月臺門都順利關上，再從監視器畫面檢查一次，才能讓列車出發。若少了這個步驟，乘客的安全無疑是一場冒險。<span class="note">用本課句型</span></p>
+    <p>原來，一個小小的手勢，守護著每天成千上萬名旅客的安全。下次搭捷運時，你也可以仔細觀察，說不定會發現更多「哇！原來如此」的祕密呢！<span class="note">總結＋懸問</span></p>
+  </div>
+  <div class="card oq" style="--tc:var(--tomato)">
+    <h3>換你寫寫看（150～250 字）</h3>
+    <label for="essay-box" style="color:var(--ink2);font-size:.95rem">題目：＿＿＿的小祕密（寫在這裡會自動暫存在這台裝置）</label>
+    <textarea id="essay-box" style="min-height:220px" placeholder="你有沒有注意過……？為什麼……呢？"></textarea>
+    <div class="mtext" id="essay-count">0 字</div>
+  </div>
+  <div class="card">
+    <h3>✅ 寫完自我檢查</h3>
+    <div class="check" id="checklist"></div>
+  </div>
+  <div class="card">
+    <h3>📊 評分標準（老師／家長用）</h3>
+    <div class="tw" style="--tc:var(--tomato)"><table>
+      <tr><th>向度</th><th>3 分（優）</th><th>2 分（良）</th><th>1 分（加油）</th></tr>
+      <tr><td>內容</td><td>原理說明清楚，有例子或數據</td><td>內容完整但說明簡單</td><td>內容空洞或偏題</td></tr>
+      <tr><td>結構</td><td>總—分—總清楚，開頭用設問</td><td>結構尚可</td><td>缺乏組織</td></tr>
+      <tr><td>語言</td><td>用詞精準，善用本課句型</td><td>通順但平淡</td><td>語病多、句型重複</td></tr>
+      <tr><td>書寫</td><td>標點正確，字跡清楚</td><td>大致正確</td><td>錯字、標點錯誤多</td></tr>
+    </table></div>
+  </div>
+  <div class="next"><button data-go="wrong">看我的錯題本 ➜</button></div>
+</section>
+
+<!-- ============ 錯題本 ============ -->
+<section class="panel" id="p-wrong" hidden data-tc="var(--bad)">
+  <h2 class="sec">📕 錯題本</h2>
+  <p class="lead">答錯的選擇題會收在這裡。重新答對後，就會自動移出錯題本。</p>
+  <div class="qset" id="q-wrong"></div>
+</section>
+</main>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const STORE='wow-lesson5-v1';
+let S={ans:{},open:{},chk:{},essay:'',tab:'home'};
+try{const raw=localStorage.getItem(STORE);if(raw)S=Object.assign(S,JSON.parse(raw));}catch(e){}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(S));}catch(e){}}
+const esc=s=>String(s);
+
+/* ---------------- tabs ---------------- */
+const TABS=[
+ ['home','🏠','重點速覽','var(--tomato)'],['text','📖','課文精讀','var(--sky)'],['words','🔤','字詞寶庫','var(--mint)'],
+ ['m1','🔍','閱讀理解','var(--sky)'],['m2','🧠','成語情境','var(--orange)'],['m3','🔧','語病句型','var(--grape)'],
+ ['m4','🎨','修辭','var(--mint)'],['m5','✏️','寫作','var(--tomato)'],['wrong','📕','錯題本','var(--bad)']];
+const tabsEl=$('#tabs');
+tabsEl.innerHTML=TABS.map(t=>`<button class="tab" data-t="${t[0]}" style="--tc:${t[3]}"><span class="ic">${t[1]}</span>${t[2]}</button>`).join('');
+function go(t){
+  TABS.forEach(x=>{const p=$('#p-'+x[0]);p.hidden=x[0]!==t;});
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
+  const p=$('#p-'+t);p.style.setProperty('--tc',p.dataset.tc);
+  S.tab=t;save();
+  if(t==='wrong')renderWrong();
+  const b=tabsEl.querySelector(`[data-t="${t}"]`);if(b)b.scrollIntoView({inline:'center',block:'nearest'});
+  window.scrollTo({top:0});
+}
+tabsEl.addEventListener('click',e=>{const b=e.target.closest('.tab');if(b)go(b.dataset.t);});
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+
+/* ---------------- secrets ---------------- */
+const SECRETS=[
+ {em:'🎤',c:'var(--sky)',q:'表演者明明聽得到音樂，為什麼還要戴耳機？',a:`<div class="wow">原來如此！</div>他們戴的是<b>「入耳式監聽耳機」</b>：<div class="layers"><div style="background:var(--sky-lt)">👂 一耳：聽<b>伴奏的音樂</b></div><div style="background:var(--sun-lt)">👂 另一耳：聽<b>自己的聲音</b></div><div style="background:var(--mint-lt)">🔇 兩耳戴上：<b>阻絕現場噪音</b></div></div>➜ 掌握實際演唱情況，<mark>避免走音、音樂跟歌聲不同步</mark>。`},
+ {em:'🧑‍🚒',c:'var(--tomato)',q:'火場這麼危險，消防衣為什麼能不怕火？',a:`<div class="wow">原來如此！</div>消防衣有<b>三層</b>（由外到內）：<div class="layers"><div style="background:var(--sun-lt)">① 反射層：金屬塗料，把<b>熱輻射反射</b>回去</div><div style="background:var(--sky-lt)">② 防水層：防止<b>有毒液體腐蝕</b></div><div style="background:var(--tomato-lt)">③ 隔熱層：隔絕肌膚接觸<b>高溫</b></div></div>➜ 至多承受<mark>攝氏八百度</mark>，爭取時間救援，也保護自身安全。`},
+ {em:'🎬',c:'var(--grape)',q:'拍電影開拍前，為什麼要「打板」？',a:`<div class="wow">原來如此！</div>主要是為了<b>影片後製</b>：<div class="layers"><div style="background:var(--grape-lt)">🎥 影像和聲音<b>分開錄製</b>（避免噪音）</div><div style="background:var(--sun-lt)">📂 檔案很多，找同一幕像<b>大海撈針</b></div><div style="background:var(--mint-lt)">📝 場記板<b>註明資訊</b>＋打板聲<b>提醒起始點</b></div></div>➜ 讓後製人員<mark>準確、有效率的將影音同步</mark>。`}];
+$('#secrets').innerHTML=SECRETS.map((s,i)=>`<div class="secret" style="--sc:${s.c}"><div class="q"><div class="em">${s.em}</div><h4>${s.q}</h4></div><button class="open" data-s="${i}">🔓 打開祕密箱</button><div class="a" id="sa${i}" hidden>${s.a}</div></div>`).join('');
+$('#secrets').addEventListener('click',e=>{const b=e.target.closest('.open');if(!b)return;const a=$('#sa'+b.dataset.s);a.hidden=!a.hidden;if(!a.hidden)a.classList.add('pop');b.textContent=a.hidden?'🔓 打開祕密箱':'🙈 關起來再想一次';});
+
+/* ---------------- lesson text ---------------- */
+const R=(t,tag)=>`<span class="rh">${t}</span><span class="rt">${tag}</span>`;
+const L=(tag)=>`<span class="lk">${tag}</span>`;
+const LESSON=[
+ {n:'一',t:`${R('提到生活中常見的職業，你會想到什麼呢？','設問・懸問')}有些職業我們<mark>耳熟能詳</mark>，能大致描繪出它們的樣貌，<mark>不足為奇</mark>。不過，${L('轉折複句')}有些職業的工作內容，背後隱藏了一些祕密，解開後，可能會令你<mark>大吃一驚</mark>呵！`,k:'<b>總起</b>：用問句開頭引起好奇，點出主題——有些工作內容背後藏著祕密。'},
+ {h:'🎤 為什麼表演者要戴耳機？'},
+ {n:'二',t:`觀賞自己喜歡的偶像明星在舞臺上<mark>載歌載舞</mark>，真是一大享受。不過，${R('表演者明明能聽到舞臺上的音樂，為什麼還要戴著耳機呢？','設問・提問')}`,k:'提出現象與疑問：聽得到音樂，為什麼還要戴耳機？'},
+ {n:'三',t:`或許你會猜，戴耳機對表演者有所<mark>助益</mark>，但不確定這副耳機真正的功能。表演者配戴的是<mark>「入耳式監聽耳機」</mark>，和一般的耳機不同：它的<mark>一耳會傳出伴奏的音樂，另一耳讓表演者聽到自己的聲音</mark>。兩耳都戴上則可以<mark>阻絕現場噪音</mark>，讓表演者掌握實際的演唱情況，避免走音或音樂跟歌聲不同步的情形。${R('可以同時聽到伴奏和自己歌聲的耳機，是不是很神奇呢？','設問・激問')}`,k:'回答問題：入耳式監聽耳機能同時聽到伴奏和自己的聲音，並阻絕噪音，避免走音或不同步。',extra:'📎 起源小知識：1995 年，音響工程師傑瑞‧哈維為了解決樂隊鼓手飽受舞臺噪音干擾、甚至影響聽力的問題，設計出入耳式監聽耳機的原型。'},
+ {h:'🧑‍🚒 為什麼消防衣能不怕火？'},
+ {n:'四',t:`每當發生火災時，消防員總是${L('條件複句')}<mark>迅速</mark>趕往現場<mark>撲滅</mark>火勢，<mark>救援</mark>受困者。不過，${R('火場這麼危險，消防員為什麼穿上消防衣便能「反其道而行」，朝火場前進呢？','設問・提問')}`,k:'提出疑問：一般人往外逃，消防員卻能「反其道而行」朝火場前進，為什麼？'},
+ {n:'五',t:`也許你知道，消防衣有保護的作用，但你可能不知道，它為什麼不怕火燒。消防衣總共有<mark>三層</mark>：表面是<mark>反射層</mark>，上頭有金屬塗料，可以將大部分的熱輻射反射回去。中間是<mark>防水層</mark>，主要防止有毒<mark>液體腐蝕</mark>。內裡則是<mark>隔熱層</mark>，能隔絕肌膚<mark>接觸</mark>到環境的高溫。這件耐燃隔熱的消防衣，至多能<mark>承受攝氏八百度</mark>的高溫，替勇闖火場的消防員，爭取多一些時間救援受困民眾，也能保護他們的生命安全。`,k:'由外而內說明三層結構：反射層→防水層→隔熱層，能爭取救援時間、保護生命安全。'},
+ {h:'🎬 為什麼拍電影需要打板？'},
+ {n:'六',t:`說到拍電影，大家應該對「打板」這個動作不<mark>陌生</mark>。不過，${R('為什麼開拍前，工作人員要在鏡頭前拿著板子打板呢？','設問・提問')}`,k:'提出疑問：開拍前為什麼要打板？'},
+ {n:'七',t:`可能你會猜跟現場的<mark>拍攝</mark>工作有關，但你也許沒想到，「打板」主要是為了<mark>影片後製</mark>。製作影片時，需要將<mark>影像和聲音分開錄製</mark>，避免錄到現場的環境噪音，以確保影音的品質。一部影片拍完，會產生大量的影像和聲音<mark>檔案</mark>，若沒有妥善安排，要找到同一幕的影音並將它們合在一起，無疑是${L('假設複句')}<mark>大海撈針</mark>。因此，在拍攝現場，工作人員會利用「場記板」<mark>註明資訊</mark>，並${L('並列複句')}藉由<mark>打板的聲音，提醒錄製的起始點</mark>。這樣，可以讓後製人員準確、有效率的將影音同步。場記板對現場的拍攝人員和後製人員，都是相當重要的小幫手呢！`,k:'打板是為了後製：場記板註明資訊、打板聲提醒起始點，讓影音準確同步。'},
+ {n:'八',t:`在常見的職業裡，隱藏許多有趣的祕密。${R('你還想到哪些令你好奇的內容呢？','設問・懸問')}設法找出答案，從中得到「${R('哇！','感嘆')}<mark>原來如此</mark>」的樂趣吧！`,k:'<b>總結</b>：職業裡藏著許多祕密，鼓勵讀者自己找答案、享受發現的樂趣。'}];
+$('#lesson').innerHTML=LESSON.map(p=>p.h?`<div class="sub-h">${p.h}</div>`:`<div class="para"><div class="pn">${p.n}</div><div class="ptext">${p.t}<div class="pkey"><b>段落重點</b>　${p.k}</div>${p.extra?`<div class="pkey" style="background:var(--sun-lt)">${p.extra}</div>`:''}</div></div>`).join('');
+
+/* ---------------- words ---------------- */
+const CHARS=[['載','車','13','載歌載舞'],['益','皿','10','助益'],['副','刀','11','一副'],['監','皿','14','監聽'],['噪','口','16','噪音'],['避','辵','17','避免'],['迅','辵','7','迅速'],['滅','水','13','撲滅'],['援','手','12','救援'],['燒','火','16','燃燒'],['液','水','11','液體'],['蝕','虫','14','腐蝕',1],['觸','角','20','接觸',1],['承','手','8','承受',1],['攝','手','21','拍攝',1],['檔','木','17','檔案'],['陌','阜','9','陌生'],['撈','手','15','打撈'],['註','言','12','註明']];
+$('#chars').innerHTML=CHARS.map(c=>`<div class="ch"><div class="z${c[4]?' trap':''}">${c[0]}</div><div class="info"><b>${c[3]}</b><br>部首：${c[1]}${c[4]?' ⚠️':''}<br>總筆畫：${c[2]}</div></div>`).join('');
+const LOOK=[['載／戴','載貨、搭載','穿戴、愛戴'],['監／堅','監視、監考','堅硬、堅強'],['噪／燥／澡／操','噪音、聒噪','枯燥／洗澡／操場'],['迅／訊','迅速、迅雷','訊息、資訊'],['滅／減','滅絕、撲滅','減少、增減'],['援／緩／暖','救援、聲援','緩慢／暖流'],['燒／曉／澆／饒','燃燒、退燒','知曉／澆水／饒命'],['擋／檔','阻擋、抵擋','檔案、搭檔'],['註／注／柱','註明、註冊','專注／臺柱'],['副／福／幅／富','一副、副業','福氣／幅員／富裕']];
+$('#lookalike').innerHTML='<tr><th>字組</th><th>本課字詞</th><th>其他字詞</th></tr>'+LOOK.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');
+const VOCAB=[['噪音','振動不規則，聽起來不悅耳的聲音'],['監聽','對電訊、音響等的監控測聽'],['助益','幫助'],['避免','設法免除'],['迅速','速度很快'],['撲滅','撲打消滅'],['救援','救助、援助'],['液體','有一定體積，無一定形狀，能流動的物體（如水、油）'],['腐蝕','物體因化學作用而逐漸毀損、消失'],['接觸','碰著、觸碰'],['承受','接受、負荷'],['陌生','不認識或不熟悉的'],['拍攝','用攝影器材把人或物的形象記錄下來'],['檔案','電腦中相關資料的組合'],['註明','記載清楚']];
+$('#vocab').innerHTML='<tr><th>語詞</th><th>意思</th></tr>'+VOCAB.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td></tr>`).join('');
+
+/* ---------------- question banks ---------------- */
+// type: mc (default) | open | lvl(header)
+const Q={};
+Q.words=[
+ {id:'w1',q:'「千載難逢」的「載」，讀音是？',o:['ㄗㄞˋ','ㄗㄞˇ','ㄉㄞˋ','ㄗㄞ'],a:1,w:'「千載難逢」的載是「年」的意思，念 ㄗㄞˇ。「載歌載舞、搭載」才念 ㄗㄞˋ。'},
+ {id:'w2',q:'「這架飛機搭載四百名乘客」的「載」，讀音是？',o:['ㄗㄞˇ','ㄉㄞˋ','ㄗㄞˋ','ㄗㄞ'],a:2,w:'搭載是「裝運」的意思，念 ㄗㄞˋ。'},
+ {id:'w3',q:'許多生物數量銳（　），面臨（　）絕的危機。',o:['滅／減','減／滅','減／減','滅／滅'],a:1,w:'數量變少是「減」少；完全消失是「滅」絕。'},
+ {id:'w4',q:'這兩名球員常聯手阻（　）對方進攻，是最佳拍（　）。',o:['擋／檔','檔／擋','擋／擋','檔／檔'],a:0,w:'用手去「阻擋」是手部的擋；「搭檔、檔案」是木部的檔。'},
+ {id:'w5',q:'大火往四周延（　），直到隔天破（　）時分，消防隊才（　）熄火勢。',o:['燒／澆／曉','曉／燒／澆','燒／曉／澆','澆／曉／燒'],a:2,w:'火字旁「燒」跟火有關；日字旁「曉」是天亮；水字旁「澆」是用水澆熄。'},
+ {id:'w6',q:'下列字和部首的配對，哪一組正確？',o:['承：水部','蝕：食部','攝：耳部','觸：角部'],a:3,w:'承是手部、蝕是虫部、攝是手部，只有「觸：角部」正確。'},
+ {id:'w7',q:'哨音一響，浩宇就（　）速衝向終點。',o:['迅','訊','汛','凶'],a:0,w:'「迅速」是速度很快，用辵部的「迅」；「訊息」才用言部的「訊」。'},
+ {id:'w8',q:'車輛產生的（　）音日益嚴重，影響居民作息。',o:['燥','澡','噪','操'],a:2,w:'聲音吵鬧要用「口」部的「噪」。'}];
+
+Q.m1=[
+ {lvl:'第一層｜表層理解',sub:'答案可以直接在文中找到'},
+ {id:'r1',q:'表演者在舞臺上配戴的耳機，叫作什麼？',o:['無線藍牙耳機','入耳式監聽耳機','降噪頭戴式耳機','骨傳導耳機'],a:1,w:'課文明確寫出名稱，其他選項文中都沒有提到。',ev:'第三段：「表演者配戴的是『入耳式監聽耳機』」'},
+ {id:'r2',q:'入耳式監聽耳機的「一耳」和「另一耳」，分別會聽到什麼？',o:['一耳聽觀眾歡呼，另一耳聽伴奏','一耳聽伴奏的音樂，另一耳聽自己的聲音','兩耳都只聽得到伴奏','一耳聽導演指示，另一耳聽自己的聲音'],a:1,w:'這正是它「和一般的耳機不同」的地方。',ev:'第三段：「它的一耳會傳出伴奏的音樂，另一耳讓表演者聽到自己的聲音。」'},
+ {id:'r3',q:'消防衣由「外」到「內」的三層，順序是？',o:['防水層→反射層→隔熱層','隔熱層→防水層→反射層','反射層→防水層→隔熱層','反射層→隔熱層→防水層'],a:2,w:'表面＝反射層、中間＝防水層、內裡＝隔熱層。常見陷阱是把防水層放在最外面。',ev:'第五段：「表面是反射層……中間是防水層……內裡則是隔熱層」'},
+ {id:'r4',q:'消防衣「中間」的防水層，主要功能是什麼？',o:['把大部分的熱輻射反射回去','防止有毒液體腐蝕','隔絕肌膚接觸到環境的高溫','讓消防衣更輕便'],a:1,w:'(A) 是反射層、(C) 是隔熱層的功能，小心「張冠李戴」。',ev:'第五段：「中間是防水層，主要防止有毒液體腐蝕。」'},
+ {id:'r5',q:'根據第七段，工作人員利用「場記板」做哪兩件事？',o:['註明資訊，並用打板的聲音提醒錄製的起始點','集合工作人員，並宣布開始休息','遮住鏡頭避免反光，並記錄演員台詞','替演員打拍子，並控制燈光'],a:0,w:'關聯詞「並」連接了兩件同時做的事。',ev:'第七段：「利用『場記板』註明資訊，並藉由打板的聲音，提醒錄製的起始點。」'},
+ {lvl:'第二層｜推論理解',sub:'要把兩句以上的資訊連起來想'},
+ {id:'r6',q:'為什麼製作影片時，要把影像和聲音「分開錄製」？',o:['為了節省攝影機的電力','避免錄到現場的環境噪音，確保影音的品質','因為攝影機沒有錄音功能','方便演員背台詞'],a:1,w:'課文直接說明了目的，「以確保影音的品質」。',ev:'第七段：「需要將影像和聲音分開錄製，避免錄到現場的環境噪音，以確保影音的品質。」'},
+ {id:'r7',q:'「若沒有妥善安排……無疑是大海撈針。」這句話的意思最接近？',o:['影音檔案太多，沒有整理的話，很難找到同一幕的影像和聲音','拍電影常常需要到海邊取景','後製人員要用針把影片縫起來','影片拍完後，檔案一定會遺失'],a:0,w:'「大海撈針」比喻東西很難找到。前文提到「會產生大量的影像和聲音檔案」，所以才難找。',ev:'第七段：「一部影片拍完，會產生大量的影像和聲音檔案……」'},
+ {id:'r8',q:'第四段說消防員「反其道而行」，指的是什麼？',o:['消防員開車常走錯路','一般人遇到火災會往外逃，消防員卻朝火場前進','消防員把消防衣反過來穿','消防員不聽隊長的命令'],a:1,w:'「反其道而行」是採取和常態相反的做法。一般人逃離火場，消防員卻衝進去。',ev:'第四段：「消防員為什麼穿上消防衣便能『反其道而行』，朝火場前進呢？」'},
+ {id:'r9',q:'下列哪一項「不是」入耳式監聽耳機的功用？',o:['阻絕現場噪音','避免走音','避免音樂跟歌聲不同步','讓臺下觀眾聽得更大聲'],a:3,w:'耳機是給「表演者」自己戴的，跟觀眾聽到的音量無關。看到「不是」要特別圈起來！',ev:'第三段：「可以阻絕現場噪音，讓表演者掌握實際的演唱情況，避免走音或音樂跟歌聲不同步的情形。」'},
+ {id:'r10',q:'作者寫出消防衣「至多能承受攝氏八百度的高溫」，這樣寫的作用是？',o:['用具體數字讓說明更清楚、更有說服力','表示消防員可以一直待在火場裡','表示所有火場都剛好是八百度','只是為了讓文章變長'],a:0,w:'這是說明文常用的「列數字」方法。「至多」表示有上限，消防衣接觸火焰過久仍會燒毀，所以 (B) 錯誤。',ev:'第五段：「這件耐燃隔熱的消防衣，至多能承受攝氏八百度的高溫」'},
+ {lvl:'第三層｜評鑑理解',sub:'判斷文體、寫法、主旨'},
+ {id:'r11',q:'仔細讀三個例子，作者說明事理的寫法有什麼相同之處？',o:['都先講一個故事，再說出道理','都用「為什麼……？」小標題提問，先寫猜測，再說明真正原理','都用比喻法說明','都在最後寫出作者對職業的感想'],a:1,w:'三個小標題結構相似，加深印象；開頭都用設問，再揭開答案。'},
+ {id:'r12',q:'作者在每個例子都寫「或許你會猜……」「也許你知道……」「可能你會猜……」，目的是？',o:['批評讀者常常猜錯','先寫出讀者可能的想法，再揭開真正答案，製造「原來如此」的驚喜','表示作者自己也不知道答案','提醒讀者不要亂猜'],a:1,w:'先猜、再用「但」轉折說出真相，讀者就會產生「哇！原來如此」的感覺。'},
+ {id:'r13',q:'關於本課，下列何者正確？',o:['本文是一篇記敘文','本文是一篇議論文，說服大家去當消防員','本文是事理類說明文，說明職業配備背後的原理','本文是抒情文，抒發對偶像的喜愛'],a:2,w:'本課客觀解釋「為什麼」，屬於事理類說明文。'},
+ {id:'r14',q:'本課的結構是？',o:['總起 → 分說三例 → 總結','只有三個例子，沒有開頭結尾','先分說，最後才總起','按照時間先後順序'],a:0,w:'第一段總起、二到七段分說三個例子、第八段總結，是「總—分—總」。'},
+ {id:'r15',q:'最後一段「你還想到哪些令你好奇的內容呢？設法找出答案……」作者希望讀者怎麼做？',o:['主動觀察生活，探究職業背後的祕密','長大以後一定要當表演者','以後不要再問問題','把整課課文背下來'],a:0,w:'作者用懸問邀請讀者自己思考，鼓勵主動探究、享受發現的樂趣。'},
+ {t:'open',id:'o1',q:'本課題目是「哇！原來如此」，你覺得這個題目好在哪裡？作者想透過這篇文章表達什麼想法？',h:'提示：想想「哇！」表達什麼情緒？「原來如此」是在什麼時候說的？',ans:'「哇！」用感嘆表達驚喜，「原來如此」是解開疑問、恍然大悟時說的話，題目一看就讓人想知道是什麼祕密。作者想表達：常見職業的工作背後藏著有趣的學問，值得我們設法找出答案，從中得到發現的樂趣。'},
+ {t:'open',id:'o2',q:'除了課文提到的三個例子，你還知道哪一種職業的「祕密」？請用「為什麼……？」寫出問題，再說明答案。',h:'可以想想：捷運司機員、醫生、廚師、外送員……',ans:'例：為什麼捷運司機員要用手指比來比去？這叫「指差確認」，用眼看、手指、口說的方式確認每扇車門和月臺門都關好，維護旅客安全。（答案僅供參考）'}];
+
+Q.m2=[
+ {lvl:'題型 A｜情境選擇',sub:'讀情境，選最適合的成語'},
+ {id:'i1',ctx:'王教授的藏書多到要用卡車才載得完，他的書房就像一座圖書館。',q:'最適合用哪個成語形容？',o:['多多益善','車載斗量','屈指可數','名副其實'],a:1,w:'「車載斗量」形容數量很多。「多多益善」是希望愈多愈好，是一種態度，不是描述數量；「屈指可數」是很少，意思相反。'},
+ {id:'i2',ctx:'班上募集二手書送到偏鄉小學，老師說：「大家能帶幾本就帶幾本，＿＿＿＿！」',q:'空格最適合填入？',o:['車載斗量','不足為奇','多多益善','大海撈針'],a:2,w:'老師希望書愈多愈好，用「多多益善」。'},
+ {id:'i3',ctx:'小美在沙灘上玩耍時弄丟了一枚小耳環，想要找回來，簡直就像＿＿＿＿。',q:'空格最適合填入？',o:['大海撈針','反其道而行','耳熟能詳','大吃一驚'],a:0,w:'在大片沙灘找小東西，非常難找，用「大海撈針」。'},
+ {id:'i4',ctx:'〈小星星〉這首兒歌，大家從小聽到大，每個人都能跟著哼上幾句。',q:'最適合用哪個成語形容這首歌？',o:['不足為奇','耳熟能詳','載歌載舞','原來如此'],a:1,w:'「耳熟能詳」是聽得非常熟悉，能詳細說出來。「不足為奇」是不值得奇怪，用來形容現象很普遍。'},
+ {id:'i5',ctx:'現在幾乎人手一支手機，小學生會用平板查資料，已經＿＿＿＿了。',q:'空格最適合填入？',o:['大吃一驚','觸目驚心','不足為奇','名副其實'],a:2,w:'很普遍、不值得奇怪的事，用「不足為奇」。'},
+ {id:'i6',ctx:'強烈地震過後，到處是倒塌的房屋和裂開的道路，讓人看了＿＿＿＿。',q:'空格最適合填入？',o:['大吃一驚','觸目驚心','多多益善','原來如此'],a:1,w:'「觸目驚心」強調「看到」的景況令人震驚；「大吃一驚」是事情出乎意料，例如朋友突然來訪。'},
+ {id:'i7',ctx:'浩宇每次賽跑都是第一名，同學都叫他「飛毛腿」。',q:'這個外號可說是＿＿＿＿。',o:['名副其實','大義滅親','反其道而行','車載斗量'],a:0,w:'外號和真實表現相符合，用「名副其實」。'},
+ {id:'i8',ctx:'法官發現犯案的人竟是自己的親弟弟，他仍然依照法律判刑，大家都很佩服他。',q:'最適合用哪個成語形容法官？',o:['不足為奇','大義滅親','耳熟能詳','多多益善'],a:1,w:'為了維護公理正義，不徇私情，讓犯罪的親人接受法律制裁，就是「大義滅親」。'},
+ {id:'i9',ctx:'暑假時大家都擠去熱門景點，我們家卻＿＿＿＿，挑了人少的小鎮，玩得很悠閒。',q:'空格最適合填入？',o:['耳熟能詳','反其道而行','大海撈針','車載斗量'],a:1,w:'做法和大多數人相反，用「反其道而行」。'},
+ {id:'i10',q:'「赴湯蹈火、出生入死」最適合用來稱讚哪一種職業？',o:['歌手','教師','消防員','醫生'],a:2,w:'消防員衝進火場救人，冒著生命危險，用「赴湯蹈火」。'},
+ {id:'i11',q:'下列「職業—語詞」的配對，哪一組「錯誤」？',o:['醫生—妙手回春','歌手—黃鶯出谷','教師—春風化雨','消防員—餘音繞梁'],a:3,w:'「餘音繞梁」形容歌聲優美，應該配歌手。'},
+ {lvl:'題型 B｜短文填空',sub:'先讀整段，再判斷'},
+ {id:'i12',ctx:'說到消防員，大家都很熟悉，對他們的工作①＿＿＿＿。但你知道消防衣為什麼不怕火嗎？聽老師說明三層結構後，我才恍然大悟：「②＿＿＿＿！」',q:'① 最適合填入？',o:['耳熟能詳','車載斗量','大義滅親','多多益善'],a:0,w:'「大家都很熟悉」，所以是耳熟能詳。'},
+ {id:'i13',ctx:'（同上段）聽老師說明三層結構後，我才恍然大悟：「②＿＿＿＿！」',q:'② 最適合填入？',o:['大海撈針','名副其實','原來如此','觸目驚心'],a:2,w:'「恍然大悟」時說的話是「原來如此」，表示事實情況原本是這樣。'},
+ {lvl:'題型 C｜成語辨析',sub:'哪一句用得對？'},
+ {id:'i14',q:'下列哪一句，成語使用最恰當？',o:['老師宣布明天放假，全班都觸目驚心。','聽完說明，我才知道打板的用途，真是原來如此。','這件事從來沒有人聽過，真是耳熟能詳。','奶奶喜歡安靜，每天在家裡載歌載舞。'],a:1,w:'(A) 放假不是可怕的景象，不能用觸目驚心；(C) 沒人聽過，和耳熟能詳矛盾；(D) 喜歡安靜卻載歌載舞，前後矛盾。'},
+ {id:'i15',q:'下列哪一句，成語使用「不恰當」？',o:['校慶晚會上，同學們在臺上載歌載舞。','第一次知道消防衣有三層，讓我大吃一驚。','這家店的珍珠奶茶車載斗量，好喝極了。','想在人海中找到走散的朋友，好比大海撈針。'],a:2,w:'「車載斗量」是形容數量多，不能用來形容飲料好喝。'},
+ {t:'open',id:'o3',q:'請從「不足為奇」和「大吃一驚」中選一個，寫出一個正確的句子，並說明為什麼這個情境適合。',h:'不足為奇＝很普遍，不奇怪；大吃一驚＝非常驚訝意外。',ans:'例：久未聯絡的好友突然到訪，讓爺爺大吃一驚。（事情出乎意料，所以用大吃一驚）／高科技時代，出門只帶手機已經不足為奇。（這件事很普遍，所以用不足為奇）'}];
+
+Q.m3=[
+ {lvl:'題型 A｜句型與關聯詞',sub:'先判斷前後句的關係'},
+ {id:'s1',q:'這家餐廳的菜很好吃，（　）價格有點貴，超出我的預算。',o:['每當','不過','若','並'],a:1,w:'前面說好吃，後面說太貴，意思相反，是轉折關係，用「不過」。'},
+ {id:'s2',q:'（　）放假，爺爺（　）會帶我去爬山。',o:['每當…總是','若…無疑是','雖然…但是','不但…而且'],a:0,w:'「放假」是條件，「帶我去爬山」是固定出現的結果，用條件複句「每當…總是…」。'},
+ {id:'s3',q:'考試前（　）不好好複習，想考滿分（　）天方夜譚。',o:['每當…總是','若…無疑是','因為…所以','不過…並'],a:1,w:'先假設一個情況（不複習），再說出結果，用假設複句「若…無疑是…」。'},
+ {id:'s4',q:'工作人員用場記板註明資訊，（　）藉由打板的聲音提醒錄製的起始點。',o:['並','不過','若','總是'],a:0,w:'兩件事同時進行，用並列的「並」。'},
+ {id:'s5',q:'「有些職業我們耳熟能詳，……不足為奇。不過，有些職業的工作內容，背後隱藏了一些祕密。」這是哪一種複句？',o:['條件複句','轉折複句','假設複句','並列複句'],a:1,w:'前面「不足為奇」，後面卻「隱藏祕密」，意思相對，是轉折複句。'},
+ {lvl:'題型 B｜語病判斷',sub:'找出錯在哪裡，並說出理由'},
+ {id:'s6',q:'下列哪一句「沒有」語病？',o:['透過這篇課文，讓我知道消防衣有三層。','每當下雨的時候，弟弟總是忘記帶傘。','雖然場記板看起來很普通，而且它非常重要。','消防員迅速快速的趕到火場。'],a:1,w:'(A) 成分殘缺：「透過……讓」找不到主語，應改「透過這篇課文，我知道……」；(C) 關聯詞誤用：雖然要配「但是」；(D) 語意重複：迅速＝快速。'},
+ {id:'s7',q:'下列哪一句有「搭配不當」的語病？',o:['歌手戴上耳機準備演唱。','消防員穿上消防衣衝進火場。','他戴上帽子和外套就出門了。','工作人員拿起場記板打板。'],a:2,w:'帽子用「戴」，外套要用「穿」。應改成「他戴上帽子、穿上外套就出門了」。'},
+ {id:'s8',q:'下列哪一句有「語意重複」的語病？',o:['一部影片拍完，大約會產生大概上百個檔案。','消防衣共有三層。','表演者戴耳機可以避免走音。','打板是為了影片後製。'],a:0,w:'「大約」和「大概」意思相同，留一個就好。'},
+ {id:'s9',q:'下列哪一句有「詞序錯誤」？',o:['他把一副新的耳機送給歌手。','他把一副耳機新的送給了歌手。','歌手收到一副新的耳機。','這副新的耳機是他送的。'],a:1,w:'修飾語「新的」要放在名詞「耳機」前面：一副新的耳機。'},
+ {id:'s10',q:'下列哪一句的關聯詞用得「不恰當」？',o:['若沒有場記板，後製人員總是很難把影音同步。','每當比賽開始，觀眾總是大聲加油。','他很努力練習，不過這次沒有得名。','媽媽把菜洗好，並切成小段。'],a:0,w:'「若」要配「就」或「無疑是」；「總是」要配「每當」。可改成「若沒有場記板，要把影音同步無疑是大海撈針」。'},
+ {id:'s11',q:'下列哪一句「缺少主語」（不知道是誰做的）？',o:['經過老師的說明，使我明白了打板的用途。','經過老師的說明，我明白了打板的用途。','老師的說明，使我明白了打板的用途。','我聽了老師的說明，明白了打板的用途。'],a:0,w:'「經過……使……」把主語弄不見了。刪掉「經過」或刪掉「使」都可以。'},
+ {lvl:'題型 C｜改寫語病句',sub:'照「問題→改法→改寫後」三步驟作答'},
+ {t:'open',id:'o4',q:'原句：「透過參觀消防局，讓我們認識了消防衣的構造。」這句話有什麼問題？應該怎麼改？',h:'問自己：是「誰」認識了消防衣？主語在哪裡？',ans:'<b>問題</b>：成分殘缺，「透過……讓……」使句子沒有主語。<br><b>改法</b>：刪掉「透過」或刪掉「讓」。<br><b>改寫後</b>：透過參觀消防局，我們認識了消防衣的構造。／參觀消防局，讓我們認識了消防衣的構造。'},
+ {t:'open',id:'o5',q:'原句：「雖然入耳式監聽耳機很小，而且功能非常強大。」這句話有什麼問題？應該怎麼改？',h:'前後意思是順接還是相反？',ans:'<b>問題</b>：關聯詞誤用，「雖然」要搭配表示轉折的「但是／卻」。<br><b>改寫後</b>：雖然入耳式監聽耳機很小，但是功能非常強大。'},
+ {t:'open',id:'o6',q:'原句：「這件消防衣至多最高能承受攝氏八百度的高溫。」這句話有什麼問題？應該怎麼改？',h:'有沒有兩個詞意思一樣？',ans:'<b>問題</b>：語意重複，「至多」和「最高」意思相同。<br><b>改寫後</b>：這件消防衣至多能承受攝氏八百度的高溫。'}];
+
+Q.m4=[
+ {lvl:'題型 A｜設問分類',sub:'這句是懸問、提問，還是激問？'},
+ {id:'h1',t:'cls',q:'提到生活中常見的職業，你會想到什麼呢？',a:0,w:'只問不答，答案隨讀者想法而不同，是懸問。'},
+ {id:'h2',t:'cls',q:'表演者明明能聽到舞臺上的音樂，為什麼還要戴著耳機呢？（後文接著說明耳機的功能）',a:1,w:'先問，答案就在後文，是自問自答的提問。'},
+ {id:'h3',t:'cls',q:'可以同時聽到伴奏和自己歌聲的耳機，是不是很神奇呢？',a:2,w:'答案在問題的反面（＝很神奇），是激問。'},
+ {id:'h4',t:'cls',q:'凡事只要差不多就好了，何必太精明呢？',a:2,w:'意思是「不必太精明」，答案在反面，是激問。'},
+ {id:'h5',t:'cls',q:'兒童相見不相識，笑問客從何處來？',a:0,w:'只問不答，沒有說出答案，是懸問。'},
+ {id:'h6',t:'cls',q:'人生什麼事最苦呢？……我說人生最苦的事，莫若於身上背著一種未了的責任。',a:1,w:'先問，接著自己回答，是提問。'},
+ {id:'h7',t:'cls',q:'像我這樣三十幾歲的人了，難道還不能料理自己嗎？',a:2,w:'「難道……嗎」表示「當然能料理自己」，是激問。'},
+ {id:'h8',t:'cls',q:'你還想到哪些令你好奇的內容呢？',a:0,w:'答案留給讀者自己去想，是懸問。'},
+ {lvl:'題型 B｜修辭效果',sub:'除了字面意思，還想表達什麼？'},
+ {id:'h9',q:'「可以同時聽到伴奏和自己歌聲的耳機，是不是很神奇呢？」作者真正想表達的是？',o:['作者不確定耳機神不神奇','這種耳機真的非常神奇','希望讀者去買這種耳機','這種耳機一點也不神奇'],a:1,w:'激問的答案在反面，用問句的語氣讓「很神奇」更有力量。'},
+ {id:'h10',q:'課文第一段用問句「你會想到什麼呢？」開頭，主要效果是？',o:['表示作者不知道答案','引起讀者好奇與思考，帶出文章主題','讓文章看起來比較長','考驗讀者的記憶力'],a:1,w:'設問開頭能增加和讀者的互動，引發閱讀動機，並聚焦主題。'},
+ {id:'h11',q:'題目「哇！原來如此」中的「哇！」用了什麼修辭？表達什麼情緒？',o:['設問；表達疑惑','感嘆；表達發現新知的驚喜','譬喻；表達害怕','誇飾；表達生氣'],a:1,w:'「哇！」是呼聲，屬於感嘆修辭，表達恍然大悟的驚喜。'},
+ {id:'h12',q:'下列哪一句「沒有」使用設問修辭？',o:['為什麼拍電影需要打板？','場記板是相當重要的小幫手呢！','難道你不想知道答案嗎？','你知道消防衣有幾層嗎？'],a:1,w:'(B) 是驚嘆語氣的直述句，沒有提出問題。'},
+ {lvl:'題型 C｜分析與仿寫',sub:'用鷹架說說看'},
+ {t:'open',id:'o7',q:'「火場這麼危險，消防員為什麼穿上消防衣便能『反其道而行』，朝火場前進呢？」請用答題鷹架分析這句話。',h:'這句話用了【　】修辭。畫面：我看到了＿＿。情緒：這讓我感覺＿＿。作者想強調的是＿＿。',ans:'這句話用了【設問（提問）】修辭。畫面：我看到大家都往外逃，只有消防員穿著消防衣往熊熊大火裡衝。情緒：讓我感覺緊張又好奇，也佩服消防員的勇敢。作者想強調的是：消防衣有特別的祕密，下文會說明它為什麼不怕火。'},
+ {t:'open',id:'o8',q:'請用「提問」（自問自答）的方式，寫兩三句話介紹一個職業的祕密。',h:'格式：為什麼……呢？原來，……',ans:'例：為什麼醫生開刀時要穿綠色的衣服呢？原來，醫生長時間看著紅色的血，眼睛容易疲勞，看看綠色可以讓眼睛得到休息。（答案僅供參考）'}];
+
+Q.m5a=[
+ {lvl:'題型 A｜造句',sub:'用本課句型造出通順的句子'},
+ {t:'open',id:'o9',q:'用「……不過……」造句。',h:'前後意思要相反。',ans:'例：這件衣服很好看，不過價格有點貴，超出我的預算。'},
+ {t:'open',id:'o10',q:'用「每當……總是……」造句。',h:'前面是條件，後面是每次都會出現的結果。',ans:'例：每當外出購物，媽媽總是自備購物袋，為環保盡一分心力。'},
+ {t:'open',id:'o11',q:'用「若……無疑是……」造句。',h:'先假設一個情況，再說出結果。',ans:'例：若你想感受現場演奏的魅力，這場古典音樂會無疑是最好的選擇。'},
+ {t:'open',id:'o12',q:'用「……並……」造句。',h:'兩件事同時發生。',ans:'例：阿姨熱情的歡迎我們，並為我們準備了豐盛的晚餐。'},
+ {lvl:'題型 B｜照樣寫',sub:'照著結構換詞語'},
+ {t:'open',id:'o13',q:'確保「影音」的「品質」 → 確保（　　）的（　　）',h:'結構：確保＋名詞＋的＋名詞',ans:'例：確保食材的新鮮／確保行人的安全／確保身體的健康／確保居民的安全'},
+ {t:'open',id:'o14',q:'在「常見」的「職業」裡，「隱藏」了許多「有趣」的「祕密」。→ 在（　）的（　）裡，（　）了許多（　）的（　）。',h:'結構：在＋形容詞＋的＋名詞＋裡，動詞＋許多＋形容詞＋的＋名詞',ans:'例：在美麗的公園裡，種植了許多特別的植物。／在廣大的宇宙中，蘊含許多深奧的原理。／在熱鬧的市場裡，充滿許多新鮮的蔬果。'},
+ {t:'open',id:'o15',q:'加分挑戰：用「耳熟能詳」造句，並加入一種修辭（設問或感嘆）。',h:'例如用激問：「難道……不是……嗎？」',ans:'例：〈小星星〉這首兒歌，難道不是每個人都耳熟能詳的嗎？（激問）'}];
+
+const CHECK=['開頭用「為什麼……？」設問點出主題','有寫出一般人的猜測，再用「但其實」揭開答案','說明原理時有條理（分點或依順序）','至少用了一種方法：舉例、列數字、作比較','結尾有總結，表達「原來如此」的發現樂趣','用了至少一個本課句型或成語','字數在 150～250 字之間，標點正確'];
+
+/* ---------------- render questions ---------------- */
+const ALL={};let mcTotal=0;
+const LET='ABCD';
+const CLS=['懸問','提問','激問'];
+function optsOf(q){return q.t==='cls'?CLS:q.o;}
+function qHTML(q,num,scope){
+  if(q.lvl)return `<div class="lvl">${q.lvl}<small>${q.sub||''}</small></div>`;
+  if(q.t==='open'){
+    const v=(S.open[q.id]||'').replace(/</g,'&lt;');
+    return `<div class="q oq" id="${scope}-${q.id}"><div class="qn"><span class="num">${num}</span><span class="tag" style="--tl:var(--grape-lt);--tc2:var(--grape)">寫寫看</span></div><div class="stem">${q.q}</div>${q.h?`<div class="scaf">💡 ${q.h}</div>`:''}<textarea id="ta-${scope}-${q.id}" data-oid="${q.id}" placeholder="先自己寫，再看參考答案">${v}</textarea><button class="show" data-ans="${scope}-${q.id}">看參考答案</button><div class="ans" id="ans-${scope}-${q.id}" hidden><b>參考答案</b><br>${q.ans}</div></div>`;
+  }
+  const o=optsOf(q);
+  return `<div class="q mc" id="${scope}-${q.id}" data-id="${q.id}"><div class="qn"><span class="num">${num}</span>${q.t==='cls'?'<span class="tag" style="--tl:var(--mint-lt);--tc2:var(--mint)">設問分類</span>':''}</div>${q.ctx?`<div class="ctx">📍 情境：${q.ctx}</div>`:''}<div class="stem">${q.q}</div><div class="opts${q.t==='cls'?' row':''}">${o.map((x,i)=>`<button class="opt" data-i="${i}"><span class="l">${q.t==='cls'?'?':LET[i]}</span><span>${x}</span></button>`).join('')}</div><div class="fbw"></div></div>`;
+}
+function paint(card,q){
+  const st=S.ans[q.id];const btns=card.querySelectorAll('.opt');const fbw=card.querySelector('.fbw');
+  btns.forEach((b,i)=>{b.classList.remove('right','wrong');b.disabled=false;});
+  fbw.innerHTML='';
+  if(st===undefined)return;
+  btns.forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('right');if(i===st.pick&&!st.ok)b.classList.add('wrong');});
+  const right=optsOf(q)[q.a];
+  fbw.innerHTML=`<div class="fb ${st.ok?'ok':'no'} pop"><div class="v">${st.ok?'🎉 答對了！原來如此！':'🤔 再想想！正確答案是 '+(q.t==='cls'?'':'('+LET[q.a]+') ')+right}</div>${q.w}${q.ev?`<div class="ev">🔎 證據：${q.ev}</div>`:''}${st.ok?'':'<button class="retry">再挑戰一次</button>'}</div>`;
+}
+function renderSet(key,elId,scope){
+  const el=document.getElementById(elId);let n=0;
+  const list=Q[key];
+  const mcs=list.filter(q=>!q.lvl&&q.t!=='open');
+  const head=mcs.length?`<div class="qhead"><div class="meter"><i id="m-${key}"></i></div><span class="mtext" id="mt-${key}"></span><button class="reset" data-reset="${key}">全部重做</button></div>`:'';
+  el.innerHTML=head+list.map(q=>{if(!q.lvl)n++;return qHTML(q,q.lvl?0:n,scope);}).join('');
+  list.forEach(q=>{if(q.id&&q.t!=='open'){ALL[q.id]={q,key};const c=document.getElementById(scope+'-'+q.id);paint(c,q);}});
+}
+function meters(){
+  let tot=0,ok=0;
+  Object.keys(Q).forEach(k=>{
+    const mcs=Q[k].filter(q=>q.id&&q.t!=='open');if(!mcs.length)return;
+    const done=mcs.filter(q=>S.ans[q.id]).length;const good=mcs.filter(q=>S.ans[q.id]&&S.ans[q.id].ok).length;
+    tot+=mcs.length;ok+=good;
+    const m=document.getElementById('m-'+k),t=document.getElementById('mt-'+k);
+    if(m){m.style.width=(done/mcs.length*100)+'%';t.textContent=`已作答 ${done}/${mcs.length}・答對 ${good}`;}
+  });
+  $('#scoreNum').textContent=ok+'/'+tot;
+}
+[['words','q-words','w'],['m1','q-m1','a'],['m2','q-m2','b'],['m3','q-m3','c'],['m4','q-m4','d'],['m5a','q-m5a','e']].forEach(x=>renderSet(...x));
+
+function toast(t){const d=document.createElement('div');d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),1600);}
+
+document.addEventListener('click',e=>{
+  const opt=e.target.closest('.opt');
+  if(opt&&!opt.disabled){
+    const card=opt.closest('.q');const id=card.dataset.id;const {q}=ALL[id];const i=+opt.dataset.i;
+    S.ans[id]={pick:i,ok:i===q.a};save();
+    document.querySelectorAll(`.q.mc[data-id="${id}"]`).forEach(c=>paint(c,q));
+    meters();
+    if(card.closest('#q-wrong')&&i===q.a)setTimeout(renderWrong,1400);
+    return;
+  }
+  const rt=e.target.closest('.retry');
+  if(rt){const card=rt.closest('.q');const id=card.dataset.id;delete S.ans[id];save();document.querySelectorAll(`.q.mc[data-id="${id}"]`).forEach(c=>paint(c,ALL[id].q));meters();return;}
+  const sh=e.target.closest('[data-ans]');
+  if(sh){const a=document.getElementById('ans-'+sh.dataset.ans);a.hidden=!a.hidden;sh.textContent=a.hidden?'看參考答案':'收起參考答案';return;}
+  const rs=e.target.closest('[data-reset]');
+  if(rs){
+    if(rs.dataset.armed!=='1'){rs.dataset.armed='1';rs.textContent='再按一次確定';setTimeout(()=>{rs.dataset.armed='';rs.textContent='全部重做';},2500);return;}
+    Q[rs.dataset.reset].forEach(q=>{if(q.id)delete S.ans[q.id];});save();
+    Object.keys(ALL).forEach(id=>document.querySelectorAll(`.q.mc[data-id="${id}"]`).forEach(c=>paint(c,ALL[id].q)));
+    meters();rs.dataset.armed='';rs.textContent='全部重做';toast('已清空，重新挑戰吧！');
+  }
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.dataset&&t.dataset.oid){S.open[t.dataset.oid]=t.value;save();}
+});
+
+/* wrong book */
+function renderWrong(){
+  const el=$('#q-wrong');
+  const ids=Object.keys(S.ans).filter(id=>S.ans[id]&&!S.ans[id].ok&&ALL[id]);
+  if(!ids.length){el.innerHTML=`<div class="card empty"><div class="big">🌈</div><p>錯題本是空的！<br>去各模組做題，答錯的題目會出現在這裡。</p></div>`;return;}
+  const names={words:'字詞',m1:'閱讀理解',m2:'成語',m3:'語病句型',m4:'修辭',m5a:'寫作'};
+  el.innerHTML=`<div class="mtext">共 ${ids.length} 題待複習</div>`+ids.map((id,k)=>{const {q,key}=ALL[id];return qHTML(q,k+1,'z').replace('<div class="qn">',`<div class="qn"><span class="tag" style="--tl:var(--bad-lt);--tc2:var(--bad)">${names[key]}</span>`);}).join('');
+  /* 錯題本的題目以未作答狀態呈現，重新作答時由全域點擊處理更新紀錄 */
+}
+
+/* essay + checklist */
+const eb=$('#essay-box');eb.value=S.essay||'';
+const cnt=()=>{$('#essay-count').textContent=eb.value.replace(/\s/g,'').length+' 字';};cnt();
+eb.addEventListener('input',()=>{S.essay=eb.value;save();cnt();});
+$('#checklist').innerHTML=CHECK.map((c,i)=>`<label for="ck${i}"><input type="checkbox" id="ck${i}" ${S.chk[i]?'checked':''}>${c}</label>`).join('');
+$('#checklist').addEventListener('change',e=>{const i=e.target.id.slice(2);S.chk[i]=e.target.checked;save();});
+
+meters();
+const start=(location.hash||'').slice(1);
+go(TABS.some(t=>t[0]===start)?start:(TABS.some(t=>t[0]===S.tab)?S.tab:'home'));
+})();
+</script>
+</body></html>

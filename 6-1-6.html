@@ -1,0 +1,804 @@
+<!doctype html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>登月先鋒 任務手冊</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+</head><body>
+<style>
+/* Layout：「登月任務」主題（明亮版）。黏頂彩色標題＋可橫捲分頁；單欄 920px；每個模組一個糖果色 */
+:root{
+  color-scheme:light;
+  --bg:#F1F0FF; --paper:#FFFFFF; --cream:#FFF8E1; --line:#CDE6F7;
+  --ink:#1D2B4A; --ink2:#46557A; --ink3:#7C89A8;
+  --sky:#1F8FFF;  --sky-lt:#DDEFFF;
+  --tomato:#FF4F5E; --tomato-lt:#FFE3E6;
+  --sun:#FFC22E; --sun-lt:#FFF3CC;
+  --mint:#13B98F; --mint-lt:#D8F7EC;
+  --grape:#8B5CF6; --grape-lt:#EEE6FF;
+  --orange:#FF8A1F; --orange-lt:#FFEBD6;
+  --ok:#13A86B; --ok-lt:#DDF7EA; --bad:#F0384A; --bad-lt:#FFE2E5;
+  --shadow:0 4px 16px rgba(31,143,255,.14);
+  --f-display:'Huninn','jf-openhuninn','Yuanti TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  --f-body:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  --r:20px;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:19px;line-height:1.85;
+  background-image:radial-gradient(circle at 12px 12px,rgba(255,194,46,.35) 2.5px,transparent 3.5px),radial-gradient(circle at 40px 34px,rgba(139,92,246,.18) 3px,transparent 4px);
+  background-size:56px 56px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:#7C5CFF}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:4px solid var(--sun);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:linear-gradient(100deg,#7C5CFF 0%,#FF5FA2 38%,#FFA726 70%,#22C3F0 100%);box-shadow:0 4px 18px rgba(124,92,255,.3);color:#fff}
+.top-in{max-width:920px;margin:0 auto;padding-top:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;gap:12px}
+.logo{flex:none;width:56px;height:56px;border-radius:18px;background:#fff;box-shadow:0 3px 10px rgba(0,0,0,.12);display:grid;place-items:center}
+.logo svg{width:46px;height:46px}
+.top h1{margin:0;font-family:var(--f-display);font-weight:400;font-size:1.55rem;line-height:1.15;letter-spacing:.06em;text-shadow:0 2px 4px rgba(0,0,0,.18)}
+.top .sub{font-size:.8rem;opacity:.96}
+.score{margin-left:auto;text-align:center;background:rgba(255,255,255,.25);border-radius:16px;padding:4px 12px;font-size:.75rem;white-space:nowrap}
+.score b{display:block;font-family:var(--f-display);font-weight:400;font-size:1.25rem;font-variant-numeric:tabular-nums;line-height:1.2}
+.tabs{max-width:920px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;padding:10px max(12px,env(safe-area-inset-right,0px)) 0 max(12px,env(safe-area-inset-left,0px));scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;border:0;background:rgba(255,255,255,.25);padding:8px 14px 9px;border-radius:16px 16px 0 0;font-weight:700;font-size:1rem;color:#fff;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.15);display:flex;align-items:center;gap:6px}
+.tab:hover{background:rgba(255,255,255,.42)}
+.tab.on{background:var(--bg);color:var(--tc);text-shadow:none}
+.tab .ic{font-size:1.1rem}
+
+main{max-width:920px;margin:0 auto;padding-block:22px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.panel{display:grid;gap:20px}
+.sec{margin:0;font-family:var(--f-display);font-weight:400;font-size:1.9rem;line-height:1.3;color:var(--tc);text-wrap:balance;display:flex;align-items:center;gap:10px}
+.sec .badge{font-family:var(--f-body);font-size:.9rem;font-weight:900;background:var(--tc);color:#fff;border-radius:999px;padding:2px 12px}
+.lead{margin:-8px 0 0;color:var(--ink2);font-size:1.02rem}
+h3{margin:0 0 10px;font-family:var(--f-display);font-weight:400;font-size:1.4rem;line-height:1.35;color:var(--ink)}
+h4{margin:0 0 6px;font-size:1.08rem}
+p{margin:0}
+.card{background:var(--paper);border-radius:var(--r);padding:20px 22px;box-shadow:var(--shadow);min-width:0}
+.card.soft{background:var(--cream);box-shadow:none;border:3px dashed var(--sun)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.tag{display:inline-block;font-size:.8rem;font-weight:900;border-radius:999px;padding:1px 10px;background:var(--tl,var(--sky-lt));color:var(--tc2,var(--sky));vertical-align:middle;letter-spacing:.04em}
+mark{background:linear-gradient(transparent 55%,#FFE58A 55%);color:inherit;padding:0 2px}
+.key{color:var(--tomato);font-weight:900}
+ul.dots{margin:0;padding-left:1.2em}
+ul.dots li{margin:4px 0}
+.mascot-say{display:flex;gap:12px;align-items:flex-start}
+.mascot-say svg{flex:none;width:58px;height:58px}
+.bubble{background:#fff;border:3px solid var(--sun);border-radius:18px 18px 18px 4px;padding:10px 16px;font-weight:500;min-width:0}
+
+/* hero */
+.hero{background:linear-gradient(135deg,#FFFFFF 0%,#FFF6D6 100%);border-radius:28px;padding:24px;box-shadow:var(--shadow);display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center}
+.hero svg.big{width:140px;height:140px}
+.hero h2{margin:0;font-family:var(--f-display);font-weight:400;font-size:2.3rem;line-height:1.2;color:var(--tomato)}
+.hero p{font-size:1.08rem;color:var(--ink2);margin-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{background:var(--sky-lt);color:var(--sky);font-weight:700;border-radius:999px;padding:3px 14px;font-size:.92rem}
+.chip.r{background:var(--tomato-lt);color:var(--tomato)}.chip.g{background:var(--mint-lt);color:var(--mint)}.chip.p{background:var(--grape-lt);color:var(--grape)}
+@media (max-width:560px){.hero{grid-template-columns:1fr;text-align:center}.hero svg.big{margin:0 auto;width:110px;height:110px}.chips{justify-content:center}}
+
+/* structure diagram */
+.flow{display:grid;gap:10px}
+.flow .end{background:var(--sky);color:#fff;border-radius:16px;padding:12px 18px;font-weight:700}
+.flow .end small{display:block;font-weight:400;opacity:.95;font-size:.95rem}
+.flow .mid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.flow .mid div{border-radius:16px;padding:12px 14px;font-weight:700;font-size:1rem;line-height:1.55}
+.flow .mid small{display:block;font-weight:400;font-size:.9rem;color:var(--ink2)}
+.flow .arrow{text-align:center;color:var(--ink3);font-weight:900;font-size:1.2rem;line-height:1}
+@media (max-width:640px){.flow .mid{grid-template-columns:1fr}}
+
+/* secret boxes */
+.secret{border-radius:24px;overflow:hidden;background:#fff;box-shadow:var(--shadow);display:flex;flex-direction:column;min-width:0}
+.secret .q{padding:18px 18px 14px;background:var(--sc);color:#fff}
+.secret .q .em{font-size:2.2rem;line-height:1}
+.secret .q h4{font-family:var(--f-display);font-weight:400;font-size:1.3rem;margin:6px 0 0;line-height:1.4}
+.secret .open{margin:14px 18px;border:0;border-radius:14px;background:var(--sun);color:var(--ink);font-weight:900;padding:10px;font-size:1.05rem;box-shadow:0 4px 0 #E2A200}
+.secret .open:active{transform:translateY(3px);box-shadow:0 1px 0 #E2A200}
+.secret .a{padding:0 18px 18px;font-size:1rem}
+.secret .a .wow{font-family:var(--f-display);font-size:1.25rem;color:var(--tomato);margin-bottom:4px}
+.pop{animation:pop .35s ease}
+@keyframes pop{0%{transform:scale(.94);opacity:.3}100%{transform:scale(1);opacity:1}}
+.layers{display:grid;gap:6px;margin:8px 0}
+.layers div{border-radius:10px;padding:6px 10px;font-size:.95rem}
+
+/* tables */
+.tw{overflow-x:auto;border-radius:16px}
+table{border-collapse:collapse;width:100%;min-width:480px;background:#fff;font-size:1rem}
+th,td{padding:10px 12px;border-bottom:2px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--tc);color:#fff;font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+
+/* lesson text */
+.para{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+.pn{width:44px;height:44px;border-radius:14px;background:var(--sky);color:#fff;display:grid;place-items:center;font-family:var(--f-display);font-size:1.3rem}
+.ptext{font-size:1.15rem;line-height:2.05;min-width:0}
+.sub-h{font-family:var(--f-display);font-size:1.45rem;color:var(--tomato);margin:6px 0 -6px;display:flex;align-items:center;gap:8px}
+.rh{border-bottom:3px wavy var(--grape);text-decoration:none}
+.rt{font-size:.72rem;font-weight:900;background:var(--grape);color:#fff;border-radius:6px;padding:0 6px;margin:0 3px;vertical-align:2px;white-space:nowrap}
+.lk{font-size:.72rem;font-weight:900;background:var(--orange);color:#fff;border-radius:6px;padding:0 6px;margin:0 3px;vertical-align:2px;white-space:nowrap}
+.pkey{margin-top:10px;background:var(--mint-lt);border-radius:14px;padding:10px 14px;font-size:1rem}
+.pkey b{color:var(--mint)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.95rem;color:var(--ink2)}
+
+/* words */
+.chars{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.ch{background:#fff;border-radius:18px;padding:12px 14px;box-shadow:var(--shadow);display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}
+.ch .z{font-family:var(--f-display);font-size:2.4rem;line-height:1;color:var(--mint);width:56px;height:56px;display:grid;place-items:center;background:var(--mint-lt);border-radius:14px}
+.ch .z.trap{background:var(--tomato-lt);color:var(--tomato)}
+.ch .info{font-size:.88rem;line-height:1.5;min-width:0}
+.ch .info b{font-size:1rem}
+.idioms{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
+.idm{background:#fff;border-radius:18px;padding:14px 16px;box-shadow:var(--shadow)}
+.idm .nm{font-family:var(--f-display);font-size:1.45rem;color:var(--orange)}
+.idm .mean{font-size:1rem}
+.idm .ex{font-size:.93rem;color:var(--ink2);margin-top:4px}
+.idm .warn{font-size:.9rem;margin-top:6px;background:var(--sun-lt);border-radius:10px;padding:4px 10px}
+
+/* quiz */
+.qset{display:grid;gap:16px}
+.qhead{display:flex;flex-wrap:wrap;align-items:center;gap:10px;justify-content:space-between}
+.meter{flex:1 1 200px;height:14px;background:#fff;border-radius:999px;overflow:hidden;box-shadow:inset 0 0 0 2px var(--line)}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--sun),var(--tc));border-radius:999px;transition:width .4s}
+.mtext{font-weight:700;color:var(--ink2);font-size:.95rem;font-variant-numeric:tabular-nums}
+.reset{border:2px solid var(--line);background:#fff;border-radius:999px;padding:4px 14px;font-size:.9rem;font-weight:700;color:var(--ink2)}
+.q{background:#fff;border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow);min-width:0}
+.q .qn{display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
+.q .num{font-family:var(--f-display);font-size:1.15rem;color:#fff;background:var(--tc);border-radius:12px;padding:0 10px}
+.q .stem{font-size:1.12rem;font-weight:500;line-height:1.8}
+.q .ctx{background:var(--cream);border-radius:14px;padding:10px 14px;margin:8px 0;font-size:1.05rem;border-left:0}
+.opts{display:grid;gap:10px;margin-top:12px}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;border:3px solid var(--line);background:#fff;border-radius:16px;padding:10px 14px;font-size:1.06rem;line-height:1.6;transition:transform .1s,border-color .15s}
+.opt:hover:not([disabled]){border-color:var(--tc);transform:translateY(-1px)}
+.opt .l{flex:none;width:30px;height:30px;border-radius:50%;background:var(--sky-lt);color:var(--sky);font-weight:900;display:grid;place-items:center;font-size:.95rem}
+.opt.right{border-color:var(--ok);background:var(--ok-lt)}
+.opt.right .l{background:var(--ok);color:#fff}
+.opt.wrong{border-color:var(--bad);background:var(--bad-lt)}
+.opt.wrong .l{background:var(--bad);color:#fff}
+.opt[disabled]{cursor:default}
+.opts.row{grid-template-columns:repeat(3,minmax(0,1fr))}
+.opts.row .opt{justify-content:center;font-weight:700}
+@media (max-width:480px){.opts.row{grid-template-columns:1fr}}
+.fb{margin-top:12px;border-radius:14px;padding:12px 16px;font-size:1.02rem}
+.fb.ok{background:var(--ok-lt)}.fb.no{background:var(--bad-lt)}
+.fb .v{font-family:var(--f-display);font-size:1.2rem}
+.fb.ok .v{color:var(--ok)}.fb.no .v{color:var(--bad)}
+.fb .ev{margin-top:6px;background:#fff;border-radius:10px;padding:6px 12px;font-size:.95rem;color:var(--ink2)}
+.retry{margin-top:8px;border:0;background:var(--bad);color:#fff;border-radius:999px;padding:4px 16px;font-weight:700;font-size:.95rem}
+.lvl{margin:8px 0 -4px;font-family:var(--f-display);font-size:1.3rem;color:var(--tc);display:flex;gap:8px;align-items:center}
+.lvl small{font-family:var(--f-body);font-size:.92rem;color:var(--ink3)}
+
+/* open questions */
+.oq textarea{width:100%;min-height:90px;border:3px solid var(--line);border-radius:14px;padding:10px 14px;font:inherit;font-size:1.05rem;background:#FCFEFF;color:var(--ink);resize:vertical;margin-top:10px}
+.oq textarea:focus{border-color:var(--tc);outline:none}
+.show{margin-top:10px;border:0;background:var(--tc);color:#fff;border-radius:999px;padding:6px 18px;font-weight:700;font-size:1rem;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+.ans{margin-top:10px;background:var(--mint-lt);border-radius:14px;padding:12px 16px;font-size:1.02rem}
+.ans b{color:var(--mint)}
+.scaf{background:var(--grape-lt);border-radius:14px;padding:10px 16px;font-size:1rem;margin-top:8px}
+
+.check{display:grid;gap:8px}
+.check label{display:flex;gap:10px;align-items:center;background:#fff;border-radius:14px;padding:8px 14px;font-size:1.02rem;cursor:pointer;box-shadow:var(--shadow)}
+.check input{width:24px;height:24px;accent-color:var(--mint);flex:none}
+.essay{background:#fff;border-radius:var(--r);padding:20px 24px;box-shadow:var(--shadow);font-size:1.08rem;line-height:2}
+.essay h4{text-align:center;font-family:var(--f-display);font-weight:400;font-size:1.35rem}
+.essay p{text-indent:2em;margin-bottom:6px}
+.note{font-size:.9rem;font-weight:900;color:#fff;background:var(--grape);border-radius:6px;padding:0 6px;margin-left:4px;text-indent:0;white-space:nowrap}
+
+.empty{text-align:center;padding:30px 20px;color:var(--ink2)}
+.empty .big{font-size:3rem}
+.next{display:flex;justify-content:flex-end}
+.next button{border:0;background:var(--tc);color:#fff;border-radius:999px;padding:10px 22px;font-weight:900;font-size:1.05rem;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:999px;padding:8px 20px;font-weight:700;z-index:80;font-size:1rem}
+
+/* mission timeline */
+.tl{display:grid}
+.tl .st{display:grid;grid-template-columns:50px 1fr;gap:12px;position:relative;padding-bottom:14px}
+.tl .st:not(:last-child)::before{content:"";position:absolute;left:23px;top:50px;bottom:0;width:4px;border-radius:4px;background:repeating-linear-gradient(var(--c) 0 6px,transparent 6px 11px)}
+.tl .dot{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-size:1.5rem;background:var(--c);box-shadow:0 3px 0 rgba(0,0,0,.12)}
+.tl .when{font-weight:900;color:var(--c);font-size:1rem;line-height:1.4}
+.tl .what{font-size:1.05rem;line-height:1.6}
+.tl .pp{font-size:.8rem;font-weight:900;background:var(--c);color:#fff;border-radius:999px;padding:0 8px;margin-left:6px;vertical-align:2px}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.trio div{border-radius:16px;padding:12px 14px;font-size:1rem;line-height:1.6}
+.trio b{display:block;font-family:var(--f-display);font-weight:400;font-size:1.2rem}
+@media (max-width:640px){.trio{grid-template-columns:1fr}}
+</style>
+
+<style>.opts.row.two{grid-template-columns:repeat(2,minmax(0,1fr))}@media (max-width:480px){.opts.row.two{grid-template-columns:1fr 1fr}}</style>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="rocket" viewBox="0 0 100 100">
+      <path d="M50 4 C70 18 76 40 72 66 H28 C24 40 30 18 50 4Z" fill="#FFFFFF" stroke="#7C5CFF" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M50 4 C60 11 66 20 69 30 H31 C34 20 40 11 50 4Z" fill="#FF5FA2" stroke="#7C5CFF" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M28 52 L14 70 L16 80 L30 70Z" fill="#FFB627" stroke="#7C5CFF" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M72 52 L86 70 L84 80 L70 70Z" fill="#FFB627" stroke="#7C5CFF" stroke-width="4" stroke-linejoin="round"/>
+      <circle cx="50" cy="44" r="12" fill="#BDEBFF" stroke="#7C5CFF" stroke-width="4"/>
+      <circle cx="45.5" cy="43" r="2.6" fill="#1D2B4A"/><circle cx="54.5" cy="43" r="2.6" fill="#1D2B4A"/>
+      <circle cx="46.3" cy="42.2" r=".9" fill="#fff"/><circle cx="55.3" cy="42.2" r=".9" fill="#fff"/>
+      <path d="M46 48 Q50 51.5 54 48" stroke="#1D2B4A" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <circle cx="41" cy="48" r="2.2" fill="#FF9AA8"/><circle cx="59" cy="48" r="2.2" fill="#FF9AA8"/>
+      <path d="M36 66 Q50 100 64 66Z" fill="#FFB627"/>
+      <path d="M42 66 Q50 88 58 66Z" fill="#FF5F5F"/>
+      <path d="M8 14 l3 6 6 3 -6 3 -3 6 -3 -6 -6 -3 6 -3Z" fill="#FFC22E"/>
+      <path d="M88 30 l2 4 4 2 -4 2 -2 4 -2 -4 -4 -2 4 -2Z" fill="#22C3F0"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="top-in">
+    <div class="logo"><svg><use href="#rocket"/></svg></div>
+    <div>
+      <h1>登月先鋒</h1>
+      <div class="sub">六上國語 第六課・自學任務手冊</div>
+    </div>
+    <div class="score" title="選擇題答對數">⭐ 答對<b id="scoreNum">0/0</b></div>
+  </div>
+  <nav class="tabs" id="tabs" aria-label="分頁"></nav>
+</header>
+
+<main id="main">
+
+<!-- ============ 首頁：重點速覽 ============ -->
+<section class="panel" id="p-home" data-tc="var(--grape)">
+  <div class="hero">
+    <svg class="big"><use href="#rocket"/></svg>
+    <div>
+      <h2 style="color:var(--grape)">從飛行少年到登月英雄！</h2>
+      <p>六歲第一次搭飛機的阿姆斯壯，一路努力成為第一個踏上月球的人。跟著他的腳步，看懂一個人怎麼一步一步實現夢想。</p>
+      <div class="chips"><span class="chip p">記敘文（傳記）</span><span class="chip r">倒敘＋引用法開頭</span><span class="chip">第三人稱</span><span class="chip g">19 個生字</span></div>
+    </div>
+  </div>
+
+  <div class="mascot-say">
+    <svg><use href="#rocket"/></svg>
+    <div class="bubble">我是「小火箭噗噗」🚀 任務順序：①先看這頁的重點 → ②到「課文精讀」讀原文 → ③背「字詞寶庫」→ ④闖五大模組 → ⑤答錯的題目會自動飛進「錯題本」，再挑戰一次！</div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><h3>📌 大意</h3><p>阿姆斯壯從小就<mark>立志當飛行員</mark>，為了登上月球，他<mark>加入太空計畫並接受訓練</mark>。成功登上月球後，他望著美麗的地球，並且<mark>採集樣本、拍照、安置設備</mark>。結束人類征月的壯舉後，他仍<mark>鼓勵後人繼續探索宇宙</mark>。</p></div>
+    <div class="card"><h3>🎯 主旨</h3><p>透過阿姆斯壯的事蹟，<mark>鼓勵我們追尋夢想、實踐自我</mark>。</p>
+      <p style="margin-top:10px">💬 一句話記住：<b class="key">有夢想，再加上努力和訓練，就能踏出屬於自己的「一大步」。</b></p></div>
+  </div>
+
+  <div class="card">
+    <h3>🗓️ 登月任務時間軸（看時間詞就能排順序！）</h3>
+    <div class="tl" id="timeline"></div>
+  </div>
+
+  <div class="card">
+    <h3>🧱 課文結構</h3>
+    <div class="flow">
+      <div class="end" style="background:var(--tomato)">事蹟（第一段・倒敘）<small>阿姆斯壯登上月球，為人類翻開不朽的一頁。</small></div>
+      <div class="arrow">▼</div>
+      <div class="mid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+        <div style="background:var(--sky-lt)">✈️ 志向一：飛行員<small>第二段｜十六歲拿到學生飛行員執照，天空卻滿足不了他</small></div>
+        <div style="background:var(--grape-lt)">👨‍🚀 志向二：太空人<small>第三段｜加入太空計畫，接受嚴苛的訓練</small></div>
+      </div>
+      <div class="arrow">▼ 登月行動 ▼</div>
+      <div class="mid">
+        <div style="background:var(--orange-lt)">🚀 發射升空<small>第四段｜火箭升空，駕駛小艇降落月球</small></div>
+        <div style="background:var(--sun-lt)">🌕 踏上月球<small>第五段｜望見家鄉地球</small></div>
+        <div style="background:var(--mint-lt)">🌊 完成回航<small>第六段｜工作完成，降落太平洋</small></div>
+      </div>
+      <div class="arrow">▼</div>
+      <div class="end" style="background:var(--mint)">貢獻（第七段）<small>投入太空工程與教學，鼓勵後人繼續探索宇宙。</small></div>
+    </div>
+  </div>
+
+  <h2 class="sec" style="font-size:1.6rem">🎁 三個任務祕密箱：先想想看，再打開！</h2>
+  <div class="grid3" id="secrets"></div>
+
+  <div class="card">
+    <h3>✍️ 本課三大寫作重點（必考！）</h3>
+    <div class="trio">
+      <div style="background:var(--tomato-lt)"><b>① 引用法開頭</b>開頭直接引用阿姆斯壯的名言，馬上點出主題，增加<mark>真實感</mark>和<mark>說服力</mark>。最後一段又引用他的話，<mark>首尾呼應</mark>（都提到「腳印」）。</div>
+      <div style="background:var(--sky-lt)"><b>② 倒敘法</b>第一段先寫最精采的「踏上月球」，再回頭從六歲說起。依時間順序，第一段應該放在<mark>第五段</mark>後面。</div>
+      <div style="background:var(--mint-lt)"><b>③ 動態＋靜態描寫</b>火箭「直衝雲霄」、地球「緩緩升起」是<mark>動態</mark>；隕石坑、象灰與濃黑的太空是<mark>靜態</mark>。</div>
+    </div>
+  </div>
+
+  <div class="card soft">
+    <h3>⚠️ 考試陷阱提醒</h3>
+    <ul class="dots">
+      <li>月球表面<b>不平坦</b>！課文說「盡是大大小小的<b>隕石坑</b>」。</li>
+      <li>七月<b>十六日</b>是火箭發射，七月<b>二十一日</b>才踏上月球，七月<b>二十四日</b>降落太平洋。</li>
+      <li>是阿姆斯壯和「<b>其中一位</b>」搭檔駕駛小艇登月，另一位留在指揮艙。</li>
+      <li>「眼前的天空」指的是<b>地球上空</b>，表示他有了更遠大的目標。</li>
+      <li>「身體像要炸裂一般」雖然有「像」，但重點是誇大痛苦，屬於<b>誇飾</b>。</li>
+      <li>部首陷阱：<b>奪</b>是「大」部、<b>凌</b>是「冫」部、<b>劃</b>是「刀」部、<b>系</b>是「糸」部、<b>宇／宙</b>是「宀」部。</li>
+    </ul>
+  </div>
+  <div class="next"><button data-go="text">開始讀課文 ➜</button></div>
+</section>
+
+<!-- ============ 課文精讀 ============ -->
+<section class="panel" id="p-text" hidden data-tc="var(--sky)">
+  <h2 class="sec">📖 課文精讀</h2>
+  <p class="lead">每段下面的綠色框是「段落重點」。看到標籤要注意：</p>
+  <div class="legend"><span><span class="rt">修辭</span>修辭手法</span><span><span class="lk">句型</span>關聯詞複句</span><span><mark>黃色螢光</mark>＝重要內容／生字詞</span></div>
+  <div id="lesson" class="card" style="display:grid;gap:18px"></div>
+  <div class="next"><button data-go="words">背字詞 ➜</button></div>
+</section>
+
+<!-- ============ 字詞寶庫 ============ -->
+<section class="panel" id="p-words" hidden data-tc="var(--mint)">
+  <h2 class="sec">🔤 字詞寶庫</h2>
+  <p class="lead">紅色格子的字是「部首容易寫錯」的字，要特別記！</p>
+  <div class="chars" id="chars"></div>
+
+  <div class="card"><h3>👀 形近字辨析</h3><div class="tw" style="--tc:var(--mint)"><table id="lookalike"></table></div></div>
+
+  <div class="grid2">
+    <div class="card"><h3>🔊 多音字：劃</h3>
+      <ul class="dots">
+        <li><b>ㄏㄨㄚˊ</b>：劃破、劃火柴、劃船、劃一刀（用尖銳的東西擦過）</li>
+        <li><b>ㄏㄨㄚˋ</b>：劃分、計劃、規劃、劃清界線（分開、計畫）</li>
+      </ul></div>
+    <div class="card"><h3>🧮 數字小知識：億</h3>
+      <ul class="dots">
+        <li>一億 ＝ 一萬個萬（10000 × 10000）</li>
+        <li>課文：「<b>六億</b>人關注的壯舉」，表示全世界都在看！</li>
+        <li>億（人部）≠ 憶（心部，記憶）</li>
+      </ul></div>
+  </div>
+
+  <div class="card"><h3>📚 重要語詞</h3><div class="tw" style="--tc:var(--mint)"><table id="vocab"></table></div></div>
+
+  <div class="grid2">
+    <div class="card"><h3>🤝 相似詞</h3><ul class="dots">
+      <li>清晰 ＝ 清楚</li><li>關注 ＝ 關心</li><li>幽默 ＝ 詼諧</li><li>探索 ＝ 探尋</li><li>凌晨 ＝ 黎明、破曉</li><li>機械 ＝ 機具、器械</li><li>燦爛奪目 ＝ 光彩耀眼</li></ul></div>
+    <div class="card"><h3>↔️ 相反詞</h3><ul class="dots">
+      <li>清晰 ↔ 模糊</li><li>冷靜 ↔ 衝動</li><li>荒涼 ↔ 繁華</li><li>寂靜 ↔ 喧鬧</li><li>脫離 ↔ 結合</li><li>降落 ↔ 升空</li><li>燦爛奪目 ↔ 黯淡無光</li></ul></div>
+  </div>
+
+  <h2 class="sec" style="font-size:1.5rem">🧩 字音字形小測驗</h2>
+  <div class="qset" id="q-words"></div>
+  <div class="next"><button data-go="m1">去做閱讀理解 ➜</button></div>
+</section>
+
+<!-- ============ 模組一 ============ -->
+<section class="panel" id="p-m1" hidden data-tc="var(--sky)">
+  <h2 class="sec"><span class="badge">模組一</span>閱讀理解</h2>
+  <div class="mascot-say"><svg><use href="#rocket"/></svg><div class="bubble">口訣：<b>答案一定在文章裡，不在腦袋裡！</b>每一題都先回課文找「證據句」，再選答案。本課的<b>時間詞</b>是排順序的好幫手喔！</div></div>
+  <div class="qset" id="q-m1"></div>
+  <div class="next"><button data-go="m2">下一關：成語 ➜</button></div>
+</section>
+
+<!-- ============ 模組二 ============ -->
+<section class="panel" id="p-m2" hidden data-tc="var(--orange)">
+  <h2 class="sec"><span class="badge">模組二</span>成語情境判斷</h2>
+  <div class="mascot-say"><svg><use href="#rocket"/></svg><div class="bubble">不只要知道意思，還要會用在<b>對的情境</b>。看完答案後，試著說出「為什麼不是別的選項」。</div></div>
+  <h3 style="margin-bottom:0">📒 課文裡的四字語詞</h3>
+  <div class="idioms" id="idioms"></div>
+  <h3 style="margin-bottom:0">🌟 延伸成語（生字變成語）</h3>
+  <div class="idioms" id="idioms2"></div>
+  <div class="qset" id="q-m2"></div>
+  <div class="next"><button data-go="m3">下一關：語病句型 ➜</button></div>
+</section>
+
+<!-- ============ 模組三 ============ -->
+<section class="panel" id="p-m3" hidden data-tc="var(--grape)">
+  <h2 class="sec"><span class="badge">模組三</span>語病句型結構</h2>
+  <div class="card">
+    <h3>🔗 本課三種複句（關聯詞要成對記）</h3>
+    <div class="tw" style="--tc:var(--grape)"><table>
+      <tr><th>句型</th><th>關係</th><th>課文原句</th></tr>
+      <tr><td><b>……卻……</b></td><td>轉折<br>（前後意思相反）</td><td>這是我的一小步，<b>卻</b>是人類的一大步。</td></tr>
+      <tr><td><b>……然而……</b></td><td>轉折<br>（前後意思相反）</td><td>阿姆斯壯加入一系列太空計畫。<b>然而</b>，要成為太空人並不容易。</td></tr>
+      <tr><td><b>必須……還要……</b></td><td>遞進<br>（後面比前面更進一層）</td><td>登月前，他<b>必須</b>進行不斷翻轉的無重力訓練……<b>還要</b>身穿沉重的太空衣走上幾個小時。</td></tr>
+    </table></div>
+    <p style="margin-top:12px">💡 <b>分辨小撇步</b>：轉折＝「本來以為 A，結果是 B（相反）」；遞進＝「做了 A 還不夠，還要做更難的 B」。</p>
+  </div>
+  <div class="card">
+    <h3>🩺 常見語病六大類</h3>
+    <div class="tw" style="--tc:var(--grape)"><table>
+      <tr><th>語病類型</th><th>怎麼看出來</th><th>例子 → 改法</th></tr>
+      <tr><td>語意重複</td><td>兩個詞意思一樣</td><td>第一個首先踏上月球 → 第一個踏上月球</td></tr>
+      <tr><td>關聯詞誤用</td><td>關聯詞配錯對</td><td>雖然……而且…… → 雖然……但是……</td></tr>
+      <tr><td>成分殘缺</td><td>找不到「誰」做這件事</td><td>經過訓練，使他成為太空人 → 經過訓練，他成為太空人</td></tr>
+      <tr><td>搭配不當</td><td>動詞和名詞不搭</td><td>穿上太空衣和頭盔 → 穿上太空衣、戴上頭盔</td></tr>
+      <tr><td>詞序錯誤</td><td>修飾語放錯位置</td><td>一枚腳印清晰的 → 一枚清晰的腳印</td></tr>
+      <tr><td>前後矛盾</td><td>前面說的和後面相反</td><td>月球表面很平坦，到處都是隕石坑 → 月球表面凹凸不平，到處都是隕石坑</td></tr>
+    </table></div>
+  </div>
+  <div class="qset" id="q-m3"></div>
+  <div class="next"><button data-go="m4">下一關：修辭 ➜</button></div>
+</section>
+
+<!-- ============ 模組四 ============ -->
+<section class="panel" id="p-m4" hidden data-tc="var(--mint)">
+  <h2 class="sec"><span class="badge">模組四</span>修辭：畫面＋情緒</h2>
+  <div class="card">
+    <h3>🎨 本課修辭大集合</h3>
+    <div class="tw" style="--tc:var(--mint)"><table>
+      <tr><th>修辭</th><th>課文例句</th><th>效果</th></tr>
+      <tr><td><b>引用（明引）</b></td><td>「這是我的一小步，卻是人類的一大步。」阿姆斯壯走出登月小艇……</td><td>開頭點出主題，增加真實感與說服力</td></tr>
+      <tr><td><b>譬喻（明喻）</b></td><td>一望無際的沙灰色<b>就像</b>沉睡中的巨人<br>地球<b>彷彿</b>黑絲絨上一顆滾圓的夜明珠<br>在月球上漫步，<b>像</b>袋鼠輕巧的跳躍</td><td>把看不到的畫面變具體</td></tr>
+      <tr><td><b>摹寫</b></td><td>倒數聲夾雜著震耳的響聲（聽覺）<br>火箭伴隨濃濃白煙，拖著火紅的尾巴（視覺）</td><td>讓讀者好像在現場</td></tr>
+      <tr><td><b>疊字</b></td><td>細細的、濃濃、大大小小、漸漸的、微微、緩緩</td><td>加強語氣，有節奏感</td></tr>
+      <tr><td><b>類疊（類字）</b></td><td><b>又</b>大<b>又</b>圓的月亮</td><td>強調月亮的大和圓</td></tr>
+      <tr><td><b>誇飾</b></td><td>身體像要炸裂一般</td><td>強調訓練的痛苦</td></tr>
+      <tr><td><b>映襯</b></td><td>熟悉卻又如此陌生</td><td>凸顯從太空看地球的新鮮與驚喜</td></tr>
+    </table></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>🏃 動態描寫</h3><p>寫東西<b>在動、在變化</b>，依時間順序寫。</p><p style="margin-top:6px">例：火箭伴隨濃濃白煙，拖著火紅的尾巴<mark>直衝雲霄</mark>。</p></div>
+    <div class="card"><h3>🖼️ 靜態描寫</h3><p>寫東西<b>靜止時</b>的顏色、大小、形狀、感覺。</p><p style="margin-top:6px">例：太空一片象灰與濃黑，<mark>寂靜而神祕</mark>。</p></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>📣 明引</h3><p><b>說出是誰說的</b>。</p><p style="margin-top:6px">例：愛因斯坦曾說：「……」</p></div>
+    <div class="card"><h3>🤫 暗引</h3><p><b>沒有說出處</b>，直接把句子放進文章裡。</p><p style="margin-top:6px">例：想把「夕陽無限好，只是近黃昏」的短暫記錄成永恆。</p></div>
+  </div>
+  <div class="card soft"><h3>🪜 修辭分析答題鷹架</h3>
+    <p>這句話用了【　　】修辭。<br>畫面：我看到了＿＿＿＿<br>情緒：這讓我感覺＿＿＿＿<br>作者想強調的是＿＿＿＿</p></div>
+  <div class="qset" id="q-m4"></div>
+  <div class="next"><button data-go="m5">下一關：寫作 ➜</button></div>
+</section>
+
+<!-- ============ 模組五 ============ -->
+<section class="panel" id="p-m5" hidden data-tc="var(--tomato)">
+  <h2 class="sec"><span class="badge">模組五</span>寫作整合</h2>
+  <div class="grid3">
+    <div class="card"><h4>① 加感覺（五感）</h4><p>✗ 火箭飛上天<br>✓ 震耳的響聲中，火箭拖著火紅的尾巴直衝雲霄</p></div>
+    <div class="card"><h4>② 加畫面（譬喻）</h4><p>✗ 地球很漂亮<br>✓ 地球彷彿黑絲絨上一顆滾圓的夜明珠</p></div>
+    <div class="card"><h4>③ 加心情轉折</h4><p>一開始……（立志）<br>後來……（遇到困難）<br>最後我發現……（領悟）</p></div>
+  </div>
+  <div class="qset" id="q-m5a"></div>
+
+  <h2 class="sec" style="font-size:1.5rem">📝 短文挑戰：「我的夢想」</h2>
+  <div class="card">
+    <h3>寫作步驟（用引用法開頭）</h3>
+    <div class="tw" style="--tc:var(--tomato)"><table>
+      <tr><th>段落</th><th>要寫什麼</th><th>可以用的句子</th></tr>
+      <tr><td>開頭</td><td>用<b>引用法</b>帶出主題</td><td>○○曾說：「……」這句話讓我……</td></tr>
+      <tr><td>中間①</td><td>夢想是什麼？為什麼有這個夢想？</td><td>我的夢想是……，因為有一次……</td></tr>
+      <tr><td>中間②</td><td>為了夢想要怎麼努力</td><td>要實現夢想，我必須……，還要……</td></tr>
+      <tr><td>結尾</td><td>心情、期許（可以呼應開頭）</td><td>雖然……，卻……／我相信總有一天……</td></tr>
+    </table></div>
+    <p style="margin-top:10px">💡 好用的名言：「有志者，事竟成。」、「千里之行，始於足下。」、「這是我的一小步，卻是人類的一大步。」（阿姆斯壯）</p>
+  </div>
+  <div class="essay">
+    <h4>範文：我的夢想</h4>
+    <p>阿姆斯壯曾說：「這是我的一小步，卻是人類的一大步。」<span class="note">引用法開頭</span>每一個偉大的成就，都是從一小步開始的。而我的第一步，就是走進那片藍色的大海。</p>
+    <p>我的夢想是成為一位海洋生物學家。三年級時，我第一次到海生館，巨大的鯨鯊在玻璃後面緩緩游過，彷彿一艘安靜的潛水艇。<span class="note">譬喻＋動態描寫</span>從那天起，我一頭栽進海洋的世界，讀遍圖書館裡的海洋圖鑑。</p>
+    <p>然而，要成為海洋生物學家並不容易。<span class="note">本課句型</span>我必須把自然科學好，還要練習游泳和潛水，學會在大海中保護自己。有時候背不起來的魚類名稱讓我頭昏腦脹，但只要想起鯨鯊游過的畫面，我又充滿了力量。</p>
+    <p>雖然現在我只是個小學生，卻已經踏出了屬於我的一小步。<span class="note">首尾呼應</span>我相信，總有一天我能如願以償，在無垠的大海中，寫下屬於自己的一頁。</p>
+  </div>
+  <div class="card oq" style="--tc:var(--tomato)">
+    <h3>換你寫寫看（150～250 字）</h3>
+    <label for="essay-box" style="color:var(--ink2);font-size:.95rem">題目：我的夢想（寫在這裡會自動暫存在這台裝置）</label>
+    <textarea id="essay-box" style="min-height:220px" placeholder="○○曾說：「……」"></textarea>
+    <div class="mtext" id="essay-count">0 字</div>
+  </div>
+  <div class="card">
+    <h3>✅ 寫完自我檢查</h3>
+    <div class="check" id="checklist"></div>
+  </div>
+  <div class="card">
+    <h3>📊 評分標準（老師／家長用）</h3>
+    <div class="tw" style="--tc:var(--tomato)"><table>
+      <tr><th>向度</th><th>3 分（優）</th><th>2 分（良）</th><th>1 分（加油）</th></tr>
+      <tr><td>內容</td><td>夢想具體，有原因、有努力的方法與感受</td><td>內容完整但平淡</td><td>內容空洞或偏題</td></tr>
+      <tr><td>結構</td><td>引用法開頭，起承轉合清楚，首尾呼應</td><td>結構尚可</td><td>缺乏組織</td></tr>
+      <tr><td>語言</td><td>用詞精準，有修辭與本課句型</td><td>通順但平淡</td><td>語病多、句型重複</td></tr>
+      <tr><td>書寫</td><td>標點正確，字跡清楚</td><td>大致正確</td><td>錯字、標點錯誤多</td></tr>
+    </table></div>
+  </div>
+  <div class="next"><button data-go="wrong">看我的錯題本 ➜</button></div>
+</section>
+
+<!-- ============ 錯題本 ============ -->
+<section class="panel" id="p-wrong" hidden data-tc="var(--bad)">
+  <h2 class="sec">📕 錯題本</h2>
+  <p class="lead">答錯的選擇題會收在這裡。重新答對後，就會自動移出錯題本。</p>
+  <div class="qset" id="q-wrong"></div>
+</section>
+</main>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const STORE='moon-lesson6-v1';
+let S={ans:{},open:{},chk:{},essay:'',tab:'home'};
+try{const raw=localStorage.getItem(STORE);if(raw)S=Object.assign(S,JSON.parse(raw));}catch(e){}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(S));}catch(e){}}
+
+/* ---------------- tabs ---------------- */
+const TABS=[
+ ['home','🏠','重點速覽','var(--grape)'],['text','📖','課文精讀','var(--sky)'],['words','🔤','字詞寶庫','var(--mint)'],
+ ['m1','🔍','閱讀理解','var(--sky)'],['m2','🧠','成語情境','var(--orange)'],['m3','🔧','語病句型','var(--grape)'],
+ ['m4','🎨','修辭','var(--mint)'],['m5','✏️','寫作','var(--tomato)'],['wrong','📕','錯題本','var(--bad)']];
+const tabsEl=$('#tabs');
+tabsEl.innerHTML=TABS.map(t=>`<button class="tab" data-t="${t[0]}" style="--tc:${t[3]}"><span class="ic">${t[1]}</span>${t[2]}</button>`).join('');
+function go(t){
+  TABS.forEach(x=>{const p=$('#p-'+x[0]);p.hidden=x[0]!==t;});
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
+  const p=$('#p-'+t);p.style.setProperty('--tc',p.dataset.tc);
+  S.tab=t;save();
+  if(t==='wrong')renderWrong();
+  const b=tabsEl.querySelector(`[data-t="${t}"]`);if(b)b.scrollIntoView({inline:'center',block:'nearest'});
+  window.scrollTo({top:0});
+}
+tabsEl.addEventListener('click',e=>{const b=e.target.closest('.tab');if(b)go(b.dataset.t);});
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+
+/* ---------------- timeline ---------------- */
+const TL=[
+ ['✈️','var(--sky)','西元1936年（6歲）','初次搭上飛機，從此對飛行著迷不已','二'],
+ ['🎂','var(--sky)','16歲生日當天','如願以償，獲得學生飛行員執照','二'],
+ ['👨‍🚀','var(--grape)','西元1965年','加入一系列太空計畫，接受嚴苛訓練','三'],
+ ['🚀','var(--orange)','1969年7月16日 下午1:32','火箭發射升空，一百多小時後駕駛小艇降落月球','四'],
+ ['🌕','var(--tomato)','7月21日 凌晨2:56','第一個踏上月球，望見藍綠色的地球','五・一'],
+ ['🧪','var(--mint)','兩個半小時後','採集樣本、拍照、安置設備，返回小艇','六'],
+ ['🌊','var(--mint)','7月24日','指揮艙衝入大氣層，降落在太平洋上','六'],
+ ['🎓','var(--sun)','回地球之後','投入太空工程與教學，鼓勵後人探索宇宙','七']];
+$('#timeline').innerHTML=TL.map(x=>`<div class="st" style="--c:${x[1]}"><div class="dot">${x[0]}</div><div><div class="when">${x[2]}<span class="pp">第${x[4]}段</span></div><div class="what">${x[3]}</div></div></div>`).join('');
+
+/* ---------------- secrets ---------------- */
+const SECRETS=[
+ {em:'👣',c:'var(--tomato)',q:'明明只是一小步，為什麼說是「人類的一大步」？',a:`<div class="wow">任務解密！</div><div class="layers"><div style="background:var(--tomato-lt)">👤 對阿姆斯壯：只是<b>左腳踩下的一步</b></div><div style="background:var(--sun-lt)">🌏 對全人類：第一次<b>正式登上月球</b></div><div style="background:var(--sky-lt)">🔭 象徵人類<b>探索太空</b>踏出的一大步</div></div>➜ 這句用了「<mark>……卻……</mark>」轉折句，「小」和「大」對比，讓意義更強烈。`},
+ {em:'🦘',c:'var(--orange)',q:'太空人在月球上，為什麼會像袋鼠一樣跳著走？',a:`<div class="wow">任務解密！</div><div class="layers"><div style="background:var(--orange-lt)">🌕 月球的重力只有地球的<b>約六分之一</b></div><div style="background:var(--sun-lt)">🎈 身體變得<b>輕飄飄</b>的</div><div style="background:var(--mint-lt)">🦘 用跳的比走路更<b>容易、省力</b></div></div>➜ 課文用<mark>譬喻（像袋鼠輕巧的跳躍）</mark>，讓我們一看就懂。`},
+ {em:'🌍',c:'var(--sky)',q:'地球是阿姆斯壯的家鄉，為什麼會覺得「熟悉卻又如此陌生」？',a:`<div class="wow">任務解密！</div><div class="layers"><div style="background:var(--sky-lt)">🏠 熟悉：那是他<b>從小生活的家鄉</b></div><div style="background:var(--grape-lt)">✨ 陌生：第一次<b>從外太空</b>看地球，從沒看過這樣的景色</div></div>➜ 「熟悉」和「陌生」放在一起是<mark>映襯</mark>，凸顯他的<b>新鮮與驚喜</b>，所以才驚呼：「它是如此美麗！」`}];
+$('#secrets').innerHTML=SECRETS.map((s,i)=>`<div class="secret" style="--sc:${s.c}"><div class="q"><div class="em">${s.em}</div><h4>${s.q}</h4></div><button class="open" data-s="${i}">🔓 打開祕密箱</button><div class="a" id="sa${i}" hidden>${s.a}</div></div>`).join('');
+$('#secrets').addEventListener('click',e=>{const b=e.target.closest('.open');if(!b)return;const a=$('#sa'+b.dataset.s);a.hidden=!a.hidden;if(!a.hidden)a.classList.add('pop');b.textContent=a.hidden?'🔓 打開祕密箱':'🙈 關起來再想一次';});
+
+/* ---------------- lesson text ---------------- */
+const R=(t,tag)=>`<span class="rh">${t}</span><span class="rt">${tag}</span>`;
+const L=(tag)=>`<span class="lk">${tag}</span>`;
+const LESSON=[
+ {n:'一',t:`${R('「這是我的一小步，卻是人類的一大步。」','引用・明引')}${L('轉折…卻…')}阿姆斯壯走出<mark>登月小艇</mark>，左腳踩在${R('細細的','疊字')}沙土上頭，留下一枚清晰的腳印。他緩慢冷靜的聲音<mark>劃破</mark><mark>荒涼</mark>寂靜，在<mark>無垠</mark>的<mark>宇宙</mark>，翻開<mark>不朽</mark>的一頁。`,k:'<b>事蹟（倒敘＋引用法開頭）</b>：阿姆斯壯登上月球，為人類翻開不朽的一頁。',extra:'📎 倒敘小提醒：這一段寫的是「踏上月球」的那一刻。如果依時間順序，它應該排在<b>第五段</b>的後面。'},
+ {n:'二',t:`西元一九三六年，六歲的阿姆斯壯初次搭上飛機，從此，對飛行<mark>著迷不已</mark>。他<mark>一頭栽進</mark>飛機模型的製作，閱讀飛行<mark>雜誌</mark>，鑽研航空學問，<mark>立志當飛行員</mark>。他在十六歲生日當天<mark>如願以償</mark>，獲得學生飛行員執照。此後，阿姆斯壯參與各種飛行測試，很快的，<mark>眼前的天空已經無法滿足他</mark>。`,k:'<b>志向一：飛行員</b>。六歲愛上飛行→十六歲拿到學生飛行員執照。「眼前的天空無法滿足他」暗示他有了更遠大的目標。'},
+ {n:'三',t:`${R('「我要成為第一個站在月球上的太空人。」','引用')}西元一九六五年，阿姆斯壯加入<mark>一系列</mark>太空計畫。然而，${L('轉折…然而…')}要成為太空人並不容易。登月前，他必須${L('遞進 必須…還要…')}進行不斷翻轉的<mark>無重力訓練</mark>、火箭發射和衝進大氣層的<mark>衝擊訓練</mark>，適應種種令人難耐的<mark>機械</mark>聲，還要身穿沉重的太空衣走上幾個小時。因此，手腳<mark>動彈不得</mark>，眼睛張不開，${R('身體像要炸裂一般','誇飾')}，都成了<mark>家常便飯</mark>。`,k:'<b>志向二：太空人</b>。加入太空計畫，接受嚴苛的訓練，身體的不舒服都成了常有的事。'},
+ {n:'四',t:`西元一九六九年七月十六日下午一時三十二分，${R('倒數聲夾雜著震耳的響聲','摹寫・聽覺')}，「３、２、１、０」${R('火箭伴隨濃濃白煙，拖著火紅的尾巴直衝雲霄','摹寫・視覺／動態')}。阿姆斯壯和兩位搭檔飛出地球，穿越太空，一百多小時後，${R('又大又圓','類字')}的月亮近在眼前。登月的時刻到了，阿姆斯壯和<mark>其中一位搭檔</mark>脫離<mark>指揮艙</mark>，<mark>駕駛</mark>小艇，成功降落在月球上。`,k:'<b>登月行動①</b>：火箭發射升空，駕駛小艇成功降落月球。（另一位搭檔留在指揮艙繞月飛行）'},
+ {n:'五',t:`七月二十一日<mark>凌晨</mark>二時五十六分，阿姆斯壯第一個踏上月球，眼前盡是大大小小的<mark>隕石坑</mark>，${R('一望無際的沙灰色就像沉睡中的巨人','譬喻・明喻')}。<mark>極目遠眺</mark>，${R('太空一片象灰與濃黑，寂靜而神祕','靜態描寫')}。漸漸的，微微光彩閃動，太空中緩緩升起一輪藍綠的星球，圓滿豐潤，${R('彷彿黑絲絨上一顆滾圓的夜明珠','譬喻・明喻')}，<mark>燦爛奪目</mark>。阿姆斯壯抬頭望著眼前的家鄉，${R('熟悉卻又如此陌生','映襯')}，內心暗自驚呼：「它是如此美麗！」`,k:'<b>登月行動②</b>：踏上月球，看見凹凸不平的月面，並望見家鄉——地球（藍綠的星球＝地球）。'},
+ {n:'六',t:`兩位太空人在月球上漫步，${R('像袋鼠輕巧的跳躍','譬喻・明喻')}，忙著<mark>採集月球表面的樣本、拍照，安置研究設備</mark>。兩個半小時後，他們完成工作，返回小艇休息，準備回航。七月二十四日，指揮艙衝入大氣層，降落在<mark>太平洋</mark>上。這<mark>四十萬人參與</mark>的任務，<mark>六億人關注</mark>的壯舉，人類首次<mark>遠征</mark>月球的旅程結束了。`,k:'<b>登月行動③</b>：在月球上完成工作，回航降落在太平洋，結束人類征月的壯舉。'},
+ {n:'七',t:`回地球之後，阿姆斯壯全心全力投入<mark>太空工程與教學</mark>。他用<mark>輕描淡寫</mark>的幽默話語，鼓勵後人繼續探索宇宙：${R('「有一天，人類會飛回月球，撿起我掉下的攝影機，順便把我的腳印擦掉。」','引用・明引')}`,k:'<b>貢獻</b>：投入太空工程與教學，用幽默的話鼓勵後人繼續探索宇宙。「腳印」和第一段呼應（首尾呼應）。'}];
+$('#lesson').innerHTML=LESSON.map(p=>`<div class="para"><div class="pn">${p.n}</div><div class="ptext">${p.t}<div class="pkey"><b>段落重點</b>　${p.k}</div>${p.extra?`<div class="pkey" style="background:var(--sun-lt)">${p.extra}</div>`:''}</div></div>`).join('');
+
+/* ---------------- words ---------------- */
+const CHARS=[['宇','宀','6','宇宙',1],['宙','宀','8','宇宙觀',1],['朽','木','6','不朽'],['垠','土','9','無垠'],['荒','艸','10','荒涼'],['劃','刀','14','劃破',1],['艇','舟','13','小艇'],['誌','言','14','雜誌'],['系','糸','7','一系列',1],['械','木','11','機械'],['訓','言','10','訓練'],['奪','大','14','燦爛奪目',1],['眺','目','11','極目遠眺'],['隕','阜','13','隕石坑'],['凌','冫','10','凌晨',1],['駕','馬','15','駕駛'],['艙','舟','16','指揮艙'],['征','彳','8','遠征'],['億','人','15','六億']];
+$('#chars').innerHTML=CHARS.map(c=>`<div class="ch"><div class="z${c[4]?' trap':''}">${c[0]}</div><div class="info"><b>${c[3]}</b><br>部首：${c[1]}${c[4]?' ⚠️':''}<br>總筆畫：${c[2]}</div></div>`).join('');
+const LOOK=[['垠／根／銀','無垠、一望無垠','根基／銀河'],['宇／守／朽／巧','宇宙、廟宇、不朽','守護／巧思'],['艇／挺／蜓／霆','汽艇、潛艇','挺拔／蜻蜓／雷霆'],['眺／跳／挑／逃','眺望、極目遠眺','跳高／挑選／逃走'],['奪／奮','爭奪、燦爛奪目','奮發、勤奮'],['駕／架','駕駛、駕照','木架、書架'],['凌／陵','凌晨、凌空','陵墓、丘陵'],['億／憶','億萬','記憶、回憶'],['征／症','遠征、征服','絕症、症狀'],['隕／損','隕石、隕落','損壞、損失'],['誌／志','雜誌、標誌','志向、立志'],['系／係','一系列、系統','關係']];
+$('#lookalike').innerHTML='<tr><th>字組</th><th>本課字詞</th><th>其他字詞</th></tr>'+LOOK.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');
+const VOCAB=[['不朽','不會磨滅，比喻永存'],['宇宙','時間與空間的總稱，即天地'],['荒涼','空曠冷清的樣子'],['無垠','遙遠而沒有邊際'],['劃破','瞬間改變原來的樣子或景象'],['登月小艇','一種載送太空人登陸月球表面的飛行工具'],['著迷不已','非常喜愛、被深深吸引'],['雜誌','含有多類文章，定期出版的刊物'],['如願以償','心願得以實現'],['訓練','經由有計畫、步驟的指導與實地練習，使人具有某種技能'],['一系列','有組織、有系統或有關聯的一連串事物'],['機械','泛指各種機具、器械'],['動彈不得','無法活動、難以更動'],['家常便飯','比喻很常見或很普通的事情'],['指揮艙','太空船上指揮船務、處理事務的空間'],['駕駛','操控車、船、飛機等交通工具'],['凌晨','清晨、黎明'],['隕石坑','隕石撞擊星球表面形成的凹坑'],['極目遠眺','窮盡眼力眺望遠處'],['燦爛奪目','形容光彩美麗，十分耀眼'],['遠征','遠行到某個地方'],['輕描淡寫','說話或寫文章時，把重要的事輕輕帶過']];
+$('#vocab').innerHTML='<tr><th>語詞</th><th>意思</th></tr>'+VOCAB.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td></tr>`).join('');
+
+/* ---------------- idiom cards ---------------- */
+const IDM=[
+ ['如願以償','心願得以實現。','他在十六歲生日當天如願以償，獲得學生飛行員執照。','要「努力很久終於成功」才用，不能用在本來就很簡單的事。'],
+ ['家常便飯','比喻很常見、很普通的事。','手腳動彈不得……都成了家常便飯。','重點是「常常發生」，不是「做得很熟練」（那是駕輕就熟）。'],
+ ['動彈不得','無法活動、難以更動。','被困在車陣中，動彈不得。','可用在人，也可用在車子、物品。'],
+ ['極目遠眺','窮盡眼力眺望遠處。','登上象山極目遠眺，市區美景一覽無遺。','一定要「往遠處看」，看近的東西不能用。'],
+ ['燦爛奪目','形容光彩美麗，十分耀眼。','地球彷彿黑絲絨上的夜明珠，燦爛奪目。','形容「光彩」，不能形容聲音或味道。'],
+ ['輕描淡寫','把重要或嚴重的事輕輕帶過。','他用輕描淡寫的幽默話語，鼓勵後人。','明明是大事，卻說得很輕鬆。'],
+ ['一頭栽進','全心投入某件事。','他一頭栽進飛機模型的製作。','表示非常投入、著迷。'],
+ ['直衝雲霄','一直衝上高空。','火箭拖著火紅的尾巴直衝雲霄。','可形容火箭、飛鳥，也可形容氣勢很高。']];
+const IDM2=[
+ ['永垂不朽','永遠流傳而不可磨滅。（朽）','警方捨身救出人質，他的義行將永垂不朽。',''],
+ ['駕輕就熟','對事情很熟悉，做起來很輕鬆。（駕）','阿庭經驗豐富，很快便駕輕就熟。','近：得心應手'],
+ ['盛氣凌人','用傲慢的氣勢壓迫別人。（凌）','他總是一副盛氣凌人的模樣，令人討厭。','反：平易近人'],
+ ['巧奪天工','人工做的卻勝過天然，技藝巧妙。（奪）','這幅畫栩栩如生，巧奪天工。','近：出神入化'],
+ ['荒謬絕倫','荒唐、錯誤到了極點。（荒）','這個說法荒謬絕倫，根本不合理。','近：荒誕不經']];
+const idmHTML=a=>a.map(x=>`<div class="idm"><div class="nm">${x[0]}</div><div class="mean">${x[1]}</div><div class="ex">例：${x[2]}</div>${x[3]?`<div class="warn">💡 ${x[3]}</div>`:''}</div>`).join('');
+$('#idioms').innerHTML=idmHTML(IDM);$('#idioms2').innerHTML=idmHTML(IDM2);
+
+/* ---------------- question banks ---------------- */
+const Q={};
+Q.words=[
+ {id:'w1',q:'「聲音劃破荒涼寂靜」的「劃」，讀音是？',o:['ㄏㄨㄚˋ','ㄏㄨㄚˊ','ㄏㄨㄚ','ㄏㄨㄛˋ'],a:1,w:'「劃破、劃火柴」念 ㄏㄨㄚˊ；「劃分、計劃」才念 ㄏㄨㄚˋ。'},
+ {id:'w2',q:'草原一望無（　），遠方的地平線和天空連在一起。',o:['根','銀','垠','很'],a:2,w:'「無垠」是沒有邊際，土地的邊界所以是「土」部的垠。'},
+ {id:'w3',q:'遊客搭乘觀光潛（　），在船（　）內欣賞海底生物。',o:['挺／倉','艇／艙','艇／倉','蜓／艙'],a:1,w:'和船有關的字多是「舟」部：潛艇、船艙。'},
+ {id:'w4',q:'站在山頂（　）望遠方，整座城市盡收眼底。',o:['跳','挑','逃','眺'],a:3,w:'用眼睛看遠方，是「目」部的眺。'},
+ {id:'w5',q:'下列字和部首的配對，哪一組正確？',o:['奪：寸部','凌：冫部','劃：田部','宇：于部'],a:1,w:'奪是「大」部、劃是「刀」部、宇是「宀」部，只有「凌：冫部」正確。'},
+ {id:'w6',q:'下列「　」中的字，哪一個去掉部首後讀音不變？',o:['宇「宙」','百「億」','「駕」照','刀「械」'],a:1,w:'億（ㄧˋ）去掉人部是「意」（ㄧˋ），讀音一樣。其他：宙→由、駕→加、械→戒，讀音都變了。'},
+ {id:'w7',q:'「據說有一顆（　）石墜落在地球某個（　）涼的角落。」',o:['損／慌','隕／荒','隕／慌','損／荒'],a:1,w:'從天上掉下來的石頭是「阜」部的隕；「荒涼」是草木稀少，用「艸」部的荒。'},
+ {id:'w8',q:'這件木雕作品栩栩如生，真是巧（　）天工。',o:['奮','奪','套','奇'],a:1,w:'「巧奪天工」的奪是勝過的意思。奮是奮發。'},
+ {id:'w9',q:'畫家的這一（　）列作品，成為不（　）的經典。',o:['係／朽','系／朽','系／巧','係／巧'],a:1,w:'「一系列」用糸部的系；「不朽」是木頭不腐壞，用木部的朽。'},
+ {id:'w10',q:'閃電（　）破天際，狂風暴雨（　）虐大地。',o:['划／凌','劃／陵','劃／凌','划／陵'],a:2,w:'劃破用刀部的「劃」；凌虐、盛氣凌人用冫部的「凌」，「陵」是陵墓、丘陵。'}];
+
+Q.m1=[
+ {lvl:'第一層｜表層理解',sub:'答案可以直接在文中找到'},
+ {id:'r1',q:'阿姆斯壯第一次搭飛機是幾歲？',o:['六歲','十歲','十六歲','二十歲'],a:0,w:'六歲第一次搭飛機；十六歲是拿到學生飛行員執照，不要搞混。',ev:'第二段：「西元一九三六年，六歲的阿姆斯壯初次搭上飛機」'},
+ {id:'r2',q:'阿姆斯壯在什麼時候獲得學生飛行員執照？',o:['六歲時','十六歲生日當天','加入太空計畫那年','登上月球之後'],a:1,w:'課文寫得很清楚，「如願以償」表示他的心願實現了。',ev:'第二段：「他在十六歲生日當天如願以償，獲得學生飛行員執照。」'},
+ {id:'r3',q:'下列哪一項「不是」阿姆斯壯登月前接受的訓練？',o:['不斷翻轉的無重力訓練','火箭發射和衝進大氣層的衝擊訓練','身穿沉重的太空衣走上幾個小時','在航行全程不吃不喝的訓練'],a:3,w:'課文沒有提到「不吃不喝」。看到「不是」要先圈起來！',ev:'第三段：「必須進行不斷翻轉的無重力訓練、火箭發射和衝進大氣層的衝擊訓練，適應種種令人難耐的機械聲，還要身穿沉重的太空衣走上幾個小時。」'},
+ {id:'r4',q:'阿姆斯壯踏上月球時，看到的月球表面是什麼樣子？',o:['十分平坦，一望無際','盡是大大小小的隕石坑，一片沙灰色','長滿藍綠色的植物','到處都是高山和河流'],a:1,w:'常見陷阱：月球表面「不平坦」！一望無際形容的是沙灰色的範圍很廣。',ev:'第五段：「眼前盡是大大小小的隕石坑，一望無際的沙灰色就像沉睡中的巨人。」'},
+ {id:'r5',q:'兩位太空人在月球上忙著做哪些事？',o:['種植物、蓋房子','採集樣本、拍照、安置研究設備','尋找外星人、插上國旗','修理火箭、補充燃料'],a:1,w:'課文列出三件工作。',ev:'第六段：「忙著採集月球表面的樣本、拍照，安置研究設備。」'},
+ {id:'r6',q:'這次登月任務最後降落在哪裡？',o:['大西洋','月球背面','太平洋','美國的沙漠'],a:2,w:'指揮艙衝入大氣層後降落在海上。',ev:'第六段：「七月二十四日，指揮艙衝入大氣層，降落在太平洋上。」'},
+ {lvl:'第二層｜推論理解',sub:'要把兩句以上的資訊連起來想'},
+ {id:'r7',q:'「很快的，眼前的天空已經無法滿足他。」這句話的意思是？',o:['他不喜歡飛行了','他想要飛得更遠，有了到太空的新目標','天空的顏色變得不好看','他的飛機故障了'],a:1,w:'「眼前的天空」指地球上空。下一段他就說要「成為第一個站在月球上的太空人」，所以這句話是在鋪陳新目標。',ev:'第三段：「我要成為第一個站在月球上的太空人。」'},
+ {id:'r8',q:'為什麼「手腳動彈不得，眼睛張不開，身體像要炸裂一般」會成了「家常便飯」？',o:['因為阿姆斯壯常常生病','因為訓練非常嚴苛，這些不舒服是常常發生的事','因為太空衣尺寸不合','因為他每天吃太多飯'],a:1,w:'「家常便飯」比喻很常見的事。前文列出各種嚴苛訓練，所以「因此」這些痛苦變得很平常。',ev:'第三段：「要成為太空人並不容易……因此，手腳動彈不得……都成了家常便飯。」'},
+ {id:'r9',q:'阿姆斯壯在月球上看到「太空中緩緩升起一輪藍綠的星球」，這顆星球是？',o:['太陽','火星','地球','另一顆月亮'],a:2,w:'後一句說「抬頭望著眼前的家鄉」，家鄉就是地球。',ev:'第五段：「阿姆斯壯抬頭望著眼前的家鄉，熟悉卻又如此陌生」'},
+ {id:'r10',q:'阿姆斯壯為什麼覺得家鄉「熟悉卻又如此陌生」？',o:['他離開地球太久，忘記家鄉的樣子','地球是他的家鄉，但他第一次從外太空看見地球','地球的顏色突然改變了','他看錯了，那不是地球'],a:1,w:'熟悉，因為是家鄉；陌生，因為從來沒有從太空看過地球。',ev:'第五段：「熟悉卻又如此陌生，內心暗自驚呼：『它是如此美麗！』」'},
+ {id:'r11',q:'阿姆斯壯說「有一天，人類會飛回月球，撿起我掉下的攝影機，順便把我的腳印擦掉。」主要用意是？',o:['他很擔心攝影機不見','他不喜歡自己的腳印留在月球上','用幽默的話鼓勵後人繼續探索宇宙','他想再回月球一次'],a:2,w:'課文前一句已經說明：「用輕描淡寫的幽默話語，鼓勵後人繼續探索宇宙」。',ev:'第七段：「他用輕描淡寫的幽默話語，鼓勵後人繼續探索宇宙」'},
+ {id:'r12',q:'第一段使用「倒敘法」。如果依照時間順序重新排列，第一段應該放在哪一段的後面？',o:['第二段','第三段','第四段','第五段'],a:3,w:'第一段寫「走出登月小艇，左腳踩在沙土上」，就是第五段「第一個踏上月球」的那一刻。'},
+ {id:'r13',q:'下列事件依照發生先後排列，哪一個正確？<br>甲、加入太空計畫　乙、獲得學生飛行員執照　丙、降落在太平洋　丁、駕駛小艇降落月球',o:['乙→甲→丁→丙','甲→乙→丁→丙','乙→甲→丙→丁','甲→丁→乙→丙'],a:0,w:'用時間詞找順序：十六歲（乙）→1965年（甲）→1969年7月16日發射後降落月球（丁）→7月24日（丙）。'},
+ {lvl:'第三層｜評鑑理解',sub:'判斷文體、寫法、主旨'},
+ {id:'r14',q:'關於本課的敘寫方式，下列何者「錯誤」？',o:['開頭使用「引用法」','使用第三人稱敘寫','依時間順序寫，沒有倒敘','屬於記敘文中的傳記'],a:2,w:'第一段先寫踏上月球，是倒敘法，所以 (C) 錯誤。'},
+ {id:'r15',q:'作者在第一段和最後一段都引用了阿姆斯壯說的話，這樣安排的作用是？',o:['讓文章字數變多','增加真實感與說服力，而且首尾呼應','表示作者就是阿姆斯壯','證明阿姆斯壯很愛說話'],a:1,w:'引用本人的話，讓讀者覺得真實；第一段和最後一段都提到「腳印」，形成首尾呼應。'},
+ {id:'r16',q:'「這四十萬人參與的任務，六億人關注的壯舉」，這句話想說明什麼？',o:['登月只靠阿姆斯壯一個人完成','登月是集合許多人的力量完成，受到全世界關注的重大事件','有四十萬人一起去了月球','六億人都反對登月'],a:1,w:'用數字說明參與的人多、關注的人更多，凸顯任務的偉大。',ev:'第六段：「這四十萬人參與的任務，六億人關注的壯舉」'},
+ {id:'r17',q:'下列哪一個標題，最能代替「登月先鋒」，說出本課內容？',o:['月球的地形介紹','太空衣的製作方法','從飛行少年到登月英雄','火箭為什麼會飛'],a:2,w:'本課寫的是阿姆斯壯從小立志、一路努力到登月的過程，是人物傳記。'},
+ {id:'r18',q:'作者想藉由阿姆斯壯的事蹟告訴我們什麼？',o:['長大後一定要當太空人','追尋夢想、實踐自我','月球比地球美麗','訓練太辛苦就應該放棄'],a:1,w:'這是本課主旨：透過阿姆斯壯的事蹟，鼓勵我們追尋夢想、實踐自我。'},
+ {t:'open',id:'o1',q:'根據課文，要成為太空人需要具備哪些條件？請從文中找出至少三點。',h:'提示：回去看第二、三段。他喜歡什麼？做了什麼準備？要忍受什麼？',ans:'①對飛行有熱愛（從小著迷不已）；②要有飛行經驗與專業知識（鑽研航空學問、取得執照、參與飛行測試）；③參加太空計畫，接受嚴苛的訓練；④能忍受身體的各種不適，例如手腳動彈不得、眼睛張不開。（答案僅供參考）'},
+ {t:'open',id:'o2',q:'你認為阿姆斯壯登上月球是偉大的壯舉嗎？請說出你的看法和理由。',h:'可以用：我認為……，因為……，而且……',ans:'我認為是偉大的壯舉。因為他是第一位踏上月球的太空人，為人類翻開不朽的一頁；而且這個任務需要四十萬人參與、六億人關注，代表人類探索宇宙的一大步。（答案僅供參考）'}];
+
+Q.m2=[
+ {lvl:'題型 A｜情境選擇',sub:'讀情境，選最適合的成語'},
+ {id:'i1',ctx:'小月從小夢想成為舞者，經過多年刻苦練習，終於考進國家舞團。',q:'最適合用哪個語詞形容？',o:['同甘共苦','如願以償','遠近馳名','別出心裁'],a:1,w:'努力很久，心願終於實現，用「如願以償」。'},
+ {id:'i2',ctx:'對急診室的護理師來說，半夜被叫醒、連續工作十幾個小時，早就是＿＿＿＿了。',q:'空格最適合填入？',o:['如願以償','燦爛奪目','家常便飯','極目遠眺'],a:2,w:'「常常發生、很普通的事」用「家常便飯」。'},
+ {id:'i3',ctx:'下班尖峰時間，爸爸的車子被困在大塞車中，前後都是車，＿＿＿＿。',q:'空格最適合填入？',o:['動彈不得','直衝雲霄','輕描淡寫','一頭栽進'],a:0,w:'車子完全不能移動，用「動彈不得」。'},
+ {id:'i4',ctx:'我們爬上玉山主峰，＿＿＿＿，層層山巒和雲海都在腳下。',q:'空格最適合填入？',o:['一頭栽進','極目遠眺','動彈不得','家常便飯'],a:1,w:'站在高處盡力往遠方看，用「極目遠眺」。'},
+ {id:'i5',ctx:'跨年夜，一朵朵煙火在夜空中綻放，五彩繽紛，令人驚嘆不已。',q:'最適合用哪個成語形容煙火？',o:['燦爛奪目','荒謬絕倫','盛氣凌人','動彈不得'],a:0,w:'形容光彩美麗耀眼，用「燦爛奪目」。'},
+ {id:'i6',ctx:'消防員救出受困的小孩，自己的手臂也燙傷了，記者訪問他時，他只笑著說：「小傷而已，沒什麼。」',q:'他回答的態度可以說是？',o:['盛氣凌人','如願以償','輕描淡寫','巧奪天工'],a:2,w:'把受傷這樣嚴重的事輕輕帶過，就是「輕描淡寫」。'},
+ {id:'i7',ctx:'王阿姨做了二十年的麵包，揉麵團、整形、烘烤，每個步驟都做得又快又輕鬆。',q:'最適合用哪個成語形容王阿姨？',o:['家常便飯','駕輕就熟','動彈不得','荒謬絕倫'],a:1,w:'「對事情很熟悉，做起來很輕鬆」是駕輕就熟。家常便飯只表示「常常發生」，沒有「做得很熟練」的意思。'},
+ {id:'i8',ctx:'學長仗著自己是隊長，常常對學弟妹大呼小叫，態度十分傲慢。',q:'最適合用哪個成語形容學長？',o:['平易近人','盛氣凌人','永垂不朽','燦爛奪目'],a:1,w:'用傲慢的氣勢壓迫別人，是「盛氣凌人」；平易近人是相反詞。'},
+ {id:'i9',ctx:'故宮的「翠玉白菜」用玉石雕成，菜葉上的紋路和小蟲都栩栩如生，好像真的一樣。',q:'最適合用哪個成語形容這件作品？',o:['巧奪天工','荒謬絕倫','家常便飯','輕描淡寫'],a:0,w:'人工做的卻比天然的還精巧，是「巧奪天工」。'},
+ {id:'i10',ctx:'有人說「只要多喝珍珠奶茶就能長高一百公分」，這種說法完全沒有根據。',q:'這種說法可以說是？',o:['永垂不朽','駕輕就熟','荒謬絕倫','如願以償'],a:2,w:'荒唐、錯誤到了極點，是「荒謬絕倫」。'},
+ {id:'i11',ctx:'為了救人而犧牲生命的英雄，他們的精神將永遠被人們記住。',q:'最適合用哪個成語？',o:['永垂不朽','燦爛奪目','盛氣凌人','動彈不得'],a:0,w:'永遠流傳、不會被磨滅，是「永垂不朽」。'},
+ {lvl:'題型 B｜短文填空',sub:'先讀整段，再判斷'},
+ {id:'i12',ctx:'阿姆斯壯從小對飛行著迷，十六歲那年①＿＿＿＿拿到學生飛行員執照。成為太空人之前，嚴苛的訓練讓身體的不舒服都成了②＿＿＿＿。',q:'① 最適合填入？',o:['如願以償','輕描淡寫','極目遠眺','盛氣凌人'],a:0,w:'實現了想當飛行員的心願，用「如願以償」。'},
+ {id:'i13',ctx:'（同上段）嚴苛的訓練讓身體的不舒服都成了②＿＿＿＿。',q:'② 最適合填入？',o:['燦爛奪目','巧奪天工','家常便飯','直衝雲霄'],a:2,w:'不舒服常常發生，用「家常便飯」。'},
+ {lvl:'題型 C｜成語辨析',sub:'哪一句用得對？'},
+ {id:'i14',q:'下列哪一句，成語使用最恰當？',o:['弟弟第一次學騎腳踏車，就駕輕就熟。','媽媽煮的湯燦爛奪目，非常好喝。','爺爺在海邊極目遠眺，看著遠方的漁船。','這次考試很簡單，我輕鬆的如願以償。'],a:2,w:'(A) 第一次學不可能很熟練；(B) 燦爛奪目形容光彩，不能形容湯好喝；(D) 如願以償要經過努力或期待，用在「很簡單」不恰當。'},
+ {id:'i15',q:'下列哪一句，成語使用「不恰當」？',o:['火箭拖著火紅的尾巴，直衝雲霄。','對棒球選手來說，受點小傷是家常便飯。','他把考試作弊這件嚴重的事輕描淡寫的帶過。','他努力了好幾年，終於家常便飯的考上第一志願。'],a:3,w:'努力好幾年才考上，應該用「如願以償」，不是「家常便飯」。'},
+ {t:'open',id:'o3',q:'「家常便飯」和「駕輕就熟」很容易用錯。請各造一個句子，並說明兩者的不同。',h:'家常便飯＝常常發生；駕輕就熟＝很熟練，做起來輕鬆。',ans:'例：對郵差來說，風吹日曬是家常便飯。／哥哥打了十年鍵盤，打字早已駕輕就熟。<br>不同：「家常便飯」強調事情<b>常常發生</b>；「駕輕就熟」強調人<b>做得很熟練、很輕鬆</b>。'}];
+
+Q.m3=[
+ {lvl:'題型 A｜句型與關聯詞',sub:'先判斷前後句的關係'},
+ {id:'s1',q:'「這是我的一小步，（　）是人類的一大步。」括號中應填入？',o:['而且','因此','卻','還要'],a:2,w:'「一小步」和「一大步」意思相對，是轉折關係，用「卻」。'},
+ {id:'s2',q:'哥哥很想參加這次的比賽，（　）報名時間已經截止了。',o:['然而','而且','因此','必須'],a:0,w:'前面「很想參加」，後面「已經截止」，結果和期待相反，是轉折，用「然而」。'},
+ {id:'s3',q:'想成為太空人，（　）通過嚴格的訓練，（　）具備強健的身體。',o:['雖然…但是','必須…還要','因為…所以','如果…就'],a:1,w:'「通過訓練」還不夠，還要「強健的身體」，後面更進一層，是遞進複句。'},
+ {id:'s4',q:'「登月前，他必須進行不斷翻轉的無重力訓練……還要身穿沉重的太空衣走上幾個小時。」這是哪一種複句？',o:['轉折複句','遞進複句','因果複句','假設複句'],a:1,w:'「必須……還要……」表示一層比一層更進一步，是遞進複句。'},
+ {id:'s5',q:'「阿姆斯壯加入一系列太空計畫。然而，要成為太空人並不容易。」用「然而」的作用是？',o:['表示前後兩件事同時發生','表示後面的意思和前面相反或相對','表示前面是原因，後面是結果','表示舉例說明'],a:1,w:'「加入了計畫」讓人以為很順利，「然而」轉折告訴我們其實並不容易。'},
+ {lvl:'題型 B｜語病判斷',sub:'找出錯在哪裡，並說出理由'},
+ {id:'s6',q:'下列哪一句「沒有」語病？',o:['透過這次太空展，讓我認識了阿姆斯壯。','阿姆斯壯從小就立志當飛行員。','雖然訓練很辛苦，而且他從不放棄。','火箭快速迅速的衝上天空。'],a:1,w:'(A) 成分殘缺：「透過……讓……」找不到主語；(C) 關聯詞誤用：雖然要配「但是」；(D) 語意重複：快速＝迅速。'},
+ {id:'s7',q:'下列哪一句有「搭配不當」的語病？',o:['太空人穿上沉重的太空衣和頭盔。','太空人在月球上採集樣本。','阿姆斯壯駕駛小艇降落月球。','火箭拖著火紅的尾巴直衝雲霄。'],a:0,w:'太空衣用「穿」，頭盔要用「戴」。應改為「穿上沉重的太空衣、戴上頭盔」。'},
+ {id:'s8',q:'下列哪一句有「語意重複」的語病？',o:['阿姆斯壯是第一個首先踏上月球的人。','阿姆斯壯是第一個踏上月球的人。','他們在月球上停留了兩個半小時。','太空中緩緩升起一輪藍綠的星球。'],a:0,w:'「第一個」和「首先」意思相同，留一個就好。'},
+ {id:'s9',q:'下列哪一句有「詞序錯誤」？',o:['他在沙土上留下一枚清晰的腳印。','他在沙土上留下一枚腳印清晰的。','沙土上有一枚清晰的腳印。','那枚清晰的腳印是他留下的。'],a:1,w:'修飾語「清晰的」要放在名詞「腳印」前面：一枚清晰的腳印。'},
+ {id:'s10',q:'下列哪一句有「前後矛盾」的語病？',o:['月球表面十分平坦，到處都是大大小小的隕石坑。','月球表面凹凸不平，到處都是大大小小的隕石坑。','太空一片象灰與濃黑，寂靜而神祕。','地球圓滿豐潤，燦爛奪目。'],a:0,w:'「十分平坦」和「到處都是隕石坑」互相矛盾，應改為「凹凸不平」。'},
+ {id:'s11',q:'下列哪一句「缺少主語」（不知道是誰做的）？',o:['經過多年的訓練，使阿姆斯壯成為優秀的太空人。','經過多年的訓練，阿姆斯壯成為優秀的太空人。','多年的訓練，使阿姆斯壯成為優秀的太空人。','阿姆斯壯經過多年的訓練，成為優秀的太空人。'],a:0,w:'「經過……使……」把主語弄不見了。刪掉「經過」或刪掉「使」就通順了。'},
+ {id:'s12',q:'下列哪一句的關聯詞用得「不恰當」？',o:['因為訓練很辛苦，然而他仍然堅持下去。','訓練很辛苦，然而他仍然堅持下去。','雖然訓練很辛苦，但是他仍然堅持下去。','訓練很辛苦，他卻仍然堅持下去。'],a:0,w:'「因為」要配「所以」表示因果；這句前後是轉折關係，應改為「雖然……但是」或刪掉「因為」。'},
+ {lvl:'題型 C｜改寫語病句',sub:'照「問題→改法→改寫後」三步驟作答'},
+ {t:'open',id:'o4',q:'原句：「通過這次的登月任務，讓人類對月球有了更多認識。」這句話有什麼問題？應該怎麼改？',h:'問自己：是「誰」對月球有了更多認識？主語在哪裡？',ans:'<b>問題</b>：成分殘缺，「通過……讓……」使句子沒有主語。<br><b>改法</b>：刪掉「通過」或刪掉「讓」。<br><b>改寫後</b>：通過這次的登月任務，人類對月球有了更多認識。／這次的登月任務，讓人類對月球有了更多認識。'},
+ {t:'open',id:'o5',q:'原句：「雖然阿姆斯壯已經是飛行員，而且他還想飛得更遠。」這句話有什麼問題？應該怎麼改？',h:'前後意思是順接還是相反？',ans:'<b>問題</b>：關聯詞誤用，「雖然」要搭配表示轉折的「但是／卻」。<br><b>改寫後</b>：雖然阿姆斯壯已經是飛行員，但是他還想飛得更遠。'},
+ {t:'open',id:'o6',q:'原句：「這次任務大約有四十萬人左右參與。」這句話有什麼問題？應該怎麼改？',h:'有沒有兩個詞意思一樣？',ans:'<b>問題</b>：語意重複，「大約」和「左右」意思相同。<br><b>改寫後</b>：這次任務大約有四十萬人參與。／這次任務有四十萬人左右參與。'}];
+
+Q.m4=[
+ {lvl:'題型 A｜修辭辨識',sub:'這句話用了什麼修辭？'},
+ {id:'h1',q:'「一望無際的沙灰色就像沉睡中的巨人。」用了什麼修辭？',o:['誇飾','譬喻','映襯','引用'],a:1,w:'把月球表面（本體）比喻成沉睡中的巨人（喻體），「像」是喻詞，屬於明喻。'},
+ {id:'h2',q:'「身體像要炸裂一般」主要用了什麼修辭？',o:['譬喻','誇飾','摹寫','映襯'],a:1,w:'陷阱題！雖然有「像」，但身體不可能真的炸裂，作者是故意誇大痛苦的程度，屬於誇飾。'},
+ {id:'h3',q:'「阿姆斯壯抬頭望著眼前的家鄉，熟悉卻又如此陌生」用了什麼修辭？',o:['映襯','類疊','譬喻','設問'],a:0,w:'把「熟悉」和「陌生」兩個相反的感受放在一起，是映襯。'},
+ {id:'h4',q:'「倒數聲夾雜著震耳的響聲」用了哪一種摹寫？',o:['視覺摹寫','聽覺摹寫','嗅覺摹寫','觸覺摹寫'],a:1,w:'寫的是「聲音」，是聽覺摹寫。'},
+ {id:'h5',q:'下列哪一個詞語「沒有」使用疊字？',o:['細細的沙土','濃濃白煙','緩緩升起','又大又圓'],a:3,w:'「又大又圓」是同一個字「又」隔開重複使用，屬於類字，不是疊字。疊字要連在一起：細細、濃濃、緩緩。'},
+ {id:'h6',q:'「太空中緩緩升起一輪藍綠的星球，圓滿豐潤，彷彿黑絲絨上一顆滾圓的夜明珠」，其中「黑絲絨」比喻的是？',o:['地球','月球表面','漆黑的宇宙','太空人的衣服'],a:2,w:'地球（夜明珠）在漆黑的宇宙（黑絲絨）中，顯得更明亮耀眼。'},
+ {lvl:'題型 B｜動態還是靜態？',sub:'東西在動、在變化＝動態；靜止的樣子＝靜態'},
+ {id:'d1',t:'cls',tag:'動靜分類',q:'火箭伴隨濃濃白煙，拖著火紅的尾巴直衝雲霄。',a:0,w:'火箭正在往上衝，是動態描寫。'},
+ {id:'d2',t:'cls',tag:'動靜分類',q:'太空一片象灰與濃黑，寂靜而神祕。',a:1,w:'描寫太空靜止的顏色與感覺，是靜態描寫。'},
+ {id:'d3',t:'cls',tag:'動靜分類',q:'微微光彩閃動，太空中緩緩升起一輪藍綠的星球。',a:0,w:'光彩「閃動」、星球「升起」，有變化，是動態描寫。'},
+ {id:'d4',t:'cls',tag:'動靜分類',q:'月球表面盡是大大小小的隕石坑。',a:1,w:'描寫月球表面的樣子，是靜態描寫。'},
+ {id:'d5',t:'cls',tag:'動靜分類',q:'小溪在山谷間奔騰而下，撞擊著岩石，濺起晶瑩的水珠。',a:0,w:'奔騰、撞擊、濺起，都在動，是動態描寫。'},
+ {id:'d6',t:'cls',tag:'動靜分類',q:'古老的石牆佇立在山坡上，斑駁的牆面顯現出歲月的痕跡。',a:1,w:'描寫石牆靜止的外觀，是靜態描寫。'},
+ {lvl:'題型 C｜明引還是暗引？',sub:'有說出是誰說的＝明引；沒說出處＝暗引'},
+ {id:'y1',t:'cls',tag:'引用分類',c:['明引','暗引'],q:'阿姆斯壯曾說：「這是我的一小步，卻是人類的一大步。」',a:0,w:'清楚說出是阿姆斯壯說的，是明引。'},
+ {id:'y2',t:'cls',tag:'引用分類',c:['明引','暗引'],q:'攝影師在海岸邊架好相機，想要將「夕陽無限好，只是近黃昏」的短暫記錄成永恆。',a:1,w:'這兩句出自李商隱的詩，但文中沒有寫出作者，是暗引。'},
+ {id:'y3',t:'cls',tag:'引用分類',c:['明引','暗引'],q:'電影《神隱少女》裡，錢婆婆告訴小千：「發生過的事不可能忘記，只是想不起來。」',a:0,w:'寫出了出處（電影、說話的人），是明引。'},
+ {id:'y4',t:'cls',tag:'引用分類',c:['明引','暗引'],q:'只要肯下功夫，「鐵杵磨成繡花針」也不是難事。',a:1,w:'直接把俗語放進句子裡，沒有說出處，是暗引。'},
+ {lvl:'題型 D｜修辭效果',sub:'除了字面意思，還想表達什麼？'},
+ {id:'h7',q:'作者把地球比喻成「黑絲絨上一顆滾圓的夜明珠」，想表達什麼？',o:['地球很小，不重要','地球在漆黑的宇宙中美麗耀眼又珍貴，寄託對家鄉的讚嘆與情感','地球和珍珠一樣可以買賣','地球表面有很多絲絨'],a:1,w:'夜明珠又亮又珍貴，黑絲絨讓它更顯眼，表達阿姆斯壯對家鄉的驚豔與珍惜。'},
+ {id:'h8',q:'課文第一段直接用阿姆斯壯的名言開頭，主要效果是？',o:['表示作者忘了寫開頭','一開始就點出主題，吸引讀者，增加真實感和說服力','讓讀者不知道文章在寫什麼','只是為了湊字數'],a:1,w:'這就是「引用法開頭」：用名言佳句馬上抓住讀者，取得讀者認同。'},
+ {id:'h9',q:'「兩位太空人在月球上漫步，像袋鼠輕巧的跳躍」，這樣寫帶給讀者什麼感受？',o:['太空人很害怕','畫面生動，感覺到太空人在月球上輕盈、有趣的樣子','月球上有很多袋鼠','太空人走得很慢很累'],a:1,w:'用大家熟悉的袋鼠來比喻，讓人一下就想像出輕巧跳躍的畫面。'},
+ {t:'open',id:'o7',q:'「一望無際的沙灰色就像沉睡中的巨人。」請用答題鷹架分析這句話。',h:'這句話用了【　】修辭。畫面：我看到了＿＿。情緒：這讓我感覺＿＿。作者想強調的是＿＿。',ans:'這句話用了【譬喻（明喻）】修辭。畫面：我看到一大片灰灰的月球表面，安安靜靜的躺著，好像一個睡著的巨人。情緒：讓我感覺月球又廣大、又安靜，有點神祕。作者想強調的是：月球的荒涼寂靜和廣闊。（答案僅供參考）'},
+ {t:'open',id:'o8',q:'請寫一句「動態描寫」，描寫你看過的一個會動的景物（如：風箏、海浪、煙火）。',h:'用動詞寫出變化：先……接著……最後……；可以加一個譬喻。',ans:'例：風箏乘著風，搖搖晃晃的往上爬，一下子就飛到雲朵旁邊，像一隻自由的老鷹在天空盤旋。（答案僅供參考）'}];
+
+Q.m5a=[
+ {lvl:'題型 A｜造句',sub:'用本課語詞、句型造出通順的句子'},
+ {t:'open',id:'o9',q:'用「如願以償」造句。',h:'先寫努力或期待，再寫終於實現。',ans:'例：經過一整年的練習，姊姊終於如願以償，考上了音樂班。'},
+ {t:'open',id:'o10',q:'用「家常便飯」造句。',h:'某種工作或身分，常常會遇到什麼事？',ans:'例：對消防員來說，半夜出勤救火早已是家常便飯。'},
+ {t:'open',id:'o11',q:'用「……卻……」造句。',h:'前後意思要相反。',ans:'例：大家總是羨慕別人擁有的美好，卻忘了珍惜自己身邊的一切。'},
+ {t:'open',id:'o12',q:'用「必須……還要……」造句。',h:'後面要比前面更進一步。',ans:'例：想要擁有健康的身體，必須注意飲食均衡，還要適當的運動。'},
+ {lvl:'題型 B｜照樣寫短語',sub:'照著結構換詞語'},
+ {t:'open',id:'o13',q:'「拖」著「火紅」的「尾巴」「直衝雲霄」→（　）著（　）的（　）（　）',h:'結構：動詞＋著＋形容詞＋的＋名詞＋四字語詞',ans:'例：穿著雪白的婚紗步入禮堂／抱著樂觀的態度勇往直前／張著銳利的爪子猛烈攻擊'},
+ {t:'open',id:'o14',q:'「黑絲絨上」「一顆」「滾圓」的「夜明珠」→（　）（　）（　）的（　）',h:'結構：名詞＋上（中／裡）＋量詞＋形容詞＋的＋名詞',ans:'例：夜空中一輪皎潔的明月／草原上一匹健壯的馬兒／抽屜裡一張老舊的相片'},
+ {t:'open',id:'o15',q:'「太空中」「緩緩」「升起」「一輪」「藍綠」的「星球」→ 照樣寫一句',h:'結構：地點＋副詞＋動詞＋量詞＋形容詞＋的＋名詞',ans:'例：河面上徐徐漂來一片枯黃的樹葉。／廚房裡慢慢飄來一陣濃郁的香味。／天空中漸漸露出一抹橙紅的晚霞。'},
+ {lvl:'題型 C｜引用法開頭練習',sub:'先引用，再接上自己的想法'},
+ {t:'open',id:'o16',q:'請用「引用法」為〈我最難忘的一次挑戰〉寫一個開頭（2～3 句）。',h:'格式：○○曾說：「……」（或俗話說：「……」）這句話讓我想起……',ans:'例：俗話說：「千里之行，始於足下。」再遠的路，也要從第一步開始走。去年參加游泳比賽時，我才真正明白這句話的意思。（答案僅供參考）'}];
+
+const CHECK=['開頭用了「引用法」（名言、俗語或詩句）','有寫出夢想是什麼，以及為什麼有這個夢想','有寫出為了夢想要怎麼努力（可用「必須……還要……」）','至少用了一種修辭（譬喻、摹寫、映襯……）','有寫出心情或想法的轉變','結尾和開頭有呼應','字數在 150～250 字之間，標點正確'];
+
+/* ---------------- render questions ---------------- */
+const ALL={};let mcTotal=0;
+const LET='ABCD';
+const CLS=['動態描寫','靜態描寫'];
+function optsOf(q){return q.t==='cls'?(q.c||CLS):q.o;}
+function qHTML(q,num,scope){
+  if(q.lvl)return `<div class="lvl">${q.lvl}<small>${q.sub||''}</small></div>`;
+  if(q.t==='open'){
+    const v=(S.open[q.id]||'').replace(/</g,'&lt;');
+    return `<div class="q oq" id="${scope}-${q.id}"><div class="qn"><span class="num">${num}</span><span class="tag" style="--tl:var(--grape-lt);--tc2:var(--grape)">寫寫看</span></div><div class="stem">${q.q}</div>${q.h?`<div class="scaf">💡 ${q.h}</div>`:''}<textarea id="ta-${scope}-${q.id}" data-oid="${q.id}" placeholder="先自己寫，再看參考答案">${v}</textarea><button class="show" data-ans="${scope}-${q.id}">看參考答案</button><div class="ans" id="ans-${scope}-${q.id}" hidden><b>參考答案</b><br>${q.ans}</div></div>`;
+  }
+  const o=optsOf(q);
+  return `<div class="q mc" id="${scope}-${q.id}" data-id="${q.id}"><div class="qn"><span class="num">${num}</span>${q.t==='cls'?`<span class="tag" style="--tl:var(--mint-lt);--tc2:var(--mint)">${q.tag||'分類'}</span>`:''}</div>${q.ctx?`<div class="ctx">📍 情境：${q.ctx}</div>`:''}<div class="stem">${q.q}</div><div class="opts${q.t==='cls'?' row'+(optsOf(q).length===2?' two':''):''}">${o.map((x,i)=>`<button class="opt" data-i="${i}"><span class="l">${q.t==='cls'?'?':LET[i]}</span><span>${x}</span></button>`).join('')}</div><div class="fbw"></div></div>`;
+}
+function paint(card,q){
+  const st=S.ans[q.id];const btns=card.querySelectorAll('.opt');const fbw=card.querySelector('.fbw');
+  btns.forEach((b,i)=>{b.classList.remove('right','wrong');b.disabled=false;});
+  fbw.innerHTML='';
+  if(st===undefined)return;
+  btns.forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('right');if(i===st.pick&&!st.ok)b.classList.add('wrong');});
+  const right=optsOf(q)[q.a];
+  fbw.innerHTML=`<div class="fb ${st.ok?'ok':'no'} pop"><div class="v">${st.ok?'🎉 答對了！原來如此！':'🤔 再想想！正確答案是 '+(q.t==='cls'?'':'('+LET[q.a]+') ')+right}</div>${q.w}${q.ev?`<div class="ev">🔎 證據：${q.ev}</div>`:''}${st.ok?'':'<button class="retry">再挑戰一次</button>'}</div>`;
+}
+function renderSet(key,elId,scope){
+  const el=document.getElementById(elId);let n=0;
+  const list=Q[key];
+  const mcs=list.filter(q=>!q.lvl&&q.t!=='open');
+  const head=mcs.length?`<div class="qhead"><div class="meter"><i id="m-${key}"></i></div><span class="mtext" id="mt-${key}"></span><button class="reset" data-reset="${key}">全部重做</button></div>`:'';
+  el.innerHTML=head+list.map(q=>{if(!q.lvl)n++;return qHTML(q,q.lvl?0:n,scope);}).join('');
+  list.forEach(q=>{if(q.id&&q.t!=='open'){ALL[q.id]={q,key};const c=document.getElementById(scope+'-'+q.id);paint(c,q);}});
+}
+function meters(){
+  let tot=0,ok=0;
+  Object.keys(Q).forEach(k=>{
+    const mcs=Q[k].filter(q=>q.id&&q.t!=='open');if(!mcs.length)return;
+    const done=mcs.filter(q=>S.ans[q.id]).length;const good=mcs.filter(q=>S.ans[q.id]&&S.ans[q.id].ok).length;
+    tot+=mcs.length;ok+=good;
+    const m=document.getElementById('m-'+k),t=document.getElementById('mt-'+k);
+    if(m){m.style.width=(done/mcs.length*100)+'%';t.textContent=`已作答 ${done}/${mcs.length}・答對 ${good}`;}
+  });
+  $('#scoreNum').textContent=ok+'/'+tot;
+}
+[['words','q-words','w'],['m1','q-m1','a'],['m2','q-m2','b'],['m3','q-m3','c'],['m4','q-m4','d'],['m5a','q-m5a','e']].forEach(x=>renderSet(...x));
+
+function toast(t){const d=document.createElement('div');d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),1600);}
+
+document.addEventListener('click',e=>{
+  const opt=e.target.closest('.opt');
+  if(opt&&!opt.disabled){
+    const card=opt.closest('.q');const id=card.dataset.id;const {q}=ALL[id];const i=+opt.dataset.i;
+    S.ans[id]={pick:i,ok:i===q.a};save();
+    document.querySelectorAll(`.q.mc[data-id="${id}"]`).forEach(c=>paint(c,q));
+    meters();
+    if(card.closest('#q-wrong')&&i===q.a)setTimeout(renderWrong,1400);
+    return;
+  }
+  const rt=e.target.closest('.retry');
+  if(rt){const card=rt.closest('.q');const id=card.dataset.id;delete S.ans[id];save();document.querySelectorAll(`.q.mc[data-id="${id}"]`).forEach(c=>paint(c,ALL[id].q));meters();return;}
+  const sh=e.target.closest('[data-ans]');
+  if(sh){const a=document.getElementById('ans-'+sh.dataset.ans);a.hidden=!a.hidden;sh.textContent=a.hidden?'看參考答案':'收起參考答案';return;}
+  const rs=e.target.closest('[data-reset]');
+  if(rs){
+    if(rs.dataset.armed!=='1'){rs.dataset.armed='1';rs.textContent='再按一次確定';setTimeout(()=>{rs.dataset.armed='';rs.textContent='全部重做';},2500);return;}
+    Q[rs.dataset.reset].forEach(q=>{if(q.id)delete S.ans[q.id];});save();
+    Object.keys(ALL).forEach(id=>document.querySelectorAll(`.q.mc[data-id="${id}"]`).forEach(c=>paint(c,ALL[id].q)));
+    meters();rs.dataset.armed='';rs.textContent='全部重做';toast('已清空，重新挑戰吧！');
+  }
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.dataset&&t.dataset.oid){S.open[t.dataset.oid]=t.value;save();}
+});
+
+/* wrong book */
+function renderWrong(){
+  const el=$('#q-wrong');
+  const ids=Object.keys(S.ans).filter(id=>S.ans[id]&&!S.ans[id].ok&&ALL[id]);
+  if(!ids.length){el.innerHTML=`<div class="card empty"><div class="big">🌈</div><p>錯題本是空的！<br>去各模組做題，答錯的題目會出現在這裡。</p></div>`;return;}
+  const names={words:'字詞',m1:'閱讀理解',m2:'成語',m3:'語病句型',m4:'修辭',m5a:'寫作'};
+  el.innerHTML=`<div class="mtext">共 ${ids.length} 題待複習</div>`+ids.map((id,k)=>{const {q,key}=ALL[id];return qHTML(q,k+1,'z').replace('<div class="qn">',`<div class="qn"><span class="tag" style="--tl:var(--bad-lt);--tc2:var(--bad)">${names[key]}</span>`);}).join('');
+  /* 錯題本的題目以未作答狀態呈現，重新作答時由全域點擊處理更新紀錄 */
+}
+
+/* essay + checklist */
+const eb=$('#essay-box');eb.value=S.essay||'';
+const cnt=()=>{$('#essay-count').textContent=eb.value.replace(/\s/g,'').length+' 字';};cnt();
+eb.addEventListener('input',()=>{S.essay=eb.value;save();cnt();});
+$('#checklist').innerHTML=CHECK.map((c,i)=>`<label for="ck${i}"><input type="checkbox" id="ck${i}" ${S.chk[i]?'checked':''}>${c}</label>`).join('');
+$('#checklist').addEventListener('change',e=>{const i=e.target.id.slice(2);S.chk[i]=e.target.checked;save();});
+
+meters();
+const start=(location.hash||'').slice(1);
+go(TABS.some(t=>t[0]===start)?start:(TABS.some(t=>t[0]===S.tab)?S.tab:'home'));
+})();
+</script>
+</body></html>
