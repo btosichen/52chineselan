@@ -1,0 +1,655 @@
+<!doctype html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>明智的抉擇 任務手冊</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#FFF6EC; --paper:#FFFFFF; --cream:#FFFBE6;
+  --ink:#2A2550; --ink2:#4E4A78; --ink3:#8580A8;
+  --pink:#FF4FA0; --pink-lt:#FFE1F0;
+  --sky:#1E9BFF; --sky-lt:#DCF0FF;
+  --sun:#FFB800; --sun-lt:#FFF1C2;
+  --mint:#10B88A; --mint-lt:#D6F7EB;
+  --grape:#8A5CFF; --grape-lt:#EDE5FF;
+  --orange:#FF7A1A; --orange-lt:#FFE8D4;
+  --red:#FF4B4B; --red-lt:#FFE3E3;
+  --ok:#10A867; --ok-lt:#DCF8EA; --bad:#F03A4C; --bad-lt:#FFE2E5;
+  --shadow:0 5px 18px rgba(255,122,26,.15);
+  --f-display:'Huninn','jf-openhuninn','Yuanti TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  --f-body:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  --r:22px;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:20px;line-height:1.85;
+  background-image:radial-gradient(circle at 14px 14px,rgba(255,79,160,.22) 3px,transparent 4px),radial-gradient(circle at 42px 38px,rgba(30,155,255,.2) 3px,transparent 4px);
+  background-size:58px 58px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:4px solid var(--sun);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* header */
+.top{position:sticky;top:0;z-index:50;background:linear-gradient(100deg,#FF4FA0 0%,#FF7A1A 35%,#FFB800 62%,#10B88A 82%,#1E9BFF 100%);box-shadow:0 4px 18px rgba(255,79,160,.3);color:#fff}
+.top-in{max-width:960px;margin:0 auto;padding:10px 16px 0;display:flex;align-items:center;gap:12px}
+.logo{flex:none;width:58px;height:58px;border-radius:20px;background:#fff;box-shadow:0 3px 10px rgba(0,0,0,.12);display:grid;place-items:center}
+.logo svg{width:50px;height:50px}
+.top h1{margin:0;font-family:var(--f-display);font-weight:400;font-size:1.6rem;line-height:1.15;letter-spacing:.06em;text-shadow:0 2px 4px rgba(0,0,0,.2)}
+.top .sub{font-size:.8rem;opacity:.97}
+.score{margin-left:auto;text-align:center;background:rgba(255,255,255,.28);border-radius:16px;padding:4px 12px;font-size:.75rem;white-space:nowrap}
+.score b{display:block;font-family:var(--f-display);font-weight:400;font-size:1.3rem;font-variant-numeric:tabular-nums;line-height:1.2}
+.tabs{max-width:960px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;padding:10px 12px 0;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;border:0;background:rgba(255,255,255,.28);padding:8px 14px 9px;border-radius:16px 16px 0 0;font-weight:700;font-size:1rem;color:#fff;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.18)}
+.tab:hover{background:rgba(255,255,255,.45)}
+.tab.on{background:var(--bg);color:var(--tc,var(--pink));text-shadow:none}
+
+main{max-width:960px;margin:0 auto;padding:22px 16px 90px}
+.panel{display:grid;gap:20px}
+.sec{margin:0;font-family:var(--f-display);font-weight:400;font-size:1.95rem;line-height:1.3;color:var(--tc);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sec .badge{font-family:var(--f-body);font-size:.88rem;font-weight:900;background:var(--tc);color:#fff;border-radius:999px;padding:2px 12px}
+.lead{margin:-8px 0 0;color:var(--ink2);font-size:1.02rem}
+h3{margin:0 0 10px;font-family:var(--f-display);font-weight:400;font-size:1.42rem;line-height:1.35}
+h4{margin:0 0 6px;font-size:1.1rem}
+p{margin:0}
+.card{background:var(--paper);border-radius:var(--r);padding:20px 22px;box-shadow:var(--shadow);min-width:0}
+.card.soft{background:var(--cream);box-shadow:none;border:3px dashed var(--sun)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+mark{background:linear-gradient(transparent 55%,#FFE066 55%);color:inherit;padding:0 2px}
+.key{color:var(--pink);font-weight:900}
+ul.dots{margin:0;padding-left:1.2em}
+ul.dots li{margin:4px 0}
+.say{display:flex;gap:12px;align-items:flex-start}
+.say svg{flex:none;width:62px;height:62px}
+.bubble{background:#fff;border:3px solid var(--sun);border-radius:18px 18px 18px 4px;padding:10px 16px;font-weight:500;min-width:0}
+
+/* hero */
+.hero{background:linear-gradient(135deg,#FFFFFF 0%,#FFEFD9 60%,#FFE1F0 100%);border-radius:30px;padding:24px;box-shadow:var(--shadow);display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center}
+.hero svg.big{width:150px;height:150px}
+.hero h2{margin:0;font-family:var(--f-display);font-weight:400;font-size:2.4rem;line-height:1.2;color:var(--pink)}
+.hero p{font-size:1.08rem;color:var(--ink2);margin-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{background:var(--sky-lt);color:var(--sky);font-weight:700;border-radius:999px;padding:3px 14px;font-size:.92rem}
+.chip.p{background:var(--pink-lt);color:var(--pink)} .chip.m{background:var(--mint-lt);color:var(--mint)} .chip.o{background:var(--orange-lt);color:var(--orange)}
+@media (max-width:620px){.hero{grid-template-columns:1fr;text-align:center}.hero svg.big{margin:0 auto;width:120px;height:120px}.hero .chips{justify-content:center}.hero h2{font-size:1.9rem}}
+
+/* mission grid on home */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.mbtn{border:0;text-align:left;background:#fff;border-radius:22px;padding:16px 18px;box-shadow:var(--shadow);border-bottom:6px solid var(--c);transition:transform .15s}
+.mbtn:hover{transform:translateY(-3px)}
+.mbtn .em{font-size:2rem;line-height:1}
+.mbtn b{display:block;font-family:var(--f-display);font-weight:400;font-size:1.3rem;color:var(--c);margin-top:6px}
+.mbtn span{font-size:.92rem;color:var(--ink2)}
+.prog{height:10px;border-radius:99px;background:#F2EEE6;margin-top:8px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--c);width:0;transition:width .4s}
+
+/* structure flow */
+.flow{display:grid;gap:12px}
+.step{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;background:#fff;border-radius:20px;padding:16px 18px;box-shadow:var(--shadow);border-left:8px solid var(--c)}
+.step .n{width:46px;height:46px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-family:var(--f-display);font-size:1.3rem}
+.step h4{color:var(--c);font-size:1.2rem}
+.arrow{text-align:center;font-size:1.5rem;color:var(--ink3);line-height:1}
+
+.table{width:100%;border-collapse:separate;border-spacing:0;font-size:1rem;overflow:hidden;border-radius:16px}
+.table th{background:var(--tc);color:#fff;padding:8px 12px;text-align:left}
+.table td{background:#fff;padding:9px 12px;border-bottom:2px solid #F6EFE4;vertical-align:top}
+.tw{overflow-x:auto}
+
+/* vocab cards */
+.vcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.vc{border:0;background:#fff;border-radius:20px;box-shadow:var(--shadow);padding:14px 16px;text-align:left;min-height:150px;border-top:7px solid var(--c);position:relative}
+.vc .w{font-family:var(--f-display);font-size:1.75rem;line-height:1.3}
+.vc .zy{font-size:.95rem;color:var(--c);font-weight:700}
+.vc .back{display:none;font-size:.98rem;color:var(--ink2)}
+.vc .back b{color:var(--ink)}
+.vc.flip .back{display:block}
+.vc.flip .hint{display:none}
+.vc .hint{font-size:.85rem;color:var(--ink3)}
+.pair{display:flex;flex-wrap:wrap;gap:10px}
+.pair .pc{background:#fff;border-radius:18px;padding:10px 14px;box-shadow:var(--shadow);flex:1 1 210px}
+.pair .pc b{font-family:var(--f-display);font-weight:400;font-size:1.4rem;color:var(--c)}
+
+/* questions */
+.qset{display:grid;gap:16px}
+.q{background:#fff;border-radius:22px;padding:18px 20px;box-shadow:var(--shadow);border-left:8px solid var(--tc)}
+.q .meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
+.qn{font-family:var(--f-display);font-size:1.15rem;color:var(--tc)}
+.lv{font-size:.8rem;font-weight:900;border-radius:999px;padding:1px 10px;background:var(--sun-lt);color:#B57F00}
+.lv.l2{background:var(--sky-lt);color:var(--sky)} .lv.l3{background:var(--grape-lt);color:var(--grape)}
+.stem{font-weight:700;font-size:1.08rem}
+.stem .scene{display:block;font-weight:500;background:var(--cream);border-radius:14px;padding:8px 14px;margin:6px 0;border:2px solid var(--sun-lt)}
+.opts{display:grid;gap:8px;margin-top:10px}
+.opt{border:3px solid #EFE8DC;background:#FFFDF8;border-radius:16px;padding:9px 14px;text-align:left;display:flex;gap:10px;align-items:flex-start;transition:background .15s,border-color .15s}
+.opt:hover:not([disabled]){border-color:var(--tc);background:#fff}
+.opt .L{flex:none;width:32px;height:32px;border-radius:50%;background:var(--tc);color:#fff;display:grid;place-items:center;font-weight:900;font-size:.95rem;margin-top:3px}
+.opt.right{border-color:var(--ok);background:var(--ok-lt)} .opt.right .L{background:var(--ok)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-lt)} .opt.wrong .L{background:var(--bad)}
+.opt[disabled]{cursor:default}
+.fb{margin-top:12px;border-radius:16px;padding:12px 16px;font-size:1rem}
+.fb.ok{background:var(--ok-lt);border:2px solid var(--ok)} .fb.no{background:var(--bad-lt);border:2px solid var(--bad)}
+.fb .h{font-weight:900;font-size:1.08rem}
+.fb .ev{display:block;margin-top:6px;background:#fff;border-radius:12px;padding:6px 12px;border-left:5px solid var(--sun)}
+.redo{margin-top:8px;border:0;background:#fff;border-radius:999px;padding:4px 14px;font-size:.9rem;font-weight:700;color:var(--ink2);box-shadow:0 2px 6px rgba(0,0,0,.08)}
+
+.passage{background:linear-gradient(180deg,#FFFDF5,#FFF7E0);border-radius:24px;padding:20px 22px;border:3px solid var(--sun);box-shadow:var(--shadow)}
+.passage h3{color:var(--orange)}
+.passage p{margin:0 0 10px;text-indent:2em}
+.passage .pno{display:inline-block;text-indent:0;background:var(--orange);color:#fff;border-radius:8px;font-size:.78rem;font-weight:900;padding:0 7px;margin-right:6px;vertical-align:middle}
+.tip{display:flex;gap:10px;align-items:flex-start;background:var(--sky-lt);border-radius:18px;padding:12px 16px}
+.tip .i{font-size:1.5rem;line-height:1.3}
+
+/* reveal cards */
+details.rv{background:#fff;border-radius:20px;box-shadow:var(--shadow);padding:14px 18px;border-left:8px solid var(--tc)}
+details.rv summary{cursor:pointer;font-weight:700;list-style:none}
+details.rv summary::-webkit-details-marker{display:none}
+details.rv summary::before{content:"👉 ";}
+details.rv[open] summary::before{content:"👇 ";}
+.ans{margin-top:10px;background:var(--mint-lt);border-radius:14px;padding:10px 14px}
+.wrongS{color:var(--bad);text-decoration:wavy underline;text-underline-offset:5px}
+
+.scaffold{font-family:var(--f-display);background:var(--grape-lt);border-radius:18px;padding:14px 18px;line-height:2.1;font-size:1.1rem}
+textarea{width:100%;min-height:200px;border:3px solid var(--grape-lt);border-radius:18px;padding:14px;font:inherit;font-size:1.05rem;line-height:1.9;background:#fff;resize:vertical}
+textarea:focus{outline:none;border-color:var(--grape)}
+input.line{width:100%;border:3px solid #EFE8DC;border-radius:14px;padding:8px 12px;font:inherit;font-size:1.02rem}
+input.line:focus{outline:none;border-color:var(--tc)}
+.checks label{display:flex;gap:10px;align-items:flex-start;padding:4px 0;cursor:pointer}
+.checks input{width:24px;height:24px;margin-top:6px;accent-color:var(--grape);flex:none}
+.cnt{font-size:.92rem;color:var(--ink2);margin-top:4px}
+.btn{border:0;border-radius:999px;padding:9px 20px;font-weight:900;background:var(--tc);color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+.btn.ghost{background:#fff;color:var(--tc);border:3px solid var(--tc)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+.next{display:flex;justify-content:flex-end}
+.done{text-align:center;background:linear-gradient(135deg,#FFF1C2,#FFE1F0);border-radius:24px;padding:20px;font-size:1.1rem}
+.done b{font-family:var(--f-display);font-weight:400;font-size:1.8rem;color:var(--pink)}
+.empty{text-align:center;color:var(--ink3);padding:30px}
+.pop{animation:pop .35s}
+@keyframes pop{0%{transform:scale(.97)}60%{transform:scale(1.02)}100%{transform:scale(1)}}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:999px;font-weight:700;z-index:99;opacity:0;transition:opacity .3s;pointer-events:none;max-width:90vw;text-align:center}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- 吉祥物：小壺壺（會燒開水的茶壺） -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="kettle" viewBox="0 0 120 120">
+      <path d="M44 22c-4-8 4-12 0-20M60 20c-4-8 4-12 0-20M76 22c-4-8 4-12 0-20" fill="none" stroke="#9FD8FF" stroke-width="5" stroke-linecap="round"/>
+      <path d="M86 58c16-4 24 6 26 16" fill="none" stroke="#FF4FA0" stroke-width="9" stroke-linecap="round"/>
+      <path d="M30 56c-10 0-16 10-12 22" fill="none" stroke="#FF4FA0" stroke-width="8" stroke-linecap="round"/>
+      <ellipse cx="58" cy="76" rx="38" ry="34" fill="#FF7AB8"/>
+      <ellipse cx="58" cy="44" rx="30" ry="8" fill="#FF4FA0"/>
+      <circle cx="58" cy="34" r="7" fill="#FFB800"/>
+      <ellipse cx="46" cy="66" rx="10" ry="6" fill="#fff" opacity=".35"/>
+      <circle cx="46" cy="78" r="5" fill="#2A2550"/><circle cx="70" cy="78" r="5" fill="#2A2550"/>
+      <circle cx="47.5" cy="76.5" r="1.7" fill="#fff"/><circle cx="71.5" cy="76.5" r="1.7" fill="#fff"/>
+      <ellipse cx="38" cy="88" rx="6" ry="4" fill="#FFB3D4"/><ellipse cx="78" cy="88" rx="6" ry="4" fill="#FFB3D4"/>
+      <path d="M52 88q6 6 12 0" fill="none" stroke="#2A2550" stroke-width="3" stroke-linecap="round"/>
+      <path d="M24 104q34 14 68 0" fill="none" stroke="#FFB800" stroke-width="6" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="top-in">
+    <div class="logo"><svg><use href="#kettle"/></svg></div>
+    <div><h1>明智的抉擇</h1><div class="sub">六上第七課・小壺壺的取捨任務</div></div>
+    <div class="score">得分<b id="scoreTxt">0 / 0</b></div>
+  </div>
+  <nav class="tabs" id="tabs" role="tablist"></nav>
+</header>
+
+<main id="main">
+
+<!-- ===================== 首頁 ===================== -->
+<section class="panel" data-tab="home" style="--tc:var(--pink)">
+  <div class="hero">
+    <svg class="big"><use href="#kettle"/></svg>
+    <div>
+      <h2>水裝太滿，就燒不開！</h2>
+      <p>嗨～我是<b>小壺壺</b>！時間和力氣就像燒水的柴火，數量有限。這一課要學會：<mark>分清輕重緩急，有捨才能有得</mark>，做出明智的抉擇。</p>
+      <div class="chips"><span class="chip p">📜 議論文</span><span class="chip">🧪 事例＋言例</span><span class="chip m">⚖️ 輕重緩急</span><span class="chip o">🔥 量力而為</span></div>
+    </div>
+  </div>
+
+  <div class="say"><svg><use href="#kettle"/></svg>
+    <div class="bubble">建議順序：先看 <b>📒 課文重點</b> 和 <b>🔤 字詞寶庫</b>，再一關一關挑戰五大模組。答錯的題目會自動收進 <b>📕 錯題本</b>，考前再複習一次就好！</div>
+  </div>
+
+  <h2 class="sec" style="font-size:1.6rem">🗺️ 任務地圖</h2>
+  <div class="mgrid" id="mgrid"></div>
+
+  <h2 class="sec" style="font-size:1.6rem">🎁 先想一想，再打開！</h2>
+  <div class="grid3">
+    <details class="rv" style="--tc:var(--orange)"><summary>為什麼水裝太滿會燒不開？</summary><div class="ans">柴火（時間、力氣）有限，水太多，柴燒完了水還沒滾。倒掉一些水，剩下的才燒得開——這就是<b>量力而為、有捨才能有得</b>。</div></details>
+    <details class="rv" style="--tc:var(--sky)"><summary>「議論文」和故事有什麼不同？</summary><div class="ans">故事重在「發生什麼事」；議論文重在「我主張什麼」，再用<b>事例</b>（真實的事）和<b>言例</b>（名人名言、俗語）來證明。</div></details>
+    <details class="rv" style="--tc:var(--mint)"><summary>「輕重緩急」怎麼判斷？</summary><div class="ans">問自己兩題：<br>① 這件事<b>重不重要</b>？（輕／重）<br>② 這件事<b>急不急</b>？（緩／急）<br>又重要又急的先做！</div></details>
+  </div>
+</section>
+
+<!-- ===================== 課文重點 ===================== -->
+<section class="panel" data-tab="notes" style="--tc:var(--orange)" hidden>
+  <h2 class="sec">📒 課文重點 <span class="badge">一定要會</span></h2>
+  <p class="lead">先抓住「作者主張什麼」，再看他「用什麼證明」。</p>
+
+  <div class="card" style="border:4px solid var(--pink)">
+    <h3 style="color:var(--pink)">⭐ 本課主旨（一句話背起來）</h3>
+    <p style="font-size:1.15rem">在<mark>時間、力氣有限</mark>的條件下，我們不能什麼都要，必須<mark>依照輕重緩急有所取捨</mark>，才能做出<span class="key">明智的抉擇</span>、達成目標。——<b>有捨才能有得</b>。</p>
+  </div>
+
+  <h3>🧱 議論文的三塊積木</h3>
+  <div class="flow">
+    <div class="step" style="--c:var(--pink)"><div class="n">1</div><div><h4>提出論點（我主張什麼）</h4><p>生活中處處要做選擇；資源有限，不可能樣樣兼顧，要懂得取捨。</p></div></div>
+    <div class="arrow">⬇</div>
+    <div class="step" style="--c:var(--sky)"><div class="n">2</div><div><h4>舉出論據（我怎麼證明）</h4>
+      <ul class="dots"><li><b>事例</b>：真實發生的事。例如<mark>爺爺用「燒開水」的事，告訴少年要量力而為</mark>——柴火有限，水不能裝太滿。</li>
+      <li><b>言例</b>：引用名言、俗語來支持。例如「<b>貪多嚼不爛</b>」：一次想要太多，反而什麼都學不好。</li></ul></div></div>
+    <div class="arrow">⬇</div>
+    <div class="step" style="--c:var(--mint)"><div class="n">3</div><div><h4>得出結論（所以應該怎麼做）</h4><p>分清<b>輕重緩急</b>，放下次要的，把力氣用在最重要的事上，才是明智的抉擇。</p></div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card" style="--tc:var(--sky)">
+      <h3>🔍 考試常考「對或錯」</h3>
+      <ul class="dots">
+        <li>✅ 本課是一篇<b>議論文</b>。</li>
+        <li>✅ 文中列舉了<b>事例</b>和<b>言例</b>。</li>
+        <li>✅ 爺爺透過燒開水，告訴少年要<b>量力而為</b>。</li>
+        <li>✅ 作者觀點：<b>有捨才能有得</b>。</li>
+        <li>❌ 「以名言佳句當作文章開頭」——<span class="key">不是</span>本課的寫法！</li>
+      </ul>
+    </div>
+    <div class="card" style="--tc:var(--grape)">
+      <h3>🧭 作者觀點 vs. 不是作者觀點</h3>
+      <div class="tw"><table class="table" style="--tc:var(--grape)">
+        <tr><th>符合本課</th><th>不符合本課</th></tr>
+        <tr><td>有捨才能有得</td><td>一分耕耘，一分收穫（講努力）</td></tr>
+        <tr><td>量力而為</td><td>機會是留給準備好的人（講準備）</td></tr>
+        <tr><td>分清輕重緩急</td><td>人不可貌相（講外表）</td></tr>
+        <tr><td>貪多嚼不爛</td><td>柳暗花明又一村（講轉機）</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="card soft">
+    <h3>📐 本課句型</h3>
+    <ul class="dots">
+      <li><b>不只……還……</b>（遞進：後面比前面更進一步）<br>例：廣泛閱讀，<u>不只</u>能增加知識，<u>還</u>可以開拓視野。</li>
+      <li><b>讓「＿＿」變得「＿＿」</b><br>例：讓「生活」變得「多采多姿」→ 讓「庭院」變得「綠意盎然」。</li>
+      <li><b>想「＿＿」「＿＿」就得「＿＿」「＿＿」</b><br>例：想「達到」「目標」就得「做出」「抉擇」→ 想「蒐集」「證據」就得「留意」「細節」。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== 字詞寶庫 ===================== -->
+<section class="panel" data-tab="vocab" style="--tc:var(--sky)" hidden>
+  <h2 class="sec">🔤 字詞寶庫 <span class="badge">點卡片翻面</span></h2>
+  <p class="lead">先自己說說看意思，再點卡片檢查。</p>
+  <div class="vcards" id="vcards"></div>
+
+  <h3>⚠️ 長得像、容易寫錯的字</h3>
+  <div class="pair" id="pairs"></div>
+
+  <h3>🎭 一字多義</h3>
+  <div class="grid2">
+    <div class="card"><h4>抽</h4><ul class="dots"><li>① 從一堆東西中拿出來：「抽」中大獎、「抽」空</li><li>② 萌發、長出：樹枝「抽」出新芽</li></ul></div>
+    <div class="card"><h4>履</h4><ul class="dots"><li>① 鞋子：西裝革「履」</li><li>② 腳步：步「履」蹣跚、輕快的步「履」</li><li>③ 踩、踏：如「履」薄冰</li></ul></div>
+    <div class="card"><h4>勞（讀音）</h4><ul class="dots"><li>ㄌㄠˊ：勞工、勞動、疲勞</li><li>ㄌㄠˋ：<b>慰勞</b>（慰問、犒賞別人的辛苦）</li></ul></div>
+  </div>
+
+  <h2 class="sec" style="font-size:1.5rem">🧩 字詞小測驗</h2>
+  <div class="qset" id="q-vocab"></div>
+</section>
+
+<!-- ===================== 模組一：閱讀理解 ===================== -->
+<section class="panel" data-tab="read" style="--tc:var(--pink)" hidden>
+  <h2 class="sec">1️⃣ 閱讀理解 <span class="badge">證據找答案</span></h2>
+  <div class="tip"><span class="i">🔎</span><div><b>答案一定在文章裡，不在腦袋裡！</b> 每一題選完，看看「證據」在哪一句。<br><span class="lv">表層</span> 直接找　<span class="lv l2">推論</span> 連起來想　<span class="lv l3">評鑑</span> 判斷主旨</div></div>
+
+  <h3>🅰 課文重點題</h3>
+  <div class="qset" id="q-readL"></div>
+
+  <div class="passage">
+    <h3>📄 短文一：小安的星期六</h3>
+    <p><span class="pno">1</span>升上六年級，小安一口氣報名了籃球、鋼琴、畫畫和程式設計四堂課。每個星期六，他從早上八點忙到晚上七點，吃午餐也是邊走邊吃。</p>
+    <p><span class="pno">2</span>兩個月過去，小安每一樣都只學到皮毛。籃球教練說他投籃姿勢一直沒練穩；鋼琴老師搖搖頭：「你彈得像在趕火車。」發表會前一週，他累得發燒，躺在床上什麼也做不了。</p>
+    <p><span class="pno">3</span>媽媽坐在床邊，請他把四堂課寫在紙上，問：「如果只能留兩樣，哪兩樣是你真的最想學好的？」小安想了很久，圈起了籃球和鋼琴，其他兩堂課先暫停。</p>
+    <p><span class="pno">4</span>三個月後，小安在校隊比賽中投進了關鍵的一球，也順利通過鋼琴檢定。他在日記裡寫下：「原來放下一些，手才空得出來，接住更重要的東西。」</p>
+  </div>
+  <div class="qset" id="q-readA"></div>
+
+  <div class="passage">
+    <h3>📄 短文二：學會說「先不要」</h3>
+    <p><span class="pno">1</span>生活中，選擇無所不在。可是一天只有二十四小時，一個人的力氣也有限，想要樣樣都做好，往往樣樣都做不好。因此，懂得說「先不要」，是做出明智抉擇的第一步。</p>
+    <p><span class="pno">2</span>果農照顧果樹時，會在果實還小的時候，狠心摘掉一部分。看起來很可惜，但這樣一來，養分才能集中，留下的果子反而長得又大又甜。</p>
+    <p><span class="pno">3</span>孟子說：「人有不為也，而後可以有為。」意思是：一個人要先懂得哪些事情不做，才能在重要的事情上有所成就。</p>
+    <p><span class="pno">4</span>所以，面對許多選擇時，我們應該先分清輕重緩急，勇敢的對次要的事說「先不要」，把力氣用在刀口上。</p>
+  </div>
+  <div class="qset" id="q-readB"></div>
+</section>
+
+<!-- ===================== 模組二：成語 ===================== -->
+<section class="panel" data-tab="idiom" style="--tc:var(--orange)" hidden>
+  <h2 class="sec">2️⃣ 成語情境判斷 <span class="badge">會用才算懂</span></h2>
+  <p class="lead">不只要知道意思，還要判斷「這個情境」用哪個最剛好。</p>
+  <div class="grid3" id="idiomCards"></div>
+  <div class="qset" id="q-idiom"></div>
+</section>
+
+<!-- ===================== 模組三：語病 ===================== -->
+<section class="panel" data-tab="grammar" style="--tc:var(--mint)" hidden>
+  <h2 class="sec">3️⃣ 語病句型結構 <span class="badge">找出哪裡怪怪的</span></h2>
+  <div class="card">
+    <h3>🩺 五種常見語病</h3>
+    <div class="tw"><table class="table" style="--tc:var(--mint)">
+      <tr><th>語病</th><th>錯在哪</th><th>小例子</th></tr>
+      <tr><td><b>語意重複</b></td><td>同樣意思說兩次</td><td>他<span class="wrongS">大約</span>花了三十分鐘<span class="wrongS">左右</span></td></tr>
+      <tr><td><b>關聯詞誤用</b></td><td>連接詞配錯對</td><td>雖然下雨，<span class="wrongS">而且</span>我們還是出發 →「但是」</td></tr>
+      <tr><td><b>成分殘缺</b></td><td>少了主角（主詞）</td><td><span class="wrongS">透過</span>這次活動，<span class="wrongS">讓</span>我們學到很多 → 刪掉「透過」或「讓」</td></tr>
+      <tr><td><b>搭配不當</b></td><td>動詞和名詞配不起來</td><td><span class="wrongS">提高</span>閱讀時間 →「增加」</td></tr>
+      <tr><td><b>詞序錯誤</b></td><td>先後順序顛倒</td><td>我們<span class="wrongS">討論並聽取</span>了意見 → 先聽取再討論</td></tr>
+    </table></div>
+  </div>
+  <div class="qset" id="q-grammar"></div>
+
+  <h3>✏️ 語病改寫練習（先自己改，再打開）</h3>
+  <div class="grid2" id="fixList"></div>
+</section>
+
+<!-- ===================== 模組四：修辭 ===================== -->
+<section class="panel" data-tab="rhet" style="--tc:var(--grape)" hidden>
+  <h2 class="sec">4️⃣ 修辭 <span class="badge">畫面＋情緒</span></h2>
+  <div class="grid3">
+    <div class="card"><h4>🪞 比喻</h4><p>甲<b>像</b>乙。找出本體和喻體。</p></div>
+    <div class="card"><h4>🧸 擬人</h4><p>把東西當成<b>人</b>來寫，有人的動作或心情。</p></div>
+    <div class="card"><h4>🎈 誇飾</h4><p>故意<b>誇大</b>，強調感受。</p></div>
+    <div class="card"><h4>🔁 排比</h4><p>三個以上<b>結構相同</b>的句子排在一起。</p></div>
+    <div class="card"><h4>❓ 設問</h4><p>自己<b>提問</b>、自己回答，吸引讀者注意。</p></div>
+    <div class="card"><h4>🎁 象徵</h4><p>用具體東西代表<b>抽象</b>的意思。</p></div>
+  </div>
+  <div class="qset" id="q-rhet"></div>
+  <div class="card">
+    <h3>🖼️ 修辭效果分析：說出「畫面＋情緒」</h3>
+    <p>句子：「原來放下一些，手才空得出來，接住更重要的東西。」</p>
+    <div class="scaffold">這句話用了【 象徵／比喻 】的寫法。<br>畫面：我看到＿＿＿＿＿＿<br>情緒：這讓我感覺＿＿＿＿＿＿<br>作者想強調的是＿＿＿＿＿＿</div>
+    <details class="rv" style="--tc:var(--grape);margin-top:10px"><summary>參考答案</summary><div class="ans">畫面：一個人雙手抱滿東西，放下一些後，才能伸手接住飛來的寶物。<br>情緒：從手忙腳亂的疲累，變成輕鬆、豁然開朗。<br>強調：用「手」這個具體動作，表現「<b>有捨才能有得</b>」這個抽象道理。</div></details>
+  </div>
+</section>
+
+<!-- ===================== 模組五：寫作 ===================== -->
+<section class="panel" data-tab="write" style="--tc:var(--sky)" hidden>
+  <h2 class="sec">5️⃣ 寫作整合 <span class="badge">加感覺・加畫面・加轉折</span></h2>
+
+  <div class="card">
+    <h3>🅰 造句：不只……還……</h3>
+    <p>記得：「還」後面要比前面<b>更進一步</b>。</p>
+    <input class="line" data-save="w1" placeholder="在這裡寫你的句子…">
+    <details class="rv" style="--tc:var(--sky);margin-top:10px"><summary>看看範例</summary><div class="ans">每天早睡，<u>不只</u>讓我上課更有精神，<u>還</u>讓我的成績進步了。<br>加修辭升級：早睡<u>不只</u>讓我的精神像充飽電的電池，<u>還</u>讓我的成績一路往上衝。</div></details>
+  </div>
+
+  <div class="card">
+    <h3>🅱 照樣寫</h3>
+    <p>① 讓「生活」變得「多采多姿」→ 讓「＿＿」變得「＿＿」</p>
+    <input class="line" data-save="w2" placeholder="讓「   」變得「   」">
+    <p style="margin-top:10px">② 想「達到」「目標」就得「做出」「抉擇」→ 想「＿＿」「＿＿」就得「＿＿」「＿＿」</p>
+    <input class="line" data-save="w3" placeholder="想「  」「  」就得「  」「  」">
+    <details class="rv" style="--tc:var(--sky);margin-top:10px"><summary>參考答案</summary><div class="ans">① 讓「庭院」變得「綠意盎然」／讓「生命」變得「意義非凡」<br>② 想「蒐集」「證據」就得「留意」「細節」／想「贏得」「比賽」就得「付出」「努力」</div></details>
+  </div>
+
+  <div class="card">
+    <h3>🅲 仿寫：比喻句</h3>
+    <p>例句：時間像一壺水，倒得太滿就燒不開。<br>仿寫：＿＿像＿＿，＿＿＿＿＿＿。</p>
+    <input class="line" data-save="w4" placeholder="＿＿像＿＿，＿＿＿＿">
+    <details class="rv" style="--tc:var(--sky);margin-top:10px"><summary>參考答案</summary><div class="ans">書包像一艘小船，裝得太多就會沉下去。<br>力氣像一杯果汁，分給太多人，每個人都只喝得到一口。</div></details>
+  </div>
+
+  <div class="card" style="border:4px solid var(--grape)">
+    <h3 style="color:var(--grape)">🅳 短文寫作：〈一次明智的抉擇〉（150～250 字）</h3>
+    <div class="grid2">
+      <div>
+        <h4>📋 寫作提示</h4>
+        <ol style="margin:0;padding-left:1.3em">
+          <li><b>說明情境</b>：當時有哪些事情要選？</li>
+          <li><b>加入感受</b>：用五感寫出猶豫、焦急的心情。</li>
+          <li><b>寫出轉折</b>：怎麼分輕重緩急？最後發現了什麼？</li>
+        </ol>
+      </div>
+      <div class="tip" style="background:var(--grape-lt)"><span class="i">💡</span><div><b>升級三招</b><br>① ✗我很緊張 → ✓我的手心冒汗，心跳得像打鼓<br>② 加畫面：桌上的作業疊得像小山<br>③ 一開始→後來→最後我發現……</div></div>
+    </div>
+    <textarea id="essay" data-save="essay" placeholder="開始寫吧！（會自動存在這台裝置上）"></textarea>
+    <div class="cnt" id="essayCnt">0 字</div>
+    <h4 style="margin-top:10px">✅ 寫完自我檢查</h4>
+    <div class="checks" id="checks">
+      <label><input type="checkbox" data-save="c1"> 我有寫清楚「要選擇的是什麼」</label>
+      <label><input type="checkbox" data-save="c2"> 我有用五感或修辭寫出心情</label>
+      <label><input type="checkbox" data-save="c3"> 我有寫出「怎麼分輕重緩急」</label>
+      <label><input type="checkbox" data-save="c4"> 結尾有寫出我的領悟（有捨才能有得）</label>
+      <label><input type="checkbox" data-save="c5"> 字數在 150～250 字，沒有錯字和語病</label>
+    </div>
+    <details class="rv" style="--tc:var(--grape);margin-top:12px"><summary>看看範文</summary><div class="ans" style="text-indent:2em">星期五晚上，我的桌上堆著數學作業、明天要交的自然報告，還有朋友約我一起玩的線上遊戲。作業疊得像一座小山，我的心跳得像打鼓，不知道該從哪裡開始。<br>我想起課文說的「輕重緩急」，就拿出一張紙，把三件事排了順序：報告明天要交，最急也最重要；數學作業星期一才交，可以排第二；遊戲最不重要，只好先跟朋友說「下次再約」。雖然有點可惜，但我專心兩個小時，就把報告做完了。<br>那天晚上我睡得特別安穩。我發現，放下一件想做的事，換來的是心裡的輕鬆，這就是一次明智的抉擇。</div></details>
+    <details class="rv" style="--tc:var(--grape);margin-top:10px"><summary>評分標準（給自己或爸媽看）</summary>
+      <div class="tw" style="margin-top:8px"><table class="table" style="--tc:var(--grape)">
+        <tr><th>向度</th><th>3 分（優）</th><th>2 分（良）</th><th>1 分（加油）</th></tr>
+        <tr><td>內容</td><td>具體，有細節與感受</td><td>完整但平淡</td><td>空洞或偏題</td></tr>
+        <tr><td>結構</td><td>有起承轉合</td><td>結構尚可</td><td>缺乏組織</td></tr>
+        <tr><td>語言</td><td>用詞精準，有修辭</td><td>通順但平淡</td><td>語病多、句型重複</td></tr>
+        <tr><td>書寫</td><td>整齊、標點正確</td><td>尚整齊</td><td>錯字多</td></tr>
+      </table></div></details>
+  </div>
+</section>
+
+<!-- ===================== 錯題本 ===================== -->
+<section class="panel" data-tab="wrong" style="--tc:var(--red)" hidden>
+  <h2 class="sec">📕 錯題本</h2>
+  <p class="lead">答錯的題目都在這裡。再做一次，答對就會自動移出喔！</p>
+  <div class="row"><button class="btn" id="resetAll" style="--tc:var(--red)">🔄 全部重新開始</button></div>
+  <div class="qset" id="q-wrong"></div>
+</section>
+
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+/* ---------- 儲存（安全包裝） ---------- */
+const KEY='l7-choice-v1';
+let store={ans:{},wrong:{},text:{}};
+try{const s=localStorage.getItem(KEY);if(s)store=Object.assign(store,JSON.parse(s));}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store));}catch(e){}}
+
+/* ---------- 分頁 ---------- */
+const TABS=[
+ ['home','🏠 首頁','var(--pink)'],['notes','📒 課文重點','var(--orange)'],['vocab','🔤 字詞寶庫','var(--sky)'],
+ ['read','1️⃣ 閱讀理解','var(--pink)'],['idiom','2️⃣ 成語情境','var(--orange)'],['grammar','3️⃣ 語病句型','var(--mint)'],
+ ['rhet','4️⃣ 修辭','var(--grape)'],['write','5️⃣ 寫作','var(--sky)'],['wrong','📕 錯題本','var(--red)']];
+const tabsEl=document.getElementById('tabs');
+TABS.forEach(([id,label,c])=>{const b=document.createElement('button');b.className='tab';b.textContent=label;b.dataset.go=id;b.style.setProperty('--tc',c);b.setAttribute('role','tab');tabsEl.appendChild(b);});
+function go(id){
+  document.querySelectorAll('section.panel').forEach(s=>s.hidden=s.dataset.tab!==id);
+  tabsEl.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.go===id));
+  const on=tabsEl.querySelector('.tab.on'); if(on) on.scrollIntoView({inline:'center',block:'nearest'});
+  if(id==='wrong') renderWrong();
+  if(id==='home') renderMap();
+  window.scrollTo({top:0});
+  try{sessionStorage.setItem(KEY+'-tab',id)}catch(e){}
+}
+document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g)go(g.dataset.go);});
+
+/* ---------- 題庫 ---------- */
+const Q={
+vocab:[
+ {s:'下列哪個「勞」的讀音和其他三個<b>不同</b>？',o:['「勞」工','慰「勞」','疲「勞」','「勞」動'],a:1,e:'「慰勞」的勞讀ㄌㄠˋ，其他都讀ㄌㄠˊ。'},
+ {s:'「形容步伐不穩、歪歪斜斜的樣子」是哪個語詞？',o:['蹣跚','孱弱','犧牲','猶豫'],a:0,e:'蹣跚（ㄆㄢˊ ㄕㄢ）：走路不穩。孱弱是身體虛弱；猶豫是拿不定主意。'},
+ {s:'「不知何時，樹枝悄悄<u>抽</u>出了新芽。」這裡的「抽」是什麼意思？',o:['從一堆東西中拿出來','萌發、長出','用鞭子打','減少'],a:1,e:'抽出新芽＝長出新芽，是「萌發、長出」的意思。'},
+ {s:'「阿姨做事一向謹慎，如<u>履</u>薄冰。」這裡的「履」是什麼意思？',o:['鞋子','腳步','踩、踏','經歷'],a:2,e:'如履薄冰＝好像踩在薄冰上，「履」是踩、踏。'},
+ {s:'下列哪一句的用字<b>完全正確</b>？',o:['種在土讓中的植物長大了','花包慢慢打開了','他正在思考該如何抉擇','工作和生活要取得平橫'],a:2,e:'正確寫法：土「壤」、花「苞」、「抉」擇、平「衡」。'},
+ {s:'下列「 」中的語詞，哪個使用<b>不恰當</b>？',o:['寒夜裡，老人踩著沉重的「步履」回家','養成運動習慣，是「維持」健康的好方法','奶奶生病後，爺爺全心「兼顧」她','爸爸很忙，仍「抽空」幫我檢查作業'],a:2,e:'「兼顧」是同時照顧兩件以上的事。全心照顧一個人應該用「照顧」。'}
+],
+readL:[
+ {lv:1,s:'關於〈明智的抉擇〉這一課，下列哪一個說法<b>錯誤</b>？',o:['是一篇議論文','文中列舉了「事例」和「言例」','用名言佳句當作文章開頭','表達依輕重緩急，才能做出明智抉擇'],a:2,e:'本課並不是用名言佳句開頭。其他三項都正確。'},
+ {lv:2,s:'課文中，爺爺透過「燒開水」這件事，想告訴少年什麼道理？',o:['一分耕耘，一分收穫','機會是留給準備好的人','三個臭皮匠，勝過一個諸葛亮','量力而為'],a:3,e:'柴火有限，水不能裝太滿——做事要衡量自己的能力，量力而為。'},
+ {lv:3,s:'下列哪一個選項最符合本課作者的觀點？',o:['有捨才能有得','一分耕耘，一分收穫','山重水複疑無路，柳暗花明又一村','人不可貌相，海水不可斗量'],a:0,e:'本課主張在有限條件下要有所取捨，「有捨才能有得」。'},
+ {lv:3,s:'讀完本課，我們可以知道下列哪一件事？',o:['只要夠努力，什麼事都能同時做好','在有限的條件下，必須有所取捨，才能達到目標','做決定時，最好聽從多數人的意見','選擇越多，生活就越幸福'],a:1,e:'這是本課主旨：條件有限，要取捨。'}
+],
+readA:[
+ {lv:1,s:'根據第１段，小安一開始報名了幾堂課？',o:['兩堂','三堂','四堂','五堂'],a:2,ev:'第１段：「一口氣報名了籃球、鋼琴、畫畫和程式設計四堂課。」',e:'籃球、鋼琴、畫畫、程式設計，共四堂。'},
+ {lv:2,s:'鋼琴老師說小安「彈得像在趕火車」，意思最接近哪一個？',o:['小安彈琴的速度剛剛好','小安彈得又急又亂，不夠用心練習','小安很喜歡火車','小安彈得比老師還好'],a:1,ev:'第２段：「每一樣都只學到皮毛」、老師「搖搖頭」。',e:'老師搖頭，代表不滿意；「趕火車」形容匆忙，所以是彈得急、不穩。'},
+ {lv:2,s:'為什麼小安最後只留下籃球和鋼琴？',o:['因為媽媽不准他學畫畫','因為那兩堂課最便宜','因為他發現樣樣都學只學到皮毛，決定留下最想學好的','因為他畫畫已經很厲害了'],a:2,ev:'第２段「只學到皮毛」＋第３段「哪兩樣是你真的最想學好的？」',e:'要把第２段的結果和第３段媽媽的問題連起來想，媽媽並沒有禁止他。'},
+ {lv:3,s:'小安日記中「放下一些，手才空得出來，接住更重要的東西」，最能呼應哪一句話？',o:['有捨才能有得','熟能生巧','天下無難事','百聞不如一見'],a:0,ev:'第４段：放下兩堂課後，比賽和檢定都成功。',e:'「放下」＝捨，「接住更重要的東西」＝得。'}
+],
+readB:[
+ {lv:1,s:'根據第２段，果農為什麼要摘掉一部分小果子？',o:['因為小果子不好吃','讓養分集中，留下的果子長得又大又甜','因為果樹太高摘不到','想早一點賣錢'],a:1,ev:'第２段：「這樣一來，養分才能集中，留下的果子反而長得又大又甜。」',e:'答案直接寫在第２段。'},
+ {lv:1,s:'第３段引用孟子的話，在議論文中屬於哪一種論據？',o:['事例','言例','比喻','結論'],a:1,ev:'第３段：「孟子說：……」',e:'引用名人說過的話＝言例；第２段果農的例子才是事例。'},
+ {lv:2,s:'第４段「把力氣用在刀口上」的意思是：',o:['做事要小心不要被刀割傷','把力氣用在最重要、最需要的地方','力氣越大越好','要學會用刀切菜'],a:1,ev:'前一句：「勇敢的對次要的事說『先不要』」。',e:'放下次要的事，就是為了把力氣留給最重要的事。'},
+ {lv:3,s:'這篇短文的寫作順序，下列哪一個正確？',o:['結論→事例→言例→論點','論點→事例→言例→結論','事例→論點→結論→言例','言例→結論→論點→事例'],a:1,ev:'第１段提出主張；第２段果農；第３段孟子；第４段「所以……」。',e:'和課文一樣的議論文架構：論點→論據（事例、言例）→結論。'},
+ {lv:3,s:'下列哪一個標題也很適合這篇文章？',o:['果樹的種植方法','孟子的一生','懂得放下，才能做好','一天有二十四小時'],a:2,ev:'全文主張：懂得說「先不要」，才能把力氣用在刀口上。',e:'標題要扣緊「主旨」，其他選項只抓到文章的一小部分。'}
+],
+idiom:[
+ {s:'下列情境，最適合用哪個成語來形容？<span class="scene">弟弟一次從圖書館借了十本書，想在一週內全部讀完，結果每本都只翻了幾頁，什麼也沒記住。</span>',o:['多采多姿','貪多嚼不爛','隔靴搔癢','如履薄冰'],a:1,e:'一次想要太多，反而吸收不了＝貪多嚼不爛。「多采多姿」雖然也有「很多」的意思，但是在稱讚生活豐富，用在這裡不對。'},
+ {s:'下列情境，最適合用哪個成語來形容？<span class="scene">班會討論教室太髒的問題，大家只說「要更認真」，卻沒有人提出輪值表或具體辦法。</span>',o:['隔靴搔癢','量力而為','輕重緩急','一舉兩得'],a:0,e:'說法沒有切中重點、解決不了問題＝隔靴搔癢（隔著靴子抓癢，抓不到癢處）。'},
+ {s:'下列情境，最適合用哪個成語來形容？<span class="scene">哥哥平常只能跑三公里，教練建議他這次先報名五公里組，不要直接挑戰全程馬拉松。</span>',o:['自不量力','貪多嚼不爛','量力而為','如履薄冰'],a:2,e:'依照自己的能力去做＝量力而為。「自不量力」意思相近，卻是在批評人「高估自己」，這裡是教練的好建議，不能用。'},
+ {s:'空格中應填入哪個成語？<span class="scene">考試前一晚，姊姊有作業要寫、有課本要複習，還想看卡通。她先分清事情的（　　），決定先完成作業，再複習，卡通週末再看。</span>',o:['多采多姿','隔靴搔癢','輕重緩急','如履薄冰'],a:2,e:'判斷哪件事重要、哪件事急＝輕重緩急。'},
+ {s:'下列哪一句的成語使用<b>最恰當</b>？',o:['他的暑假如履薄冰，每天都過得好精彩','第一次端著滿滿一鍋熱湯，他走得如履薄冰，一步也不敢大意','這部電影如履薄冰，大家都笑翻了','妹妹如履薄冰的把蛋糕一口吃光'],a:1,e:'如履薄冰：好像踩在薄冰上，形容非常小心謹慎。只有端熱湯這個情境需要小心。'},
+ {s:'下列哪一句「多采多姿」用得<b>不恰當</b>？',o:['參加社團後，我的校園生活變得多采多姿','花園裡的花朵多采多姿，吸引許多蝴蝶','這碗湯多采多姿，喝起來很鹹','夜市裡的攤位多采多姿，讓人逛不完'],a:2,e:'多采多姿形容豐富、有變化的樣子，不能用來形容「味道很鹹」。'}
+],
+grammar:[
+ {s:'下列哪一句<b>沒有</b>語病？',o:['透過這次社團發表，讓我明白了取捨的重要。','這次社團發表，讓我明白了取捨的重要。','他大約花了三十分鐘左右寫完作業。','雖然時間有限，而且我們還是完成了報告。'],a:1,e:'①成分殘缺（「透過」和「讓」同時用，句子沒有主詞）；③語意重複（大約＝左右）；④關聯詞誤用（雖然……但是）。'},
+ {s:'「我們要提高同學的閱讀興趣和閱讀時間。」這句話的問題是：',o:['語意重複','詞序錯誤','搭配不當','沒有問題'],a:2,e:'「提高興趣」可以，但「提高時間」不搭配。應改成「培養閱讀興趣，增加閱讀時間」。'},
+ {s:'「班長在班會中討論並聽取了大家的意見。」這句話的問題是：',o:['詞序錯誤','關聯詞誤用','成分殘缺','沒有問題'],a:0,e:'要先「聽取」意見，才能「討論」。應改成「聽取並討論了大家的意見」。'},
+ {s:'下列哪一句的關聯詞使用<b>正確</b>？',o:['廣泛閱讀不只能增加知識，還可以開拓視野。','廣泛閱讀不只能增加知識，而是可以開拓視野。','廣泛閱讀雖然能增加知識，所以可以開拓視野。','廣泛閱讀因為能增加知識，但是可以開拓視野。'],a:0,e:'本課句型「不只……還……」表示更進一步。'},
+ {s:'下列哪一句<b>有</b>語病？',o:['只有分清輕重緩急，才能做出明智的抉擇。','如果水裝得太滿，就會燒不開。','他不但做事很認真，而且也很努力用心。','因為時間不夠，所以我先完成最重要的作業。'],a:2,e:'「認真」「努力用心」意思重複，而且「而且也」重複。可改成「他不但做事認真，而且很有效率」。'}
+],
+rhet:[
+ {s:'下列哪一句使用了<b>比喻</b>？',o:['時間像一壺水，倒得太滿就燒不開。','鬧鐘一大早就扯開嗓子催我起床。','作業多到我寫到天荒地老也寫不完。','什麼是明智的抉擇呢？就是分清輕重緩急。'],a:0,e:'「時間（本體）像一壺水（喻體）」是比喻。②擬人 ③誇飾 ④設問。'},
+ {s:'「鬧鐘一大早就扯開嗓子催我起床。」哪幾個字讓鬧鐘像人？',o:['一大早','扯開嗓子、催','起床','鬧鐘'],a:1,e:'鬧鐘不會「扯開嗓子」也不會「催」，這是人的動作——擬人。'},
+ {s:'「作業多到我寫到天荒地老也寫不完。」作者用誇飾，想強調什麼感受？',o:['作業很簡單','作業多到讓人壓力很大、很疲憊','作者很喜歡寫作業','天氣很冷'],a:1,e:'誇飾故意誇大，是為了強調「多到受不了」的感受。'},
+ {s:'「什麼才是明智的抉擇呢？就是分清輕重緩急後，勇敢取捨。」這句用了哪種修辭？',o:['排比','擬人','設問','誇飾'],a:2,e:'先提出問題，再自己回答＝設問，可以吸引讀者注意重點。'}
+]
+};
+const MOD={vocab:'字詞',readL:'閱讀・課文',readA:'閱讀・短文一',readB:'閱讀・短文二',idiom:'成語',grammar:'語病',rhet:'修辭'};
+const ALL=[];Object.keys(Q).forEach(k=>Q[k].forEach((q,i)=>{q.id=k+'-'+i;q.mod=k;q.n=i+1;ALL.push(q);}));
+const BYID={};ALL.forEach(q=>BYID[q.id]=q);
+const LV=['','表層','推論','評鑑'];
+const LETTER=['A','B','C','D'];
+
+function qHTML(q,label){
+  return `<div class="q" data-q="${q.id}">
+    <div class="meta"><span class="qn">${label||('第 '+q.n+' 題')}</span>${q.lv?`<span class="lv l${q.lv}">${LV[q.lv]}</span>`:''}</div>
+    <div class="stem">${q.s}</div>
+    <div class="opts">${q.o.map((t,i)=>`<button class="opt" data-i="${i}"><span class="L">${LETTER[i]}</span><span>${t}</span></button>`).join('')}</div>
+    <div class="fbw"></div></div>`;
+}
+function paint(el,q){
+  const r=store.ans[q.id];const opts=el.querySelectorAll('.opt');const fbw=el.querySelector('.fbw');
+  opts.forEach((b,i)=>{b.classList.remove('right','wrong');b.disabled=r!==undefined;
+    if(r!==undefined){if(i===q.a)b.classList.add('right');else if(i===r)b.classList.add('wrong');}});
+  if(r===undefined){fbw.innerHTML='';return;}
+  const ok=r===q.a;
+  fbw.innerHTML=`<div class="fb ${ok?'ok':'no'} pop"><div class="h">${ok?'🎉 答對了！':'💪 再想想！正確答案是 '+LETTER[q.a]}</div>${q.ev?`<span class="ev">🔎 證據：${q.ev}</span>`:''}<div style="margin-top:6px">${q.e}</div></div><button class="redo">↺ 重做這題</button>`;
+}
+function mount(boxId,list){
+  const box=document.getElementById(boxId);if(!box)return;
+  box.innerHTML=list.map(q=>qHTML(q)).join('');
+  list.forEach(q=>paint(box.querySelector(`[data-q="${q.id}"]`),q));
+}
+document.addEventListener('click',e=>{
+  const opt=e.target.closest('.opt');const redo=e.target.closest('.redo');
+  const card=e.target.closest('.q[data-q]');if(!card)return;
+  const q=BYID[card.dataset.q];
+  if(opt&&!opt.disabled){
+    const i=+opt.dataset.i;store.ans[q.id]=i;
+    if(i===q.a){ if(store.wrong[q.id]){delete store.wrong[q.id];toast('👏 錯題訂正成功！');} }
+    else store.wrong[q.id]=1;
+    save();refreshAll(q.id);
+  }else if(redo){delete store.ans[q.id];save();refreshAll(q.id);}
+});
+function refreshAll(id){
+  const q=BYID[id];document.querySelectorAll(`.q[data-q="${id}"]`).forEach(el=>paint(el,q));updateScore();
+}
+function updateScore(){
+  let done=0,ok=0;ALL.forEach(q=>{const r=store.ans[q.id];if(r!==undefined){done++;if(r===q.a)ok++;}});
+  document.getElementById('scoreTxt').textContent=ok+' / '+ALL.length;
+}
+let tt;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),1800);}
+
+Object.keys(Q).forEach(k=>mount('q-'+k,Q[k]));
+
+function renderWrong(){
+  const box=document.getElementById('q-wrong');const ids=Object.keys(store.wrong).filter(id=>BYID[id]);
+  if(!ids.length){box.innerHTML='<div class="empty"><svg style="width:90px;height:90px"><use href="#kettle"/></svg><br>目前沒有錯題，太棒了！🎉</div>';return;}
+  box.innerHTML=ids.map(id=>{const q=BYID[id];return qHTML(q,'【'+MOD[q.mod]+'】第 '+q.n+' 題');}).join('');
+  ids.forEach(id=>{const q=BYID[id];const el=box.querySelector(`[data-q="${id}"]`);
+    if(store.ans[id]!==q.a){delete store.ans[id];} paint(el,q);});
+  save();updateScore();
+}
+document.getElementById('resetAll').addEventListener('click',()=>{store.ans={};store.wrong={};save();Object.keys(Q).forEach(k=>mount('q-'+k,Q[k]));renderWrong();updateScore();toast('已全部重新開始！');});
+
+/* ---------- 首頁任務地圖 ---------- */
+const MAP=[['notes','📒','課文重點','主旨・結構・常考','var(--orange)',null],['vocab','🔤','字詞寶庫','生字・多義字',' var(--sky)',['vocab']],
+ ['read','1️⃣','閱讀理解','證據找答案','var(--pink)',['readL','readA','readB']],['idiom','2️⃣','成語情境','會用才算懂','var(--orange)',['idiom']],
+ ['grammar','3️⃣','語病句型','找出哪裡怪','var(--mint)',['grammar']],['rhet','4️⃣','修辭','畫面＋情緒','var(--grape)',['rhet']],
+ ['write','5️⃣','寫作','一次明智的抉擇','var(--sky)',null],['wrong','📕','錯題本','考前再複習','var(--red)',null]];
+function renderMap(){
+  document.getElementById('mgrid').innerHTML=MAP.map(([id,em,t,d,c,mods])=>{
+    let bar='';if(mods){let tot=0,ok=0;mods.forEach(m=>Q[m].forEach(q=>{tot++;if(store.ans[q.id]===q.a)ok++;}));
+      bar=`<div class="prog"><i style="width:${Math.round(ok/tot*100)}%"></i></div><span>${ok} / ${tot} 題答對</span>`;}
+    if(id==='wrong'){const n=Object.keys(store.wrong).length;bar=`<span>${n} 題待訂正</span>`;}
+    return `<button class="mbtn" data-go="${id}" style="--c:${c}"><div class="em">${em}</div><b>${t}</b><span>${d}</span>${bar}</button>`;}).join('');
+}
+
+/* ---------- 字詞卡 ---------- */
+const V=[
+ ['抉擇','ㄐㄩㄝˊ ㄗㄜˊ','挑選、決定。','面對兩個社團，他做出了明智的抉擇。'],
+ ['爐灶','ㄌㄨˊ ㄗㄠˋ','生火煮東西的設備。','廢棄的爐灶旁長滿雜草。'],
+ ['叢生','ㄘㄨㄥˊ ㄕㄥ','草木聚集在一起生長。','荒地上雜草叢生。'],
+ ['蹣跚','ㄆㄢˊ ㄕㄢ','走路不穩、歪歪斜斜。','老人步履蹣跚的走回家。'],
+ ['步履','ㄅㄨˋ ㄌㄩˇ','腳步、走路。','她踩著輕快的步履上學。'],
+ ['犧牲','ㄒㄧ ㄕㄥ','為了某個目的而放棄自己的利益。','媽媽犧牲假期帶我們出遊。'],
+ ['兼顧','ㄐㄧㄢ ㄍㄨˋ','同時照顧到兩方面以上。','他想兼顧課業和社團。'],
+ ['平衡','ㄆㄧㄥˊ ㄏㄥˊ','兩方面力量相當、不偏一邊。','在工作和生活之間取得平衡。'],
+ ['孱弱','ㄔㄢˊ ㄖㄨㄛˋ','身體瘦小虛弱。','他小時候身體孱弱，常常生病。'],
+ ['猶豫','ㄧㄡˊ ㄩˋ','遲疑、拿不定主意。','他猶豫了很久才決定。'],
+ ['維生素','ㄨㄟˊ ㄕㄥ ㄙㄨˋ','維持身體健康需要的營養素。','豆芽菜富含維生素。'],
+ ['跆拳道','ㄊㄞˊ ㄑㄩㄢˊ ㄉㄠˋ','一種以腳踢為主的武術。','哥哥每週學兩次跆拳道。'],
+ ['隔靴搔癢','ㄍㄜˊ ㄒㄩㄝ ㄙㄠ ㄧㄤˇ','說話或做事沒抓到重點。','這篇介紹太淺，猶如隔靴搔癢。'],
+ ['貪多嚼不爛','ㄊㄢ ㄉㄨㄛ ㄐㄧㄠˊ ㄅㄨˋ ㄌㄢˋ','一次想要太多，反而做不好、吸收不了。','讀書要循序漸進，以免貪多嚼不爛。'],
+ ['土壤','ㄊㄨˇ ㄖㄤˇ','地表上能生長植物的泥土。','肥沃的土壤讓作物長得好。'],
+ ['花苞','ㄏㄨㄚ ㄅㄠ','還沒開放的花朵。','玫瑰結出了可愛的花苞。']
+];
+const VC=['var(--pink)','var(--sky)','var(--orange)','var(--mint)','var(--grape)'];
+document.getElementById('vcards').innerHTML=V.map((v,i)=>`<button class="vc" style="--c:${VC[i%5]}"><div class="w">${v[0]}</div><div class="zy">${v[1]}</div><div class="hint">👆 點我看意思</div><div class="back"><b>意思：</b>${v[2]}<br><b>例句：</b>${v[3]}</div></button>`).join('');
+document.getElementById('vcards').addEventListener('click',e=>{const c=e.target.closest('.vc');if(c)c.classList.toggle('flip');});
+const P=[['抉 ≠ 決','「抉」擇（挑選）<br>「決」定、解「決」'],['壤 ≠ 讓 ≠ 嚷','土「壤」（土字旁）<br>「讓」座、「嚷」叫'],['苞 ≠ 包','花「苞」（草字頭）<br>書「包」'],['衡 ≠ 橫','平「衡」<br>「橫」線'],['犧牲','兩個字都是「牛」字旁！'],['跆 ≠ 苔','「跆」拳道（足字旁，用腳）<br>青「苔」'],['搔 ≠ 騷','「搔」癢（手字旁，用手抓）<br>「騷」動']];
+document.getElementById('pairs').innerHTML=P.map((p,i)=>`<div class="pc" style="--c:${VC[i%5]}"><b>${p[0]}</b><div>${p[1]}</div></div>`).join('');
+
+/* ---------- 成語卡 ---------- */
+const ID=[['貪多嚼不爛','一次想要太多，反而做不好','var(--pink)'],['量力而為','依照自己的能力去做','var(--orange)'],['輕重緩急','事情的重要程度和緊急程度','var(--mint)'],['隔靴搔癢','沒抓到重點，解決不了問題','var(--sky)'],['如履薄冰','像踩在薄冰上，非常小心','var(--grape)'],['多采多姿','豐富、有變化','var(--pink)']];
+document.getElementById('idiomCards').innerHTML=ID.map(d=>`<div class="card" style="border-top:7px solid ${d[2]};padding:14px 18px"><b style="font-family:var(--f-display);font-weight:400;font-size:1.4rem;color:${d[2]}">${d[0]}</b><div style="font-size:.98rem;color:var(--ink2)">${d[1]}</div></div>`).join('');
+
+/* ---------- 語病改寫 ---------- */
+const FIX=[
+ ['經過老師的說明，使我明白了議論文的寫法。','成分殘缺：「經過」和「使」同時用，句子沒有主詞。','老師的說明，使我明白了議論文的寫法。／經過老師的說明，我明白了議論文的寫法。'],
+ ['這個暑假我學會了游泳、跆拳道和很多書。','搭配不當：「學會」不能搭配「很多書」。','這個暑假我學會了游泳、跆拳道，還讀了很多書。'],
+ ['我們應該要盡量把握每分每秒的時間。','語意重複：「應該」＝「要」；「每分每秒」就是時間。','我們應該盡量把握每分每秒。'],
+ ['不但他功課很好，而且他也很會打籃球。','關聯詞位置：主詞相同時，「不但」要放在主詞後面。','他不但功課很好，而且很會打籃球。']
+];
+document.getElementById('fixList').innerHTML=FIX.map((f,i)=>`<details class="rv" style="--tc:var(--mint)"><summary>原句 ${i+1}：${f[0]}</summary><div class="ans"><b>→ 問題：</b>${f[1]}<br><b>→ 改寫後：</b>${f[2]}</div></details>`).join('');
+
+/* ---------- 寫作輸入保存 ---------- */
+document.querySelectorAll('[data-save]').forEach(el=>{
+  const k=el.dataset.save;const v=store.text[k];
+  if(el.type==='checkbox'){el.checked=!!v;el.addEventListener('change',()=>{store.text[k]=el.checked;save();});}
+  else{if(v)el.value=v;el.addEventListener('input',()=>{store.text[k]=el.value;save();if(k==='essay')cnt();});}
+});
+function cnt(){const n=(document.getElementById('essay').value.match(/[一-鿿]/g)||[]).length;
+  const el=document.getElementById('essayCnt');el.textContent=n+' 字'+(n<150?'（還差 '+(150-n)+' 字）':n>250?'（超過 250 字囉）':' ✅ 字數剛好');}
+cnt();
+
+updateScore();
+let start='home';try{start=sessionStorage.getItem(KEY+'-tab')||'home'}catch(e){}
+go(TABS.some(t=>t[0]===start)?start:'home');
+})();
+</script>
+</body></html>
