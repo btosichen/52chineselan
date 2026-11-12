@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第八課 飢渴好「火」伴｜小火苗復習站</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFF8E7;
+  --ink:#3A2E4F;
+  --soft:#6B5B85;
+  --orange:#FF7A2F;
+  --yellow:#FFC93C;
+  --red:#FF5C6C;
+  --pink:#FF8FB8;
+  --sky:#3FB8FF;
+  --mint:#2EC4A0;
+  --purple:#9B6BFF;
+  --lime:#8BD346;
+  --card:#FFFFFF;
+  --line:#FFE2B8;
+  --radius:24px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  font-size:20px;line-height:1.75;color:var(--ink);
+  background:var(--bg);
+  background-image:
+    radial-gradient(circle at 8% 12%, #FFE7A8 0 60px, transparent 61px),
+    radial-gradient(circle at 92% 30%, #D6F2FF 0 80px, transparent 81px),
+    radial-gradient(circle at 15% 85%, #FFD9E8 0 70px, transparent 71px),
+    radial-gradient(circle at 88% 90%, #D8F7EC 0 90px, transparent 91px);
+  background-attachment:fixed;
+}
+/* ---------- header ---------- */
+header{
+  background:linear-gradient(120deg,#FF9A3C 0%,#FF5C6C 50%,#FF8FB8 100%);
+  color:#fff;padding:22px 20px 70px;text-align:center;position:relative;overflow:hidden;
+}
+header::after{
+  content:"";position:absolute;left:0;right:0;bottom:-2px;height:50px;
+  background:var(--bg);
+  border-radius:50% 50% 0 0 / 100% 100% 0 0;
+}
+.brand{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+.brand svg{width:96px;height:96px;filter:drop-shadow(0 6px 0 rgba(0,0,0,.12));animation:bob 2.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+.brand h1{margin:0;font-size:40px;font-weight:900;letter-spacing:2px;text-shadow:0 4px 0 rgba(0,0,0,.15)}
+.brand .sub{font-size:20px;font-weight:700;opacity:.95}
+.chips{margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.chip{background:rgba(255,255,255,.25);border:2px solid rgba(255,255,255,.6);padding:2px 14px;border-radius:999px;font-size:17px;font-weight:700}
+
+/* ---------- nav ---------- */
+nav{
+  position:sticky;top:0;z-index:20;background:rgba(255,248,231,.92);backdrop-filter:blur(8px);
+  padding:10px 10px;display:flex;gap:10px;overflow-x:auto;justify-content:flex-start;
+  border-bottom:3px dashed var(--line);
+}
+@media(min-width:1000px){nav{justify-content:center}}
+nav button{
+  flex:0 0 auto;border:none;cursor:pointer;font-family:inherit;font-size:19px;font-weight:900;
+  padding:10px 18px;border-radius:999px;color:#fff;box-shadow:0 5px 0 rgba(0,0,0,.15);
+  transition:transform .15s;
+}
+nav button:hover{transform:translateY(-2px)}
+nav button.active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.15);outline:4px solid #fff;outline-offset:-4px}
+.n0{background:var(--orange)}.n1{background:var(--sky)}.n2{background:var(--mint)}.n3{background:var(--purple)}.n4{background:var(--pink)}.n5{background:var(--lime)}.n6{background:var(--yellow);color:var(--ink)!important}
+
+main{max-width:1000px;margin:0 auto;padding:20px 16px 80px}
+section.page{display:none;animation:pop .35s ease}
+section.page.show{display:block}
+@keyframes pop{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+h2{font-size:32px;font-weight:900;margin:10px 0 14px;display:flex;align-items:center;gap:10px}
+h3{font-size:25px;font-weight:900;margin:0 0 10px}
+.card{
+  background:var(--card);border-radius:var(--radius);padding:22px 24px;margin:18px 0;
+  box-shadow:0 8px 0 rgba(255,166,77,.18), 0 2px 12px rgba(0,0,0,.05);
+  border:3px solid var(--line);
+}
+.card.c-orange{border-color:#FFC79A}.card.c-sky{border-color:#A9DEFF}.card.c-mint{border-color:#9FE8D3}
+.card.c-purple{border-color:#D3BDFF}.card.c-pink{border-color:#FFC3DA}.card.c-yellow{border-color:#FFE08A}.card.c-lime{border-color:#C8EDA3}
+.tag{display:inline-block;padding:2px 12px;border-radius:999px;font-size:16px;font-weight:900;color:#fff;margin-right:6px;vertical-align:middle}
+.t-orange{background:var(--orange)}.t-sky{background:var(--sky)}.t-mint{background:var(--mint)}.t-purple{background:var(--purple)}.t-pink{background:var(--pink)}.t-red{background:var(--red)}.t-lime{background:var(--lime)}.t-yellow{background:var(--yellow);color:var(--ink)}
+.hl{background:linear-gradient(transparent 55%, #FFE27A 55%);font-weight:700}
+.hl-pink{background:linear-gradient(transparent 55%, #FFC9DE 55%);font-weight:700}
+.hl-sky{background:linear-gradient(transparent 55%, #C6E9FF 55%);font-weight:700}
+.big{font-size:23px;font-weight:700}
+.muted{color:var(--soft)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.mini{border-radius:18px;padding:14px 16px;font-size:19px}
+.bg-y{background:#FFF4CC}.bg-s{background:#E3F4FF}.bg-m{background:#E0F8F1}.bg-p{background:#F0E8FF}.bg-k{background:#FFE9F2}.bg-o{background:#FFEBDD}.bg-l{background:#EEF9E2}
+
+/* hero intro bubble */
+.speech{display:flex;gap:14px;align-items:flex-start}
+.speech svg{flex:0 0 70px;width:70px;height:70px}
+.bubble{background:#FFF4CC;border-radius:20px;padding:14px 18px;position:relative;font-weight:500}
+.bubble::before{content:"";position:absolute;left:-12px;top:22px;border:8px solid transparent;border-right:12px solid #FFF4CC;border-left:0}
+
+/* timeline */
+.timeline{position:relative;margin:10px 0 0;padding-left:34px}
+.timeline::before{content:"";position:absolute;left:14px;top:6px;bottom:6px;width:6px;border-radius:6px;background:linear-gradient(#FFC93C,#FF7A2F,#FF5C6C,#9B6BFF,#3FB8FF,#2EC4A0)}
+.step{position:relative;margin:0 0 16px;padding:12px 16px;border-radius:18px;background:#fff;border:3px solid var(--line)}
+.step::before{content:attr(data-n);position:absolute;left:-38px;top:12px;width:30px;height:30px;border-radius:50%;background:var(--orange);color:#fff;font-weight:900;font-size:17px;display:flex;align-items:center;justify-content:center;border:3px solid #fff;box-shadow:0 2px 0 rgba(0,0,0,.15)}
+.step b.ttl{font-size:21px}
+.emo{float:right;font-size:17px;font-weight:900;padding:0 10px;border-radius:999px;background:#FFE9F2;color:#D9346B;margin-left:8px}
+
+/* flashcards */
+.flash{perspective:900px;height:150px;cursor:pointer}
+.flash .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flash.flip .in{transform:rotateY(180deg)}
+.flash .f,.flash .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px}
+.flash .f{background:linear-gradient(135deg,#FFD66B,#FF9A3C);color:#fff}
+.flash .f .ch{font-size:58px;font-weight:900;line-height:1;text-shadow:0 3px 0 rgba(0,0,0,.15)}
+.flash .f small{font-size:15px;font-weight:700;opacity:.95;margin-top:6px}
+.flash .b{background:#fff;border:3px solid #FFC79A;transform:rotateY(180deg);font-size:18px;line-height:1.5}
+.flash .b .zy{font-size:22px;font-weight:900;color:var(--orange)}
+
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:19px;overflow:hidden;border-radius:16px}
+th{background:var(--sky);color:#fff;padding:10px;font-weight:900}
+td{padding:10px;border-bottom:2px dashed #E3F4FF;background:#fff;vertical-align:top}
+tr:nth-child(even) td{background:#F6FBFF}
+
+/* emotion chart */
+.chartwrap{overflow-x:auto}
+.chartwrap svg{min-width:720px;width:100%;height:auto}
+
+/* ---------- quiz ---------- */
+.progress{height:18px;background:#FFF;border-radius:999px;border:3px solid var(--line);overflow:hidden;margin:6px 0 4px}
+.progress div{height:100%;width:0;background:linear-gradient(90deg,#FFC93C,#FF7A2F);border-radius:999px;transition:width .4s}
+.qcard{background:#fff;border-radius:var(--radius);padding:20px 22px;margin:18px 0;border:3px solid var(--line);box-shadow:0 6px 0 rgba(0,0,0,.05)}
+.qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.qnum{width:42px;height:42px;border-radius:14px;color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:21px}
+.qtext{font-size:21px;font-weight:700;margin:6px 0 12px}
+.qctx{background:#FFF8E7;border-left:8px solid var(--yellow);border-radius:12px;padding:10px 14px;margin:6px 0 12px;font-size:19px}
+.opts{display:grid;gap:10px}
+.opt{
+  text-align:left;font-family:inherit;font-size:20px;font-weight:500;color:var(--ink);
+  background:#F9F6FF;border:3px solid #E5DCFF;border-radius:16px;padding:12px 16px;cursor:pointer;
+  display:flex;gap:12px;align-items:flex-start;transition:transform .12s, background .12s;
+}
+.opt:hover:not(:disabled){transform:translateX(4px);background:#F0E8FF}
+.opt .lt{flex:0 0 34px;height:34px;border-radius:50%;background:#fff;border:3px solid #D3BDFF;display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--purple)}
+.opt.right{background:#DDF8EE;border-color:var(--mint)}
+.opt.right .lt{background:var(--mint);border-color:var(--mint);color:#fff}
+.opt.wrong{background:#FFE3E6;border-color:var(--red)}
+.opt.wrong .lt{background:var(--red);border-color:var(--red);color:#fff}
+.opt:disabled{cursor:default}
+.fb{display:none;margin-top:14px;border-radius:16px;padding:14px 16px;font-size:19px}
+.fb.show{display:block;animation:pop .3s}
+.fb.ok{background:#E0F8F1;border:3px solid #9FE8D3}
+.fb.no{background:#FFF0E0;border:3px solid #FFC79A}
+.fb .say{font-weight:900;font-size:21px}
+.fb .ev{margin-top:8px;background:#fff;border-radius:12px;padding:8px 12px;border:2px dashed #FFC93C}
+.btn{
+  font-family:inherit;font-size:19px;font-weight:900;border:none;border-radius:999px;padding:10px 22px;cursor:pointer;color:#fff;
+  box-shadow:0 5px 0 rgba(0,0,0,.15);transition:transform .12s;
+}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.15)}
+.b-orange{background:var(--orange)}.b-sky{background:var(--sky)}.b-mint{background:var(--mint)}.b-purple{background:var(--purple)}.b-pink{background:var(--pink)}
+.reveal{display:none;margin-top:12px;background:#E0F8F1;border-radius:16px;padding:12px 16px;border:3px dashed var(--mint)}
+.reveal.show{display:block;animation:pop .3s}
+.scorebar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:#fff;border-radius:20px;padding:12px 18px;border:3px solid var(--line)}
+.scorebar .s{font-size:24px;font-weight:900}
+.stars{font-size:28px;letter-spacing:2px}
+textarea,input[type=text]{
+  width:100%;font-family:inherit;font-size:20px;border:3px solid #FFD98A;border-radius:16px;padding:12px 14px;background:#FFFDF6;color:var(--ink);
+}
+textarea:focus,input:focus{outline:none;border-color:var(--orange)}
+.counter{text-align:right;font-weight:700;color:var(--soft);font-size:17px}
+.check{display:flex;gap:10px;align-items:flex-start;margin:6px 0;font-size:19px;cursor:pointer}
+.check input{width:24px;height:24px;margin-top:6px;accent-color:var(--mint)}
+.scaffold{background:#F0E8FF;border-radius:16px;padding:12px 16px;font-size:19px;line-height:2}
+.scaffold u{text-decoration:none;border-bottom:3px dotted var(--purple);padding:0 30px}
+.lvl{font-size:16px;font-weight:900;padding:2px 10px;border-radius:999px}
+.lv1{background:#E3F4FF;color:#1A84C7}.lv2{background:#FFEBDD;color:#D2561A}.lv3{background:#F0E8FF;color:#6E3FD9}
+
+/* result page */
+.medal{font-size:70px;text-align:center;line-height:1.2}
+.rrow{display:flex;align-items:center;gap:12px;margin:10px 0}
+.rrow .lab{flex:0 0 130px;font-weight:900}
+.rrow .bar{flex:1;height:26px;background:#fff;border-radius:999px;border:3px solid var(--line);overflow:hidden}
+.rrow .bar div{height:100%;border-radius:999px}
+.rrow .num{flex:0 0 80px;text-align:right;font-weight:900}
+
+/* confetti */
+.confetti{position:fixed;top:-20px;font-size:26px;pointer-events:none;z-index:99;animation:fall 1.4s linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(540deg);opacity:.2}}
+.toTop{position:fixed;right:16px;bottom:16px;width:58px;height:58px;border-radius:50%;border:none;background:var(--orange);color:#fff;font-size:28px;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.18);z-index:30}
+footer{text-align:center;color:var(--soft);font-size:16px;padding:20px}
+@media(max-width:600px){
+  body{font-size:19px}
+  .brand h1{font-size:30px}
+  h2{font-size:27px}
+  .card{padding:18px 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- reusable mascot -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="fg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE15A"/><stop offset=".55" stop-color="#FFA23A"/><stop offset="1" stop-color="#FF5C3C"/>
+    </linearGradient>
+    <symbol id="mascot" viewBox="0 0 100 110">
+      <path d="M50 4 C58 22 80 30 82 58 C85 88 66 104 50 104 C32 104 15 90 18 64 C20 46 32 42 34 26 C40 36 44 40 46 44 C46 30 44 18 50 4Z" fill="url(#fg)" stroke="#E2502A" stroke-width="3"/>
+      <path d="M50 46 C56 56 66 62 64 78 C62 92 54 96 50 96 C42 96 36 90 37 80 C38 70 46 66 50 46Z" fill="#FFF3A6" opacity=".85"/>
+      <ellipse cx="40" cy="70" rx="5" ry="6.5" fill="#3A2E4F"/><ellipse cx="60" cy="70" rx="5" ry="6.5" fill="#3A2E4F"/>
+      <circle cx="42" cy="67.5" r="1.8" fill="#fff"/><circle cx="62" cy="67.5" r="1.8" fill="#fff"/>
+      <ellipse cx="31" cy="80" rx="6" ry="3.5" fill="#FF7FA8" opacity=".8"/><ellipse cx="69" cy="80" rx="6" ry="3.5" fill="#FF7FA8" opacity=".8"/>
+      <path d="M43 81 Q50 89 57 81" fill="none" stroke="#3A2E4F" stroke-width="3" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header>
+  <div class="brand">
+    <svg><use href="#mascot"/></svg>
+    <div>
+      <div class="sub">🔥 小火苗復習站 · 六上國語</div>
+      <h1>第八課　飢渴好「火」伴</h1>
+    </div>
+  </div>
+  <div class="chips">
+    <span class="chip">📚 改寫自《手斧男孩》</span>
+    <span class="chip">✍️ 蓋瑞．伯森</span>
+    <span class="chip">📖 記敘文本（小說）</span>
+  </div>
+</header>
+
+<nav id="nav">
+  <button class="n0 active" data-p="p0">📖 課文重點</button>
+  <button class="n1" data-p="p1">🔍 閱讀理解</button>
+  <button class="n2" data-p="p2">🧩 成語情境</button>
+  <button class="n3" data-p="p3">🔧 語病句型</button>
+  <button class="n4" data-p="p4">🎨 修辭</button>
+  <button class="n5" data-p="p5">✏️ 寫作</button>
+  <button class="n6" data-p="p6">🏆 我的成績</button>
+</nav>
+
+<main>
+
+<!-- ======================= P0 重點 ======================= -->
+<section class="page show" id="p0">
+  <div class="card c-yellow">
+    <div class="speech">
+      <svg><use href="#mascot"/></svg>
+      <div class="bubble">嗨！我是<b>小火苗</b>🔥 今天我們要跟著布萊恩，看他怎麼在森林裡把我「生」出來！<br>建議順序：<span class="hl">先讀重點 ➜ 翻生字卡 ➜ 再做五大模組練習</span>，最後到「我的成績」看星星⭐</div>
+    </div>
+  </div>
+
+  <h2>🗺️ 一、課文快速看懂</h2>
+  <div class="grid2">
+    <div class="card c-orange">
+      <h3><span class="tag t-orange">大意</span>這課在說什麼？</h3>
+      <p style="margin:0">墜機後獨自在森林求生的<b>布萊恩</b>，在黑暗中又怕又孤單，開始<span class="hl">自怨自艾</span>。後來他想起手斧打到岩壁會<b>擦出火花</b>，於是試著生火。經過<span class="hl">四次嘗試</span>，最後用<b>樺樹皮毛鬚</b>加上<b>輕柔吹氣</b>，終於成功！他把「火」當成好朋友，也更想念爸媽。</p>
+    </div>
+    <div class="card c-pink">
+      <h3><span class="tag t-pink">主旨</span>作者想告訴我們</h3>
+      <p class="big" style="margin:0">人在<span class="hl-pink">孤獨無助</span>時需要朋友的陪伴；遇到<span class="hl-pink">困境</span>時，要冷靜思考，<span class="hl-pink">勇敢突破自己</span>。</p>
+    </div>
+  </div>
+
+  <div class="card c-sky">
+    <h3><span class="tag t-sky">背景</span>布萊恩為什麼在森林裡？</h3>
+    <div class="grid3">
+      <div class="mini bg-s">👦 13 歲，從小在<b>城市</b>長大</div>
+      <div class="mini bg-s">✈️ 搭<b>單引擎小飛機</b>去油田探視爸爸</div>
+      <div class="mini bg-s">💔 駕駛員<b>心臟病猝死</b>，飛機墜落在<b>杳無人煙</b>的森林</div>
+      <div class="mini bg-s">🪓 靠著媽媽送的<b>手斧</b>在荒野求生</div>
+    </div>
+  </div>
+
+  <h2>🔥 二、生火大冒險（課文結構）</h2>
+  <div class="card c-orange">
+    <div class="timeline">
+      <div class="step" data-n="1"><span class="emo">😢 自怨自艾</span><b class="ttl">生火動機</b><br>第三天深夜被<b>豪豬</b>攻擊，腿上扎了刺；長期在<b>沒有火光的黑暗</b>中，又怕又孤單，哭到<b>筋疲力盡</b>睡著。</div>
+      <div class="step" data-n="2"><span class="emo">🤩 振奮</span><b class="ttl">找到靈感</b><br>醒來看到晨光中手斧的<b>金屬閃光</b>，想起昨晚丟手斧打中岩壁，<b>擦出一串火花</b> → <span class="hl">靈光一閃</span>：可以用手斧生火！</div>
+      <div class="step" data-n="3"><span class="emo">😣 苦惱</span><b class="ttl">第一次嘗試：乾草 ❌</b><br>用<b>斧背</b>敲岩壁敲出火花，丟到<b>乾草</b>上，火花卻熄滅。他發現需要<span class="hl">「絨毛般既細又軟的東西」</span>，例如碎紙片。</div>
+      <div class="step" data-n="4"><span class="emo">😞 頹喪</span><b class="ttl">第二次嘗試：樺樹毛鬚 ❌</b><br>發現<b>樺樹皮</b>像乾淨的紙，剝下細細的<b>毛鬚</b>，收集到<b>棒球般大小</b>。火花竄入後好像燒旺了些，<b>還是熄了</b>。他頹然跌坐：「那些火花跟我一樣，也快被餓死了。」</div>
+      <div class="step" data-n="5"><span class="emo">🧐 冷靜堅持</span><b class="ttl">第三次嘗試：用力吹氣 ❌</b><br>他<b>回想科學課</b>：生火要有<b>燃料</b>（樹皮毛鬚已有）和<b>氧氣</b>！於是用力吹氣，結果<b>太賣力</b>，把小火花<b>吹熄了</b>。</div>
+      <div class="step" data-n="6"><span class="emo">🥳 狂喜</span><b class="ttl">第四次嘗試：輕柔吹氣 ✅</b><br>改成<b>輕輕的吹</b>，小火花變成「火蟲」、紅炭，最後化為<b>烈焰</b>！「火！有火了！有火了！」</div>
+      <div class="step" data-n="7"><span class="emo">😊 歡欣</span><b class="ttl">穩定燃燒</b><br>加入<b>細樹枝 → 大木頭</b>，火燒得穩定，他才鬆口氣。他有了一個名叫「火」的朋友，<b>既是朋友，也是守衛</b>。</div>
+      <div class="step" data-n="8"><span class="emo">🥺 思念</span><b class="ttl">結尾</b><br>他想和人分享成功，四周卻<b>空無一人</b>；他好想知道<b>爸爸、媽媽</b>現在正在做什麼。</div>
+    </div>
+  </div>
+
+  <h2>📈 三、布萊恩的心情雲霄飛車</h2>
+  <div class="card c-purple">
+    <p class="muted" style="margin-top:0">考試超愛考「<b>從事件推論人物情緒</b>」！看動作、表情、說的話，就能讀出心情。</p>
+    <div class="chartwrap">
+    <svg viewBox="0 0 760 330" role="img" aria-label="布萊恩情緒變化折線圖">
+      <defs><linearGradient id="lg" x1="0" x2="1"><stop offset="0" stop-color="#3FB8FF"/><stop offset=".5" stop-color="#FF7A2F"/><stop offset="1" stop-color="#FF5C6C"/></linearGradient></defs>
+      <line x1="50" y1="20" x2="50" y2="270" stroke="#C9B8E8" stroke-width="3"/>
+      <line x1="50" y1="270" x2="740" y2="270" stroke="#C9B8E8" stroke-width="3"/>
+      <line x1="50" y1="160" x2="740" y2="160" stroke="#E5DCFF" stroke-width="2" stroke-dasharray="8 6"/>
+      <text x="8" y="40" font-size="15" fill="#9B6BFF" font-weight="900">開心</text>
+      <text x="8" y="262" font-size="15" fill="#9B6BFF" font-weight="900">難過</text>
+      <polyline fill="none" stroke="url(#lg)" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"
+        points="90,235 175,80 260,175 345,215 430,145 515,45 600,70 685,135"/>
+      <g font-size="15" font-weight="900" text-anchor="middle" fill="#3A2E4F">
+        <circle cx="90" cy="235" r="9" fill="#3FB8FF"/><text x="90" y="222">😢自怨自艾</text>
+        <circle cx="175" cy="80" r="9" fill="#FFC93C"/><text x="175" y="66">🤩振奮</text>
+        <circle cx="260" cy="175" r="9" fill="#FF9A3C"/><text x="260" y="203">😣苦惱抱憾</text>
+        <circle cx="345" cy="215" r="9" fill="#FF7A2F"/><text x="345" y="243">😞頹喪</text>
+        <circle cx="430" cy="145" r="9" fill="#2EC4A0"/><text x="430" y="131">🧐冷靜堅持</text>
+        <circle cx="515" cy="45" r="9" fill="#FF5C6C"/><text x="515" y="31">🥳狂喜</text>
+        <circle cx="600" cy="70" r="9" fill="#FF8FB8"/><text x="618" y="98">😊歡欣</text>
+        <circle cx="685" cy="135" r="9" fill="#9B6BFF"/><text x="690" y="121">🥺思念</text>
+      </g>
+      <g font-size="14" text-anchor="middle" fill="#6B5B85" font-weight="700">
+        <text x="90" y="292">負傷</text><text x="175" y="292">找到靈感</text><text x="260" y="292">第一次</text><text x="345" y="292">第二次</text>
+        <text x="430" y="292">第三次</text><text x="515" y="292">第四次</text><text x="600" y="292">穩定燃燒</text><text x="685" y="292">結尾</text>
+        <text x="90" y="312">段1</text><text x="175" y="312">段2</text><text x="260" y="312">段3</text><text x="345" y="312">段4</text><text x="430" y="312">段5</text><text x="515" y="312">段6</text><text x="600" y="312">段7</text><text x="685" y="312">段8</text>
+      </g>
+    </svg>
+    </div>
+  </div>
+
+  <h2>🏅 四、成功生火的祕訣（成功要素）</h2>
+  <div class="grid3">
+    <div class="mini bg-o"><b>💪 不放棄</b><br>失敗三次，仍繼續嘗試。</div>
+    <div class="mini bg-s"><b>🧠 冷靜思考</b><br>從頹喪中振作，靜心回想。</div>
+    <div class="mini bg-m"><b>🔬 運用所學</b><br>想起科學課：燃料＋氧氣。</div>
+    <div class="mini bg-p"><b>🔁 從失敗中修正</b><br>乾草→樺樹毛鬚；用力吹→輕吹。</div>
+    <div class="mini bg-k"><b>👀 觀察環境</b><br>發現金屬閃光、湖邊樺樹。</div>
+    <div class="mini bg-l"><b>🏃 有行動力</b><br>想到就做，一試再試。</div>
+  </div>
+
+  <h2>🎯 五、生字卡（點一下翻面）</h2>
+  <div class="grid3" id="flashGrid"></div>
+
+  <h2>⚠️ 六、易錯字音字形</h2>
+  <div class="card c-sky">
+    <table>
+      <tr><th>比一比</th><th>讀音＆語詞</th><th>記憶小撇步</th></tr>
+      <tr><td><b>怨</b> / 怒</td><td>ㄩㄢˋ 埋怨 ／ ㄋㄨˋ 怒火</td><td>心裡「怨」：夗＋心</td></tr>
+      <tr><td><b>艾</b></td><td>ㄧˋ 自怨自<b>艾</b> ／ ㄞˋ <b>艾</b>草</td><td>⚡ 自怨自艾的艾唸 <b>ㄧˋ</b>！</td></tr>
+      <tr><td><b>枕</b> / 耽</td><td>ㄓㄣˇ 枕頭 ／ ㄓㄣˋ 枕戈待旦 ／ ㄉㄢ 耽誤</td><td>當「墊著頭」的動作時唸 ㄓㄣˋ</td></tr>
+      <tr><td><b>臂</b> / 壁 / 譬</td><td>ㄅㄧˋ 手臂 ／ ㄅㄧˋ 岩壁 ／ ㄆㄧˋ 譬喻</td><td>手用「月」、牆用「土」、說話用「言」</td></tr>
+      <tr><td><b>膝</b> / 漆</td><td>ㄒㄧ 膝蓋 ／ ㄑㄧ 一片漆黑</td><td>身體部位用「月」</td></tr>
+      <tr><td><b>焰</b> / 陷</td><td>ㄧㄢˋ 火焰 ／ ㄒㄧㄢˋ 陷阱</td><td>有火才是「焰」</td></tr>
+      <tr><td><b>惱</b> / 腦</td><td>ㄋㄠˇ 苦惱 ／ 頭腦</td><td>心情用「忄」、身體用「月」</td></tr>
+      <tr><td><b>鬚</b> / 鬍 / 鬆 / 髮</td><td>ㄒㄩ 毛鬚 ／ 鬍鬚 ／ 放鬆 ／ 頭髮</td><td>都和「毛髮」有關，部首「髟」</td></tr>
+      <tr><td><b>剝</b> / 綠 / 錄</td><td>ㄅㄛ 剝開 ／ 綠色 ／ 錄音</td><td>用刀「剝」：右邊是「刂」</td></tr>
+      <tr><td><b>竄</b> / 鼠</td><td>ㄘㄨㄢˋ 竄入 ／ ㄕㄨˇ 松鼠</td><td>老鼠鑽進「穴」裡＝竄</td></tr>
+      <tr><td><b>熾</b> / 織 / 識 / 職</td><td>ㄔˋ 熾熱 ／ ㄓ 織物 ／ ㄕˋ 辨識 ／ ㄓˊ 職業</td><td>很熱用「火」</td></tr>
+      <tr><td><b>炭</b> / 灰</td><td>ㄊㄢˋ 紅炭 ／ ㄏㄨㄟ 灰色</td><td>山下有火＝炭</td></tr>
+      <tr><td><b>飢</b> / 肌</td><td>ㄐㄧ 飢渴 ／ 肌膚</td><td>肚子餓跟「食」有關</td></tr>
+      <tr><td><b>緒</b> / 諸</td><td>ㄒㄩˋ 思緒 ／ ㄓㄨ 諸位</td><td>思緒像「絲線」一樣</td></tr>
+      <tr><td>熄 / 跌 / 瞬 / 頹</td><td>ㄒㄧ 熄滅 ／ ㄉㄧㄝ 跌坐 ／ ㄕㄨㄣˋ 瞬間 ／ ㄊㄨㄟˊ 頹然</td><td>瞬：眨「目」之間</td></tr>
+      <tr><td>猝 / 樺 / 裊 / 杳</td><td>ㄘㄨˋ 猝死 ／ ㄏㄨㄚˋ 樺樹 ／ ㄋㄧㄠˇ 裊裊 ／ ㄧㄠˇ 杳無人煙</td><td>樺唸「畫」不是「華」</td></tr>
+    </table>
+  </div>
+
+  <h2>📒 七、重要語詞</h2>
+  <div class="grid2" id="vocabGrid"></div>
+
+  <h2>🧱 八、必考句型</h2>
+  <div class="card c-mint" id="patternBox"></div>
+
+  <h2>🎨 九、修辭寶盒</h2>
+  <div class="card c-pink" id="rhetBox"></div>
+
+  <div style="text-align:center;margin-top:24px">
+    <button class="btn b-sky" onclick="go('p1')">讀完了！開始練習 ➜ 🔍 閱讀理解</button>
+  </div>
+</section>
+
+<!-- ======================= P1 閱讀 ======================= -->
+<section class="page" id="p1">
+  <h2>🔍 模組一｜閱讀理解</h2>
+  <div class="card c-sky"><div class="speech"><svg><use href="#mascot"/></svg><div class="bubble">口訣：<b>答案一定在文章裡，不在腦袋裡！</b>每題都會告訴你「證據」在哪一段喔。<br><span class="lvl lv1">第一層 找資訊</span> <span class="lvl lv2">第二層 想原因</span> <span class="lvl lv3">第三層 做判斷</span></div></div></div>
+  <div class="scorebar"><span class="s" id="sc-read">得分：0 / 0</span><span class="stars" id="st-read"></span><button class="btn b-sky" onclick="resetQuiz('read')">🔄 重新作答</button></div>
+  <div class="progress"><div id="pg-read"></div></div>
+  <div id="q-read"></div>
+</section>
+
+<!-- ======================= P2 成語 ======================= -->
+<section class="page" id="p2">
+  <h2>🧩 模組二｜成語情境判斷</h2>
+  <div class="card c-mint"><div class="speech"><svg><use href="#mascot"/></svg><div class="bubble">不只要知道意思，還要<b>用在對的情境</b>！小心「意思很像但用錯地方」的陷阱選項。</div></div></div>
+  <div class="card c-mint">
+    <h3>📚 本課成語小字典</h3>
+    <div class="grid2" id="idiomDict"></div>
+  </div>
+  <div class="scorebar"><span class="s" id="sc-idiom">得分：0 / 0</span><span class="stars" id="st-idiom"></span><button class="btn b-mint" onclick="resetQuiz('idiom')">🔄 重新作答</button></div>
+  <div class="progress"><div id="pg-idiom"></div></div>
+  <div id="q-idiom"></div>
+</section>
+
+<!-- ======================= P3 語病 ======================= -->
+<section class="page" id="p3">
+  <h2>🔧 模組三｜語病句型結構</h2>
+  <div class="card c-purple">
+    <div class="speech"><svg><use href="#mascot"/></svg><div class="bubble">找出句子裡<b>多餘的字</b>和<b>配不起來的結構</b>！先認識五種常見語病 👇</div></div>
+    <div class="grid3" style="margin-top:14px">
+      <div class="mini bg-p"><b>① 語意重複</b><br>「大約…<s>左右</s>」意思重複</div>
+      <div class="mini bg-p"><b>② 關聯詞誤用</b><br>「雖然…<s>而且</s>」→ 雖然…但是</div>
+      <div class="mini bg-p"><b>③ 成分殘缺</b><br>「<s>透過</s>…<s>使</s>我」→ 沒有主角</div>
+      <div class="mini bg-p"><b>④ 搭配不當</b><br>「提高…<s>方法</s>」→ 改進方法</div>
+      <div class="mini bg-p"><b>⑤ 詞序錯誤</b><br>修飾語放錯位置</div>
+    </div>
+  </div>
+  <div class="scorebar"><span class="s" id="sc-grammar">得分：0 / 0</span><span class="stars" id="st-grammar"></span><button class="btn b-purple" onclick="resetQuiz('grammar')">🔄 重新作答</button></div>
+  <div class="progress"><div id="pg-grammar"></div></div>
+  <div id="q-grammar"></div>
+  <h2 style="margin-top:30px">✂️ 語病改寫挑戰</h2>
+  <div id="fix-grammar"></div>
+</section>
+
+<!-- ======================= P4 修辭 ======================= -->
+<section class="page" id="p4">
+  <h2>🎨 模組四｜修辭（畫面＋情緒）</h2>
+  <div class="card c-pink"><div class="speech"><svg><use href="#mascot"/></svg><div class="bubble">把文字變成<b>畫面</b>，再從畫面讀出<b>情緒</b>！不會的話，回「課文重點 → 修辭寶盒」複習一下。</div></div></div>
+  <div class="scorebar"><span class="s" id="sc-rhet">得分：0 / 0</span><span class="stars" id="st-rhet"></span><button class="btn b-pink" onclick="resetQuiz('rhet')">🔄 重新作答</button></div>
+  <div class="progress"><div id="pg-rhet"></div></div>
+  <div id="q-rhet"></div>
+
+  <h2 style="margin-top:30px">🖼️ 修辭效果分析（用鷹架回答）</h2>
+  <div class="card c-pink">
+    <div class="qctx">「<b>紅色熾熱的火蟲爬上樹皮毛鬚</b>，與其他樹皮會合，壯大……」</div>
+    <div class="scaffold">
+      這句話用了【<u>　　</u>】修辭。<br>
+      畫面：我看到了<u>　　　　　　</u><br>
+      情緒：這讓我感覺<u>　　　　　　</u><br>
+      作者想強調的是<u>　　　　　　</u>
+    </div>
+    <textarea rows="4" placeholder="照著上面的鷹架，寫下你的答案…" style="margin-top:12px"></textarea>
+    <button class="btn b-pink" style="margin-top:10px" onclick="this.nextElementSibling.classList.toggle('show')">👀 看參考答案</button>
+    <div class="reveal">
+      這句話用了【<b>譬喻＋擬人＋摹寫（視覺、觸覺）</b>】修辭。<br>
+      畫面：小小的紅色火花像一隻隻發光的小蟲，<b>慢慢爬</b>上樹皮毛鬚，越聚越大。<br>
+      情緒：讓人感到<b>緊張又期待</b>，好像跟著布萊恩屏住呼吸。<br>
+      作者想強調：火苗<b>正在一點一點長大</b>，布萊恩終於快要成功了！
+    </div>
+  </div>
+  <div class="card c-pink">
+    <div class="qctx">「<b>那些火花跟我一樣，也快被餓死了。</b>」</div>
+    <textarea rows="3" placeholder="這句話除了說火花熄滅，還表達了布萊恩什麼心情？"></textarea>
+    <button class="btn b-pink" style="margin-top:10px" onclick="this.nextElementSibling.classList.toggle('show')">👀 看參考答案</button>
+    <div class="reveal">用<b>擬人</b>把火花寫成會「餓」的人：火花缺燃料和氧氣，布萊恩自己也缺食物。<br>表達布萊恩覺得自己和火花一樣<b>快撐不下去</b>，心情<b>頹喪、無力、自嘲</b>。</div>
+  </div>
+
+  <h2 style="margin-top:30px">✨ 仿寫修辭句</h2>
+  <div class="card c-pink" id="imitateBox"></div>
+</section>
+
+<!-- ======================= P5 寫作 ======================= -->
+<section class="page" id="p5">
+  <h2>✏️ 模組五｜寫作整合</h2>
+  <div class="card c-lime">
+    <h3>🚀 寫作升級三招</h3>
+    <div class="grid3">
+      <div class="mini bg-l"><b>① 加感覺（五感）</b><br><s class="muted">我很開心</s><br>✅ 我笑到肚子痛，眼睛都瞇起來了</div>
+      <div class="mini bg-y"><b>② 加畫面</b><br><s class="muted">火燒起來了</s><br>✅ 紅色的小火花像火蟲一樣，一路爬上樹皮</div>
+      <div class="mini bg-k"><b>③ 加心情轉折</b><br>一開始😣 → 後來😞 → 最後我發現…😊</div>
+    </div>
+  </div>
+
+  <h2>🅰️ 造句練習</h2>
+  <div id="sentBox"></div>
+
+  <h2>🅱️ 仿寫句型</h2>
+  <div id="copyBox"></div>
+
+  <h2>🅲 短文寫作</h2>
+  <div class="card c-lime">
+    <h3>題目：〈那一次，我沒有放棄〉</h3>
+    <p style="margin:4px 0">布萊恩失敗了三次，最後靠冷靜思考成功生火。你有沒有遇過「一直失敗、差點想放棄」的事？請寫一篇 <b>150～250 字</b> 的短文。</p>
+    <div class="grid3" style="margin:10px 0">
+      <div class="mini bg-s">1️⃣ <b>說明事件</b>：遇到什麼困難？</div>
+      <div class="mini bg-y">2️⃣ <b>加入感受</b>：用五感寫出失敗時的心情</div>
+      <div class="mini bg-k">3️⃣ <b>心情轉變</b>：怎麼調整方法？最後領悟什麼？</div>
+    </div>
+    <textarea id="essay" rows="9" placeholder="在這裡寫下你的短文…（會自動幫你存起來）"></textarea>
+    <div class="counter" id="essayCount">0 字</div>
+    <h3 style="margin-top:14px">✅ 寫完自我檢查</h3>
+    <div id="essayChecks"></div>
+    <button class="btn b-mint" style="margin-top:10px" onclick="this.nextElementSibling.classList.toggle('show')">📝 看範文</button>
+    <div class="reveal" id="model"></div>
+  </div>
+  <div class="card c-yellow">
+    <h3>📏 老師怎麼打分數？</h3>
+    <table>
+      <tr><th>向度</th><th>⭐⭐⭐ 優</th><th>⭐⭐ 良</th><th>⭐ 加油</th></tr>
+      <tr><td><b>內容</b></td><td>具體，有細節和感受</td><td>完整但平淡</td><td>空洞或離題</td></tr>
+      <tr><td><b>結構</b></td><td>有起承轉合</td><td>結構尚可</td><td>缺乏組織</td></tr>
+      <tr><td><b>語言</b></td><td>用詞精準，有修辭</td><td>通順但平淡</td><td>語病多、句子重複</td></tr>
+      <tr><td><b>書寫</b></td><td>整齊清楚</td><td>尚整齊</td><td>潦草難認</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ======================= P6 成績 ======================= -->
+<section class="page" id="p6">
+  <h2>🏆 我的成績單</h2>
+  <div class="card c-yellow">
+    <div class="medal" id="medal">🔥</div>
+    <p class="big" style="text-align:center;margin:0" id="medalText"></p>
+    <div id="resultRows" style="margin-top:16px"></div>
+    <p class="muted" style="text-align:center">⭐ 寫作與改寫題是開放題，請自己對照參考答案或請老師批改喔！</p>
+    <div style="text-align:center"><button class="btn b-orange" onclick="resetAll()">🔄 全部重來</button></div>
+  </div>
+</section>
+
+</main>
+<button class="toTop" onclick="window.scrollTo({top:0})" aria-label="回到上方">⬆</button>
+<footer>🔥 小火苗復習站｜六上國語 第八課 飢渴好「火」伴｜自學復習用</footer>
+
+<script>
+/* ================= 資料 ================= */
+const FLASH = [
+  ["怨","ㄩㄢˋ","自怨自艾、埋怨"],["艾","ㄧˋ / ㄞˋ","自怨自艾 / 艾草"],["枕","ㄓㄣˇ","枕頭、枕戈待旦"],
+  ["臂","ㄅㄧˋ","手臂、三頭六臂"],["膝","ㄒㄧ","膝蓋、屈膝"],["焰","ㄧㄢˋ","火焰、烈焰"],
+  ["惱","ㄋㄠˇ","苦惱、懊惱"],["鬚","ㄒㄩ","毛鬚、鬍鬚"],["跌","ㄉㄧㄝ","跌坐、跌倒"],
+  ["熄","ㄒㄧ","熄滅、熄火"],["剝","ㄅㄛ","剝開、剝皮"],["竄","ㄘㄨㄢˋ","竄入、逃竄"],
+  ["瞬","ㄕㄨㄣˋ","瞬間、瞬息"],["頹","ㄊㄨㄟˊ","頹然、頹喪"],["熾","ㄔˋ","熾熱、熾烈"],
+  ["炭","ㄊㄢˋ","紅炭、木炭"],["飢","ㄐㄧ","飢渴、飢餓"],["緒","ㄒㄩˋ","思緒、情緒"],
+  ["裊","ㄋㄧㄠˇ","裊裊、炊煙裊裊"],["樺","ㄏㄨㄚˋ","樺樹"]
+];
+const VOCAB = [
+  ["自怨自艾","消極的埋怨、責怪自己。","布萊恩被豪豬攻擊後開始自怨自艾。"],
+  ["筋疲力盡","形容身體非常疲累。","他哭到筋疲力盡才睡著。"],
+  ["杳無人煙","荒涼、沒有人居住。","飛機摔落在杳無人煙的森林深處。"],
+  ["死裡逃生","從非常危險的情況中脫身。","死裡逃生的布萊恩只剩一把手斧。"],
+  ["漫無邊際","非常寬廣，一眼望不到盡頭。","他必須忍受漫無邊際的孤獨。"],
+  ["靈光一閃","突然想到好主意。","看到金屬閃光，他靈光一閃。"],
+  ["星星之火","細微的火點；也比喻小事情。","他需要能引燃星星之火的東西。"],
+  ["頹然","無力、灰心喪氣的樣子。","失敗後他頹然跌坐。"],
+  ["瞬間","轉眼之間，非常短的時間。","火花竄入樹皮後瞬間消失。"],
+  ["靜心凝神","讓心安靜、集中精神。","他緊握手斧，靜心凝神。"],
+  ["熾熱","很熱，溫度極高。","紅色熾熱的火蟲爬上樹皮。"],
+  ["飢渴","肚子餓又口渴；比喻非常迫切的渴望。","他把細樹枝丟進飢渴的烈焰。"],
+  ["裊裊","煙霧繚繞、搖曳上升的樣子。","裊裊輕煙盤旋在他頭上。"],
+  ["思緒","思路、想法的條理。","思緒翻騰的他想念爸媽。"],
+  ["空無一人","空蕩蕩的，一個人也沒有。","他四下環顧，空無一人。"]
+];
+const PATTERNS = [
+  ["由……引發的……","因果短語","由<b>黑夜</b>引發的<b>恐懼</b>","由<b>玩笑</b>引發的<b>衝突</b>"],
+  ["……隨後……","連貫複句：按時間說出接連發生的事","布萊恩回到洞穴，<b>隨後</b>將樺樹皮球剝開。","早上爸爸先載我上學，<b>隨後</b>才到公司上班。"],
+  ["直到……才……","條件複句：滿足前面條件，後面才發生","<b>直到</b>大木頭也燒得很好，他<b>才</b>鬆了口氣。","我們<b>直到</b>媽媽回家，<b>才</b>開始整理行李。"],
+  ["要是……就……","假設複句：先假設，再說結果","<b>要是</b>能維持這堆小火，<b>就</b>可以防止豪豬闖進來。","<b>要是</b>明天放晴，我們<b>就</b>去爬山。"],
+  ["既是……也是……","並列複句：同時有兩種身分或情況","火，<b>既是</b>朋友，<b>也是</b>守衛。","他<b>既是</b>籃球隊長，<b>也是</b>班長。"],
+  ["＿＿般既＿＿又＿＿的＿＿","譬喻法形容東西的特徵","<b>絨毛</b>般既<b>細</b>又<b>軟</b>的<b>東西</b>","<b>鋼鐵</b>般既<b>厚</b>又<b>硬</b>的<b>建材</b>"],
+  ["拖著＿＿的＿＿走出＿＿","描述用什麼狀態做出動作","<b>拖著</b>疼痛的腳<b>走出</b>洞穴","<b>提著</b>沉重的行李<b>進入</b>機場"]
+];
+const RHET = [
+  ["譬喻","t-orange","甲像乙","樺樹皮<b>就像</b>乾淨而微帶小斑點的紙張（明喻）<br>火，既是朋友，也是守衛（暗喻）<br>絨毛<b>般</b>既細又軟的東西／棒球<b>般</b>大小"],
+  ["擬人","t-pink","把物當人寫","那些火花跟我一樣，也快被<b>餓死</b>了<br>丟進<b>飢渴</b>的烈焰中"],
+  ["摹寫","t-sky","寫出五感","視覺：一道<b>金屬閃光</b>、一片<b>漆黑</b>、<b>灰暗</b>的晨光<br>觸覺＋視覺：<b>紅色熾熱</b>的火蟲"],
+  ["設問","t-purple","故意問問題","懸問：火到底如何生成的？<br>提問（自問自答）：生火需要什麼？得有燃料……"],
+  ["類疊","t-mint","字詞句重複","疊字：眼巴巴、一點點、足足、輕輕、微微、裊裊<br>疊句：有火了！有火了！"],
+  ["頂真","t-red","前句結尾＝後句開頭","朝豪豬丟<b>手斧</b>，<b>手斧</b>擊中岩壁<br>壯<b>大</b>，<b>大</b>到成為一塊紅炭"],
+  ["映襯","t-yellow","兩件事對比","連山頂洞人都會生火，但我就是不會"]
+];
+const IDIOMS = [
+  ["自怨自艾","消極的埋怨、責怪自己（艾唸ㄧˋ）","😔 怪「自己」"],
+  ["怨聲載道","眾人到處都在抱怨","😤 怨「大家」"],
+  ["杳無人煙","荒涼、沒有人住","🌲 地方很荒涼"],
+  ["漫無邊際","寬廣到看不到盡頭","🌊 很大很廣"],
+  ["死裡逃生","從極危險中脫身","🚑 差點沒命"],
+  ["靈光一閃","忽然想到好點子","💡 突然想到"],
+  ["枕戈待旦","枕著武器等天亮，隨時準備作戰","⚔️ 不敢鬆懈"],
+  ["高枕無憂","墊高枕頭安心睡，沒有憂慮","😴 很放心"],
+  ["三頭六臂","比喻本領很大","💪 超厲害"],
+  ["生靈塗炭","人民處在極困苦的處境","😭 大災難"],
+  ["千頭萬緒","事情雜亂、很難處理","🧶 一團亂"]
+];
+
+/* ---------- 題庫 ---------- */
+const QUIZ = {
+read:[
+ {lv:1,q:"布萊恩為什麼會獨自一人在森林裡求生？",o:["參加夏令營時在山裡迷路","搭小飛機探視爸爸，駕駛員猝死，飛機墜落","跟爸爸到森林露營時走散了","因為和家人吵架而離家出走"],a:1,why:"前言提到他搭單引擎小飛機去油田找爸爸，駕駛員心臟病突發猝死，飛機摔進森林。",ev:"前言：「駕駛員卻心臟病突發猝死，飛機摔落在杳無人煙的森林深處。」"},
+ {lv:1,q:"布萊恩想到「用手斧生火」的靈感，是從哪件事來的？",o:["想起科學課老師示範過","前一晚把手斧丟向豪豬，擊中岩壁擦出火花","看到天空打雷閃電","媽媽送手斧時教過他"],a:1,why:"他看見晨光中手斧的金屬閃光，想起昨晚手斧擊中岩壁，擦出一串火花。科學課是第三次嘗試時才回想的。",ev:"意義段2：手斧擊中岩壁時，擦出了一串火花。"},
+ {lv:1,q:"布萊恩四次生火嘗試的順序，哪一個正確？",o:["樺樹毛鬚 → 乾草 → 輕柔吹氣 → 用力吹氣","乾草 → 樺樹毛鬚 → 用力吹氣 → 輕柔吹氣","乾草 → 用力吹氣 → 樺樹毛鬚 → 輕柔吹氣","乾草 → 樺樹毛鬚 → 輕柔吹氣 → 用力吹氣"],a:1,why:"第一次乾草、第二次樺樹毛鬚、第三次太用力吹熄、第四次輕柔吹氣成功。",ev:"意義段3～6 依序寫出四次嘗試。"},
+ {lv:1,q:"布萊恩發現乾草不夠好，他覺得自己需要什麼樣的東西？",o:["又粗又硬的大木頭","絨毛般既細又軟的東西","濕濕的青草","亮晶晶的金屬"],a:1,why:"火花太小，需要細、軟、容易點燃的東西，他還想到碎紙片。",ev:"意義段3：「他需要絨毛般既細又軟的東西。」"},
+ {lv:2,q:"第三天深夜，布萊恩為什麼開始「自怨自艾」？",o:["因為找不到食物，肚子太餓","因為弄丟了媽媽送的手斧","剛被豪豬攻擊受傷，加上長期在黑暗中的恐懼和孤獨","因為想念學校的同學"],a:2,why:"要結合兩個訊息：身體受傷（豪豬）＋心理壓力（黑夜引發的恐懼、孤單）。",ev:"意義段1：剛被豪豬攻擊……加上連日來由黑夜引發的恐懼。"},
+ {lv:2,q:"布萊恩大叫：「就差一點點！就差那麼一點點！」這時他的心情最可能是？",o:["輕鬆愉快","懊惱可惜，又有點不甘心","非常害怕","得意洋洋"],a:1,why:"火花差點燒起來卻熄滅，所以是「差一點就成功」的懊惱與可惜。",ev:"意義段4：火花熄滅前似乎燒旺了一些，但還是失敗。"},
+ {lv:2,q:"為什麼第三次嘗試時，布萊恩用力吹氣，火反而熄滅了？",o:["因為氧氣太多會讓火爆炸","因為樺樹皮被吹濕了","火花還太小，他吹得太賣力，把火苗吹熄了","因為他忘了放燃料"],a:2,why:"吹氣是為了供應氧氣沒錯，但火太小時太大力會把火苗吹走、吹熄。",ev:"意義段5：「太賣力了，原有一道亮光……但被他吹熄了。」"},
+ {lv:2,q:"「那些火花跟我一樣，也快被餓死了。」這句話的意思最接近？",o:["布萊恩想把火花吃掉","布萊恩和火花都缺少需要的東西，都快撐不下去了","火花很喜歡布萊恩","布萊恩故意讓火花熄滅"],a:1,why:"火花缺燃料和氧氣而熄滅，布萊恩缺食物又一再失敗，兩者處境很像，表現出他的頹喪。",ev:"意義段4：布萊恩頹然跌坐時心裡這麼想。"},
+ {lv:2,q:"布萊恩說火「既是朋友，也是守衛」，「守衛」指的是什麼？",o:["火可以幫他煮飯","火可以防止豪豬等動物闖進洞穴","火可以幫他找到回家的路","火可以吸引飛機來救他"],a:1,why:"前一句說：要是能維持這堆小火，就可以防止豪豬等動物闖進來。",ev:"意義段7：「就可以防止豪豬等動物闖進來。火，既是朋友，也是守衛。」"},
+ {lv:2,q:"結尾布萊恩「四下環顧……空無一人」，作者想表達什麼？",o:["他很高興終於沒有豪豬了","成功的喜悅沒人可以分享，他感到孤單，也更想念家人","他想要趕快離開森林","他覺得森林的風景很無聊"],a:1,why:"他好想和人分享成果，卻只有太陽、微風和湖泊；接著想知道爸媽在做什麼，表現孤獨與思念。",ev:"意義段8：真希望有人可以聊聊這件事……真想知道爸爸、媽媽現在正在做什麼？"},
+ {lv:3,q:"課名「飢渴好『火』伴」，最適合的解釋是？",o:["布萊恩又餓又渴，所以生火煮東西","火需要不斷加燃料（飢渴），也是陪伴、保護他的好夥伴","布萊恩找到一位又餓又渴的人當朋友","這是一篇介紹火災危險的文章"],a:1,why:"「飢渴」寫火需要大量燃料才能燒；「火伴」諧音「伙伴」，表示火是他的好朋友。",ev:"意義段7：「雖然是個飢渴的朋友，卻是好朋友。」"},
+ {lv:3,q:"下列哪一項「不是」布萊恩能成功生火的原因？",o:["失敗了也不放棄","回想並運用科學課學到的知識","從失敗中檢討、修正方法","有大人在旁邊一步步教他"],a:3,why:"他是獨自一人，靠自己冷靜思考、修正方法才成功，沒有人教他。",ev:"全文：布萊恩始終「獨自一個人」。"},
+ {lv:3,q:"這篇文章最想告訴讀者的道理是？",o:["森林很危險，千萬不要去","搭飛機很可怕","遇到困難要冷靜思考、不放棄，勇敢突破自己","要多帶打火機出門"],a:2,why:"主旨：孤獨無助時需要朋友，身處困境要勇敢突破自我。",ev:"從四次嘗試到成功的過程，可以歸納出主旨。"}
+],
+idiom:[
+ {ctx:"小傑這次數學考不好，回家後一直說：「都是我太笨了，我什麼都做不好……」整個晚上悶悶不樂。",q:"最適合用哪個成語形容小傑？",o:["怨聲載道","自怨自艾","千頭萬緒","高枕無憂"],a:1,why:"小傑一直「責怪自己」，就是自怨自艾。「怨聲載道」是很多人一起抱怨，對象不對。"},
+ {ctx:"學校突然停電，教室冷氣全停，三十幾度的高溫讓全校同學都在抱怨。",q:"空格應填入哪個成語？「停電讓全校□□□□。」",o:["自怨自艾","怨聲載道","靈光一閃","死裡逃生"],a:1,why:"「全校」很多人都在抱怨＝怨聲載道。自怨自艾只怪自己，不適合。"},
+ {ctx:"登山隊在深山裡走了三天，沿路沒有看到任何房子，也沒遇到半個人。",q:"這座深山可以怎麼形容？",o:["杳無人煙","筋疲力盡","死裡逃生","星星之火"],a:0,why:"沒有人居住、很荒涼＝杳無人煙。"},
+ {ctx:"站在海邊，眼前的大海一望無際，怎麼看都看不到盡頭，讓人覺得自己好渺小。",q:"最適合形容這片大海的是？",o:["空無一人","漫無邊際","靜心凝神","頹然"],a:1,why:"寬廣到看不到盡頭＝漫無邊際。「空無一人」是說沒有人，不是說很寬廣。"},
+ {ctx:"決賽前一晚，球隊教練要大家保持警覺、隨時準備，誰都不敢鬆懈。",q:"哪個成語最適合？",o:["高枕無憂","三頭六臂","枕戈待旦","怨聲載道"],a:2,why:"時時警惕、隨時準備作戰＝枕戈待旦。「高枕無憂」剛好意思相反！"},
+ {ctx:"媽媽這週要搬家、加班，還要照顧生病的弟弟，事情一大堆，不知道從哪裡開始做。",q:"空格最適合填入：「媽媽覺得事情□□□□。」",o:["千頭萬緒","三頭六臂","生靈塗炭","死裡逃生"],a:0,why:"事情很雜亂、難處理＝千頭萬緒。「三頭六臂」是形容人本領很大，不是形容事情多。"},
+ {ctx:"小明卡在一道數學難題半小時，突然看到窗外的樹，一下子想到解題的方法。",q:"最適合形容小明的是？",o:["自怨自艾","靈光一閃","筋疲力盡","漫無邊際"],a:1,why:"突然想到好方法＝靈光一閃，就像布萊恩看見金屬閃光時一樣。"},
+ {q:"下列哪一句的成語使用「最恰當」？",o:["夜市擠得水洩不通，真是杳無人煙。","小華一個人就完成全班的海報，真是自怨自艾。","戰爭讓人民流離失所、生靈塗炭。","颱風快來了，我們什麼都不用準備，高枕無憂吧！"],a:2,why:"戰爭讓人民處於極端困苦＝生靈塗炭 ✅。夜市人很多不能用杳無人煙；做很多事應用「三頭六臂」；颱風要來還「高枕無憂」不合理。"}
+],
+grammar:[
+ {q:"下列哪一句「沒有語病」？",o:["透過布萊恩的故事，讓我學到不放棄。","雖然失敗很多次，而且他還是不放棄。","布萊恩雖然失敗很多次，但是他還是不放棄。","他因為肚子很餓，所以感到很飢餓。"],a:2,why:"「透過…讓我」缺主語（成分殘缺）；「雖然…而且」關聯詞誤用；「很餓」和「飢餓」語意重複。"},
+ {q:"「布萊恩大約敲了十分鐘左右，才敲出火花。」這句話的語病是？",o:["語意重複","關聯詞誤用","詞序錯誤","沒有語病"],a:0,why:"「大約」和「左右」都是估計的意思，只要留一個：大約敲了十分鐘／敲了十分鐘左右。"},
+ {q:"下列哪一句「搭配不當」？",o:["布萊恩改進了生火的方法。","布萊恩提高了生火的方法。","布萊恩收集了一些樹皮毛鬚。","布萊恩找到了生火的靈感。"],a:1,why:"「提高」要搭配水準、能力；「方法」要用「改進」。"},
+ {q:"下列哪一句的「關聯詞」使用正確？",o:["直到大木頭也燒得很好，他才鬆了口氣。","雖然他很累，所以他還是繼續敲。","要是能維持這堆小火，但是可以防止豪豬。","火既然是朋友，也是守衛。"],a:0,why:"「直到…才…」條件複句正確。其他句應改為「雖然…但是」、「要是…就…」、「既是…也是…」。"},
+ {q:"下列哪一句「詞序錯誤」？",o:["他收集了棒球般大小的樹皮毛鬚。","他收集了大小棒球般的樹皮毛鬚。","他輕輕的吹著小火花。","他拖著疼痛的腳走出洞穴。"],a:1,why:"應該是「棒球般大小」，形容詞的順序放錯了。"},
+ {q:"「經過四次嘗試，使布萊恩終於成功生火。」這句話的問題是？",o:["缺少主語（成分殘缺）","語意重複","關聯詞誤用","沒有問題"],a:0,why:"「經過…使…」讓句子沒有主角。改成：「經過四次嘗試，布萊恩終於成功生火。」"}
+]
+};
+QUIZ.rhet = [
+ {q:"下列哪一句使用了「擬人」修辭？",o:["樺樹皮就像乾淨而微帶小斑點的紙張。","那些火花跟我一樣，也快被餓死了。","有火了！有火了！","火到底如何生成的？"],a:1,why:"火花不會「餓死」，把火花當成人來寫＝擬人。其他三句分別是譬喻、類疊、設問。"},
+ {q:"「樺樹漂亮的白色樹皮，就像乾淨而微帶小斑點的紙張。」本體和喻體分別是？",o:["本體：紙張／喻體：樹皮","本體：樹皮／喻體：紙張","本體：樺樹／喻體：斑點","本體：白色／喻體：乾淨"],a:1,why:"被形容的是「樹皮」（本體），拿「紙張」（喻體）來比，有喻詞「就像」＝明喻。"},
+ {q:"「火，既是朋友，也是守衛。」使用了哪一種修辭？",o:["設問","頂真","譬喻（暗喻）","摹寫"],a:2,why:"直接說火「是」朋友、「是」守衛，用「是」當喻詞＝暗喻。"},
+ {q:"「火到底如何生成的？他回想起學校……」這裡用設問的主要目的是？",o:["真的要問讀者問題","引起注意，帶出布萊恩開始冷靜思考","表示布萊恩很生氣","描寫火的顏色"],a:1,why:"作者不是真的問讀者，而是用問題帶出布萊恩「靜下來回想」的轉折。"},
+ {q:"下列哪一組語詞「全部都是疊字」？",o:["眼巴巴、一點點、裊裊","熄滅、瞬間、熾熱","頹然、苦惱、思緒","烈焰、紅炭、樹皮"],a:0,why:"眼「巴巴」、一「點點」、「裊裊」都有重複的字，可以加強語氣、讓文章有節奏感。"},
+ {q:"「與其他樹皮會合，壯大，大到成為一塊紅炭。」其中「壯大，大到」用的修辭是？",o:["頂真","映襯","設問","誇飾"],a:0,why:"前面以「大」結尾，後面以「大」開頭，像接力一樣＝頂真。"},
+ {q:"「紅色熾熱的火蟲」用了哪兩種感官的摹寫？",o:["聽覺＋嗅覺","視覺＋觸覺","味覺＋聽覺","嗅覺＋觸覺"],a:1,why:"「紅色」是看到的（視覺），「熾熱」是感覺到的溫度（觸覺）。"}
+];
+
+const FIXES = [
+ ["透過這次失敗，使布萊恩學到要輕柔吹氣。","成分殘缺：「透過…使…」讓句子沒有主語。","這次失敗，使布萊恩學到要輕柔吹氣。／透過這次失敗，布萊恩學到要輕柔吹氣。"],
+ ["雖然火花熄滅了，而且布萊恩沒有放棄。","關聯詞誤用：「雖然」要配「但是／卻」。","雖然火花熄滅了，但是布萊恩沒有放棄。"],
+ ["布萊恩的生火技術越來越進步了很多。","語意重複：「越來越進步」和「進步了很多」重複。","布萊恩的生火技術越來越進步。／布萊恩的生火技術進步了很多。"],
+ ["布萊恩在湖邊看到漂亮的樺樹皮和清脆的鳥叫聲。","搭配不當：鳥叫聲不能用「看到」。","布萊恩在湖邊看到漂亮的樺樹皮，也聽到清脆的鳥叫聲。"]
+];
+const IMITATE = [
+ ["＿＿般既＿＿又＿＿的＿＿","絨毛般既細又軟的東西","棉花糖般既白又軟的雲朵"],
+ ["＿＿就像＿＿（明喻）","樺樹皮就像乾淨而微帶小斑點的紙張","夕陽就像一顆熟透的橘子，掛在天邊"],
+ ["＿＿，既是＿＿，也是＿＿（暗喻）","火，既是朋友，也是守衛","書，既是老師，也是陪我長大的好朋友"],
+ ["擬人：讓東西像人一樣有動作或感受","那些火花跟我一樣，也快被餓死了","路邊的小草被太陽曬得垂下頭，好像渴得說不出話"]
+];
+const SENTS = [
+ ["自怨自艾","大隊接力時我不小心掉棒，老師拍拍我的肩說：「不要再自怨自艾了，下次再加油！」"],
+ ["……隨後……","放學後我先回家寫功課，隨後才去公園打球。"],
+ ["直到……才……","我直到把每一題都檢查完，才放心的交出考卷。"],
+ ["要是……就……","要是每天多練習十分鐘，我的跳繩就能越跳越好。"],
+ ["既是……也是……","阿嬤既是我的長輩，也是我最好的聊天夥伴。"],
+ ["靈光一閃","正當大家想不出班級口號時，小美靈光一閃，想到一句超有創意的口號。"]
+];
+const COPIES = [
+ ["拖著疼痛的腳走出洞穴","＿著＿＿的＿＿＿＿＿＿","提著沉重的行李進入機場／背著鼓鼓的書包走進教室"],
+ ["由黑夜引發的恐懼","由＿＿引發的＿＿","由一句玩笑引發的爭吵／由停電引發的混亂"],
+ ["裊裊輕煙盤旋在他的腦袋上方","＿＿的＿＿＿＿在＿＿＿＿","潔白的雲朵飄浮在藍藍的天空中"]
+];
+const ESSAY_CHECK = ["有寫出遇到什麼困難（事件）","有用到至少一種五感描寫（看到、聽到、摸到…）","有寫出失敗時的心情","有寫出我怎麼調整方法","有寫出最後的領悟或心情轉變","字數在 150～250 字之間","至少用了一種修辭（譬喻、擬人、設問…）"];
+const MODEL = `<b>〈那一次，我沒有放棄〉</b><br>
+　　四年級的跳繩比賽，我連「二迴旋」都跳不過三下。每次繩子「啪」的一聲打在小腿上，又刺又痛，我忍不住坐在地上自怨自艾：「我一定不是跳繩的料。」<br>
+　　那天晚上，我看著掛在門後的跳繩，它好像垂著頭等我。我想起體育老師說過：「手腕要轉快，跳得要高。」原來我一直用整隻手臂甩繩，難怪跳不起來！第二天，我改用手腕轉繩，膝蓋微微彎曲，一下、兩下……竟然跳了五下！<br>
+　　比賽那天，我跳了二十二下，雖然沒有得獎，心裡卻像點起一盞小燈，又暖又亮。我發現，失敗不可怕，只要冷靜找出問題、換個方法，就能一步步靠近成功。`;
+
+/* ================= 狀態（記錄在瀏覽器） ================= */
+const KEY="ch6-1-8-progress";
+let STATE={read:{},idiom:{},grammar:{},rhet:{},essay:""};
+try{const s=localStorage.getItem(KEY);if(s)STATE=Object.assign(STATE,JSON.parse(s));}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(STATE));}catch(e){}}
+
+/* ================= 導覽 ================= */
+function go(id){
+  document.querySelectorAll("section.page").forEach(s=>s.classList.toggle("show",s.id===id));
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.p===id));
+  if(id==="p6")renderResult();
+  window.scrollTo({top:document.querySelector("nav").offsetTop,behavior:"smooth"});
+}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.p));
+
+/* ================= 重點頁 ================= */
+document.getElementById("flashGrid").innerHTML=FLASH.map(f=>`
+  <div class="flash" onclick="this.classList.toggle('flip')">
+    <div class="in"><div class="f"><div class="ch">${f[0]}</div><small>點我翻面 👆</small></div>
+    <div class="b"><div class="zy">${f[1]}</div><div>${f[2]}</div></div></div>
+  </div>`).join("");
+const vcols=["bg-y","bg-s","bg-m","bg-p","bg-k","bg-o","bg-l"];
+document.getElementById("vocabGrid").innerHTML=VOCAB.map((v,i)=>`
+  <div class="mini ${vcols[i%vcols.length]}"><b style="font-size:22px">${v[0]}</b><br>📌 ${v[1]}<br><span class="muted">✏️ ${v[2]}</span></div>`).join("");
+document.getElementById("patternBox").innerHTML=PATTERNS.map(p=>`
+  <div style="margin-bottom:14px;padding-bottom:12px;border-bottom:2px dashed #9FE8D3">
+    <span class="tag t-mint">${p[0]}</span><span class="muted">${p[1]}</span><br>
+    📖 課文：${p[2]}<br>🌟 例句：${p[3]}
+  </div>`).join("");
+document.getElementById("rhetBox").innerHTML=`<div class="grid2">`+RHET.map(r=>`
+  <div class="mini bg-k"><span class="tag ${r[1]}">${r[0]}</span><b>${r[2]}</b><br>${r[3]}</div>`).join("")+`</div>`;
+document.getElementById("idiomDict").innerHTML=IDIOMS.map((d,i)=>`
+  <div class="mini ${vcols[i%vcols.length]}"><b style="font-size:22px">${d[0]}</b>　<span class="tag t-mint">${d[2]}</span><br>${d[1]}</div>`).join("");
+
+/* ================= 測驗 ================= */
+const COLORS={read:"var(--sky)",idiom:"var(--mint)",grammar:"var(--purple)",rhet:"var(--pink)"};
+const LV={1:["lv1","第一層 找資訊"],2:["lv2","第二層 想原因"],3:["lv3","第三層 做判斷"]};
+const PRAISE=["答對了！你是閱讀小偵探 🕵️","太棒了！火力全開 🔥","完全正確！給你一顆星 ⭐","好厲害！證據找得超準 🎯"];
+const ENCOURAGE=["差一點點！就像布萊恩一樣，再想一次 💪","沒關係，失敗是成功的燃料 🔥","再看一下證據，你可以的！"];
+const POS=[2,0,3,1,1,3,0,2,3,1,2,0,2,3];
+const OFF={read:0,idiom:3,grammar:5,rhet:9};
+function perm(m,i){
+  const it=QUIZ[m][i],n=it.o.length;
+  const others=[...Array(n).keys()].filter(k=>k!==it.a);
+  const t=POS[(i+OFF[m])%POS.length]%n;
+  others.splice(t,0,it.a);
+  return others;
+}
+function renderQuiz(m){
+  const box=document.getElementById("q-"+m);
+  box.innerHTML=QUIZ[m].map((it,i)=>{
+    const lv=it.lv?`<span class="lvl ${LV[it.lv][0]}">${LV[it.lv][1]}</span>`:"";
+    return `<div class="qcard" id="${m}-${i}">
+      <div class="qhead"><div class="qnum" style="background:${COLORS[m]}">${i+1}</div>${lv}</div>
+      ${it.ctx?`<div class="qctx">📍 情境：${it.ctx}</div>`:""}
+      <div class="qtext">${it.q}</div>
+      <div class="opts">${perm(m,i).map((j,pos)=>`<button class="opt" data-j="${j}" onclick="answer('${m}',${i},${j})"><span class="lt">${"ABCD"[pos]}</span><span>${it.o[j]}</span></button>`).join("")}</div>
+      <div class="fb"></div>
+    </div>`;}).join("");
+  Object.keys(STATE[m]).forEach(i=>showAns(m,+i,STATE[m][i],false));
+  updateScore(m);
+}
+function answer(m,i,j){
+  if(STATE[m][i]!==undefined)return;
+  STATE[m][i]=j;save();showAns(m,i,j,true);updateScore(m);
+}
+function showAns(m,i,j,anim){
+  const it=QUIZ[m][i],card=document.getElementById(m+"-"+i);if(!card)return;
+  card.querySelectorAll(".opt").forEach(b=>{
+    const k=+b.dataset.j;b.disabled=true;
+    if(k===it.a)b.classList.add("right");else if(k===j)b.classList.add("wrong");
+  });
+  const ok=j===it.a,fb=card.querySelector(".fb");
+  fb.className="fb show "+(ok?"ok":"no");
+  const msg=ok?PRAISE[i%PRAISE.length]:ENCOURAGE[i%ENCOURAGE.length];
+  fb.innerHTML=`<div class="say">${ok?"✅ ":"🤔 "}${msg}</div>
+    <div>${ok?"":"正確答案是 <b>"+"ABCD"[perm(m,i).indexOf(it.a)]+"</b>。"}💡 ${it.why}</div>
+    ${it.ev?`<div class="ev">🔎 證據：${it.ev}</div>`:""}`;
+  if(ok&&anim)confetti();
+}
+function updateScore(m){
+  const total=QUIZ[m].length,done=Object.keys(STATE[m]).length;
+  const right=Object.keys(STATE[m]).filter(i=>STATE[m][i]===QUIZ[m][i].a).length;
+  document.getElementById("sc-"+m).textContent=`得分：${right} / ${total}　（已作答 ${done} 題）`;
+  document.getElementById("pg-"+m).style.width=(done/total*100)+"%";
+  document.getElementById("st-"+m).textContent=done===total?stars(right/total):"";
+}
+function stars(r){const n=r>=.9?3:r>=.7?2:r>=.4?1:0;return "⭐".repeat(n)+"☆".repeat(3-n);}
+function resetQuiz(m){STATE[m]={};save();renderQuiz(m);window.scrollTo({top:document.querySelector("nav").offsetTop});}
+function resetAll(){if(!confirm("確定要清除全部作答紀錄嗎？"))return;["read","idiom","grammar","rhet"].forEach(m=>{STATE[m]={};renderQuiz(m)});renderResult();}
+["read","idiom","grammar","rhet"].forEach(renderQuiz);
+
+/* 改寫、仿寫、造句 */
+function openCard(title,prompt,ans,cls,btn,ph){
+  return `<div class="card ${cls}">
+    <div class="qtext" style="margin-top:0">${title}</div>${prompt}
+    <input type="text" placeholder="${ph||"寫下你的答案…"}">
+    <button class="btn ${btn}" style="margin-top:10px" onclick="this.nextElementSibling.classList.toggle('show')">👀 看參考答案</button>
+    <div class="reveal">${ans}</div></div>`;
+}
+document.getElementById("fix-grammar").innerHTML=FIXES.map((f,i)=>openCard(
+  `✂️ 第 ${i+1} 句：這句話哪裡怪怪的？請改寫。`,
+  `<div class="qctx">❌ ${f[0]}</div>`,
+  `🔍 問題：${f[1]}<br>✅ 改寫：<b>${f[2]}</b>`,"c-purple","b-purple","改寫後的句子…")).join("");
+document.getElementById("imitateBox").innerHTML=IMITATE.map(t=>`
+  <div style="margin-bottom:16px">
+    <span class="tag t-pink">${t[0]}</span><br>📖 課文：${t[1]}
+    <input type="text" placeholder="換你寫寫看…" style="margin-top:6px">
+    <button class="btn b-pink" style="margin-top:8px" onclick="this.nextElementSibling.classList.toggle('show')">👀 看範例</button>
+    <div class="reveal">🌟 ${t[2]}</div>
+  </div>`).join("");
+document.getElementById("sentBox").innerHTML=SENTS.map((s,i)=>openCard(
+  `🅰️ ${i+1}. 請用「<span class="hl">${s[0]}</span>」造句`,"",
+  `🌟 ${s[1]}<br><span class="muted">加分：句子裡加一種修辭或五感描寫！</span>`,"c-lime","b-mint","我的句子…")).join("");
+document.getElementById("copyBox").innerHTML=COPIES.map((c,i)=>openCard(
+  `🅱️ ${i+1}. 照樣寫短語`,
+  `<div class="qctx">📖 ${c[0]}<br>✏️ 句型：${c[1]}</div>`,
+  `🌟 ${c[2]}`,"c-lime","b-mint","照樣寫…")).join("");
+
+/* 短文 */
+const essay=document.getElementById("essay");
+essay.value=STATE.essay||"";
+function countEssay(){const n=essay.value.replace(/\s/g,"").length;document.getElementById("essayCount").textContent=n+" 字"+(n>=150&&n<=250?" ✅ 字數剛好":n>250?" （有點多囉）":"");}
+essay.addEventListener("input",()=>{STATE.essay=essay.value;save();countEssay();});countEssay();
+document.getElementById("essayChecks").innerHTML=ESSAY_CHECK.map(c=>`<label class="check"><input type="checkbox"><span>${c}</span></label>`).join("");
+document.getElementById("model").innerHTML=MODEL;
+
+/* 成績頁 */
+function renderResult(){
+  const names={read:["🔍 閱讀理解","var(--sky)"],idiom:["🧩 成語情境","var(--mint)"],grammar:["🔧 語病句型","var(--purple)"],rhet:["🎨 修辭","var(--pink)"]};
+  let R=0,T=0,D=0;
+  document.getElementById("resultRows").innerHTML=Object.keys(names).map(m=>{
+    const t=QUIZ[m].length,r=Object.keys(STATE[m]).filter(i=>STATE[m][i]===QUIZ[m][i].a).length,d=Object.keys(STATE[m]).length;
+    R+=r;T+=t;D+=d;
+    return `<div class="rrow"><span class="lab">${names[m][0]}</span><span class="bar"><div style="width:${r/t*100}%;background:${names[m][1]}"></div></span><span class="num">${r}/${t}</span></div>`;
+  }).join("");
+  const p=T?R/T:0;
+  document.getElementById("medal").textContent=D<T?"🔥":p>=.9?"🏆":p>=.7?"🥈":"🌱";
+  document.getElementById("medalText").textContent=D<T?`已完成 ${D}/${T} 題，繼續加油！`:p>=.9?`滿分火焰！答對 ${R}/${T} 題，你是生火大師！`:p>=.7?`很棒！答對 ${R}/${T} 題，再複習錯的題目就更完美`:`答對 ${R}/${T} 題。像布萊恩一樣，修正方法再試一次！`;
+}
+
+/* 彩帶 */
+function confetti(){
+  const e=["🔥","⭐","✨","🎉","💛"];
+  for(let i=0;i<14;i++){const s=document.createElement("span");s.className="confetti";s.textContent=e[i%e.length];
+    s.style.left=Math.random()*100+"vw";s.style.animationDelay=Math.random()*.3+"s";document.body.appendChild(s);setTimeout(()=>s.remove(),1800);}
+}
+</script>
+</body>
+</html>
